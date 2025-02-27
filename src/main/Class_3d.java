@@ -142,7 +142,7 @@ public class Class_3d {
       }
    }
 
-   public static void sub_198() {
+   public static void callGc() {
       try {
          System.gc();
       } catch (Exception var1) {

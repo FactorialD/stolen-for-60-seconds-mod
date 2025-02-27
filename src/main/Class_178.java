@@ -126,7 +126,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          var_4b9 = true;
          var_463 = new Thread(this);
          var_463.start();
-         Class_3d.sub_198();
+         Class_3d.callGc();
       }
    }
 
@@ -146,7 +146,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             var_55f.sub_db();
          }
 
-         Class_3d.sub_198();
+         Class_3d.callGc();
       }
    }
 
@@ -160,7 +160,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
       var_463 = null;
       var_55f = null;
-      Class_3d.sub_198();
+      Class_3d.callGc();
    }
 
    private void sub_bd() {
@@ -234,7 +234,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    private static void sub_167(Graphics var0) {
       if (var_6bc && !var_6ac && var_b74 == var_bfe && var_bca == var_c60 && var_115 > 12) {
-         Class_19e.sub_388(var0, Class_b3.var_1d - Class_1cc.var_b6[38][2] - 2, var_11cf - Class_1cc.var_b6[9][3] + Class_19e.var_ac, 2, 5);
+         Class_19e.sub_388(var0, Class_b3.var_1d - SomeLevelDataVariablesInterface.var_b6[38][2] - 2, var_11cf - SomeLevelDataVariablesInterface.var_b6[9][3] + Class_19e.var_ac, 2, 5);
       }
 
    }
@@ -374,7 +374,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    private static void sub_21a() {
       short[] var0 = new short[]{190, 209, 199};
-      sub_22b((byte)3, (byte[])null, var0, Class_1b0.sub_42b((short)128), (byte)2);
+      sub_22b((byte)3, (byte[])null, var0, Class_1b0.readTextFromLng((short)128), (byte)2);
    }
 
    public static void sub_22b(byte var0, byte[] var1, short[] var2, short[] var3, byte var4) {
@@ -472,7 +472,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
       var_13a7.sub_3d3();
       var_93a = 999999;
-      Class_3d.sub_198();
+      Class_3d.callGc();
    }
 
    private static void sub_360() {
@@ -503,7 +503,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          if (Class_1b0.var_217[4] == null) {
             Class_1b0.var_217[2] = null;
             Class_1b0.var_217[3] = null;
-            Class_3d.sub_198();
+            Class_3d.callGc();
             sub_187(100L);
             Class_1b0.sub_333(4);
             sub_187(500L);
@@ -519,7 +519,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             Class_1b0.var_217[4] = null;
             Class_1b0.var_217[5] = null;
             Class_1b0.var_217[6] = null;
-            Class_3d.sub_198();
+            Class_3d.callGc();
             sub_187(50L);
             Class_1b0.sub_333(3);
             sub_187(50L);
@@ -531,14 +531,14 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             Class_1b0.var_217[4] = null;
             Class_1b0.var_217[5] = null;
             Class_1b0.var_217[6] = null;
-            Class_3d.sub_198();
+            Class_3d.callGc();
             sub_187(50L);
             Class_1b0.sub_333(2);
             sub_187(50L);
          }
       }
 
-      Class_3d.sub_198();
+      Class_3d.callGc();
       var_22b = false;
    }
 
@@ -627,8 +627,8 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       switch(var_114a) {
       case 1:
          ++var_114a;
-         this.sub_57d("prov", (String)null, 16777215, 2000, true);
-         this.sub_57d("prov2", (String)null, 16777215, 2000, true);
+         //this.sub_57d("prov", (String)null, 16777215, 2000, true);
+         //this.sub_57d("prov2", (String)null, 16777215, 2000, true);
          this.sub_57d("logo1", (String)null, 16777215, 2000, true);
          this.sub_57d("logo2", "title", 16777215, 2000, false);
          var_114a = 6;
@@ -642,34 +642,34 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       case 10:
          Class_1b0.sub_333(var_114a - 6 >> 1);
          if (Class_1b0.var_217[2] != null && var_1180 > 176) {
-            Class_1cc.var_b6[7][2] = (short)Class_1b0.var_217[2].getWidth();
+            SomeLevelDataVariablesInterface.var_b6[7][2] = (short)Class_1b0.var_217[2].getWidth();
          }
 
-         Class_b3.var_cf = var_11cf - Class_1cc.var_b6[9][3];
-         var_ce9 = var_1180 - Class_1cc.var_b6[7][2] >> 1;
-         var_d24 = Class_1cc.var_b6[28][3] + (var_11cf - Class_1cc.var_b6[28][3] - Class_1cc.var_b6[7][3] >> 1);
+         Class_b3.var_cf = var_11cf - SomeLevelDataVariablesInterface.var_b6[9][3];
+         var_ce9 = var_1180 - SomeLevelDataVariablesInterface.var_b6[7][2] >> 1;
+         var_d24 = SomeLevelDataVariablesInterface.var_b6[28][3] + (var_11cf - SomeLevelDataVariablesInterface.var_b6[28][3] - SomeLevelDataVariablesInterface.var_b6[7][3] >> 1);
          if (var_11cf < 120) {
             var_d24 += 10;
          }
 
          int var1;
-         for(var1 = 0; var1 < Class_1cc.var_65.length; ++var1) {
-            int[] var10000 = Class_1cc.var_65[var1];
+         for(var1 = 0; var1 < SomeLevelDataVariablesInterface.var_65.length; ++var1) {
+            int[] var10000 = SomeLevelDataVariablesInterface.var_65[var1];
             var10000[0] += var_ce9;
-            var10000 = Class_1cc.var_65[var1];
+            var10000 = SomeLevelDataVariablesInterface.var_65[var1];
             var10000[1] += var_d24;
          }
 
-         for(var1 = 0; var1 < Class_1cc.var_9d.length; ++var1) {
-            short[] var3 = Class_1cc.var_9d[var1];
+         for(var1 = 0; var1 < SomeLevelDataVariablesInterface.var_9d.length; ++var1) {
+            short[] var3 = SomeLevelDataVariablesInterface.var_9d[var1];
             var3[0] = (short)(var3[0] + var_ce9);
-            var3 = Class_1cc.var_9d[var1];
+            var3 = SomeLevelDataVariablesInterface.var_9d[var1];
             var3[1] = (short)(var3[1] + var_d24);
          }
 
          var_ca0 = 0;
-         var_bfe = Class_1cc.var_65[var_ca0][0];
-         var_c60 = Class_1cc.var_65[var_ca0][1];
+         var_bfe = SomeLevelDataVariablesInterface.var_65[var_ca0][0];
+         var_c60 = SomeLevelDataVariablesInterface.var_65[var_ca0][1];
          ++var_114a;
          return;
       case 12:
@@ -678,7 +678,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          ++var_114a;
          return;
       case 18:
-         Class_1b0.sub_3ad();
+         Class_1b0.readCharactersFromLng();
 
          try {
             var_13cf = Integer.parseInt(Class_1b0.sub_5a0((short)276));
@@ -753,9 +753,9 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          switch(((Short)Class_19e.var_838).shortValue()) {
          case 200:
             if (var_1cd) {
-               sub_22b((byte)27, (byte[])null, new short[]{193, 194}, Class_1b0.sub_42b((short)130), (byte)2);
+               sub_22b((byte)27, (byte[])null, new short[]{193, 194}, Class_1b0.readTextFromLng((short)130), (byte)2);
             } else {
-               sub_22b((byte)37, (byte[])null, new short[]{201, 195, 196, 197}, Class_1b0.sub_42b((short)198), (byte)2);
+               sub_22b((byte)37, (byte[])null, new short[]{201, 195, 196, 197}, Class_1b0.readTextFromLng((short)198), (byte)2);
             }
 
             return true;
@@ -805,7 +805,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             default:
                return true;
             case 194:
-               sub_22b((byte)37, (byte[])null, new short[]{201, 195, 196, 197}, Class_1b0.sub_42b((short)198), (byte)2);
+               sub_22b((byte)37, (byte[])null, new short[]{201, 195, 196, 197}, Class_1b0.readTextFromLng((short)198), (byte)2);
                return true;
             }
          }
@@ -942,12 +942,12 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          sub_187((long)var4);
          this.var_1403 = null;
          this.var_1453 = null;
-         Class_3d.sub_198();
+         Class_3d.callGc();
       }
    }
 
    private static void sub_5d0() {
-      Class_1b0.sub_7ec(new short[][]{Class_1b0.sub_42b((short)251), Class_1b0.sub_42b((short)252), Class_1b0.sub_42b((short)253), Class_1b0.sub_42b((short)254), Class_1b0.sub_42b((short)255)}, new int[]{100000, 50000, 30000, 20000, 10000});
+      Class_1b0.sub_7ec(new short[][]{Class_1b0.readTextFromLng((short)251), Class_1b0.readTextFromLng((short)252), Class_1b0.readTextFromLng((short)253), Class_1b0.readTextFromLng((short)254), Class_1b0.readTextFromLng((short)255)}, new int[]{100000, 50000, 30000, 20000, 10000});
    }
 
    private static void sub_611() {
@@ -965,7 +965,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          sub_6dd();
       }
 
-      Class_3d.sub_198();
+      Class_3d.callGc();
    }
 
    private static void sub_670() {
@@ -1015,7 +1015,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
       var0[var1] = 211;
       var_114a = 25;
-      sub_22b((byte)22, (byte[])null, var0, Class_1b0.sub_42b((short)129), (byte)1);
+      sub_22b((byte)22, (byte[])null, var0, Class_1b0.readTextFromLng((short)129), (byte)1);
    }
 
    private static void sub_707() {
@@ -1027,7 +1027,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       }
 
       var_114a = 25;
-      sub_22b((byte)45, (byte[])null, var0, Class_1b0.sub_42b((short)203), (byte)2);
+      sub_22b((byte)45, (byte[])null, var0, Class_1b0.readTextFromLng((short)203), (byte)2);
    }
 
    private static void sub_76b() {
@@ -1052,7 +1052,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                   ((short[][])((short[][])var_a60.elementAt(1)))[var1 + 1] = ((short[][])((short[][])var_a60.elementAt(1)))[var1];
                }
 
-               ((short[][])((short[][])var_a60.elementAt(0)))[var_ab2] = Class_1b0.sub_42b((short)207);
+               ((short[][])((short[][])var_a60.elementAt(0)))[var_ab2] = Class_1b0.readTextFromLng((short)207);
                ((int[])((int[])var_a60.elementAt(1)))[var0] = var_e38;
                var_afa = 0;
                break;
@@ -1073,7 +1073,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       if (var_5ed) {
          short[][] var5 = (short[][])((short[][])var_a60.elementAt(0));
          int[] var6 = (int[])((int[])var_a60.elementAt(1));
-         if (var_ce9 > 0 || var_d24 > Class_1cc.var_b6[28][3]) {
+         if (var_ce9 > 0 || var_d24 > SomeLevelDataVariablesInterface.var_b6[28][3]) {
             Class_b3.var_2a1.setColor(0);
             Class_b3.var_2a1.setClip(0, 0, var_1180, var_11cf);
             Class_b3.var_2a1.fillRect(0, 0, var_1180, var_11cf);
@@ -1081,7 +1081,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
          Class_1b0.sub_2db(Class_b3.var_2a1, (byte)7, 0, var_ce9, var_d24);
          Class_19e.sub_29c(Class_b3.var_2a1);
-         Class_1b0.sub_47c(Class_b3.var_2a1, Class_1b0.sub_42b((short)203), (var_1180 >> 1) - (Class_1b0.sub_42b((short)203).length * Class_1b0.var_12 >> 1), var_150d);
+         Class_1b0.sub_47c(Class_b3.var_2a1, Class_1b0.readTextFromLng((short)203), (var_1180 >> 1) - (Class_1b0.readTextFromLng((short)203).length * Class_1b0.var_12 >> 1), var_150d);
          var1 = var_1566;
 
          for(int var7 = 0; var7 < 5; ++var7) {
@@ -1115,7 +1115,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                   }
 
                   if (var8 == var_afa && var_115 > 12) {
-                     Class_1b0.sub_47c(var0, Class_1b0.sub_42b((short)256), var3 + var8 * Class_1b0.var_12, var1 + 2);
+                     Class_1b0.sub_47c(var0, Class_1b0.readTextFromLng((short)256), var3 + var8 * Class_1b0.var_12, var1 + 2);
                   }
 
                   ++var8;
@@ -1177,7 +1177,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    private static void sub_8d4(Graphics var0) {
       var_338 = true;
-      if (var_5e0 && (var_ce9 > 0 || var_d24 > Class_1cc.var_b6[28][3])) {
+      if (var_5e0 && (var_ce9 > 0 || var_d24 > SomeLevelDataVariablesInterface.var_b6[28][3])) {
          Class_b3.var_2a1.setColor(0);
          Class_b3.var_2a1.setClip(0, 0, var_1180, var_11cf);
          Class_b3.var_2a1.fillRect(0, 0, var_1180, var_11cf);
@@ -1186,7 +1186,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       sub_8f3(var0);
       Class_1b0.sub_2db(var0, (byte)40, 0, var_b74, var_bca);
       if (var_6bc && var_115 > 12) {
-         Class_1b0.sub_2db(var0, (byte)39, 2, var_b74 + Class_1cc.var_b6[40][2], var_bca);
+         Class_1b0.sub_2db(var0, (byte)39, 2, var_b74 + SomeLevelDataVariablesInterface.var_b6[40][2], var_bca);
       }
 
       sub_94f(var0, var_b74, var_bca, true);
@@ -1199,26 +1199,26 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          Class_1b0.sub_2db(Class_b3.var_2a1, (byte)7, 0, var_ce9, var_d24);
 
          for(int var2 = 1; var2 < 5; ++var2) {
-            if (!var_d50.contains(var_d34[var2]) && Class_b3.var_68a[var_dc6 - 1][6 + var2] == 1) {
-               Class_1b0.sub_2db(Class_b3.var_2a1, (byte)(34 + var2 - 1), 0, Class_1cc.var_9d[var2][0], Class_1cc.var_9d[var2][1]);
+            if (!var_d50.contains(var_d34[var2]) && Class_b3.levelAdditionalData_TimerEtc[var_dc6 - 1][6 + var2] == 1) {
+               Class_1b0.sub_2db(Class_b3.var_2a1, (byte)(34 + var2 - 1), 0, SomeLevelDataVariablesInterface.var_9d[var2][0], SomeLevelDataVariablesInterface.var_9d[var2][1]);
             }
 
             if (Class_b3.var_99f.contains(var_d34[var2])) {
-               Class_1b0.sub_2db(Class_b3.var_2a1, (byte)39, 0, Class_1cc.var_65[(short)(2 + var2)][0] - (Class_1cc.var_b6[39][2] >> 1), Class_1cc.var_65[(short)(2 + var2)][1]);
+               Class_1b0.sub_2db(Class_b3.var_2a1, (byte)39, 0, SomeLevelDataVariablesInterface.var_65[(short)(2 + var2)][0] - (SomeLevelDataVariablesInterface.var_b6[39][2] >> 1), SomeLevelDataVariablesInterface.var_65[(short)(2 + var2)][1]);
             }
          }
 
          Class_1b0.sub_2db(Class_b3.var_2a1, (byte)29, 0, 0, 0);
-         Class_1cc.var_65[8][0] = Class_1cc.var_b6[29][2] >> 1;
-         Class_1cc.var_65[8][1] = Class_1cc.var_b6[29][3] >> 1;
+         SomeLevelDataVariablesInterface.var_65[8][0] = SomeLevelDataVariablesInterface.var_b6[29][2] >> 1;
+         SomeLevelDataVariablesInterface.var_65[8][1] = SomeLevelDataVariablesInterface.var_b6[29][3] >> 1;
 
-         for(int var3 = 0 + Class_1cc.var_b6[29][2]; var3 < var_1180 - Class_1cc.var_b6[30][2]; var3 += Class_1cc.var_b6[28][2]) {
+         for(int var3 = 0 + SomeLevelDataVariablesInterface.var_b6[29][2]; var3 < var_1180 - SomeLevelDataVariablesInterface.var_b6[30][2]; var3 += SomeLevelDataVariablesInterface.var_b6[28][2]) {
             Class_1b0.sub_2db(Class_b3.var_2a1, (byte)28, 0, var3, 0);
          }
 
-         Class_1b0.sub_2db(Class_b3.var_2a1, (byte)30, 0, var_1180 - Class_1cc.var_b6[30][2], 0);
-         Class_1cc.var_65[1][0] = var_1180 - (Class_1cc.var_b6[30][2] >> 1);
-         Class_1cc.var_65[1][1] = Class_1cc.var_b6[30][3] >> 1;
+         Class_1b0.sub_2db(Class_b3.var_2a1, (byte)30, 0, var_1180 - SomeLevelDataVariablesInterface.var_b6[30][2], 0);
+         SomeLevelDataVariablesInterface.var_65[1][0] = var_1180 - (SomeLevelDataVariablesInterface.var_b6[30][2] >> 1);
+         SomeLevelDataVariablesInterface.var_65[1][1] = SomeLevelDataVariablesInterface.var_b6[30][3] >> 1;
          sub_96d(Class_b3.var_2a1);
          sub_9cc(Class_b3.var_2a1);
          var_62c = true;
@@ -1251,24 +1251,24 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                for(var7 = 2; var7 > -1; --var7) {
                   var6 += (var_1180 >> 1) - var6 >> 1;
                   var5 += var4;
-                  Class_1b0.sub_2db(var0, (byte)(15 + var7), 0, var6 - (Class_1cc.var_b6[15 + var7][2] >> 1), var5 - (Class_1cc.var_b6[15 + var7][3] >> 1));
+                  Class_1b0.sub_2db(var0, (byte)(15 + var7), 0, var6 - (SomeLevelDataVariablesInterface.var_b6[15 + var7][2] >> 1), var5 - (SomeLevelDataVariablesInterface.var_b6[15 + var7][3] >> 1));
                }
 
-               var6 = (var_1180 >> 1) - (7 * Class_1cc.var_b6[18][2] >> 1);
-               var5 += var4 - (Class_1cc.var_b6[3][3] >> 1);
+               var6 = (var_1180 >> 1) - (7 * SomeLevelDataVariablesInterface.var_b6[18][2] >> 1);
+               var5 += var4 - (SomeLevelDataVariablesInterface.var_b6[3][3] >> 1);
                var_102d = var6;
-               var_105e = var5 + (Class_1cc.var_b6[3][3] - Class_1b0.var_a9 >> 1);
-               var_109d = 7 * Class_1cc.var_b6[18][2];
+               var_105e = var5 + (SomeLevelDataVariablesInterface.var_b6[3][3] - Class_1b0.var_a9 >> 1);
+               var_109d = 7 * SomeLevelDataVariablesInterface.var_b6[18][2];
                if (var_10ea > var_102d + var_109d) {
                   var_10ea = var_102d + var_109d;
                }
 
-               Class_1b0.sub_2db(var0, (byte)3, 0, var6 - (Class_1cc.var_b6[3][2] >> 1), var5);
-               Class_1b0.sub_2db(var0, (byte)3, 0, var6 + 7 * Class_1cc.var_b6[18][2] - (Class_1cc.var_b6[3][2] >> 1), var5);
+               Class_1b0.sub_2db(var0, (byte)3, 0, var6 - (SomeLevelDataVariablesInterface.var_b6[3][2] >> 1), var5);
+               Class_1b0.sub_2db(var0, (byte)3, 0, var6 + 7 * SomeLevelDataVariablesInterface.var_b6[18][2] - (SomeLevelDataVariablesInterface.var_b6[3][2] >> 1), var5);
 
                for(var7 = 0; var7 < 7; ++var7) {
                   Class_1b0.sub_2db(var0, (byte)18, 0, var6, var5);
-                  var6 += Class_1cc.var_b6[18][2];
+                  var6 += SomeLevelDataVariablesInterface.var_b6[18][2];
                }
 
             }
@@ -1279,24 +1279,24 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    private static void sub_96d(Graphics var0) {
       short[] var1;
       int var2 = (var1 = Class_1b0.sub_533(String.valueOf(var_e38))).length * Class_1b0.var_12;
-      int var3 = Class_1cc.var_b6[29][2] + 2;
-      int var4 = var_1180 - Class_1cc.var_b6[30][2] - 2 - Class_1cc.var_b6[31][2];
-      int var5 = Class_1cc.var_b6[28][3] - Class_1cc.var_b6[32][3] - 1 >> 1;
-      int var6 = var3 + Class_1cc.var_b6[31][2] - 1;
-      int var7 = var5 + (Class_1cc.var_b6[32][3] - Class_1b0.var_a9 >> 1);
+      int var3 = SomeLevelDataVariablesInterface.var_b6[29][2] + 2;
+      int var4 = var_1180 - SomeLevelDataVariablesInterface.var_b6[30][2] - 2 - SomeLevelDataVariablesInterface.var_b6[31][2];
+      int var5 = SomeLevelDataVariablesInterface.var_b6[28][3] - SomeLevelDataVariablesInterface.var_b6[32][3] - 1 >> 1;
+      int var6 = var3 + SomeLevelDataVariablesInterface.var_b6[31][2] - 1;
+      int var7 = var5 + (SomeLevelDataVariablesInterface.var_b6[32][3] - Class_1b0.var_a9 >> 1);
       Class_1b0.sub_2db(Class_b3.var_2a1, (byte)31, 0, var3, var5);
       if (var3 + 1 < var4) {
-         boolean var8 = var4 - var3 > Class_1cc.var_b6[31][2];
+         boolean var8 = var4 - var3 > SomeLevelDataVariablesInterface.var_b6[31][2];
          Class_1b0.sub_2db(Class_b3.var_2a1, (byte)31, 0, var4, var5);
          Class_1b0.sub_2db(Class_b3.var_2a1, (byte)32, 0, var4, var5);
-         var6 = var4 + Class_1cc.var_b6[31][2] - 1;
+         var6 = var4 + SomeLevelDataVariablesInterface.var_b6[31][2] - 1;
 
-         for(var3 = var4 - Class_1cc.var_b6[32][2]; var3 > Class_1cc.var_b6[29][2] + 2; var3 -= Class_1cc.var_b6[32][2]) {
+         for(var3 = var4 - SomeLevelDataVariablesInterface.var_b6[32][2]; var3 > SomeLevelDataVariablesInterface.var_b6[29][2] + 2; var3 -= SomeLevelDataVariablesInterface.var_b6[32][2]) {
             Class_1b0.sub_2db(Class_b3.var_2a1, (byte)32, 0, var3, var5);
          }
 
          if (var8) {
-            Class_1b0.sub_2db(Class_b3.var_2a1, (byte)33, 0, Class_1cc.var_b6[29][2] + 4, var7);
+            Class_1b0.sub_2db(Class_b3.var_2a1, (byte)33, 0, SomeLevelDataVariablesInterface.var_b6[29][2] + 4, var7);
          }
       }
 
@@ -1307,7 +1307,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       if (var_5bb > 0) {
          int var1 = var_11cf - Class_1b0.var_a9 - 3;
          boolean var2 = false;
-         Class_1b0.sub_47c(var0, Class_1b0.sub_42b((short)260), 3, var1);
+         Class_1b0.sub_47c(var0, Class_1b0.readTextFromLng((short)260), 3, var1);
          int var3 = 3 + Class_1b0.var_12;
          Class_1b0.sub_46a(var0, String.valueOf(var_10ff), var3, var1);
       }
@@ -1317,12 +1317,12 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       int var2 = Class_1b0.var_a9 + 2;
       var_7d3 = var_11cf < 111 ? 0 : (var_11cf < 161 ? 1 : (var_11cf < 221 ? 2 : 3));
       var_798 = var_1180 < 121 ? -1 : (var_1180 < 133 ? 0 : (var_1180 < 180 ? 2 : 3));
-      int var3 = 6 * (Class_1cc.var_b6[26][2] + var_798) + 6 + 2 + var_798;
-      int var4 = var2 + (var_7d3 << 1) + 6 + 2 + var_7d3 + Class_1cc.var_b6[26][3] * toolStats.length / 6;
-      boolean var5 = var_11cf - Class_1cc.var_b6[9][3] - Class_1cc.var_b6[28][3] > var4;
-      var4 += var5 ? Class_1cc.var_b6[38][3] + var_7d3 : 0;
+      int var3 = 6 * (SomeLevelDataVariablesInterface.var_b6[26][2] + var_798) + 6 + 2 + var_798;
+      int var4 = var2 + (var_7d3 << 1) + 6 + 2 + var_7d3 + SomeLevelDataVariablesInterface.var_b6[26][3] * toolStats.length / 6;
+      boolean var5 = var_11cf - SomeLevelDataVariablesInterface.var_b6[9][3] - SomeLevelDataVariablesInterface.var_b6[28][3] > var4;
+      var4 += var5 ? SomeLevelDataVariablesInterface.var_b6[38][3] + var_7d3 : 0;
       int var6 = (var_1180 >> 1) - (var3 >> 1);
-      int var7 = (var_11cf + Class_1cc.var_b6[28][3] - Class_1cc.var_b6[24][3] >> 1) - (var4 >> 1);
+      int var7 = (var_11cf + SomeLevelDataVariablesInterface.var_b6[28][3] - SomeLevelDataVariablesInterface.var_b6[24][3] >> 1) - (var4 >> 1);
       var_729 = var6 + var_798 + 3 + 1;
       var_762 = var7 + var_7d3 + 3 + 1 + var2;
       var_7f5 = var6 + 3 + 2;
@@ -1343,12 +1343,12 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       for(byte var15 = 0; var15 < toolStats.length; ++var15) {
          byte var16 = (byte)Class_b3.sub_bc9(var15);
          var_e17[var8][var9] = var16;
-         int var10 = var_729 + var8 * (Class_1cc.var_b6[26][2] + var_798);
-         int var11 = var_762 + var9 * (Class_1cc.var_b6[26][3] + var_7d3);
+         int var10 = var_729 + var8 * (SomeLevelDataVariablesInterface.var_b6[26][2] + var_798);
+         int var11 = var_762 + var9 * (SomeLevelDataVariablesInterface.var_b6[26][3] + var_7d3);
          Class_1b0.sub_2db(var0, (byte)26, 0, var10, var11);
          Class_1b0.sub_2db(var0, (byte)8, (byte)toolStats[var15][2], var10 + 2, var11 + 2);
          if (var_900.var_451[0] != var16 && var_900.var_451[1] != var16 && var_900.var_451[2] != var16) {
-            if (toolStats[var15][0] > var_e38 || Class_b3.var_68a[var_dc6 - 1][13 + sub_e5c(var16)] == 0) {
+            if (toolStats[var15][0] > var_e38 || Class_b3.levelAdditionalData_TimerEtc[var_dc6 - 1][13 + sub_e5c(var16)] == 0) {
                Class_1b0.sub_2db(var0, (byte)41, 0, var10 + 2, var11 + 2);
             }
          } else {
@@ -1364,22 +1364,22 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       }
 
       if (var5) {
-         var12 = var_762 + var9 * (Class_1cc.var_b6[26][3] + var_7d3);
-         var13 = var6 + var3 - 3 - 1 - Class_1cc.var_b6[38][2] - var_798;
+         var12 = var_762 + var9 * (SomeLevelDataVariablesInterface.var_b6[26][3] + var_7d3);
+         var13 = var6 + var3 - 3 - 1 - SomeLevelDataVariablesInterface.var_b6[38][2] - var_798;
          int var14 = var_729 + (var13 - var_729 >> 1);
          Class_19e.sub_388(var0, var_729, var12, 1, 4);
          Class_19e.sub_388(var0, var13, var12, 2, 5);
          Class_1b0.sub_2db(var0, (byte)38, 0, var14, var12);
-         Class_1cc.var_b6[43][2] = 7;
-         Class_1cc.var_b6[43][3] = 9;
-         Class_1b0.sub_2db(var0, (byte)43, Class_1b0.sub_42b((short)241)[0], var14 + (Class_1cc.var_b6[38][2] >> 1) - (Class_1cc.var_b6[43][2] >> 1), var12 + (Class_1cc.var_b6[38][3] >> 1) - (Class_1cc.var_b6[43][3] >> 1));
-         Class_1cc.var_b6[43][2] = (short)Class_1b0.var_12;
-         Class_1cc.var_b6[43][3] = (short)Class_1b0.var_a9;
+         SomeLevelDataVariablesInterface.var_b6[43][2] = 7;
+         SomeLevelDataVariablesInterface.var_b6[43][3] = 9;
+         Class_1b0.sub_2db(var0, (byte)43, Class_1b0.readTextFromLng((short)241)[0], var14 + (SomeLevelDataVariablesInterface.var_b6[38][2] >> 1) - (SomeLevelDataVariablesInterface.var_b6[43][2] >> 1), var12 + (SomeLevelDataVariablesInterface.var_b6[38][3] >> 1) - (SomeLevelDataVariablesInterface.var_b6[43][3] >> 1));
+         SomeLevelDataVariablesInterface.var_b6[43][2] = (short)Class_1b0.var_12;
+         SomeLevelDataVariablesInterface.var_b6[43][3] = (short)Class_1b0.var_a9;
       }
 
       sub_96d(Class_b3.var_2a1);
-      var_bfe = var_729 + var_6c8 * (Class_1cc.var_b6[26][2] + var_798) + (Class_1cc.var_b6[26][2] >> 1);
-      var_c60 = var_762 + var_6d8 * (Class_1cc.var_b6[26][3] + var_7d3) + (Class_1cc.var_b6[26][3] >> 1);
+      var_bfe = var_729 + var_6c8 * (SomeLevelDataVariablesInterface.var_b6[26][2] + var_798) + (SomeLevelDataVariablesInterface.var_b6[26][2] >> 1);
+      var_c60 = var_762 + var_6d8 * (SomeLevelDataVariablesInterface.var_b6[26][3] + var_7d3) + (SomeLevelDataVariablesInterface.var_b6[26][3] >> 1);
       sub_b52();
    }
 
@@ -1501,7 +1501,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                   return;
                }
 
-               if (Class_b3.var_68a[var_dc6 - 1][13 + sub_e5c(var1)] == 0) {
+               if (Class_b3.levelAdditionalData_TimerEtc[var_dc6 - 1][13 + sub_e5c(var1)] == 0) {
                   sub_2c8((byte)0, (byte[])null, (short)182, (Object[])null, new short[]{126}, (short)136);
                   var_93a = 999999;
                   var_649 = true;
@@ -1509,7 +1509,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                   return;
                }
 
-               var2 = Class_b3.var_6c9[var_f0d][0] - var_900.var_29a;
+               var2 = Class_b3.thiefStats[var_f0d][0] - var_900.var_29a;
                if (toolStats[sub_e5c(var1)][1] > var2) {
                   sub_2c8((byte)0, (byte[])null, (short)(var2 == 0 ? 188 : 187), new Object[]{new Integer(toolStats[sub_e5c(var1)][1]), new Short((short)(41 + var_f0d)), new Integer(var2)}, new short[]{126}, (short)136);
                   var_93a = 999999;
@@ -1562,7 +1562,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
                short[] var6 = new short[var2];
                Class_3d.sub_1cf(var5, 0, var6, 0, var2);
-               sub_22b((byte)6, new byte[]{13, 0}, var6, Class_1b0.sub_42b((short)136), (byte)2);
+               sub_22b((byte)6, new byte[]{13, 0}, var6, Class_1b0.readTextFromLng((short)136), (byte)2);
                break;
             case 1:
                var_13a7.sub_3d3();
@@ -1573,7 +1573,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                if (var_dc6 < 6) {
                   sub_2c8((byte)0, (byte[])null, (short)183, (Object[])null, new short[]{126}, (short)137);
                } else {
-                  sub_22b((byte)2, new byte[]{5, var_f0d}, new short[]{125, 122}, Class_1b0.sub_42b((short)41), (byte)2);
+                  sub_22b((byte)2, new byte[]{5, var_f0d}, new short[]{125, 122}, Class_1b0.readTextFromLng((short)41), (byte)2);
                }
                break;
             case 3:
@@ -1588,7 +1588,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                   var4 = new short[]{124, 122};
                }
 
-               sub_22b((byte)2, new byte[]{5, var_f0d}, var4, Class_1b0.sub_42b((short)(41 + var_f0d)), (byte)2);
+               sub_22b((byte)2, new byte[]{5, var_f0d}, var4, Class_1b0.readTextFromLng((short)(41 + var_f0d)), (byte)2);
                break;
             case 7:
                if (Class_b3.var_99f.size() == 0 && var_dc6 == 1) {
@@ -1614,8 +1614,8 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       var_ff4 = null;
       var_6ac = false;
       var_5e0 = true;
-      var_bfe = Class_1cc.var_65[var_ca0][0];
-      var_c60 = Class_1cc.var_65[var_ca0][1];
+      var_bfe = SomeLevelDataVariablesInterface.var_65[var_ca0][0];
+      var_c60 = SomeLevelDataVariablesInterface.var_65[var_ca0][1];
       boolean var0 = false;
 
       for(int var1 = 0; var1 < var_1123.length; ++var1) {
@@ -1634,13 +1634,13 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    private static void sub_ae7() {
       var_55f.sub_8c(3, -1);
       int var0;
-      int var1 = (var0 = Class_b3.var_68a[var_dc6 - 1][0] + 0) / 60;
+      int var1 = (var0 = Class_b3.levelAdditionalData_TimerEtc[var_dc6 - 1][0] + 0) / 60;
       int var2 = (var0 - var1 * 60) / 10;
       int var3 = var0 - var1 * 60 - var2 * 10;
       if (var_dc6 < 7) {
-         sub_2c8((byte)41, new byte[]{5, 5}, Class_b3.var_68a[var_dc6 - 1][25], new Object[]{new Integer(var1), new Integer(var2), new Integer(var3)}, new short[]{126}, (short)133);
+         sub_2c8((byte)41, new byte[]{5, 5}, Class_b3.levelAdditionalData_TimerEtc[var_dc6 - 1][25], new Object[]{new Integer(var1), new Integer(var2), new Integer(var3)}, new short[]{126}, (short)133);
       } else {
-         sub_2db((byte)41, new byte[]{5, 5}, Class_b3.var_68a[var_dc6 - 1][25], new Object[]{new Integer(var1), new Integer(var2), new Integer(var3)}, new short[]{126}, (short)134, new Object[]{new Integer(var_dc6 - 6)});
+         sub_2db((byte)41, new byte[]{5, 5}, Class_b3.levelAdditionalData_TimerEtc[var_dc6 - 1][25], new Object[]{new Integer(var1), new Integer(var2), new Integer(var3)}, new short[]{126}, (short)134, new Object[]{new Integer(var_dc6 - 6)});
       }
    }
 
@@ -1672,19 +1672,19 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             }
          }
 
-         var_bfe = var_729 + var_6c8 * (Class_1cc.var_b6[26][2] + var_798) + (Class_1cc.var_b6[26][2] >> 1);
-         var_c60 = var_762 + var_6d8 * (Class_1cc.var_b6[26][3] + var_7d3) + (Class_1cc.var_b6[26][3] >> 1);
+         var_bfe = var_729 + var_6c8 * (SomeLevelDataVariablesInterface.var_b6[26][2] + var_798) + (SomeLevelDataVariablesInterface.var_b6[26][2] >> 1);
+         var_c60 = var_762 + var_6d8 * (SomeLevelDataVariablesInterface.var_b6[26][3] + var_7d3) + (SomeLevelDataVariablesInterface.var_b6[26][3] >> 1);
          sub_b52();
       } else {
          var_ca0 = var_b4c[var_ca0][var0];
-         var_bfe = Class_1cc.var_65[var_ca0][0];
-         var_c60 = Class_1cc.var_65[var_ca0][1];
+         var_bfe = SomeLevelDataVariablesInterface.var_65[var_ca0][0];
+         var_c60 = SomeLevelDataVariablesInterface.var_65[var_ca0][1];
          switch(var_ca0) {
          case 2:
             var_900 = var_d34[0];
             break;
          case 3:
-            if (var_d50.contains(var_d34[1]) || Class_b3.var_68a[var_dc6 - 1][7] == 0) {
+            if (var_d50.contains(var_d34[1]) || Class_b3.levelAdditionalData_TimerEtc[var_dc6 - 1][7] == 0) {
                var_ca0 = var_b5a[0][var0];
                sub_b3f(var0);
                return;
@@ -1693,7 +1693,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             var_900 = var_d34[1];
             break;
          case 4:
-            if (var_d50.contains(var_d34[2]) || Class_b3.var_68a[var_dc6 - 1][8] == 0) {
+            if (var_d50.contains(var_d34[2]) || Class_b3.levelAdditionalData_TimerEtc[var_dc6 - 1][8] == 0) {
                var_ca0 = var_b5a[1][var0];
                sub_b3f(var0);
                return;
@@ -1702,7 +1702,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             var_900 = var_d34[2];
             break;
          case 5:
-            if (!var_d50.contains(var_d34[3]) && Class_b3.var_68a[var_dc6 - 1][9] != 0) {
+            if (!var_d50.contains(var_d34[3]) && Class_b3.levelAdditionalData_TimerEtc[var_dc6 - 1][9] != 0) {
                var_900 = var_d34[3];
                break;
             }
@@ -1711,7 +1711,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             sub_b3f(var0);
             return;
          case 6:
-            if (var_d50.contains(var_d34[4]) || Class_b3.var_68a[var_dc6 - 1][10] == 0) {
+            if (var_d50.contains(var_d34[4]) || Class_b3.levelAdditionalData_TimerEtc[var_dc6 - 1][10] == 0) {
                var_ca0 = var_b5a[3][var0];
                sub_b3f(var0);
                return;
@@ -1748,7 +1748,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          case 1:
             var_1217 = 0;
             var10000 = new int[]{2, 4, 5, 3, 6};
-            Class_3d.sub_198();
+            Class_3d.callGc();
             sub_187(10L);
             sub_187(10L);
             Class_b3.sub_74();
@@ -1779,7 +1779,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    private static void sub_b8e(Graphics var0) {
       if (var_1217 != 0) {
          short[] var1;
-         int var2 = (var1 = Class_1b0.sub_42b((short)130)).length * Class_1b0.var_12;
+         int var2 = (var1 = Class_1b0.readTextFromLng((short)130)).length * Class_1b0.var_12;
          byte var3 = Class_1b0.var_a9;
          int var4 = (var_1180 >> 1) - (var2 >> 1);
          int var5 = (var_11cf >> 1) - (var3 >> 1);
@@ -1796,7 +1796,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          var_f69 = 0;
          var_f83 = var_11cf - Class_1b0.var_a9 - 2;
          var_fa9 = var_1180;
-         var0 = Class_1b0.sub_42b((short)Class_1cc.var_65[var_ca0][2]);
+         var0 = Class_1b0.readTextFromLng((short)SomeLevelDataVariablesInterface.var_65[var_ca0][2]);
          var_6bc = !var_129e[7 + var_ca0] && var_5bb == -1;
          if (var_12fc && var_6bc) {
             var_129e[7 + var_ca0] = true;
@@ -1833,7 +1833,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             Class_205 var12 = var_d34[var_f0d];
             switch(var1) {
             case 122:
-               sub_2c8((byte)0, new byte[]{5, var12.var_3a}, (short)(var12.var_3a == 0 ? 147 : 148), new Object[]{new Integer(Class_b3.var_6c9[var12.var_3a][0]), new Integer(Class_b3.var_6c9[var12.var_3a][1]), new Short((short)(var12.var_3a + 99))}, new short[]{126}, (short)(41 + var12.var_3a));
+               sub_2c8((byte)0, new byte[]{5, var12.var_3a}, (short)(var12.var_3a == 0 ? 147 : 148), new Object[]{new Integer(Class_b3.thiefStats[var12.var_3a][0]), new Integer(Class_b3.thiefStats[var12.var_3a][1]), new Short((short)(var12.var_3a + 99))}, new short[]{126}, (short)(41 + var12.var_3a));
                return true;
             case 123:
                var12.sub_19d();
@@ -2030,7 +2030,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                   var_e38 -= Class_b3.var_7a3[var_9fe];
                   Class_b3.var_7a3[var_9fe] = 0;
                   if (221 + var_9fe == 227) {
-                     sub_2c8((byte)34, new byte[]{5, 5}, Class_b3.var_68a[var_dc6 - 1][26], (Object[])null, new short[]{126}, (short)189);
+                     sub_2c8((byte)34, new byte[]{5, 5}, Class_b3.levelAdditionalData_TimerEtc[var_dc6 - 1][26], (Object[])null, new short[]{126}, (short)189);
                      return true;
                   }
 
@@ -2120,7 +2120,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    public static void sub_c15() {
       var_e38 = var_e86;
-      Class_b3.var_c7c = Class_b3.var_c9e;
+      Class_b3.someLevelDataVarLast = Class_b3.var_c9e;
       Class_b3.sub_140(Class_b3.var_8ff, Class_b3.var_8dc);
       Class_b3.sub_f0(Class_b3.var_896, Class_b3.var_84c);
       Class_b3.var_99f.removeAllElements();
@@ -2171,7 +2171,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       }
 
       if (var0 > 0) {
-         sub_260((byte)20, (byte[])null, var4, var2, Class_1b0.sub_42b((short)143), (byte)2);
+         sub_260((byte)20, (byte[])null, var4, var2, Class_1b0.readTextFromLng((short)143), (byte)2);
          return true;
       } else {
          return false;
@@ -2228,7 +2228,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                var4[var2][0] = new Short((short)(51 + var1));
                var4[var2][1] = new Integer(Class_205.var_2a[var1][var0]);
                var5[var2][0] = 4;
-               var5[var2][1] = Class_1cc.var_da[var1][4];
+               var5[var2][1] = SomeLevelDataVariablesInterface.var_da[var1][4];
                ++var2;
             }
          }
@@ -2247,7 +2247,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          var0 = new short[]{192};
       }
 
-      sub_22b((byte)14, (byte[])null, var0, Class_1b0.sub_42b((short)130), (byte)1);
+      sub_22b((byte)14, (byte[])null, var0, Class_1b0.readTextFromLng((short)130), (byte)1);
    }
 
    private static void sub_d10() {
@@ -2283,7 +2283,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       } else {
          if (var_dc6 != var0) {
             var_dc6 = var0;
-            Class_b3.sub_233(var_dc6);
+            Class_b3.loadLevel(var_dc6);
             if (var_dc6 == 1 || var_dc6 == 7) {
                Class_b3.var_99f.removeAllElements();
                var_d50.removeAllElements();
@@ -2324,7 +2324,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    private static void sub_ddc(Graphics var0) {
       if (var_ff4 != null && (var_b74 == var_bfe && var_bca == var_c60 || var_26f == 1) && (var_12fc || var_6ac)) {
-         Class_1b0.sub_4da(var0, var_ff4, var_10ea, var_105e, var_102d, var_102d + var_109d);
+         Class_1b0.drawText(var0, var_ff4, var_10ea, var_105e, var_102d, var_102d + var_109d);
       }
 
    }
@@ -2501,7 +2501,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       }
 
       Class_1b0.sub_7ec(var2, var3);
-      Class_3d.sub_198();
+      Class_3d.callGc();
       return var7;
    }
 

@@ -13,16 +13,16 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.rms.RecordStore;
 
-public final class Class_1b0 implements Class_1cc {
+public final class Class_1b0 implements SomeLevelDataVariablesInterface {
    public static byte var_12 = 7;
    public static byte var_a9 = 9;
    private static final Random var_e3 = new Random();
    private static String[] var_f8 = new String[]{"abc", "pic1", "pic2", "pic3", "pic4", "pic5", "pic6"};
    public static short var_12d;
    private static final short[][] var_13b = new short[][]{{64, 11, 116, 106, 54, 25, 64, 93, 46, 41, 54, 77}, {49, 0, 77, 15, 49, 112, 77, 127, 56, 15, 70, 112, 48, 26, 56, 42, 70, 25, 78, 42}, {49, 0, 77, 15, 49, 112, 77, 127, 56, 15, 70, 112, 43, 15, 82, 112, 37, 26, 43, 44, 82, 26, 92, 44}, {55, 8, 113, 118, 17, 38, 55, 78, 28, 38, 41, 78}, {34, 13, 49, 113, 31, 23, 34, 105}, {27, 0, 100, 127, 40, 0, 87, 127}, {4, 22, 30, 56, 20, 100, 30, 111, 13, 36, 30, 44, 20, 73, 30, 85, 30, 0, 48, 127}, {27, 0, 100, 127, 40, 47, 88, 94, 65, 68, 79, 79, 50, 54, 71, 55, 51, 70, 54, 77}, {43, 1, 111, 125, 1, 27, 43, 76, 13, 27, 25, 76, 83, 22, 94, 97, 56, 93, 66, 102}, {12, 11, 113, 116, 35, 32, 91, 92, 12, 45, 35, 82, 45, 92, 85, 116, 43, 11, 84, 32, 91, 44, 113, 83}, {42, 32, 81, 86, 34, 99, 89, 124, 57, 50, 64, 61, 51, 86, 73, 99}, {32, 10, 48, 118, 4, 47, 18, 81, 18, 16, 33, 110}, {11, 0, 48, 127, 24, 18, 48, 109}, {9, 1, 49, 126, 4, 22, 9, 37, 4, 91, 9, 104}, {11, 16, 29, 109, 11, 0, 48, 127}, {43, 6, 104, 120, 82, 6, 104, 120, 43, 105, 82, 120, 43, 6, 82, 22}, {29, 28, 99, 100, 29, 94, 35, 100, 29, 28, 35, 34, 93, 28, 99, 34, 93, 94, 99, 100}, {40, 21, 90, 37, 90, 37, 106, 85, 40, 85, 90, 100, 26, 37, 40, 85}, {28, 34, 102, 82, 11, 73, 28, 82, 11, 34, 28, 43, 48, 34, 82, 82, 102, 44, 118, 73}, {27, 0, 100, 127}, {0, 25, 37, 25, 52, 8, 118, 119, 118, 77, 126, 100, 62, 0, 105, 8, 62, 119, 105, 127, 37, 25, 37, 102, 0, 8, 52, 8, 0, 102, 37, 102, 0, 119, 52, 119, 118, 27, 126, 52}, {32, 32, 99, 87, 48, 50, 82, 60, 49, 73, 49, 87, 66, 73, 66, 87, 81, 73, 81, 87}, {12, 11, 113, 116, 35, 32, 91, 92}, {24, 24, 101, 101}};
-   private static String var_170;
+   private static String allCharactersStr;
    public static boolean var_19d;
-   private static final Hashtable var_1d8 = new Hashtable();
+   private static final Hashtable someTextBuffer = new Hashtable();
    public static Image[] var_217;
    private static short var_279;
    private static short var_2a2;
@@ -172,7 +172,7 @@ public final class Class_1b0 implements Class_1cc {
 
    private static int sub_111(int var0, int var1, int var2, short[] var3) {
       int var4 = var0 + var2 - 1;
-      int var5 = var_170.indexOf(46);
+      int var5 = allCharactersStr.indexOf(46);
       boolean var6 = false;
       int var7;
       if (var4 - var1 > 2) {
@@ -210,7 +210,7 @@ public final class Class_1b0 implements Class_1cc {
 
    private static int sub_175(short[] var0, int var1, int var2, int var3) {
       int var4 = var3 + var1;
-      short[] var5 = sub_42b((short)265);
+      short[] var5 = readTextFromLng((short)265);
       if (sub_1ce(var3, var4, var0) > 1) {
          for(int var6 = var3 + var2; var6 > var3; --var6) {
             int var7;
@@ -325,16 +325,20 @@ public final class Class_1b0 implements Class_1cc {
       var0.drawLine(var1, var2, var1, var2 + var4 - 2);
    }
 
-   public static DataInputStream sub_272(byte var0) throws IOException {
-      DataInputStream var1 = sub_3e9("m");
+   /** Return stream with bias at level data position
+    * */
+   public static DataInputStream getLevelDataStream(byte level) throws IOException {
+      DataInputStream levelStream = getDataInputStreamFromDat("m");
       byte var2 = 1;
 
-      for(short var3 = var1.readShort(); var2 != var0; ++var2) {
-         var1.skipBytes(var3);
-         var3 = var1.readShort();
+      // Get level data size from first 2 bytes
+      // Then skip current level data, until get to needed level data
+      for(short var3 = levelStream.readShort(); var2 != level; ++var2) {
+         levelStream.skipBytes(var3);
+         var3 = levelStream.readShort();
       }
 
-      return var1;
+      return levelStream;
    }
 
    public static void sub_2c5(Graphics var0, byte var1, byte var2, int var3, int var4, int var5) {
@@ -369,8 +373,8 @@ public final class Class_1b0 implements Class_1cc {
    }
 
    public static void sub_2e7(Graphics var0, int var1, int var2, int var3, int var4, int var5, int var6, int var7, int var8) {
-      short var9 = Class_1cc.var_b6[var1][2];
-      short var10 = Class_1cc.var_b6[var1][3];
+      short var9 = SomeLevelDataVariablesInterface.var_b6[var1][2];
+      short var10 = SomeLevelDataVariablesInterface.var_b6[var1][3];
       if (var3 + var9 > 0 && var3 < Class_b3.var_1d && var4 + var10 > 0 && var4 < Class_b3.var_b0) {
          int var11 = var3 + var9 - Class_b3.var_1d;
          int var12 = var4 + var10 - Class_b3.var_b0;
@@ -379,21 +383,21 @@ public final class Class_1b0 implements Class_1cc {
          int var15 = Math.max(var7, var4 < 0 ? -var4 : 0);
          int var16 = Math.max(var8, var12 > 0 ? var12 : 0);
          int var17 = 0;
-         if (var2 >= Class_1cc.var_b6[var1][4]) {
-            var17 = var2 / Class_1cc.var_b6[var1][4];
-            var2 -= var17 * Class_1cc.var_b6[var1][4];
+         if (var2 >= SomeLevelDataVariablesInterface.var_b6[var1][4]) {
+            var17 = var2 / SomeLevelDataVariablesInterface.var_b6[var1][4];
+            var2 -= var17 * SomeLevelDataVariablesInterface.var_b6[var1][4];
          }
 
-         var0.setClip(var3 + var13, var4 + var15, Class_1cc.var_b6[var1][2] - var14 - var13, Class_1cc.var_b6[var1][3] - var16 - var15);
+         var0.setClip(var3 + var13, var4 + var15, SomeLevelDataVariablesInterface.var_b6[var1][2] - var14 - var13, SomeLevelDataVariablesInterface.var_b6[var1][3] - var16 - var15);
          Image var18;
-         if ((var18 = var_217[Class_1cc.var_b6[var1][5]]) != null) {
-            var0.drawImage(var18, var3 - var2 * Class_1cc.var_b6[var1][2] - Class_1cc.var_b6[var1][0], var4 - Class_1cc.var_b6[var1][1] - var17 * Class_1cc.var_b6[var1][3], 20);
+         if ((var18 = var_217[SomeLevelDataVariablesInterface.var_b6[var1][5]]) != null) {
+            var0.drawImage(var18, var3 - var2 * SomeLevelDataVariablesInterface.var_b6[var1][2] - SomeLevelDataVariablesInterface.var_b6[var1][0], var4 - SomeLevelDataVariablesInterface.var_b6[var1][1] - var17 * SomeLevelDataVariablesInterface.var_b6[var1][3], 20);
          }
       }
    }
 
    public static void sub_333(int var0) {
-      Class_3d.sub_198();
+      Class_3d.callGc();
 
       try {
          if (var_217 == null) {
@@ -404,11 +408,11 @@ public final class Class_1b0 implements Class_1cc {
       } catch (Exception var1) {
       }
 
-      Class_3d.sub_198();
+      Class_3d.callGc();
    }
 
    public static Image sub_352(String var0) {
-      Class_3d.sub_198();
+      Class_3d.callGc();
       try {
 		return Image.createImage("/dat/" + var0 + ".png");
 	} catch (IOException e) {
@@ -418,25 +422,26 @@ public final class Class_1b0 implements Class_1cc {
 	return null;
    }
 
-   public static void sub_3ad() {
-      Class_3d.sub_198();
+   public static void readCharactersFromLng() {
+      Class_3d.callGc();
       var_12d = (short)((byte)(var_217[0].getWidth() / var_12));
-      Class_1cc.var_b6[43][4] = var_12d;
-      DataInputStream var0 = null;
+      SomeLevelDataVariablesInterface.var_b6[43][4] = var_12d;
+      DataInputStream dataStream = null;
 
       try {
-         var_19d = (var0 = sub_3e9("lng")).readByte() == 1;
-         var_170 = var0.readUTF();
-         var_279 = (short)var_170.indexOf(95);
-         var_2a2 = (short)var_170.indexOf(45);
+         var_19d = (dataStream = getDataInputStreamFromDat("lng")).readByte() == 1;
+         allCharactersStr = dataStream.readUTF();
+         var_279 = (short)allCharactersStr.indexOf(95);
+         var_2a2 = (short)allCharactersStr.indexOf(45);
+         // this accordingly to lng file, never runs
          if (var_19d) {
             var_12 = (byte)Font.getDefaultFont().charWidth('W');
             var_a9 = (byte)Font.getDefaultFont().getHeight();
-            Class_1cc.var_b6[43][2] = (short)var_12;
-            Class_1cc.var_b6[43][3] = (short)var_a9;
+            SomeLevelDataVariablesInterface.var_b6[43][2] = (short)var_12;
+            SomeLevelDataVariablesInterface.var_b6[43][3] = (short)var_a9;
          }
 
-         short var2 = var0.readShort();
+         short var2 = dataStream.readShort();
          short var3 = 1;
 
          while(true) {
@@ -445,16 +450,16 @@ public final class Class_1b0 implements Class_1cc {
                   var2 = (short)(var2 << 1);
                }
 
-               var0.skipBytes(var2);
+               dataStream.skipBytes(var2);
             } else {
                short[] var4 = new short[var2];
 
                int var5;
                for(var5 = 0; var5 < var2; ++var5) {
                   if (var_19d) {
-                     var4[var5] = var0.readShort();
+                     var4[var5] = dataStream.readShort();
                   } else {
-                     var4[var5] = (short)var0.readByte();
+                     var4[var5] = (short)dataStream.readByte();
                      if (var4[var5] < 0) {
                         var4[var5] = (short)(255 & (byte)var4[var5]);
                      }
@@ -495,85 +500,87 @@ public final class Class_1b0 implements Class_1cc {
                         break;
                      case 275:
                         Class_178.var_b17 = var2 > 0;
-                        var_1d8.put(new Short(var3), var4);
+                        someTextBuffer.put(new Short(var3), var4);
                         break;
                      default:
-                        var_1d8.put(new Short(var3), var4);
+                        someTextBuffer.put(new Short(var3), var4);
                      }
                   } catch (NumberFormatException var7) {
                   }
                } else {
-                  var_1d8.put(new Short(var3), var4);
+                  someTextBuffer.put(new Short(var3), var4);
                }
             }
 
             ++var3;
-            var2 = var0.readShort();
+            var2 = dataStream.readShort();
          }
       } catch (Exception var8) {
          try {
-            if (var0 != null) {
-               var0.close();
+            if (dataStream != null) {
+               dataStream.close();
             }
          } catch (IOException var6) {
          }
 
-         var_2c7 = sub_42b((short)264);
-         Class_3d.sub_198();
+         var_2c7 = readTextFromLng((short)264);
+         Class_3d.callGc();
       }
    }
 
-   private static DataInputStream sub_3e9(String var0) {
-      return new DataInputStream(MM.sub_d("/dat/" + var0));
+   private static DataInputStream getDataInputStreamFromDat(String filename) {
+      return new DataInputStream(MM.sub_d("/dat/" + filename));
    }
 
-   public static short[] sub_42b(short var0) {
-      short[] var1;
-      if ((var1 = (short[])((short[])var_1d8.get(new Short(var0)))) != null) {
-         return var1;
+   public static short[] readTextFromLng(short var0) {
+      short[] fastResult;
+      if ((fastResult = (short[])((short[])someTextBuffer.get(new Short(var0)))) != null) {
+         return fastResult;
       } else {
-         DataInputStream var2 = null;
+         DataInputStream dataStream = null;
 
          try {
-            var2 = sub_3e9("lng");
+            dataStream = getDataInputStreamFromDat("lng");
             byte var3 = 1;
-            var2.readByte();
-            short var4 = var2.readShort();
-            var2.skipBytes(var4);
-            var4 = var2.readShort();
+            // skip character dictionary bytes and go to text ones
+            dataStream.readByte();
+            short someTextDataLength = dataStream.readShort();
+            dataStream.skipBytes(someTextDataLength);
+            
+            someTextDataLength = dataStream.readShort();
 
             while(var3 <= 1) {
                if (1 == var0) {
-                  short[] var5 = new short[var4];
+                  short[] resultTextData = new short[someTextDataLength];
 
-                  for(int var6 = 0; var6 < var4; ++var6) {
+                  for(int i = 0; i < someTextDataLength; ++i) {
                      if (var_19d) {
-                        var5[var6] = var2.readShort();
+                        resultTextData[i] = dataStream.readShort();
                      } else {
-                        var5[var6] = (short)var2.readByte();
-                        if (var5[var6] < 0) {
-                           var5[var6] = (short)(255 & (byte)var5[var6]);
+                        resultTextData[i] = (short)dataStream.readByte();
+                        if (resultTextData[i] < 0) {
+                           resultTextData[i] = (short)(255 & (byte)resultTextData[i]);
                         }
                      }
                   }
 
-                  return var5;
+                  return resultTextData;
                }
 
                if (var_19d) {
-                  var4 = (short)(var4 << 1);
+                  someTextDataLength = (short)(someTextDataLength << 1);
                }
 
-               var2.skipBytes(var4);
+               dataStream.skipBytes(someTextDataLength);
                var3 = 2;
-               var2.readShort();
+               dataStream.readShort();
             }
 
             return null;
          } catch (Exception var8) {
             try {
-               if (var2 != null) {
-                  var2.close();
+               if (dataStream != null) {
+                  dataStream.close();
                }
             } catch (Exception var7) {
             }
@@ -588,19 +595,19 @@ public final class Class_1b0 implements Class_1cc {
    }
 
    public static void sub_47c(Graphics var0, short[] var1, int var2, int var3) {
-      sub_4da(var0, var1, var2, var3, 0, 0);
+      drawText(var0, var1, var2, var3, 0, 0);
    }
 
-   public static void sub_4da(Graphics var0, short[] var1, int var2, int var3, int var4, int var5) {
-      if (var_19d && var0 != null) {
-         var0.setClip(0, 0, Class_b3.var_1d, Class_b3.var_b0);
+   public static void drawText(Graphics g, short[] textCodes, int var2, int var3, int var4, int var5) {
+      if (var_19d && g != null) {
+         g.setClip(0, 0, Class_b3.var_1d, Class_b3.var_b0);
       }
 
       int var6 = var2;
 
-      for(int var7 = 0; var7 < var1.length; ++var7) {
+      for(int var7 = 0; var7 < textCodes.length; ++var7) {
          short var8;
-         if ((var8 = var1[var7]) != -1) {
+         if ((var8 = textCodes[var7]) != -1) {
             if (!var_19d) {
                var6 = var2 + var7 * var_12;
             }
@@ -609,16 +616,16 @@ public final class Class_1b0 implements Class_1cc {
             if (var3 + var_a9 > 0 && var3 < Class_b3.var_b0 && (!(var9 = var4 != var5) && var6 + var_12 > 0 && var6 < Class_b3.var_1d || var9 && var6 >= var4 && var6 + var_12 <= var5)) {
                if (var_19d) {
                   try {
-                     var0.setColor(5, 5, 5);
-                     var0.drawSubstring(var_170, var8, 1, var6 + 1, var3 + 1, 20);
-                     var0.setColor(254, 250, 254);
-                     var0.drawSubstring(var_170, var8, 1, var6, var3, 20);
-                     var6 += Font.getDefaultFont().substringWidth(var_170, var8, 1);
+                     g.setColor(5, 5, 5);
+                     g.drawSubstring(allCharactersStr, var8, 1, var6 + 1, var3 + 1, 20);
+                     g.setColor(254, 250, 254);
+                     g.drawSubstring(allCharactersStr, var8, 1, var6, var3, 20);
+                     var6 += Font.getDefaultFont().substringWidth(allCharactersStr, var8, 1);
                   } catch (Exception var10) {
                      var6 = var2 + var7 * var_12;
                   }
                } else {
-                  sub_2db(var0, (byte)43, var8, var6, var3);
+                  sub_2db(g, (byte)43, var8, var6, var3);
                }
             }
          }
@@ -631,7 +638,7 @@ public final class Class_1b0 implements Class_1cc {
       short[] var2 = new short[var1 = var0.length()];
 
       for(int var3 = 0; var3 < var1; ++var3) {
-         var2[var3] = (short)var_170.indexOf(var0.charAt(var3));
+         var2[var3] = (short)allCharactersStr.indexOf(var0.charAt(var3));
       }
 
       return var2;
@@ -683,11 +690,11 @@ public final class Class_1b0 implements Class_1cc {
 
    public static String sub_5a0(short var0) {
       StringBuffer var1 = new StringBuffer();
-      short[] var2 = sub_42b(var0);
+      short[] var2 = readTextFromLng(var0);
 
       for(int var3 = 0; var3 < var2.length; ++var3) {
          try {
-            var1.append(var_170.charAt(var2[var3]));
+            var1.append(allCharactersStr.charAt(var2[var3]));
          } catch (Exception var4) {
          }
       }
@@ -700,7 +707,7 @@ public final class Class_1b0 implements Class_1cc {
 
       for(int var2 = 0; var2 < var0.length; ++var2) {
          try {
-            var1.append(var_170.charAt(var0[var2]));
+            var1.append(allCharactersStr.charAt(var0[var2]));
          } catch (Exception var3) {
          }
       }
@@ -737,7 +744,7 @@ public final class Class_1b0 implements Class_1cc {
             Class_178.var_dc6 = var2.readByte();
             Class_178.var_e38 = var2.readInt();
             if (Class_178.var_dc6 != var3) {
-               Class_b3.sub_233(Class_178.var_dc6);
+               Class_b3.loadLevel(Class_178.var_dc6);
             } else {
                Class_b3.var_84c.clear();
                Class_b3.sub_192(true);
@@ -772,7 +779,7 @@ public final class Class_1b0 implements Class_1cc {
                   }
                }
 
-               Class_3d.sub_198();
+               Class_3d.callGc();
             }
          }
 
@@ -790,7 +797,7 @@ public final class Class_1b0 implements Class_1cc {
             }
          }
 
-         Class_3d.sub_198();
+         Class_3d.callGc();
          return;
       }
 
@@ -803,7 +810,7 @@ public final class Class_1b0 implements Class_1cc {
          }
       }
 
-      Class_3d.sub_198();
+      Class_3d.callGc();
    }
 
    public static void sub_6f5() {
@@ -853,7 +860,7 @@ public final class Class_1b0 implements Class_1cc {
                } catch (Exception var12) {
                }
 
-               Class_3d.sub_198();
+               Class_3d.callGc();
             }
          }
 
@@ -867,7 +874,7 @@ public final class Class_1b0 implements Class_1cc {
          } catch (Exception var13) {
          }
 
-         Class_3d.sub_198();
+         Class_3d.callGc();
          return;
       }
 
@@ -878,7 +885,7 @@ public final class Class_1b0 implements Class_1cc {
       } catch (Exception var14) {
       }
 
-      Class_3d.sub_198();
+      Class_3d.callGc();
    }
 
    public static void sub_71d() {
@@ -896,7 +903,7 @@ public final class Class_1b0 implements Class_1cc {
          } catch (Exception var8) {
          }
 
-         Class_3d.sub_198();
+         Class_3d.callGc();
       }
 
    }
@@ -1083,7 +1090,7 @@ public final class Class_1b0 implements Class_1cc {
                   }
                }
 
-               Class_3d.sub_198();
+               Class_3d.callGc();
             }
          }
 
@@ -1101,7 +1108,7 @@ public final class Class_1b0 implements Class_1cc {
             }
          }
 
-         Class_3d.sub_198();
+         Class_3d.callGc();
          return var0;
       }
 
@@ -1114,7 +1121,7 @@ public final class Class_1b0 implements Class_1cc {
          }
       }
 
-      Class_3d.sub_198();
+      Class_3d.callGc();
       return var0;
    }
 
@@ -1216,10 +1223,10 @@ public final class Class_1b0 implements Class_1cc {
                }
             }
 
-            for(var26 = 0; var26 < Class_b3.var_209; ++var26) {
-               for(var6 = 0; var6 < Class_b3.var_23c; ++var6) {
-                  Class_7c var29;
-                  if ((var29 = (Class_7c)Class_b3.var_826.get(Class_b3.sub_201(var26, var6))) != null) {
+            for(var26 = 0; var26 < Class_b3.mapWidth; ++var26) {
+               for(var6 = 0; var6 < Class_b3.mapHeight; ++var6) {
+                  SomeLevelDataCLass var29;
+                  if ((var29 = (SomeLevelDataCLass)Class_b3.someLevelDataHashMap.get(Class_b3.combineInts(var26, var6))) != null) {
                      var1.writeShort(var29.var_18d);
                      var1.writeShort(var29.var_1a5);
                      var1.writeByte(var29.var_22c);
@@ -1231,7 +1238,7 @@ public final class Class_1b0 implements Class_1cc {
             Enumeration var28 = Class_b3.var_84c.elements();
 
             while(var28.hasMoreElements()) {
-               Class_7c var31 = (Class_7c)var28.nextElement();
+               SomeLevelDataCLass var31 = (SomeLevelDataCLass)var28.nextElement();
                var1.writeByte(var31.var_71);
                var1.writeByte(var31.var_119);
                var1.writeShort(var31.var_18d);
@@ -1319,7 +1326,7 @@ public final class Class_1b0 implements Class_1cc {
                      var0 = null;
                      var2 = null;
                      var1 = null;
-                     Class_3d.sub_198();
+                     Class_3d.callGc();
                      var26 = false;
                      break label371;
                   }
@@ -1363,8 +1370,8 @@ public final class Class_1b0 implements Class_1cc {
 
                   for(var35 = 1; var35 < Class_178.var_d34.length; ++var35) {
                      var7 = Class_178.var_d34[var35];
-                     byte var38 = Class_b3.var_bc1;
-                     byte var9 = Class_b3.var_bf6;
+                     byte var38 = Class_b3.someLevelDataVar1;
+                     byte var9 = Class_b3.someLevelDataVar2;
                      var7.sub_1e();
                      byte var10 = 0;
                      byte var11 = 0;
@@ -1402,10 +1409,10 @@ public final class Class_1b0 implements Class_1cc {
                   }
 
                   int var37;
-                  Class_7c var39;
-                  for(var35 = 0; var35 < Class_b3.var_209; ++var35) {
-                     for(var37 = 0; var37 < Class_b3.var_23c; ++var37) {
-                        if ((var39 = (Class_7c)Class_b3.var_826.get(Class_b3.sub_201(var35, var37))) != null) {
+                  SomeLevelDataCLass var39;
+                  for(var35 = 0; var35 < Class_b3.mapWidth; ++var35) {
+                     for(var37 = 0; var37 < Class_b3.mapHeight; ++var37) {
+                        if ((var39 = (SomeLevelDataCLass)Class_b3.someLevelDataHashMap.get(Class_b3.combineInts(var35, var37))) != null) {
                            var39.var_18d = var2.readShort();
                            var39.var_1a5 = var2.readShort();
                            var39.var_22c = var2.readByte();
@@ -1417,10 +1424,10 @@ public final class Class_1b0 implements Class_1cc {
                   var6 = var2.readByte();
 
                   for(var37 = 0; var37 < var6; ++var37) {
-                     (var39 = new Class_7c((byte)9, var2.readByte(), var2.readByte(), (byte)3, (byte)0, (byte)0, (byte)0)).var_18d = var2.readShort();
+                     (var39 = new SomeLevelDataCLass((byte)9, var2.readByte(), var2.readByte(), (byte)3, (byte)0, (byte)0, (byte)0)).var_18d = var2.readShort();
                      var39.var_1a5 = var2.readShort();
                      var39.var_1f5 = var2.readByte();
-                     Class_b3.var_84c.put(Class_b3.sub_201(var39.var_71, var39.var_119), var39);
+                     Class_b3.var_84c.put(Class_b3.combineInts(var39.var_71, var39.var_119), var39);
                   }
 
                   var26 = false;
@@ -1454,7 +1461,7 @@ public final class Class_1b0 implements Class_1cc {
                      }
                   }
 
-                  Class_3d.sub_198();
+                  Class_3d.callGc();
                }
             }
 
@@ -1472,7 +1479,7 @@ public final class Class_1b0 implements Class_1cc {
                }
             }
 
-            Class_3d.sub_198();
+            Class_3d.callGc();
             return;
          }
 
@@ -1485,11 +1492,11 @@ public final class Class_1b0 implements Class_1cc {
             }
          }
 
-         Class_3d.sub_198();
+         Class_3d.callGc();
          return;
       }
 
-      Class_3d.sub_198();
+      Class_3d.callGc();
    }
 
    private static void sub_8fa() {

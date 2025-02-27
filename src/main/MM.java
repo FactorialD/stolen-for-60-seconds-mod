@@ -10,7 +10,7 @@ public final class MM extends MIDlet {
 
 	public final void startApp() {
 		//Class_293.sub_4d(this);
-		Class_3d.sub_198();
+		Class_3d.callGc();
 		if (var_d4) {
 			var_a1 = this.getAppProperty("MIDlet-Version");
 			if (var_a1 == null) {

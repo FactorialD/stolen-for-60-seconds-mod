@@ -1,7 +1,7 @@
 package main;
 import javax.microedition.lcdui.Graphics;
 
-public final class Class_7c implements Class_1cc {
+public final class SomeLevelDataCLass implements SomeLevelDataVariablesInterface {
    public final byte var_4c;
    public final byte var_71;
    public final byte var_119;
@@ -12,7 +12,7 @@ public final class Class_7c implements Class_1cc {
    public byte var_1f5;
    public byte var_22c;
 
-   public Class_7c(byte var1, byte var2, byte var3, byte var4, byte var5, byte var6, byte var7) {
+   public SomeLevelDataCLass(byte var1, byte var2, byte var3, byte var4, byte var5, byte var6, byte var7) {
       this.var_4c = var1;
       this.var_71 = var2;
       this.var_119 = var3;
@@ -26,11 +26,11 @@ public final class Class_7c implements Class_1cc {
       int var2;
       if (Class_b3.var_a5a != 0) {
          byte var3;
-         if ((var3 = this.var_4c) == 6 && Class_b3.var_68a[Class_178.var_dc6 - 1][25] == 32) {
+         if ((var3 = this.var_4c) == 6 && Class_b3.levelAdditionalData_TimerEtc[Class_178.var_dc6 - 1][25] == 32) {
             var3 = 4;
          }
 
-         boolean var4 = Class_1b0.sub_678(Class_1cc.var_da[var3][5], (byte)6) || Class_1b0.sub_678(Class_1cc.var_da[var3][5], (byte)7);
+         boolean var4 = Class_1b0.sub_678(SomeLevelDataVariablesInterface.var_da[var3][5], (byte)6) || Class_1b0.sub_678(SomeLevelDataVariablesInterface.var_da[var3][5], (byte)7);
          if (var3 == 6 && Class_b3.var_7f3 > 0) {
             return;
          }
@@ -56,12 +56,12 @@ public final class Class_7c implements Class_1cc {
             int var8 = 0;
             int var9 = 0;
             int var10 = 0;
-            if (Class_1b0.sub_678(Class_1cc.var_da[var3][5], (byte)6)) {
+            if (Class_1b0.sub_678(SomeLevelDataVariablesInterface.var_da[var3][5], (byte)6)) {
                var7 = this.var_163 == 2 ? 12 : 0;
                var8 = this.var_163 == 0 ? 12 : 0;
                var9 = this.var_163 == 3 ? 12 : 0;
                var10 = this.var_163 == 1 ? 12 : 0;
-            } else if (Class_1b0.sub_678(Class_1cc.var_da[var3][5], (byte)7)) {
+            } else if (Class_1b0.sub_678(SomeLevelDataVariablesInterface.var_da[var3][5], (byte)7)) {
                var5 = Class_b3.var_3e7[0][this.var_163] * 12;
                var6 = Class_b3.var_3e7[1][this.var_163] * 12;
                var7 = this.var_163 == 0 ? 12 : 0;
@@ -70,9 +70,9 @@ public final class Class_7c implements Class_1cc {
                var10 = this.var_163 == 3 ? 12 : 0;
             }
 
-            Class_1b0.sub_2e7(var1, 4, (byte)(Class_1cc.var_da[var3][this.var_163] + var2), Class_b3.var_1dc + this.var_71 * 24 + var5, Class_b3.var_1fb + this.var_119 * 24 + var6, var7, var8, var9, var10);
+            Class_1b0.sub_2e7(var1, 4, (byte)(SomeLevelDataVariablesInterface.var_da[var3][this.var_163] + var2), Class_b3.var_1dc + this.var_71 * 24 + var5, Class_b3.var_1fb + this.var_119 * 24 + var6, var7, var8, var9, var10);
          } else {
-            Class_1b0.sub_2db(var1, (byte)4, (byte)(Class_1cc.var_da[var3][this.var_163] + var2), Class_b3.var_1dc + this.var_71 * 24, Class_b3.var_1fb + this.var_119 * 24);
+            Class_1b0.sub_2db(var1, (byte)4, (byte)(SomeLevelDataVariablesInterface.var_da[var3][this.var_163] + var2), Class_b3.var_1dc + this.var_71 * 24, Class_b3.var_1fb + this.var_119 * 24);
          }
 
          if (var3 == 9) {
@@ -86,11 +86,11 @@ public final class Class_7c implements Class_1cc {
             }
          }
       } else {
-         if (this.var_4c == 6 && (Class_b3.var_7f3 > 0 || Class_b3.var_68a[Class_178.var_dc6 - 1][25] == 32)) {
+         if (this.var_4c == 6 && (Class_b3.var_7f3 > 0 || Class_b3.levelAdditionalData_TimerEtc[Class_178.var_dc6 - 1][25] == 32)) {
             return;
          }
 
-         if (this.var_4c == 4 && Class_b3.var_68a[Class_178.var_dc6 - 1][25] == 32) {
+         if (this.var_4c == 4 && Class_b3.levelAdditionalData_TimerEtc[Class_178.var_dc6 - 1][25] == 32) {
             return;
          }
 
@@ -99,9 +99,9 @@ public final class Class_7c implements Class_1cc {
                var2 = this.var_22c == 0 ? 16711680 : (this.var_22c == 1 ? 315140 : 255);
             } else {
                var2 = this.var_22c > 0 ? 12058726 : 0;
-               if (Class_1b0.sub_678(Class_1cc.var_da[this.var_4c][5], (byte)5)) {
+               if (Class_1b0.sub_678(SomeLevelDataVariablesInterface.var_da[this.var_4c][5], (byte)5)) {
                   var2 = 5855577;
-               } else if (Class_b3.var_7a3[this.var_1f5] > 0 || Class_b3.var_68a[Class_178.var_dc6 - 1][25] == 20) {
+               } else if (Class_b3.var_7a3[this.var_1f5] > 0 || Class_b3.levelAdditionalData_TimerEtc[Class_178.var_dc6 - 1][25] == 20) {
                   var2 = 0;
                }
 
@@ -110,7 +110,7 @@ public final class Class_7c implements Class_1cc {
                }
             }
 
-            Class_1b0.sub_2c5(var1, Class_1cc.var_da[this.var_4c][4], this.var_163, Class_b3.var_1dc + this.var_71 * 24, Class_b3.var_1fb + this.var_119 * 24, var2);
+            Class_1b0.sub_2c5(var1, SomeLevelDataVariablesInterface.var_da[this.var_4c][4], this.var_163, Class_b3.var_1dc + this.var_71 * 24, Class_b3.var_1fb + this.var_119 * 24, var2);
          } else {
             Class_1b0.sub_2db(var1, (byte)47, 0, Class_b3.var_1dc + this.var_71 * 24, Class_b3.var_1fb + this.var_119 * 24);
          }

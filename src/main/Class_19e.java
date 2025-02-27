@@ -2,7 +2,7 @@ package main;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Graphics;
 
-public final class Class_19e implements Class_1cc {
+public final class Class_19e implements SomeLevelDataVariablesInterface {
    private static byte var_51 = 2;
    public static final int var_ac;
    private static final int var_d0;
@@ -102,14 +102,14 @@ public final class Class_19e implements Class_1cc {
       }
 
       if (var_850 != null) {
-         var_34f = var_12e + (var_1bd - Class_1cc.var_b6[var_850[0]][2] >> 1);
+         var_34f = var_12e + (var_1bd - SomeLevelDataVariablesInterface.var_b6[var_850[0]][2] >> 1);
          var_3ad = var_18c + var_202 + 4;
       }
 
       var_3e5 = var_12e + (var_1bd - var_882.length * Class_1b0.var_12 >> 1);
       var_424 = var_18c + 2 + (var_202 - Class_1b0.var_a9 >> 1);
       if (var_673) {
-         var_5ff = var_327 - Class_1cc.var_b6[44][3] * 2;
+         var_5ff = var_327 - SomeLevelDataVariablesInterface.var_b6[44][3] * 2;
          var_644 = var_12e + var_1bd - var_662 - 2 - 1;
       }
 
@@ -174,11 +174,11 @@ public final class Class_19e implements Class_1cc {
       var_95a = new int[var_8ca.length];
       int var1 = 0;
       if (var_a80) {
-         var1 = Class_1cc.var_b6[6][2] + 2;
+         var1 = SomeLevelDataVariablesInterface.var_b6[6][2] + 2;
       }
 
       if (var_abc != null) {
-         var1 += Class_1cc.var_b6[var_abc[var_abc.length - 1][0]][2] + 4;
+         var1 += SomeLevelDataVariablesInterface.var_b6[var_abc[var_abc.length - 1][0]][2] + 4;
       }
 
       int var3;
@@ -218,7 +218,7 @@ public final class Class_19e implements Class_1cc {
       for(int var3 = 0; var3 < var_8ca.length; ++var3) {
          var_95a[var3] = Class_1b0.sub_1e5(sub_1fc(var3), var2);
          if (var_abc != null) {
-            int var4 = var_abc[var3] == null ? 1 : Class_1cc.var_b6[var_abc[var3][0]][3];
+            int var4 = var_abc[var3] == null ? 1 : SomeLevelDataVariablesInterface.var_b6[var_abc[var3][0]][3];
 
             int var5;
             for(var5 = 0; var4 > var_45d; ++var5) {
@@ -253,7 +253,7 @@ public final class Class_19e implements Class_1cc {
    }
 
    private static int sub_1ea() {
-      return var_850 != null ? Class_1cc.var_b6[var_850[0]][3] + 4 : 0;
+      return var_850 != null ? SomeLevelDataVariablesInterface.var_b6[var_850[0]][3] + 4 : 0;
    }
 
    private static short[] sub_1fc(int var0) {
@@ -261,7 +261,7 @@ public final class Class_19e implements Class_1cc {
       if (var_914 != null) {
          var1 = Class_1b0.sub_569(var_8ca[var0], var_914[var0]);
       } else {
-         var1 = Class_1b0.sub_42b(var_8ca[var0]);
+         var1 = Class_1b0.readTextFromLng(var_8ca[var0]);
       }
 
       return var1;
@@ -287,7 +287,7 @@ public final class Class_19e implements Class_1cc {
 
       Class_1b0.sub_20e(var0, var1 + var5, var2 + var5, var3 - (var5 << 1), var6, false, 6518395);
       Class_1b0.sub_2db(var0, (byte)45, 0, var1 + var5 + 2, var2 + var5 + 2);
-      Class_1b0.sub_2db(var0, (byte)45, 0, var1 + var5 + var3 - (var5 << 1) - 2 - Class_1cc.var_b6[45][2], var2 + var5 + 2);
+      Class_1b0.sub_2db(var0, (byte)45, 0, var1 + var5 + var3 - (var5 << 1) - 2 - SomeLevelDataVariablesInterface.var_b6[45][2], var2 + var5 + 2);
    }
 
    public static void sub_29c(Graphics var0) {
@@ -355,7 +355,7 @@ public final class Class_19e implements Class_1cc {
             sub_3a6(var0, var_46d, var_508);
          }
 
-         Class_3d.sub_198();
+         Class_3d.callGc();
          Class_1b0.sub_5d(var0, var_b16, var_508, var_285, var_297, var_2e2, var_46d, var_45d);
          var_6ce = false;
       } else {
@@ -420,7 +420,7 @@ public final class Class_19e implements Class_1cc {
             if (var_abc != null) {
                short var9 = 0;
                if (var_a80) {
-                  var9 = (short)(0 + Class_1cc.var_b6[6][2] + 3);
+                  var9 = (short)(0 + SomeLevelDataVariablesInterface.var_b6[6][2] + 3);
                }
 
                if (var_abc[var5] != null) {
@@ -442,7 +442,7 @@ public final class Class_19e implements Class_1cc {
 
             short[] var10;
             if (var_914 == null) {
-               var10 = Class_1b0.sub_42b(var_8ca[var5]);
+               var10 = Class_1b0.readTextFromLng(var_8ca[var5]);
             } else {
                var10 = Class_1b0.sub_569(var_8ca[var5], var_914[var5]);
             }
@@ -453,7 +453,7 @@ public final class Class_19e implements Class_1cc {
             }
 
             if (var_abc != null && var_abc[var5] == null) {
-               var7 = -(Class_1cc.var_b6[var_abc[var_abc.length - 1][0]][2] + 4 >> 1);
+               var7 = -(SomeLevelDataVariablesInterface.var_b6[var_abc[var_abc.length - 1][0]][2] + 4 >> 1);
             }
 
             if (var_c2e && var5 > 0) {
@@ -475,7 +475,7 @@ public final class Class_19e implements Class_1cc {
 
          var_790.hasPointerEvents();
          var_6ce = false;
-         Class_3d.sub_198();
+         Class_3d.callGc();
       } else {
          var1.drawImage(Class_b3.var_25f, 0, 0, 0);
          if (var_673) {
@@ -488,8 +488,8 @@ public final class Class_19e implements Class_1cc {
          }
 
          if (var_7ed == 22) {
-            Class_1b0.sub_2db(var1, (byte)16, 0, var_285 - (Class_1cc.var_b6[16][2] << 1) + Math.abs(12 - Class_178.var_115), var_297 + var_45d * var_9a0 - 2);
-            Class_1b0.sub_2db(var1, (byte)16, 0, var_285 + (Class_1cc.var_b6[16][2] >> 1) + var2 - Math.abs(12 - Class_178.var_115), var_297 + var_45d * var_9a0 - 2);
+            Class_1b0.sub_2db(var1, (byte)16, 0, var_285 - (SomeLevelDataVariablesInterface.var_b6[16][2] << 1) + Math.abs(12 - Class_178.var_115), var_297 + var_45d * var_9a0 - 2);
+            Class_1b0.sub_2db(var1, (byte)16, 0, var_285 + (SomeLevelDataVariablesInterface.var_b6[16][2] >> 1) + var2 - Math.abs(12 - Class_178.var_115), var_297 + var_45d * var_9a0 - 2);
          } else {
             if (!var_c2e) {
                var3 = 0;
@@ -520,15 +520,15 @@ public final class Class_19e implements Class_1cc {
          }
 
       } else {
-         int var1 = Class_b3.var_b0 - Class_1cc.var_b6[9][3];
+         int var1 = Class_b3.var_b0 - SomeLevelDataVariablesInterface.var_b6[9][3];
 
-         for(int var2 = 0; var2 < Class_b3.var_1d; var2 += Class_1cc.var_b6[9][2]) {
+         for(int var2 = 0; var2 < Class_b3.var_1d; var2 += SomeLevelDataVariablesInterface.var_b6[9][2]) {
             Class_1b0.sub_2db(var0, (byte)9, 0, var2, var1);
          }
 
          sub_388(var0, 2, var1 + var_ac, var_89d[0] - 126, 4);
          if (var_89d.length > 1) {
-            int var3 = Class_b3.var_1d - Class_1cc.var_b6[38][2] - 2;
+            int var3 = Class_b3.var_1d - SomeLevelDataVariablesInterface.var_b6[38][2] - 2;
             sub_388(var0, var3, var1 + var_ac, var_89d[1] - 126, 5);
          }
 
@@ -537,16 +537,16 @@ public final class Class_19e implements Class_1cc {
 
    public static void sub_388(Graphics var0, int var1, int var2, int var3, int var4) {
       Class_1b0.sub_2db(var0, (byte)38, 0, var1, var2);
-      Class_1b0.sub_2db(var0, (byte)39, (byte)var3, var1 + (Class_1cc.var_b6[38][2] >> 1) - (Class_1cc.var_b6[39][2] >> 1), var2 + (Class_1cc.var_b6[38][3] >> 1) - (Class_1cc.var_b6[39][3] >> 1));
+      Class_1b0.sub_2db(var0, (byte)39, (byte)var3, var1 + (SomeLevelDataVariablesInterface.var_b6[38][2] >> 1) - (SomeLevelDataVariablesInterface.var_b6[39][2] >> 1), var2 + (SomeLevelDataVariablesInterface.var_b6[38][3] >> 1) - (SomeLevelDataVariablesInterface.var_b6[39][3] >> 1));
    }
 
    private static void sub_3a6(Graphics var0, int var1, int var2) {
-      for(int var3 = var_297 + Class_1cc.var_b6[44][3]; var3 < var_297 + var_327 - Class_1cc.var_b6[44][3]; var3 += Class_1cc.var_b6[44][3]) {
+      for(int var3 = var_297 + SomeLevelDataVariablesInterface.var_b6[44][3]; var3 < var_297 + var_327 - SomeLevelDataVariablesInterface.var_b6[44][3]; var3 += SomeLevelDataVariablesInterface.var_b6[44][3]) {
          Class_1b0.sub_2db(var0, (byte)44, 2, var_644, var3);
       }
 
       Class_1b0.sub_2db(var0, (byte)44, 0, var_644, var_297);
-      Class_1b0.sub_2db(var0, (byte)44, 1, var_644, var_297 + var_327 - Class_1cc.var_b6[44][3]);
+      Class_1b0.sub_2db(var0, (byte)44, 1, var_644, var_297 + var_327 - SomeLevelDataVariablesInterface.var_b6[44][3]);
       int var4 = Math.max(100 * var1 / var_4fa * var_5ff / 100, 4);
       int var5 = 100 * var2 / var_4fa * var_5ff / 100;
       var5 = Math.min(var_5ff - var4, var5);
@@ -554,8 +554,8 @@ public final class Class_19e implements Class_1cc {
          var5 = var_5ff - var4;
       }
 
-      Class_1b0.sub_20e(var0, var_644 + 1, var_297 + Class_1cc.var_b6[44][3] + var5, var_662 - 2, var4, true, 6518395);
-      Class_1b0.sub_2db(var0, (byte)45, 0, var_644 + 1 + (var_662 - 2 >> 1) - (Class_1cc.var_b6[45][2] >> 1), var_297 + Class_1cc.var_b6[44][3] + var5 + (var4 >> 1) - (Class_1cc.var_b6[45][3] >> 1));
+      Class_1b0.sub_20e(var0, var_644 + 1, var_297 + SomeLevelDataVariablesInterface.var_b6[44][3] + var5, var_662 - 2, var4, true, 6518395);
+      Class_1b0.sub_2db(var0, (byte)45, 0, var_644 + 1 + (var_662 - 2 >> 1) - (SomeLevelDataVariablesInterface.var_b6[45][2] >> 1), var_297 + SomeLevelDataVariablesInterface.var_b6[44][3] + var5 + (var4 >> 1) - (SomeLevelDataVariablesInterface.var_b6[45][3] >> 1));
    }
 
    private static void sub_3c5(Graphics var0, int var1, int var2) {
@@ -565,11 +565,11 @@ public final class Class_19e implements Class_1cc {
       }
 
       if (var2 > 0 || var_7c6 != 0 && var_673) {
-         Class_1b0.sub_250(var0, var_644, var_297, Class_1cc.var_b6[44][2], Class_1cc.var_b6[44][3], true, -1, var3, var3);
+         Class_1b0.sub_250(var0, var_644, var_297, SomeLevelDataVariablesInterface.var_b6[44][2], SomeLevelDataVariablesInterface.var_b6[44][3], true, -1, var3, var3);
       }
 
       if (var_4fa - var2 > var1 || var_7c6 != 0 && var_673) {
-         Class_1b0.sub_250(var0, var_644, var_297 + var_327 - Class_1cc.var_b6[44][3], Class_1cc.var_b6[44][2], Class_1cc.var_b6[44][3], true, -1, var3, var3);
+         Class_1b0.sub_250(var0, var_644, var_297 + var_327 - SomeLevelDataVariablesInterface.var_b6[44][3], SomeLevelDataVariablesInterface.var_b6[44][2], SomeLevelDataVariablesInterface.var_b6[44][3], true, -1, var3, var3);
       }
 
    }
@@ -756,7 +756,7 @@ public final class Class_19e implements Class_1cc {
    }
 
    public static void sub_4bd(short var0) {
-      var_882 = Class_1b0.sub_42b(var0);
+      var_882 = Class_1b0.readTextFromLng(var0);
    }
 
    public static void sub_4ea(short var0, Object[] var1) {
@@ -768,9 +768,9 @@ public final class Class_19e implements Class_1cc {
    }
 
    static {
-      var_ac = Class_1cc.var_b6[9][3] - Class_1cc.var_b6[38][3] + 1 >> 1;
-      var_d0 = Class_1cc.var_b6[9][3] + 2;
-      var_662 = Class_1cc.var_b6[44][2];
+      var_ac = SomeLevelDataVariablesInterface.var_b6[9][3] - SomeLevelDataVariablesInterface.var_b6[38][3] + 1 >> 1;
+      var_d0 = SomeLevelDataVariablesInterface.var_b6[9][3] + 2;
+      var_662 = SomeLevelDataVariablesInterface.var_b6[44][2];
       var_6ce = true;
       var_b61 = new byte[]{8, 8, 8, 8, 8, 8, 8, 0};
    }

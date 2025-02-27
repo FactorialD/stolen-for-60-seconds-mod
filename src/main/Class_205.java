@@ -2,7 +2,7 @@ package main;
 import java.util.Vector;
 import javax.microedition.lcdui.Graphics;
 
-public final class Class_205 implements Class_1cc {
+public final class Class_205 implements SomeLevelDataVariablesInterface {
    public static final byte[][] var_2a = new byte[][]{{0, 0, 35, 80, 65, 20, 0, 0, 30, 15, 8, 0}, {22, 18, 14, 30, 20, 0, 0, 0, 0, 15, 8, 0}, {0, 55, 35, 55, 45, 25, 0, 0, 0, 15, 8, 0}, {25, 20, 17, 15, 0, 0, 0, 0, 0, 15, 8, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10}, {14, 8, 0, 20, 0, 0, 0, 0, 0, 15, 8, 0}, {0, 0, 0, 0, 0, 0, 50, 30, 15, 0, 0, 0}, {15, 10, 8, 12, 0, 0, 30, 0, 0, 15, 8, 0}, {25, 20, 17, 15, 0, 0, 0, 0, 0, 15, 8, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 8, 0}, {17, 11, 0, 20, 0, 0, 0, 0, 0, 15, 8, 0}, {15, 10, 0, 0, 0, 0, 0, 0, 0, 15, 8, 0}, {0, 0, 35, 70, 20, 15, 0, 0, 25, 15, 8, 0}, {14, 8, 0, 20, 0, 0, 0, 0, 0, 15, 8, 0}, {20, 15, 15, 30, 0, 0, 0, 0, 0, 15, 8, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {17, 10, 0, 20, 0, 0, 0, 0, 0, 15, 8, 0}, {17, 10, 0, 20, 0, 0, 0, 0, 0, 15, 8, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
    public final byte var_3a;
    public byte var_bb;
@@ -16,7 +16,7 @@ public final class Class_205 implements Class_1cc {
    public byte var_2d2;
    public short var_341;
    public final Vector var_39c = new Vector();
-   public Class_7c var_3d8;
+   public SomeLevelDataCLass var_3d8;
    public final short[] var_3fa = new short[6];
    public final byte[] var_451 = new byte[3];
    public byte var_47f;
@@ -32,8 +32,8 @@ public final class Class_205 implements Class_1cc {
 
    public final void sub_1e() {
       var_552[0] = 0;
-      this.var_bb = Class_b3.var_bc1;
-      this.var_123 = Class_b3.var_bf6;
+      this.var_bb = Class_b3.someLevelDataVar1;
+      this.var_123 = Class_b3.someLevelDataVar2;
       this.var_24a = 0;
       this.var_39c.removeAllElements();
       this.var_39c.addElement(new Class_240(this.var_bb, this.var_123, (byte)0, (byte)0, (byte)0));
@@ -44,7 +44,7 @@ public final class Class_205 implements Class_1cc {
          this.var_1a6 = 2;
       } else {
          if (Class_b3.var_e52 == 2) {
-            if (this.var_bb != Class_b3.var_bc1 || this.var_123 != Class_b3.var_bf6) {
+            if (this.var_bb != Class_b3.someLevelDataVar1 || this.var_123 != Class_b3.someLevelDataVar2) {
                if (var_552[this.var_3a] < 3) {
                   this.var_1a6 = Class_b3.var_619[this.var_3a][var_552[this.var_3a]].sub_a2();
                   this.var_17b = Class_b3.var_619[this.var_3a][var_552[this.var_3a]].sub_106();
@@ -121,13 +121,13 @@ public final class Class_205 implements Class_1cc {
                break;
             case 5:
                var6 = true;
-               this.var_3d8 = (Class_7c)Class_b3.var_84c.get(Class_b3.sub_201(this.var_bb, this.var_123));
+               this.var_3d8 = (SomeLevelDataCLass)Class_b3.var_84c.get(Class_b3.combineInts(this.var_bb, this.var_123));
                Class_b3.sub_75c(this.var_bb, this.var_123, true, true, this.var_341 + 1 + 5, this.var_3d8.var_1f5 == 114, false);
                if (this.var_3d8.var_1f5 == 114) {
                   Class_b3.sub_75c(this.var_bb, this.var_123, true, true, this.var_341 + 1 + 5, this.var_3d8.var_1f5 == 114, true);
                }
 
-               Class_b3.var_84c.remove(Class_b3.sub_201(this.var_bb, this.var_123));
+               Class_b3.var_84c.remove(Class_b3.combineInts(this.var_bb, this.var_123));
             }
          }
       }
@@ -201,14 +201,14 @@ public final class Class_205 implements Class_1cc {
       }
 
       if (this.sub_311() && this.var_3d8 != null) {
-         var2 = Class_b3.var_3e7[0][this.var_17b] * Class_1cc.var_da[this.var_3d8.var_4c][6];
-         var3 = Class_b3.var_3e7[1][this.var_17b] * Class_1cc.var_da[this.var_3d8.var_4c][6];
+         var2 = Class_b3.var_3e7[0][this.var_17b] * SomeLevelDataVariablesInterface.var_da[this.var_3d8.var_4c][6];
+         var3 = Class_b3.var_3e7[1][this.var_17b] * SomeLevelDataVariablesInterface.var_da[this.var_3d8.var_4c][6];
       }
 
       int var4 = Class_b3.var_1dc + this.var_bb * 24 + var2;
       int var5 = Class_b3.var_1fb + this.var_123 * 24 + var3;
       if (Class_b3.var_a5a == 1) {
-         if (Class_b3.var_bc1 == this.var_bb && Class_b3.var_bf6 == this.var_123) {
+         if (Class_b3.someLevelDataVar1 == this.var_bb && Class_b3.someLevelDataVar2 == this.var_123) {
             if (var2 == 0 && var3 == 0) {
                return;
             }
@@ -220,7 +220,7 @@ public final class Class_205 implements Class_1cc {
             }
          }
 
-         if (Class_b3.var_bc1 == this.var_bb + Class_b3.var_3e7[0][this.var_17b] && Class_b3.var_bf6 == this.var_123 + Class_b3.var_3e7[1][this.var_17b]) {
+         if (Class_b3.someLevelDataVar1 == this.var_bb + Class_b3.var_3e7[0][this.var_17b] && Class_b3.someLevelDataVar2 == this.var_123 + Class_b3.var_3e7[1][this.var_17b]) {
             if (var3 < 0) {
                Class_b3.var_d39 = true;
             } else if (var3 > 0) {
@@ -237,7 +237,7 @@ public final class Class_205 implements Class_1cc {
          Class_1b0.sub_2db(var1, (byte)50, this.var_17b, var4 + this.var_3a, var5 + this.var_3a);
          if (Class_b3.var_983 != null && Class_b3.var_983.var_3a == this.var_3a && Class_178.var_91 > 6 && !this.var_210) {
             Class_1b0.sub_2db(var1, (byte)51, Class_b3.var_983.var_3a - 1, var4 + 12 - 3 + this.var_3a, var5 + 12 - 3 + this.var_3a);
-            if (Class_b3.var_983.var_bb == Class_b3.var_bc1 && Class_b3.var_983.var_123 == Class_b3.var_bf6) {
+            if (Class_b3.var_983.var_bb == Class_b3.someLevelDataVar1 && Class_b3.var_983.var_123 == Class_b3.someLevelDataVar2) {
                Class_b3.var_983.var_2d2 = Class_b3.var_983.var_29a;
             }
          }
@@ -319,7 +319,7 @@ public final class Class_205 implements Class_1cc {
    public final void sub_2da(byte var1, boolean var2) {
       this.var_210 = true;
       if (Class_b3.var_a5a == 0) {
-         if (this.var_1a6 == 5 && Class_b3.var_84c.containsKey(Class_b3.sub_201(this.var_bb, this.var_123))) {
+         if (this.var_1a6 == 5 && Class_b3.var_84c.containsKey(Class_b3.combineInts(this.var_bb, this.var_123))) {
             Class_178.sub_2c8((byte)0, (byte[])null, (short)172, (Object[])null, new short[]{126}, (short)137);
             return;
          }
@@ -333,8 +333,8 @@ public final class Class_205 implements Class_1cc {
             case 3:
                this.var_3d8.var_1a5 = var_4aa;
                Class_b3.sub_702();
-               if (this.var_3d8.var_1f5 != 0 && this.var_3d8.var_22c > 0 && Class_b3.var_7a3[this.var_3d8.var_1f5] <= 0 && this.var_2d2 + Class_b3.var_71c[this.var_3d8.var_1f5][1] > Class_b3.var_6c9[this.var_3a][0]) {
-                  if (Class_b3.var_6c9[this.var_3a][0] - this.sub_46a() < Class_b3.var_71c[this.var_3d8.var_1f5][1]) {
+               if (this.var_3d8.var_1f5 != 0 && this.var_3d8.var_22c > 0 && Class_b3.var_7a3[this.var_3d8.var_1f5] <= 0 && this.var_2d2 + Class_b3.var_71c[this.var_3d8.var_1f5][1] > Class_b3.thiefStats[this.var_3a][0]) {
+                  if (Class_b3.thiefStats[this.var_3a][0] - this.sub_46a() < Class_b3.var_71c[this.var_3d8.var_1f5][1]) {
                      Class_b3.var_247 = 186;
                   } else {
                      Class_b3.var_247 = 185;
@@ -344,8 +344,8 @@ public final class Class_205 implements Class_1cc {
             case 4:
                this.var_3d8.var_18d = var_4aa;
                Class_b3.sub_702();
-               if (this.var_451[this.var_47f] == 115 && this.var_3d8.var_1f5 != 0 && this.var_3d8.var_22c > 0 && Class_b3.var_7a3[this.var_3d8.var_1f5] <= 0 && this.var_2d2 + Class_b3.var_71c[this.var_3d8.var_1f5][1] > Class_b3.var_6c9[this.var_3a][0]) {
-                  if (Class_b3.var_6c9[this.var_3a][0] - this.sub_46a() < Class_b3.var_71c[this.var_3d8.var_1f5][1]) {
+               if (this.var_451[this.var_47f] == 115 && this.var_3d8.var_1f5 != 0 && this.var_3d8.var_22c > 0 && Class_b3.var_7a3[this.var_3d8.var_1f5] <= 0 && this.var_2d2 + Class_b3.var_71c[this.var_3d8.var_1f5][1] > Class_b3.thiefStats[this.var_3a][0]) {
+                  if (Class_b3.thiefStats[this.var_3a][0] - this.sub_46a() < Class_b3.var_71c[this.var_3d8.var_1f5][1]) {
                      Class_b3.var_247 = 186;
                   } else {
                      Class_b3.var_247 = 185;
@@ -353,13 +353,13 @@ public final class Class_205 implements Class_1cc {
                }
                break;
             case 5:
-               this.var_3d8 = new Class_7c((byte)9, this.var_bb, this.var_123, this.var_17b, (byte)1, this.var_451[this.var_47f], (byte)0);
+               this.var_3d8 = new SomeLevelDataCLass((byte)9, this.var_bb, this.var_123, this.var_17b, (byte)1, this.var_451[this.var_47f], (byte)0);
                Class_b3.sub_75c(this.var_bb, this.var_123, true, false, var_4aa + 5, this.var_3d8.var_1f5 == 114, false);
                if (this.var_3d8.var_1f5 == 114) {
                   Class_b3.sub_75c(this.var_bb, this.var_123, true, false, var_4aa + 5, this.var_3d8.var_1f5 == 114, true);
                }
 
-               Class_b3.var_84c.put(Class_b3.sub_201(this.var_bb, this.var_123), this.var_3d8);
+               Class_b3.var_84c.put(Class_b3.combineInts(this.var_bb, this.var_123), this.var_3d8);
                this.var_3d8.var_18d = (short)(var_4aa + 5);
                Class_b3.sub_702();
             }
@@ -367,8 +367,8 @@ public final class Class_205 implements Class_1cc {
       }
 
       if (Class_b3.var_a5a == 1 && this.var_1a6 == 5) {
-         this.var_3d8 = new Class_7c((byte)9, this.var_bb, this.var_123, this.var_17b, (byte)0, this.var_451[this.var_47f], (byte)0);
-         Class_b3.var_84c.put(Class_b3.sub_201(this.var_bb, this.var_123), this.var_3d8);
+         this.var_3d8 = new SomeLevelDataCLass((byte)9, this.var_bb, this.var_123, this.var_17b, (byte)0, this.var_451[this.var_47f], (byte)0);
+         Class_b3.var_84c.put(Class_b3.combineInts(this.var_bb, this.var_123), this.var_3d8);
          this.var_3d8.var_1bc[0] = var1;
       }
 
@@ -380,7 +380,7 @@ public final class Class_205 implements Class_1cc {
 
    public final boolean sub_373() {
       if (this.var_3d8.var_1f5 != 0 && this.var_3d8.var_22c > 0) {
-         if (Class_b3.var_6c9[this.var_3a][0] - this.var_29a >= Class_b3.var_71c[this.var_3d8.var_1f5][1]) {
+         if (Class_b3.thiefStats[this.var_3a][0] - this.var_29a >= Class_b3.var_71c[this.var_3d8.var_1f5][1]) {
             short[] var10000 = this.var_3fa;
             byte var10001 = this.var_3d8.var_1f5;
             var10000[var10001] = (short)(var10000[var10001] + this.var_3d8.var_22c);
@@ -398,7 +398,7 @@ public final class Class_205 implements Class_1cc {
    public final boolean sub_3a5() {
       var_4ca = this.var_bb + Class_b3.var_3e7[0][this.var_17b];
       var_51f = this.var_123 + Class_b3.var_3e7[1][this.var_17b];
-      return var_4ca >= 0 && var_4ca < Class_b3.var_209 && var_51f >= 0 && var_51f < Class_b3.var_23c;
+      return var_4ca >= 0 && var_4ca < Class_b3.mapWidth && var_51f >= 0 && var_51f < Class_b3.mapHeight;
    }
 
    public final void sub_3e7(boolean var1) {
