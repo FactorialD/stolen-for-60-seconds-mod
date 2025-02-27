@@ -1,0 +1,12 @@
+MIDlet-Install-Notify: http://www.glowingmobile.com/pub/notify.php?a=stolen_in_60_sec&c=276
+MIDlet-Data-Size: 8192
+MIDlet-Version: 0.0.1
+MIDlet-Vendor: FactorialD
+MIDlet-Info-URL: http://wap.glomogames.com/
+Manifest-Version: 1.0
+MIDlet-Icon: /icons/icon.png
+MicroEdition-Configuration: CLDC-1.1
+MIDlet-Name: StolenIn60SecMod
+MIDlet-1: MIDlet-1,,main.MM
+MicroEdition-Profile: MIDP-2.1
+MIDlet-Jar-URL: StolenIn60SecMod.jar
