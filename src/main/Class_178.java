@@ -254,7 +254,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
                var_26f = 5;
 
-               var_130f = Class_1b0.sub_352("nor");
+               var_130f = Class_1b0.loadImagePng("nor");
             }
 
             this.sub_1aa(var1);
@@ -500,40 +500,40 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       var_22b = true;
       switch(var0) {
       case 0:
-         if (Class_1b0.var_217[4] == null) {
-            Class_1b0.var_217[2] = null;
-            Class_1b0.var_217[3] = null;
+         if (Class_1b0.mainImages[4] == null) {
+            Class_1b0.mainImages[2] = null;
+            Class_1b0.mainImages[3] = null;
             Class_3d.callGc();
             sub_187(100L);
-            Class_1b0.sub_333(4);
+            Class_1b0.loadMainImage(4);
             sub_187(500L);
-            Class_1b0.sub_333(5);
+            Class_1b0.loadMainImage(5);
             sub_187(500L);
-            Class_1b0.sub_333(6);
+            Class_1b0.loadMainImage(6);
             sub_187(500L);
          }
          break;
       case 1:
-         if (Class_1b0.var_217[3] == null) {
-            Class_1b0.var_217[2] = null;
-            Class_1b0.var_217[4] = null;
-            Class_1b0.var_217[5] = null;
-            Class_1b0.var_217[6] = null;
+         if (Class_1b0.mainImages[3] == null) {
+            Class_1b0.mainImages[2] = null;
+            Class_1b0.mainImages[4] = null;
+            Class_1b0.mainImages[5] = null;
+            Class_1b0.mainImages[6] = null;
             Class_3d.callGc();
             sub_187(50L);
-            Class_1b0.sub_333(3);
+            Class_1b0.loadMainImage(3);
             sub_187(50L);
          }
          break;
       case 2:
-         if (Class_1b0.var_217[2] == null) {
-            Class_1b0.var_217[3] = null;
-            Class_1b0.var_217[4] = null;
-            Class_1b0.var_217[5] = null;
-            Class_1b0.var_217[6] = null;
+         if (Class_1b0.mainImages[2] == null) {
+            Class_1b0.mainImages[3] = null;
+            Class_1b0.mainImages[4] = null;
+            Class_1b0.mainImages[5] = null;
+            Class_1b0.mainImages[6] = null;
             Class_3d.callGc();
             sub_187(50L);
-            Class_1b0.sub_333(2);
+            Class_1b0.loadMainImage(2);
             sub_187(50L);
          }
       }
@@ -636,13 +636,13 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          return;
       case 6:
       case 8:
-         Class_1b0.sub_333(var_114a - 6 >> 1);
+         Class_1b0.loadMainImage(var_114a - 6 >> 1);
          ++var_114a;
          return;
       case 10:
-         Class_1b0.sub_333(var_114a - 6 >> 1);
-         if (Class_1b0.var_217[2] != null && var_1180 > 176) {
-            SomeLevelDataVariablesInterface.var_b6[7][2] = (short)Class_1b0.var_217[2].getWidth();
+         Class_1b0.loadMainImage(var_114a - 6 >> 1);
+         if (Class_1b0.mainImages[2] != null && var_1180 > 176) {
+            SomeLevelDataVariablesInterface.var_b6[7][2] = (short)Class_1b0.mainImages[2].getWidth();
          }
 
          Class_b3.var_cf = var_11cf - SomeLevelDataVariablesInterface.var_b6[9][3];
@@ -924,11 +924,11 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    private void sub_57d(String var1, String var2, int var3, int var4, boolean var5) {
       if (var1 != null) {
-	    this.var_1403 = Class_1b0.sub_352(var1);
+	    this.var_1403 = Class_1b0.loadImagePng(var1);
 	 }
 
       if (var2 != null) {
-	    this.var_1453 = Class_1b0.sub_352(var2);
+	    this.var_1453 = Class_1b0.loadImagePng(var2);
 	 }
 
       if (this.var_1403 != null || this.var_1453 != null) {
@@ -2203,8 +2203,8 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       int var2 = 0;
       int var1;
       if (Class_b3.sub_bc9(var0) != 113 && Class_b3.sub_bc9(var0) != 114) {
-         for(var1 = 0; var1 < Class_205.var_2a.length; ++var1) {
-            if (Class_205.var_2a[var1][var0] > 0 && var1 != 11) {
+         for(var1 = 0; var1 < Class_205.toolUsingTimeStats.length; ++var1) {
+            if (Class_205.toolUsingTimeStats[var1][var0] > 0 && var1 != 11) {
                ++var2;
             }
          }
@@ -2222,11 +2222,11 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          var5[0] = null;
          var2 = 1;
 
-         for(var1 = 0; var1 < Class_205.var_2a.length; ++var1) {
-            if (Class_205.var_2a[var1][var0] > 0 && var1 != 11) {
+         for(var1 = 0; var1 < Class_205.toolUsingTimeStats.length; ++var1) {
+            if (Class_205.toolUsingTimeStats[var1][var0] > 0 && var1 != 11) {
                var3[var2] = 82;
                var4[var2][0] = new Short((short)(51 + var1));
-               var4[var2][1] = new Integer(Class_205.var_2a[var1][var0]);
+               var4[var2][1] = new Integer(Class_205.toolUsingTimeStats[var1][var0]);
                var5[var2][0] = 4;
                var5[var2][1] = SomeLevelDataVariablesInterface.var_da[var1][4];
                ++var2;
@@ -2235,7 +2235,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
          sub_29b((byte)0, new byte[]{8, var0}, var3, var4, var5, (boolean[])null, Class_b3.sub_bc9(var0), (byte)1);
       } else {
-         sub_2c8((byte)0, new byte[]{8, var0}, (short)(Class_b3.sub_bc9(var0) == 113 ? 83 : 84), new Object[]{new Integer(Class_205.var_2a[0][var0])}, new short[]{126}, Class_b3.sub_bc9(var0));
+         sub_2c8((byte)0, new byte[]{8, var0}, (short)(Class_b3.sub_bc9(var0) == 113 ? 83 : 84), new Object[]{new Integer(Class_205.toolUsingTimeStats[0][var0])}, new short[]{126}, Class_b3.sub_bc9(var0));
       }
    }
 

@@ -173,7 +173,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
 
    private static void sub_c2() {
       if (!var_e7f) {
-         int var0 = Class_1b0.var_217[6].getHeight() * Class_1b0.var_217[6].getWidth() / 576;
+         int var0 = Class_1b0.mainImages[6].getHeight() * Class_1b0.mainImages[6].getWidth() / 576;
 
          int var1;
          int var2;
@@ -183,7 +183,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
             }
          }
 
-         var0 = Class_1b0.var_217[5].getHeight() * Class_1b0.var_217[5].getWidth() / 576;
+         var0 = Class_1b0.mainImages[5].getHeight() * Class_1b0.mainImages[5].getWidth() / 576;
 
          for(var1 = 0; var1 < SomeLevelDataVariablesInterface.var_da.length; ++var1) {
             for(var2 = 0; var2 < var_64c[var1].length && SomeLevelDataVariablesInterface.var_da[var1][0] >= var0; ++var2) {
@@ -529,7 +529,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
       var0.drawImage(var_25f, 0, 0, 0);
       if (var_a5a == 1 && var_983 != null && var_983.var_3d8 != null && var_983.sub_311()) {
          byte var1 = var_983.var_1a6 == 5 ? 1 : var_983.var_3d8.var_4c;
-         byte var2 = var_983.var_1a6 == 3 ? 8 : Class_205.var_2a[var1][Class_178.sub_e5c(var_983.var_451[var_983.var_47f])];
+         byte var2 = var_983.var_1a6 == 3 ? 8 : Class_205.toolUsingTimeStats[var1][Class_178.sub_e5c(var_983.var_451[var_983.var_47f])];
          var_983.var_3d8.sub_92(var0, var2, var_983.var_1a6 != 3);
       }
 
@@ -1248,7 +1248,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                                           var1.var_3d8.var_1bc[0] = 0;
                                           var1.var_3d8.var_1bc[1] = 0;
                                        } else {
-                                          var1.var_3d8.var_1bc[0] = Class_205.var_2a[4][Class_178.sub_e5c(var1.var_451[var1.var_47f])];
+                                          var1.var_3d8.var_1bc[0] = Class_205.toolUsingTimeStats[4][Class_178.sub_e5c(var1.var_451[var1.var_47f])];
                                           var1.var_3d8.var_1bc[1] = 8;
                                        }
                                     }
@@ -1324,14 +1324,14 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                                  if (var1.var_1a6 == 5) {
                                     byte var6 = var1.var_3d8.var_4c;
                                     var1.var_3d8 = new SomeLevelDataCLass((byte)9, var1.var_bb, var1.var_123, var1.var_17b, (byte)0, var1.var_451[var1.var_47f], (byte)0);
-                                    var1.var_3d8.var_1bc[0] = Class_205.var_2a[var6][Class_178.sub_e5c(var1.var_451[var1.var_47f])];
+                                    var1.var_3d8.var_1bc[0] = Class_205.toolUsingTimeStats[var6][Class_178.sub_e5c(var1.var_451[var1.var_47f])];
                                     var_84c.put(combineInts(var1.var_bb, var1.var_123), var1.var_3d8);
                                     ++var1.var_341;
                                     var1.var_210 = true;
                                     var_2c9 = true;
                                  } else if (var1.var_1a6 == 4) {
                                     if (var1.var_3d8.var_1bc[0] == 120) {
-                                       var1.var_3d8.var_1bc[0] = Class_205.var_2a[var1.var_3d8.var_4c][Class_178.sub_e5c(var1.var_451[var1.var_47f])];
+                                       var1.var_3d8.var_1bc[0] = Class_205.toolUsingTimeStats[var1.var_3d8.var_4c][Class_178.sub_e5c(var1.var_451[var1.var_47f])];
                                     }
 
                                     ++var1.var_341;
@@ -1701,7 +1701,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                      var2 = 0;
 
                      for(int var3 = 0; var3 < 12; ++var3) {
-                        if (Class_205.var_2a[var1.var_4c][var3] > 0) {
+                        if (Class_205.toolUsingTimeStats[var1.var_4c][var3] > 0) {
                            ++var2;
                         }
                      }
@@ -1713,10 +1713,10 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                         var2 = 0;
 
                         for(int var6 = 0; var6 < 12; ++var6) {
-                           if (Class_205.var_2a[var1.var_4c][var6] > 0) {
+                           if (Class_205.toolUsingTimeStats[var1.var_4c][var6] > 0) {
                               var9[var2][0] = 8;
                               var9[var2][1] = (byte)Class_178.toolStats[var6][2];
-                              var5[var2][0] = new Integer(Class_205.var_2a[var1.var_4c][var6]);
+                              var5[var2][0] = new Integer(Class_205.toolUsingTimeStats[var1.var_4c][var6]);
                               var4[var2] = (short)(85 + var6);
                               ++var2;
                            }
@@ -1872,19 +1872,19 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                      default:
                         return false;
                      case 4:
-                        if (Class_205.var_4aa + Class_205.var_2a[var11.var_3d8.var_4c][var5] > 599) {
+                        if (Class_205.var_4aa + Class_205.toolUsingTimeStats[var11.var_3d8.var_4c][var5] > 599) {
                            return false;
                         }
 
                         var11.var_1a6 = var6;
-                        var11.sub_2da(Class_205.var_2a[var11.var_3d8.var_4c][var5], true);
+                        var11.sub_2da(Class_205.toolUsingTimeStats[var11.var_3d8.var_4c][var5], true);
                         if (var_a5a == 1 && var11.var_3d8.var_1bc[0] == 120) {
-                           var11.var_3d8.var_1bc[0] = Class_205.var_2a[var11.var_3d8.var_4c][var5];
+                           var11.var_3d8.var_1bc[0] = Class_205.toolUsingTimeStats[var11.var_3d8.var_4c][var5];
                         }
 
                         return false;
                      case 5:
-                        if (Class_205.var_4aa + Class_205.var_2a[var11.var_3d8.var_4c][var5] > 599) {
+                        if (Class_205.var_4aa + Class_205.toolUsingTimeStats[var11.var_3d8.var_4c][var5] > 599) {
                            return false;
                         }
 
@@ -1898,7 +1898,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                         }
 
                         var11.var_1a6 = var6;
-                        var11.sub_2da(Class_205.var_2a[var11.var_3d8.var_4c][var5], true);
+                        var11.sub_2da(Class_205.toolUsingTimeStats[var11.var_3d8.var_4c][var5], true);
                         return false;
                      }
                   }
@@ -2108,7 +2108,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
 
    private static byte sub_a94(Class_205 var0, byte var1) {
       byte var2 = -1;
-      if (Class_205.var_2a[var0.var_3d8.var_4c][var1] > 0) {
+      if (Class_205.toolUsingTimeStats[var0.var_3d8.var_4c][var1] > 0) {
          if (sub_bc9(var1) != 113 && sub_bc9(var1) != 114) {
             var2 = 4;
          } else {

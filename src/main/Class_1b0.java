@@ -17,13 +17,13 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
    public static byte var_12 = 7;
    public static byte var_a9 = 9;
    private static final Random var_e3 = new Random();
-   private static String[] var_f8 = new String[]{"abc", "pic1", "pic2", "pic3", "pic4", "pic5", "pic6"};
+   private static String[] mainImageNames = new String[]{"abc", "pic1", "pic2", "pic3", "pic4", "pic5", "pic6"};
    public static short var_12d;
    private static final short[][] var_13b = new short[][]{{64, 11, 116, 106, 54, 25, 64, 93, 46, 41, 54, 77}, {49, 0, 77, 15, 49, 112, 77, 127, 56, 15, 70, 112, 48, 26, 56, 42, 70, 25, 78, 42}, {49, 0, 77, 15, 49, 112, 77, 127, 56, 15, 70, 112, 43, 15, 82, 112, 37, 26, 43, 44, 82, 26, 92, 44}, {55, 8, 113, 118, 17, 38, 55, 78, 28, 38, 41, 78}, {34, 13, 49, 113, 31, 23, 34, 105}, {27, 0, 100, 127, 40, 0, 87, 127}, {4, 22, 30, 56, 20, 100, 30, 111, 13, 36, 30, 44, 20, 73, 30, 85, 30, 0, 48, 127}, {27, 0, 100, 127, 40, 47, 88, 94, 65, 68, 79, 79, 50, 54, 71, 55, 51, 70, 54, 77}, {43, 1, 111, 125, 1, 27, 43, 76, 13, 27, 25, 76, 83, 22, 94, 97, 56, 93, 66, 102}, {12, 11, 113, 116, 35, 32, 91, 92, 12, 45, 35, 82, 45, 92, 85, 116, 43, 11, 84, 32, 91, 44, 113, 83}, {42, 32, 81, 86, 34, 99, 89, 124, 57, 50, 64, 61, 51, 86, 73, 99}, {32, 10, 48, 118, 4, 47, 18, 81, 18, 16, 33, 110}, {11, 0, 48, 127, 24, 18, 48, 109}, {9, 1, 49, 126, 4, 22, 9, 37, 4, 91, 9, 104}, {11, 16, 29, 109, 11, 0, 48, 127}, {43, 6, 104, 120, 82, 6, 104, 120, 43, 105, 82, 120, 43, 6, 82, 22}, {29, 28, 99, 100, 29, 94, 35, 100, 29, 28, 35, 34, 93, 28, 99, 34, 93, 94, 99, 100}, {40, 21, 90, 37, 90, 37, 106, 85, 40, 85, 90, 100, 26, 37, 40, 85}, {28, 34, 102, 82, 11, 73, 28, 82, 11, 34, 28, 43, 48, 34, 82, 82, 102, 44, 118, 73}, {27, 0, 100, 127}, {0, 25, 37, 25, 52, 8, 118, 119, 118, 77, 126, 100, 62, 0, 105, 8, 62, 119, 105, 127, 37, 25, 37, 102, 0, 8, 52, 8, 0, 102, 37, 102, 0, 119, 52, 119, 118, 27, 126, 52}, {32, 32, 99, 87, 48, 50, 82, 60, 49, 73, 49, 87, 66, 73, 66, 87, 81, 73, 81, 87}, {12, 11, 113, 116, 35, 32, 91, 92}, {24, 24, 101, 101}};
    private static String allCharactersStr;
    public static boolean var_19d;
-   private static final Hashtable someTextBuffer = new Hashtable();
-   public static Image[] var_217;
+   private static final Hashtable gameTexts = new Hashtable();
+   public static Image[] mainImages;
    private static short var_279;
    private static short var_2a2;
    private static short[] var_2c7;
@@ -43,7 +43,7 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
       }
    }
 
-   public static void sub_5d(Graphics var0, short[] var1, int var2, int var3, int var4, int var5, int var6, int var7) {
+   public static void sub_5d(Graphics g, short[] var1, int var2, int var3, int var4, int var5, int var6, int var7) {
       int var8 = 0;
       int var9 = 0;
 
@@ -82,7 +82,7 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
                   }
                }
 
-               sub_47c(var0, var14, var3, var4 + (var8 - var2) * var7);
+               sub_47c(g, var14, var3, var4 + (var8 - var2) * var7);
             }
          }
 
@@ -390,31 +390,31 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
 
          var0.setClip(var3 + var13, var4 + var15, SomeLevelDataVariablesInterface.var_b6[var1][2] - var14 - var13, SomeLevelDataVariablesInterface.var_b6[var1][3] - var16 - var15);
          Image var18;
-         if ((var18 = var_217[SomeLevelDataVariablesInterface.var_b6[var1][5]]) != null) {
+         if ((var18 = mainImages[SomeLevelDataVariablesInterface.var_b6[var1][5]]) != null) {
             var0.drawImage(var18, var3 - var2 * SomeLevelDataVariablesInterface.var_b6[var1][2] - SomeLevelDataVariablesInterface.var_b6[var1][0], var4 - SomeLevelDataVariablesInterface.var_b6[var1][1] - var17 * SomeLevelDataVariablesInterface.var_b6[var1][3], 20);
          }
       }
    }
 
-   public static void sub_333(int var0) {
+   public static void loadMainImage(int imageIndex) {
       Class_3d.callGc();
 
       try {
-         if (var_217 == null) {
-            var_217 = new Image[7];
+         if (mainImages == null) {
+            mainImages = new Image[7];
          }
 
-         var_217[var0] = sub_352(var_f8[var0]);
+         mainImages[imageIndex] = loadImagePng(mainImageNames[imageIndex]);
       } catch (Exception var1) {
       }
 
       Class_3d.callGc();
    }
 
-   public static Image sub_352(String var0) {
+   public static Image loadImagePng(String imageName) {
       Class_3d.callGc();
       try {
-		return Image.createImage("/dat/" + var0 + ".png");
+		return Image.createImage("/dat/" + imageName + ".png");
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -424,7 +424,7 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
 
    public static void readCharactersFromLng() {
       Class_3d.callGc();
-      var_12d = (short)((byte)(var_217[0].getWidth() / var_12));
+      var_12d = (short)((byte)(mainImages[0].getWidth() / var_12));
       SomeLevelDataVariablesInterface.var_b6[43][4] = var_12d;
       DataInputStream dataStream = null;
 
@@ -500,15 +500,15 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
                         break;
                      case 275:
                         Class_178.var_b17 = var2 > 0;
-                        someTextBuffer.put(new Short(var3), var4);
+                        gameTexts.put(new Short(var3), var4);
                         break;
                      default:
-                        someTextBuffer.put(new Short(var3), var4);
+                        gameTexts.put(new Short(var3), var4);
                      }
                   } catch (NumberFormatException var7) {
                   }
                } else {
-                  someTextBuffer.put(new Short(var3), var4);
+                  gameTexts.put(new Short(var3), var4);
                }
             }
 
@@ -534,7 +534,7 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
 
    public static short[] readTextFromLng(short var0) {
       short[] fastResult;
-      if ((fastResult = (short[])((short[])someTextBuffer.get(new Short(var0)))) != null) {
+      if ((fastResult = (short[])((short[])gameTexts.get(new Short(var0)))) != null) {
          return fastResult;
       } else {
          DataInputStream dataStream = null;
