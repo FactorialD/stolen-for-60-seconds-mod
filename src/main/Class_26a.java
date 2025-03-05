@@ -4,7 +4,7 @@ import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
 
-public abstract class Class_26a extends Canvas implements SomeLevelDataVariablesInterface {
+public abstract class Class_26a extends Canvas implements LevelObjectData {
    public static int musicManagerPriorityLevel;
    public static int var_140 = 21;
    public static int var_1d5 = 22;

@@ -13,7 +13,7 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.rms.RecordStore;
 
-public final class Class_1b0 implements SomeLevelDataVariablesInterface {
+public final class Class_1b0 implements LevelObjectData {
    public static byte var_12 = 7;
    public static byte var_a9 = 9;
    private static final Random var_e3 = new Random();
@@ -381,26 +381,26 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
    }
 
    public static void sub_2e7(Graphics g, int var1, int var2, int var3, int var4, int var5, int var6, int var7, int var8) {
-      short var9 = SomeLevelDataVariablesInterface.var_b6[var1][2];
-      short var10 = SomeLevelDataVariablesInterface.var_b6[var1][3];
-      if (var3 + var9 > 0 && var3 < Class_b3.var_1d && var4 + var10 > 0 && var4 < Class_b3.var_b0) {
-         int var11 = var3 + var9 - Class_b3.var_1d;
-         int var12 = var4 + var10 - Class_b3.var_b0;
+      short var9 = LevelObjectData.var_b6[var1][2];
+      short var10 = LevelObjectData.var_b6[var1][3];
+      if (var3 + var9 > 0 && var3 < LevelManager.var_1d && var4 + var10 > 0 && var4 < LevelManager.var_b0) {
+         int var11 = var3 + var9 - LevelManager.var_1d;
+         int var12 = var4 + var10 - LevelManager.var_b0;
          int var13 = Math.max(var5, var3 < 0 ? -var3 : 0);
          int var14 = Math.max(var6, var11 > 0 ? var11 : 0);
          int var15 = Math.max(var7, var4 < 0 ? -var4 : 0);
          int var16 = Math.max(var8, var12 > 0 ? var12 : 0);
          int var17 = 0;
-         if (var2 >= SomeLevelDataVariablesInterface.var_b6[var1][4]) {
-            var17 = var2 / SomeLevelDataVariablesInterface.var_b6[var1][4];
-            var2 -= var17 * SomeLevelDataVariablesInterface.var_b6[var1][4];
+         if (var2 >= LevelObjectData.var_b6[var1][4]) {
+            var17 = var2 / LevelObjectData.var_b6[var1][4];
+            var2 -= var17 * LevelObjectData.var_b6[var1][4];
          }
 
-         g.setClip(var3 + var13, var4 + var15, SomeLevelDataVariablesInterface.var_b6[var1][2] - var14 - var13, SomeLevelDataVariablesInterface.var_b6[var1][3] - var16 - var15);
-         Image var18 = mainImages[SomeLevelDataVariablesInterface.var_b6[var1][5]];
+         g.setClip(var3 + var13, var4 + var15, LevelObjectData.var_b6[var1][2] - var14 - var13, LevelObjectData.var_b6[var1][3] - var16 - var15);
+         Image var18 = mainImages[LevelObjectData.var_b6[var1][5]];
          // maybe here loading maptiles
          if (var18 != null) {
-            g.drawImage(var18, var3 - var2 * SomeLevelDataVariablesInterface.var_b6[var1][2] - SomeLevelDataVariablesInterface.var_b6[var1][0], var4 - SomeLevelDataVariablesInterface.var_b6[var1][1] - var17 * SomeLevelDataVariablesInterface.var_b6[var1][3], 20);
+            g.drawImage(var18, var3 - var2 * LevelObjectData.var_b6[var1][2] - LevelObjectData.var_b6[var1][0], var4 - LevelObjectData.var_b6[var1][1] - var17 * LevelObjectData.var_b6[var1][3], 20);
          }
       }
    }
@@ -434,7 +434,7 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
    public static void readCharactersFromLng() {
       Class_3d.callGc();
       var_12d = (short)((byte)(mainImages[0].getWidth() / var_12));
-      SomeLevelDataVariablesInterface.var_b6[43][4] = var_12d;
+      LevelObjectData.var_b6[43][4] = var_12d;
       DataInputStream dataStream = null;
 
       try {
@@ -446,8 +446,8 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
          if (var_19d) {
             var_12 = (byte)Font.getDefaultFont().charWidth('W');
             var_a9 = (byte)Font.getDefaultFont().getHeight();
-            SomeLevelDataVariablesInterface.var_b6[43][2] = (short)var_12;
-            SomeLevelDataVariablesInterface.var_b6[43][3] = (short)var_a9;
+            LevelObjectData.var_b6[43][2] = (short)var_12;
+            LevelObjectData.var_b6[43][3] = (short)var_a9;
          }
 
          short var2 = dataStream.readShort();
@@ -609,7 +609,7 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
 
    public static void drawText(Graphics g, short[] textCodes, int var2, int var3, int var4, int var5) {
       if (var_19d && g != null) {
-         g.setClip(0, 0, Class_b3.var_1d, Class_b3.var_b0);
+         g.setClip(0, 0, LevelManager.var_1d, LevelManager.var_b0);
       }
 
       int var6 = var2;
@@ -622,7 +622,7 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
             }
 
             boolean var9;
-            if (var3 + var_a9 > 0 && var3 < Class_b3.var_b0 && (!(var9 = var4 != var5) && var6 + var_12 > 0 && var6 < Class_b3.var_1d || var9 && var6 >= var4 && var6 + var_12 <= var5)) {
+            if (var3 + var_a9 > 0 && var3 < LevelManager.var_b0 && (!(var9 = var4 != var5) && var6 + var_12 > 0 && var6 < LevelManager.var_1d || var9 && var6 >= var4 && var6 + var_12 <= var5)) {
                if (var_19d) {
                   try {
                      g.setColor(5, 5, 5);
@@ -753,10 +753,10 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
             Class_178.var_dc6 = var2.readByte();
             Class_178.var_e38 = var2.readInt();
             if (Class_178.var_dc6 != var3) {
-               Class_b3.loadLevel(Class_178.var_dc6);
+               LevelManager.loadLevel(Class_178.var_dc6);
             } else {
-               Class_b3.var_84c.clear();
-               Class_b3.sub_192(true);
+               LevelManager.var_84c.clear();
+               LevelManager.sub_192(true);
             }
 
             Class_178.var_d50.removeAllElements();
@@ -1161,20 +1161,20 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
 
             outStream.writeByte(Class_178.var_dc6);
             outStream.writeInt(Class_178.var_e38);
-            outStream.writeByte(Class_b3.var_c64);
+            outStream.writeByte(LevelManager.var_c64);
 
-            for(var3 = 0; var3 < Class_b3.var_7a3.length; ++var3) {
-               outStream.writeInt(Class_b3.var_7a3[var3]);
+            for(var3 = 0; var3 < LevelManager.var_7a3.length; ++var3) {
+               outStream.writeInt(LevelManager.var_7a3[var3]);
             }
 
-            outStream.writeInt(Class_b3.var_7f3);
-            var3 = Class_b3.var_99f.size();
+            outStream.writeInt(LevelManager.var_7f3);
+            var3 = LevelManager.var_99f.size();
             outStream.writeByte(var3);
 
             int var4;
             int var6;
             for(var4 = 0; var4 < var3; ++var4) {
-               Class_205 var5 = (Class_205)Class_b3.var_99f.elementAt(var4);
+               Class_205 var5 = (Class_205)LevelManager.var_99f.elementAt(var4);
                outStream.writeByte(var5.var_3a);
                outStream.write(var5.var_451);
 
@@ -1232,10 +1232,10 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
                }
             }
 
-            for(var26 = 0; var26 < Class_b3.mapWidth; ++var26) {
-               for(var6 = 0; var6 < Class_b3.mapHeight; ++var6) {
-                  SomeLevelDataCLass var29;
-                  if ((var29 = (SomeLevelDataCLass)Class_b3.someLevelDataHashMap.get(Class_b3.combineInts(var26, var6))) != null) {
+            for(var26 = 0; var26 < LevelManager.mapWidth; ++var26) {
+               for(var6 = 0; var6 < LevelManager.mapHeight; ++var6) {
+                  LevelObject var29;
+                  if ((var29 = (LevelObject)LevelManager.levelObjectsMap.get(LevelManager.combineInts(var26, var6))) != null) {
                      outStream.writeShort(var29.var_18d);
                      outStream.writeShort(var29.var_1a5);
                      outStream.writeByte(var29.var_22c);
@@ -1243,13 +1243,13 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
                }
             }
 
-            outStream.writeByte(Class_b3.var_84c.size());
-            Enumeration var28 = Class_b3.var_84c.elements();
+            outStream.writeByte(LevelManager.var_84c.size());
+            Enumeration var28 = LevelManager.var_84c.elements();
 
             while(var28.hasMoreElements()) {
-               SomeLevelDataCLass var31 = (SomeLevelDataCLass)var28.nextElement();
-               outStream.writeByte(var31.var_71);
-               outStream.writeByte(var31.var_119);
+               LevelObject var31 = (LevelObject)var28.nextElement();
+               outStream.writeByte(var31.x);
+               outStream.writeByte(var31.y);
                outStream.writeShort(var31.var_18d);
                outStream.writeShort(var31.var_1a5);
                outStream.writeByte(var31.var_1f5);
@@ -1341,14 +1341,14 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
                   }
 
                   Class_178.var_e38 = var2.readInt();
-                  Class_b3.var_c64 = var2.readByte();
+                  LevelManager.var_c64 = var2.readByte();
 
-                  for(int var4 = 0; var4 < Class_b3.var_7a3.length; ++var4) {
-                     Class_b3.var_7a3[var4] = var2.readInt();
+                  for(int var4 = 0; var4 < LevelManager.var_7a3.length; ++var4) {
+                     LevelManager.var_7a3[var4] = var2.readInt();
                   }
 
-                  Class_b3.var_7f3 = var2.readInt();
-                  Class_b3.var_99f.removeAllElements();
+                  LevelManager.var_7f3 = var2.readInt();
+                  LevelManager.var_99f.removeAllElements();
                   byte var33 = var2.readByte();
 
                   byte var6;
@@ -1356,7 +1356,7 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
                   for(var5 = 0; var5 < var33; ++var5) {
                      var6 = var2.readByte();
                      var7 = Class_178.var_d34[var6];
-                     Class_b3.var_99f.addElement(var7);
+                     LevelManager.var_99f.addElement(var7);
                      var2.read(var7.var_451);
 
                      for(int var8 = 0; var8 < var7.var_3fa.length; ++var8) {
@@ -1379,8 +1379,8 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
 
                   for(var35 = 1; var35 < Class_178.var_d34.length; ++var35) {
                      var7 = Class_178.var_d34[var35];
-                     byte var38 = Class_b3.someLevelDataVar1;
-                     byte var9 = Class_b3.someLevelDataVar2;
+                     byte var38 = LevelManager.someLevelDataVar1;
+                     byte var9 = LevelManager.someLevelDataVar2;
                      var7.sub_1e();
                      byte var10 = 0;
                      byte var11 = 0;
@@ -1402,8 +1402,8 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
                               }
 
                               if (var10 == 1) {
-                                 var38 = (byte)(var38 + Class_b3.var_3e7[0][var11]);
-                                 var9 = (byte)(var9 + Class_b3.var_3e7[1][var11]);
+                                 var38 = (byte)(var38 + LevelManager.var_3e7[0][var11]);
+                                 var9 = (byte)(var9 + LevelManager.var_3e7[1][var11]);
                               }
 
                               var7.var_39c.addElement(new Class_240(var38, var9, (byte)0, var11, (byte)0));
@@ -1418,10 +1418,10 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
                   }
 
                   int var37;
-                  SomeLevelDataCLass var39;
-                  for(var35 = 0; var35 < Class_b3.mapWidth; ++var35) {
-                     for(var37 = 0; var37 < Class_b3.mapHeight; ++var37) {
-                        if ((var39 = (SomeLevelDataCLass)Class_b3.someLevelDataHashMap.get(Class_b3.combineInts(var35, var37))) != null) {
+                  LevelObject var39;
+                  for(var35 = 0; var35 < LevelManager.mapWidth; ++var35) {
+                     for(var37 = 0; var37 < LevelManager.mapHeight; ++var37) {
+                        if ((var39 = (LevelObject)LevelManager.levelObjectsMap.get(LevelManager.combineInts(var35, var37))) != null) {
                            var39.var_18d = var2.readShort();
                            var39.var_1a5 = var2.readShort();
                            var39.var_22c = var2.readByte();
@@ -1429,14 +1429,14 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
                      }
                   }
 
-                  Class_b3.var_84c.clear();
+                  LevelManager.var_84c.clear();
                   var6 = var2.readByte();
 
                   for(var37 = 0; var37 < var6; ++var37) {
-                     (var39 = new SomeLevelDataCLass((byte)9, var2.readByte(), var2.readByte(), (byte)3, (byte)0, (byte)0, (byte)0)).var_18d = var2.readShort();
+                     (var39 = new LevelObject((byte)9, var2.readByte(), var2.readByte(), (byte)3, (byte)0, (byte)0, (byte)0)).var_18d = var2.readShort();
                      var39.var_1a5 = var2.readShort();
                      var39.var_1f5 = var2.readByte();
-                     Class_b3.var_84c.put(Class_b3.combineInts(var39.var_71, var39.var_119), var39);
+                     LevelManager.var_84c.put(LevelManager.combineInts(var39.x, var39.y), var39);
                   }
 
                   var26 = false;

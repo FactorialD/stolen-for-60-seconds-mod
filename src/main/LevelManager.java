@@ -6,7 +6,7 @@ import java.util.Vector;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
-public final class Class_b3 implements SomeLevelDataVariablesInterface {
+public final class LevelManager implements LevelObjectData {
    public static int var_1d;
    public static int var_b0;
    public static int var_cf;
@@ -41,10 +41,10 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
    public static int[] var_779 = new int[6];
    public static int[] var_7a3 = new int[7];
    public static int var_7f3;
-   public static final Hashtable someLevelDataHashMap = new Hashtable();
+   public static final Hashtable levelObjectsMap = new Hashtable();
    public static final Hashtable var_84c = new Hashtable();
    public static final Hashtable var_896 = new Hashtable();
-   public static final Hashtable var_8dc = new Hashtable();
+   public static final Hashtable alarmWithZonesMap = new Hashtable();
    public static final Hashtable var_8ff = new Hashtable();
    public static byte var_953;
    public static byte var_96a;
@@ -101,17 +101,17 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
       } else {
          Class_178.musicManager.switchMusicPlayer(3, -1);
          var_25f = null;
-         Class_178.sub_187(10L);
+         Class_178.threadSleep(10L);
          var_2a1 = null;
          Class_178.sub_3b5(0);
          sub_c2();
          Class_3d.callGc();
-         Class_178.sub_187(50L);
+         Class_178.threadSleep(50L);
          Class_178.var_26f = 1;
          var_25f = Image.createImage(var_1d, var_b0);
          var_2a1 = var_25f.getGraphics();
          Class_3d.callGc();
-         Class_178.sub_187(10L);
+         Class_178.threadSleep(10L);
          Class_178.var_ff4 = null;
          var_a93 = false;
          var_aad = false;
@@ -143,7 +143,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
             Class_178.var_d82.addElement(var0.nextElement());
          }
 
-         sub_140(var_8dc, var_8ff);
+         sub_140(alarmWithZonesMap, var_8ff);
          sub_f0(var_84c, var_896);
          var_84c.clear();
          sub_192(false);
@@ -185,21 +185,21 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
 
          var0 = Class_1b0.mainImages[5].getHeight() * Class_1b0.mainImages[5].getWidth() / 576;
 
-         for(var1 = 0; var1 < SomeLevelDataVariablesInterface.var_da.length; ++var1) {
-            for(var2 = 0; var2 < var_64c[var1].length && SomeLevelDataVariablesInterface.var_da[var1][0] >= var0; ++var2) {
+         for(var1 = 0; var1 < LevelObjectData.var_da.length; ++var1) {
+            for(var2 = 0; var2 < var_64c[var1].length && LevelObjectData.var_da[var1][0] >= var0; ++var2) {
                if (var_64c[var1][0] == -1) {
-                  SomeLevelDataVariablesInterface.var_da[var1][0] = SomeLevelDataVariablesInterface.var_da[var1][1] = SomeLevelDataVariablesInterface.var_da[var1][2] = SomeLevelDataVariablesInterface.var_da[var1][3] = (byte)var0;
-                  SomeLevelDataVariablesInterface.var_da[var1][4] = -1;
+                  LevelObjectData.var_da[var1][0] = LevelObjectData.var_da[var1][1] = LevelObjectData.var_da[var1][2] = LevelObjectData.var_da[var1][3] = (byte)var0;
+                  LevelObjectData.var_da[var1][4] = -1;
                   break;
                }
 
-               SomeLevelDataVariablesInterface.var_da[var1][0] = SomeLevelDataVariablesInterface.var_da[var_64c[var1][var2 + 1]][0];
-               SomeLevelDataVariablesInterface.var_da[var1][1] = SomeLevelDataVariablesInterface.var_da[var_64c[var1][var2 + 1]][1];
-               SomeLevelDataVariablesInterface.var_da[var1][2] = SomeLevelDataVariablesInterface.var_da[var_64c[var1][var2 + 1]][2];
-               SomeLevelDataVariablesInterface.var_da[var1][3] = SomeLevelDataVariablesInterface.var_da[var_64c[var1][var2 + 1]][3];
-               SomeLevelDataVariablesInterface.var_da[var1][5] = Class_1b0.sub_6b7(SomeLevelDataVariablesInterface.var_da[var1][5], (byte)6, Class_1b0.sub_678(SomeLevelDataVariablesInterface.var_da[var_64c[var1][var2 + 1]][5], (byte)6));
-               SomeLevelDataVariablesInterface.var_da[var1][5] = Class_1b0.sub_6b7(SomeLevelDataVariablesInterface.var_da[var1][5], (byte)7, Class_1b0.sub_678(SomeLevelDataVariablesInterface.var_da[var_64c[var1][var2 + 1]][5], (byte)7));
-               SomeLevelDataVariablesInterface.var_da[var1][6] = SomeLevelDataVariablesInterface.var_da[var_64c[var1][var2 + 1]][6];
+               LevelObjectData.var_da[var1][0] = LevelObjectData.var_da[var_64c[var1][var2 + 1]][0];
+               LevelObjectData.var_da[var1][1] = LevelObjectData.var_da[var_64c[var1][var2 + 1]][1];
+               LevelObjectData.var_da[var1][2] = LevelObjectData.var_da[var_64c[var1][var2 + 1]][2];
+               LevelObjectData.var_da[var1][3] = LevelObjectData.var_da[var_64c[var1][var2 + 1]][3];
+               LevelObjectData.var_da[var1][5] = Class_1b0.sub_6b7(LevelObjectData.var_da[var1][5], (byte)6, Class_1b0.sub_678(LevelObjectData.var_da[var_64c[var1][var2 + 1]][5], (byte)6));
+               LevelObjectData.var_da[var1][5] = Class_1b0.sub_6b7(LevelObjectData.var_da[var1][5], (byte)7, Class_1b0.sub_678(LevelObjectData.var_da[var_64c[var1][var2 + 1]][5], (byte)7));
+               LevelObjectData.var_da[var1][6] = LevelObjectData.var_da[var_64c[var1][var2 + 1]][6];
             }
          }
 
@@ -212,11 +212,11 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
       Enumeration var2 = var0.elements();
 
       while(var2.hasMoreElements()) {
-         SomeLevelDataCLass var3 = (SomeLevelDataCLass)var2.nextElement();
-         SomeLevelDataCLass var4;
-         (var4 = new SomeLevelDataCLass(var3.var_4c, var3.var_71, var3.var_119, var3.var_163, (byte)0, var3.var_1f5, var3.var_22c)).var_18d = var3.var_18d;
+         LevelObject var3 = (LevelObject)var2.nextElement();
+         LevelObject var4;
+         (var4 = new LevelObject(var3.objectType, var3.x, var3.y, var3.var_163, (byte)0, var3.var_1f5, var3.var_22c)).var_18d = var3.var_18d;
          var4.var_1a5 = var3.var_1a5;
-         var1.put(combineInts(var3.var_71, var3.var_119), var4);
+         var1.put(combineInts(var3.x, var3.y), var4);
       }
 
    }
@@ -292,10 +292,10 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
    }
 
    public static void sub_192(boolean var0) {
-      Enumeration var1 = someLevelDataHashMap.elements();
+      Enumeration var1 = levelObjectsMap.elements();
 
       while(var1.hasMoreElements()) {
-         ((SomeLevelDataCLass)var1.nextElement()).sub_c6(var0);
+         ((LevelObject)var1.nextElement()).sub_c6(var0);
       }
 
    }
@@ -311,70 +311,79 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
 
    public static void loadLevel(byte level) {
       someLevelDataVarLast = 180;
-      someLevelDataHashMap.clear();
+      levelObjectsMap.clear();
       var_84c.clear();
-      var_8dc.clear();
+      alarmWithZonesMap.clear();
       DataInputStream dataConfig = null;
 
       try {
-    	 // First two bytes in level is his length in bytes
-    	 // Two next bytes is height and width
+    	 dataConfig = Class_1b0.getLevelDataStream(level);
+    	 // Two first bytes is height and width
     	  
     	 // Read height and width
-         mapWidth = (dataConfig = Class_1b0.getLevelDataStream(level)).readByte();
-
+         mapWidth = dataConfig.readByte();
          mapHeight = dataConfig.readByte();
          
          mapArray = new byte[mapWidth][mapHeight];
          byte[] levelDataBytesBuffer = new byte[mapWidth * mapHeight];
          dataConfig.readFully(levelDataBytesBuffer);
-         int tmpCounter = 0;
+         
 
          // Filling map array with data from dataBytes
-         int j;
+         int tmpCounter = 0;
          for(int i = 0; i < mapHeight; ++i) {
-            for(j = 0; j < mapWidth; ++j) {
+            for(int j = 0; j < mapWidth; ++j) {
                mapArray[j][i] = levelDataBytesBuffer[tmpCounter++];
             }
          }
 
          // Read next two bytes as 16-bit number
-         // Then multiply it by 7 and read next such count of bytes
-         short someDataLength;
-         levelDataBytesBuffer = new byte[(someDataLength = dataConfig.readShort()) * 7];
+         // Then multiply it by 7 and thus get length of next data block
+         // Read this data block
+         short dataBlock1 = dataConfig.readShort();
+         levelDataBytesBuffer = new byte[dataBlock1  * 7];
          dataConfig.readFully(levelDataBytesBuffer);
 
          // Puts in HashTable object,
-         // where key is second and third bytes, paired in one Short,
+         // where key is second and third bytes, paired in one Short, (coordinates of game object)
          // and value is object with data of 1-7 bytes
-         for(tmpCounter = 0; tmpCounter < someDataLength; ++tmpCounter) {
+         for(tmpCounter = 0; tmpCounter < dataBlock1; ++tmpCounter) {
             int index = tmpCounter * 7;
-            someLevelDataHashMap.put(combineInts(levelDataBytesBuffer[index + 1], levelDataBytesBuffer[index + 2]), new SomeLevelDataCLass(levelDataBytesBuffer[index++], levelDataBytesBuffer[index++], levelDataBytesBuffer[index++], levelDataBytesBuffer[index++], levelDataBytesBuffer[index++], levelDataBytesBuffer[index++], levelDataBytesBuffer[index]));
+            levelObjectsMap.put(
+            		combineInts(levelDataBytesBuffer[index + 1], levelDataBytesBuffer[index + 2]), //hash key is coordinates
+            		new LevelObject(
+            				levelDataBytesBuffer[index++], //type of object
+            				levelDataBytesBuffer[index++], //x
+            				levelDataBytesBuffer[index++], //y
+            				levelDataBytesBuffer[index++], 
+            				levelDataBytesBuffer[index++], 
+            				levelDataBytesBuffer[index++], 
+            				levelDataBytesBuffer[index]));
          }
 
-         // Read next byte
-         byte var24 = dataConfig.readByte();
+         // Read next byte for next data block length
+         // it is count of alarms with zones 
+         byte alarms = dataConfig.readByte();
 
          // for that byte, read next 2 bytes and combine them
-         
-         for(tmpCounter = 0; tmpCounter < var24; ++tmpCounter) {
-            Integer var6 = combineInts(dataConfig.readByte(), dataConfig.readByte());
+         for(tmpCounter = 0; tmpCounter < alarms; ++tmpCounter) {
+            Integer alarmCoods = combineInts(dataConfig.readByte(), dataConfig.readByte());
             
-            // then read next byte
+            // then read next byte (its count of alarm zones)
             // and for that byte create new buffer of its size
-            // and from that buffer read paired bytes in HashTable
-            byte var7;
-            levelDataBytesBuffer = new byte[var7 = dataConfig.readByte()];
+            // and from that buffer read paired bytes in HashTable (coords of alarm zones)
+            byte alarmZonesCount = dataConfig.readByte();
+            levelDataBytesBuffer = new byte[alarmZonesCount];
             dataConfig.readFully(levelDataBytesBuffer);
 
-            for(int i = 0; i < var7; i += 2) {
-               var_8dc.put(combineInts(levelDataBytesBuffer[i], levelDataBytesBuffer[i + 1]), var6);
+            for(int i = 0; i < alarmZonesCount; i += 2) {
+               alarmWithZonesMap.put(combineInts(levelDataBytesBuffer[i], levelDataBytesBuffer[i + 1]), alarmCoods);
             }
          }
          
          //read next byte and if it > 0
          // then read 2 more bytes and write it to some variables
-         // then read (skip) one byte and write one more byte to some variable
+         // then read (skip) one short and write one more byte to some variable
 
          if (dataConfig.readByte() > 0) {
             someLevelDataVar1 = (byte)dataConfig.readShort();
@@ -402,15 +411,15 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
 
       var_779 = new int[6];
       Hashtable var18 = new Hashtable();
-      Enumeration var22 = someLevelDataHashMap.elements();
+      Enumeration var22 = levelObjectsMap.elements();
 
-      SomeLevelDataCLass var20;
+      LevelObject var20;
       Integer var21;
       Integer[] var25;
       while(var22.hasMoreElements()) {
-         var20 = (SomeLevelDataCLass)var22.nextElement();
+         var20 = (LevelObject)var22.nextElement();
          var25 = new Integer[3];
-         if (var20.var_22c > 0 && var20.var_1f5 != 0 && Class_1b0.sub_678(SomeLevelDataVariablesInterface.var_da[var20.var_4c][5], (byte)4)) {
+         if (var20.var_22c > 0 && var20.var_1f5 != 0 && Class_1b0.sub_678(LevelObjectData.var_da[var20.objectType][5], (byte)4)) {
             var21 = combineInts(var20.var_1f5, var20.var_22c);
             if (var18.containsKey(var21)) {
                (var25 = (Integer[])((Integer[])var18.get(var21)))[0] = new Integer(var20.var_22c);
@@ -427,7 +436,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
          }
       }
 
-      var22 = someLevelDataHashMap.elements();
+      var22 = levelObjectsMap.elements();
 
       while(true) {
          while(true) {
@@ -436,11 +445,11 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                   do {
                      do {
                         if (!var22.hasMoreElements()) {
-                           var22 = someLevelDataHashMap.elements();
+                           var22 = levelObjectsMap.elements();
 
                            while(var22.hasMoreElements()) {
-                              var20 = (SomeLevelDataCLass)var22.nextElement();
-                              if (Class_1b0.sub_678(SomeLevelDataVariablesInterface.var_da[var20.var_4c][5], (byte)4) && var20.var_1f5 < 6) {
+                              var20 = (LevelObject)var22.nextElement();
+                              if (Class_1b0.sub_678(LevelObjectData.var_da[var20.objectType][5], (byte)4) && var20.var_1f5 < 6) {
                                  int[] var27 = var_779;
                                  var27[0] += var20.var_22c * var_71c[var20.var_1f5][0];
                                  var27 = var_779;
@@ -453,9 +462,9 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                            someLevelDataVarLast = levelAdditionalData_TimerEtc[level - 1][0] + Class_1b0.sub_21(0, 10);
                            return;
                         }
-                     } while((var20 = (SomeLevelDataCLass)var22.nextElement()).var_22c <= 0);
+                     } while((var20 = (LevelObject)var22.nextElement()).var_22c <= 0);
                   } while(var20.var_1f5 == 0);
-               } while(!Class_1b0.sub_678(SomeLevelDataVariablesInterface.var_da[var20.var_4c][5], (byte)4));
+               } while(!Class_1b0.sub_678(LevelObjectData.var_da[var20.objectType][5], (byte)4));
 
                var21 = combineInts(var20.var_1f5, var20.var_22c);
             } while(!var18.containsKey(var21));
@@ -525,26 +534,26 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
    }
 
    private static void sub_2d2(Graphics g) {
-      g.setClip(0, var_b0 - SomeLevelDataVariablesInterface.var_b6[9][3], var_1d, SomeLevelDataVariablesInterface.var_b6[9][3]);
+      g.setClip(0, var_b0 - LevelObjectData.var_b6[9][3], var_1d, LevelObjectData.var_b6[9][3]);
       g.drawImage(var_25f, 0, 0, 0);
       if (var_a5a == 1 && var_983 != null && var_983.var_3d8 != null && var_983.sub_311()) {
-         byte var1 = var_983.var_1a6 == 5 ? 1 : var_983.var_3d8.var_4c;
+         byte var1 = var_983.var_1a6 == 5 ? 1 : var_983.var_3d8.objectType;
          byte var2 = var_983.var_1a6 == 3 ? 8 : Class_205.toolUsingTimeStats[var1][Class_178.sub_e5c(var_983.var_451[var_983.var_47f])];
          var_983.var_3d8.sub_92(g, var2, var_983.var_1a6 != 3);
       }
 
       if (var_983 != null) {
          int var9 = var_1d < 130 ? 2 : 4;
-         Class_1b0.sub_2db(g, (byte)24, 0, var9, var_b0 - SomeLevelDataVariablesInterface.var_b6[24][3]);
-         Class_1b0.sub_2db(g, (byte)5, var_983.var_3a, var9 + (SomeLevelDataVariablesInterface.var_b6[24][2] >> 1) - (SomeLevelDataVariablesInterface.var_b6[5][2] >> 1), var_b0 - SomeLevelDataVariablesInterface.var_b6[24][3] + (SomeLevelDataVariablesInterface.var_b6[24][3] >> 1) - (SomeLevelDataVariablesInterface.var_b6[5][3] >> 1) + 1);
+         Class_1b0.sub_2db(g, (byte)24, 0, var9, var_b0 - LevelObjectData.var_b6[24][3]);
+         Class_1b0.sub_2db(g, (byte)5, var_983.var_3a, var9 + (LevelObjectData.var_b6[24][2] >> 1) - (LevelObjectData.var_b6[5][2] >> 1), var_b0 - LevelObjectData.var_b6[24][3] + (LevelObjectData.var_b6[24][3] >> 1) - (LevelObjectData.var_b6[5][3] >> 1) + 1);
          if (var_a5a == 0 && Class_178.var_80 > 6 && var_983.var_29a < var_983.var_2d2) {
-            int var10 = var_b0 - SomeLevelDataVariablesInterface.var_b6[9][3];
-            int var3 = SomeLevelDataVariablesInterface.var_b6[9][3] - SomeLevelDataVariablesInterface.var_b6[26][3] + 1 >> 1;
+            int var10 = var_b0 - LevelObjectData.var_b6[9][3];
+            int var3 = LevelObjectData.var_b6[9][3] - LevelObjectData.var_b6[26][3] + 1 >> 1;
             int var4;
-            int var5 = (var4 = var9 + SomeLevelDataVariablesInterface.var_b6[24][2] + var9) + 1;
+            int var5 = (var4 = var9 + LevelObjectData.var_b6[24][2] + var9) + 1;
             int var6 = var10 + var3 + 1;
-            int var7 = SomeLevelDataVariablesInterface.var_b6[25][2] - 2;
-            int var8 = SomeLevelDataVariablesInterface.var_b6[25][3] - 2;
+            int var7 = LevelObjectData.var_b6[25][2] - 2;
+            int var8 = LevelObjectData.var_b6[25][3] - 2;
             Class_1b0.sub_2db(g, (byte)25, 0, var4, var10 + var3);
             g.setColor(0);
             g.setClip(0, 0, var_1d, var_b0);
@@ -555,8 +564,8 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
    }
 
    public static void sub_2df(Graphics var0, boolean var1) {
-      int var2 = var_b0 - SomeLevelDataVariablesInterface.var_b6[9][3];
-      int var3 = SomeLevelDataVariablesInterface.var_b6[9][3] - SomeLevelDataVariablesInterface.var_b6[26][3] + 1 >> 1;
+      int var2 = var_b0 - LevelObjectData.var_b6[9][3];
+      int var3 = LevelObjectData.var_b6[9][3] - LevelObjectData.var_b6[26][3] + 1 >> 1;
       int var4 = 0;
       int var5 = var_1d < 130 ? 2 : 4;
       if (var_983 == null) {
@@ -565,18 +574,18 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
 
       while(var4 < var_1d) {
          Class_1b0.sub_2db(var0, (byte)(var1 ? 9 : 12), 0, var4, var2);
-         var4 += SomeLevelDataVariablesInterface.var_b6[var1 ? 9 : 12][2];
+         var4 += LevelObjectData.var_b6[var1 ? 9 : 12][2];
       }
 
       if (var_983 != null) {
-         Class_1b0.sub_2db(var0, (byte)24, 0, var5, var_b0 - SomeLevelDataVariablesInterface.var_b6[24][3]);
-         Class_1b0.sub_2db(var0, (byte)5, var_983.var_3a, var5 + (SomeLevelDataVariablesInterface.var_b6[24][2] >> 1) - (SomeLevelDataVariablesInterface.var_b6[5][2] >> 1), var_b0 - SomeLevelDataVariablesInterface.var_b6[24][3] + (SomeLevelDataVariablesInterface.var_b6[24][3] >> 1) - (SomeLevelDataVariablesInterface.var_b6[5][3] >> 1) + 1);
-         int var6 = (var4 = var5 + SomeLevelDataVariablesInterface.var_b6[24][2] + var5) + 1;
+         Class_1b0.sub_2db(var0, (byte)24, 0, var5, var_b0 - LevelObjectData.var_b6[24][3]);
+         Class_1b0.sub_2db(var0, (byte)5, var_983.var_3a, var5 + (LevelObjectData.var_b6[24][2] >> 1) - (LevelObjectData.var_b6[5][2] >> 1), var_b0 - LevelObjectData.var_b6[24][3] + (LevelObjectData.var_b6[24][3] >> 1) - (LevelObjectData.var_b6[5][3] >> 1) + 1);
+         int var6 = (var4 = var5 + LevelObjectData.var_b6[24][2] + var5) + 1;
          int var7 = var2 + var3 + 1;
-         int var8 = SomeLevelDataVariablesInterface.var_b6[25][2] - 2;
-         int var9 = SomeLevelDataVariablesInterface.var_b6[25][3] - 2;
+         int var8 = LevelObjectData.var_b6[25][2] - 2;
+         int var9 = LevelObjectData.var_b6[25][3] - 2;
          Class_1b0.sub_2db(var0, (byte)25, 0, var4, var2 + var3);
-         var4 += SomeLevelDataVariablesInterface.var_b6[25][2] + var5;
+         var4 += LevelObjectData.var_b6[25][2] + var5;
 
          for(int var10 = 0; var10 < var_983.var_451.length; ++var10) {
             Class_1b0.sub_2db(var0, (byte)26, 0, var4, var2 + var3);
@@ -584,7 +593,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                Class_1b0.sub_2db(var0, (byte)8, Class_178.sub_e5c(var_983.var_451[var10]), var4 + 2, var2 + var3 + 2);
             }
 
-            var4 += SomeLevelDataVariablesInterface.var_b6[26][2] + var5;
+            var4 += LevelObjectData.var_b6[26][2] + var5;
          }
 
          var0.setColor(0);
@@ -592,8 +601,8 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
          var0.fillRect(var6, var7, var8, var9 - var9 * var_983.var_29a / thiefStats[var_983.var_3a][0]);
       } else {
          Class_19e.sub_388(var0, 2, var2 + Class_19e.var_ac, 1, 4);
-         var4 = 2 + SomeLevelDataVariablesInterface.var_b6[38][2] + 5;
-         Class_1b0.sub_47c(var0, Class_1b0.readTextFromLng((short)262), var4, var2 + (SomeLevelDataVariablesInterface.var_b6[9][3] >> 1) - (Class_1b0.var_a9 >> 1));
+         var4 = 2 + LevelObjectData.var_b6[38][2] + 5;
+         Class_1b0.sub_47c(var0, Class_1b0.readTextFromLng((short)262), var4, var2 + (LevelObjectData.var_b6[9][3] >> 1) - (Class_1b0.var_a9 >> 1));
       }
    }
 
@@ -614,21 +623,21 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
             int var7 = Class_1b0.var_a9 + 4;
             var0.setClip(0, 0, var_1d, var_b0);
             var0.setColor(11446175);
-            var0.fillRect(var_1d - var6 - 2, var_b0 - SomeLevelDataVariablesInterface.var_b6[9][3] - var7 + 4, var6, var7);
+            var0.fillRect(var_1d - var6 - 2, var_b0 - LevelObjectData.var_b6[9][3] - var7 + 4, var6, var7);
             if (Class_205.var_4aa > var3 && Class_178.var_80 > 6) {
                var0.setColor(16711680);
-               var0.fillRect(var_1d - var6 - 2, var_b0 - SomeLevelDataVariablesInterface.var_b6[9][3] - var7 + 4, var6, var7);
+               var0.fillRect(var_1d - var6 - 2, var_b0 - LevelObjectData.var_b6[9][3] - var7 + 4, var6, var7);
             }
 
-            Class_1b0.sub_46a(var0, var5, var_1d - var6 - 2 + (var6 - var5.length() * Class_1b0.var_12 >> 1), var_b0 - SomeLevelDataVariablesInterface.var_b6[9][3] - var7 + 2 + 4);
+            Class_1b0.sub_46a(var0, var5, var_1d - var6 - 2 + (var6 - var5.length() * Class_1b0.var_12 >> 1), var_b0 - LevelObjectData.var_b6[9][3] - var7 + 2 + 4);
          } else {
-            Class_1b0.sub_2db(var0, (byte)27, 0, var_1d - SomeLevelDataVariablesInterface.var_b6[27][2] - 2, var_b0 - SomeLevelDataVariablesInterface.var_b6[9][3] - 10);
+            Class_1b0.sub_2db(var0, (byte)27, 0, var_1d - LevelObjectData.var_b6[27][2] - 2, var_b0 - LevelObjectData.var_b6[9][3] - 10);
             if (Class_205.var_4aa > var3 && Class_178.var_80 > 6) {
                var0.setColor(16711680);
-               var0.fillRect(var_1d - SomeLevelDataVariablesInterface.var_b6[27][2] - 2 + 4, var_b0 - SomeLevelDataVariablesInterface.var_b6[9][3] - 10 + 4, SomeLevelDataVariablesInterface.var_b6[27][2] - 8, SomeLevelDataVariablesInterface.var_b6[27][3] - 4);
+               var0.fillRect(var_1d - LevelObjectData.var_b6[27][2] - 2 + 4, var_b0 - LevelObjectData.var_b6[9][3] - 10 + 4, LevelObjectData.var_b6[27][2] - 8, LevelObjectData.var_b6[27][3] - 4);
             }
 
-            Class_1b0.sub_46a(var0, var5, var_1d - SomeLevelDataVariablesInterface.var_b6[27][2] - 2 + (SomeLevelDataVariablesInterface.var_b6[27][2] - 4 * Class_1b0.var_12 >> 1), var_b0 - SomeLevelDataVariablesInterface.var_b6[9][3] - 10 + 4);
+            Class_1b0.sub_46a(var0, var5, var_1d - LevelObjectData.var_b6[27][2] - 2 + (LevelObjectData.var_b6[27][2] - 4 * Class_1b0.var_12 >> 1), var_b0 - LevelObjectData.var_b6[9][3] - 10 + 4);
          }
       }
    }
@@ -636,17 +645,17 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
    private static void sub_38e(Graphics var0) {
       if (var_a5a == 1) {
          Class_1b0.sub_2db(var0, (byte)(var_d39 ? 20 : 21), 0, var_cdc + 17, var_cf8 + 19);
-         Class_1b0.sub_2db(var0, (byte)(var_d55 ? 22 : 23), 0, var_cdc + 17, var_cf8 + 5 - SomeLevelDataVariablesInterface.var_b6[var_d55 ? 22 : 23][3]);
+         Class_1b0.sub_2db(var0, (byte)(var_d55 ? 22 : 23), 0, var_cdc + 17, var_cf8 + 5 - LevelObjectData.var_b6[var_d55 ? 22 : 23][3]);
       }
 
    }
 
    private static void sub_3a8(Graphics var0) {
       if (var_a5a == 1) {
-         Class_1b0.sub_2e7(var0, 10, 0, var_cdc, var_cf8, 0, 0, 0, var_cf8 + SomeLevelDataVariablesInterface.var_b6[46][3] - var_cf);
+         Class_1b0.sub_2e7(var0, 10, 0, var_cdc, var_cf8, 0, 0, 0, var_cf8 + LevelObjectData.var_b6[46][3] - var_cf);
          Class_1b0.sub_2db(var0, (byte)14, 0, var_d80, var_dc9);
       } else if (var_2c9 && var_cf8 <= var_cf) {
-         Class_1b0.sub_2e7(var_2a1, 46, 0, var_cdc, var_cf8, 0, 0, 0, var_cf8 + SomeLevelDataVariablesInterface.var_b6[46][3] - var_cf);
+         Class_1b0.sub_2e7(var_2a1, 46, 0, var_cdc, var_cf8, 0, 0, 0, var_cf8 + LevelObjectData.var_b6[46][3] - var_cf);
          var_2a1.setClip(0, 0, var_1d, var_b0);
       }
    }
@@ -658,7 +667,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
       }
 
       if (var_e52 != 4) {
-         var_d80 = -SomeLevelDataVariablesInterface.var_b6[14][2];
+         var_d80 = -LevelObjectData.var_b6[14][2];
          var_dc9 = var_cf8;
       }
 
@@ -692,7 +701,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
          break;
       case 4:
          int var0;
-         if ((var0 = var_1dc + someLevelDataVar1 * 24 - 12 - 4 - (var_d80 + SomeLevelDataVariablesInterface.var_b6[14][2])) > 0) {
+         if ((var0 = var_1dc + someLevelDataVar1 * 24 - 12 - 4 - (var_d80 + LevelObjectData.var_b6[14][2])) > 0) {
             var_d80 += Math.max(var_de4, 1);
             if (var0 < 15) {
                --var_de4;
@@ -749,7 +758,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
             var1 = var_84c.elements();
 
             while(var1.hasMoreElements()) {
-               ((SomeLevelDataCLass)var1.nextElement()).sub_59(var0);
+               ((LevelObject)var1.nextElement()).sub_59(var0);
             }
          }
 
@@ -757,8 +766,8 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
             var1 = var_84c.elements();
 
             while(var1.hasMoreElements()) {
-               SomeLevelDataCLass var2;
-               if ((var2 = (SomeLevelDataCLass)var1.nextElement()).var_18d - 5 <= Class_205.var_4aa) {
+               LevelObject var2;
+               if ((var2 = (LevelObject)var1.nextElement()).var_18d - 5 <= Class_205.var_4aa) {
                   var2.sub_59(var0);
                }
             }
@@ -841,10 +850,10 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                }
 
                Integer var22 = combineInts(var20, var24);
-               SomeLevelDataCLass var25 = null;
+               LevelObject var25 = null;
                boolean var14 = false;
-               if (someLevelDataHashMap.containsKey(var22)) {
-                  var14 = (var25 = (SomeLevelDataCLass)someLevelDataHashMap.get(var22)) != null && (var25.var_4c == 1 || var25.var_4c == 2);
+               if (levelObjectsMap.containsKey(var22)) {
+                  var14 = (var25 = (LevelObject)levelObjectsMap.get(var22)) != null && (var25.objectType == 1 || var25.objectType == 2);
                }
 
                if (!var14 || var_a5a == 0) {
@@ -855,8 +864,8 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                   Class_1b0.sub_2db(var_2a1, (byte)var1, var2, var_1dc + var20 * 24, var_1fb + var24 * 24);
                }
 
-               if (var_a5a == 0 && var_8dc.containsKey(var22) && var_7f3 == 0) {
-                  Class_1b0.sub_2db(var_2a1, (byte)var1, (byte)(15 + ((SomeLevelDataCLass)someLevelDataHashMap.get(var_8dc.get(var22))).var_22c), var_1dc + var20 * 24, var_1fb + var24 * 24);
+               if (var_a5a == 0 && alarmWithZonesMap.containsKey(var22) && var_7f3 == 0) {
+                  Class_1b0.sub_2db(var_2a1, (byte)var1, (byte)(15 + ((LevelObject)levelObjectsMap.get(alarmWithZonesMap.get(var22))).var_22c), var_1dc + var20 * 24, var_1fb + var24 * 24);
                }
 
                if (var25 != null) {
@@ -933,8 +942,8 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
          if ((var3 = mapArray[var0][var1]) <= 12) {
             return var3;
          } else {
-            SomeLevelDataCLass var4;
-            if ((var4 = (SomeLevelDataCLass)someLevelDataHashMap.get(combineInts(var0, var1))) != null && (var4.var_4c == 1 || var4.var_4c == 2)) {
+            LevelObject var4;
+            if ((var4 = (LevelObject)levelObjectsMap.get(combineInts(var0, var1))) != null && (var4.objectType == 1 || var4.objectType == 2)) {
                var3 = 12;
             }
 
@@ -996,21 +1005,21 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
       } else {
          Integer var2 = combineInts(Class_205.var_4ca, Class_205.var_51f);
          boolean var3;
-         if (var3 = someLevelDataHashMap.containsKey(var2)) {
-            SomeLevelDataCLass var4;
-            if ((var4 = (SomeLevelDataCLass)someLevelDataHashMap.get(var2)).var_4c == 20 || var4.var_4c == 25) {
+         if (var3 = levelObjectsMap.containsKey(var2)) {
+            LevelObject var4;
+            if ((var4 = (LevelObject)levelObjectsMap.get(var2)).objectType == 20 || var4.objectType == 25) {
                return false;
             }
 
-            if (var4.var_4c == 6 && (var_7f3 > 0 || var4.var_18d > 0 && var4.var_18d <= Class_205.var_4aa)) {
+            if (var4.objectType == 6 && (var_7f3 > 0 || var4.var_18d > 0 && var4.var_18d <= Class_205.var_4aa)) {
                return false;
             }
 
-            if (var4.var_4c == 4 && var1 && (var_7a3[5] > 0 || var4.var_18d > 0 && var4.var_18d <= Class_205.var_4aa)) {
+            if (var4.objectType == 4 && var1 && (var_7a3[5] > 0 || var4.var_18d > 0 && var4.var_18d <= Class_205.var_4aa)) {
                return false;
             }
 
-            if (var4.var_4c == 1 || var4.var_4c == 2) {
+            if (var4.objectType == 1 || var4.objectType == 2) {
                if (!var1 && var4.var_1bc[0] <= 0) {
                   return false;
                }
@@ -1026,7 +1035,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
    }
 
    private static void sub_538(Integer var0) {
-      if (var_8dc.containsKey(var0)) {
+      if (alarmWithZonesMap.containsKey(var0)) {
          if (Class_178.var_5bb == -1) {
             var_c64 = 5;
             Class_178.sub_2c8((byte)39, (byte[])null, (short)156, (Object[])null, new short[]{126}, (short)137);
@@ -1231,17 +1240,17 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                                        break label210;
                                     }
 
-                                    if (var1.var_3d8.var_4c == 6) {
-                                       Integer var2 = combineInts(var1.var_3d8.var_71, var1.var_3d8.var_119);
-                                       Enumeration var3 = var_8dc.keys();
+                                    if (var1.var_3d8.objectType == 6) {
+                                       Integer var2 = combineInts(var1.var_3d8.x, var1.var_3d8.y);
+                                       Enumeration var3 = alarmWithZonesMap.keys();
 
                                        while(var3.hasMoreElements()) {
                                           Integer var4 = (Integer)var3.nextElement();
-                                          if (var2.equals(var_8dc.get(var4))) {
-                                             var_8dc.remove(var4);
+                                          if (var2.equals(alarmWithZonesMap.get(var4))) {
+                                             alarmWithZonesMap.remove(var4);
                                           }
                                        }
-                                    } else if (var1.var_3d8.var_4c == 4) {
+                                    } else if (var1.var_3d8.objectType == 4) {
                                        if (var1.sub_373()) {
                                           var1.var_3d8.var_1bc[1] = 0;
                                        } else if (var1.var_3d8.var_22c == 0) {
@@ -1253,7 +1262,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                                        }
                                     }
 
-                                    sub_538(combineInts(var1.var_3d8.var_71, var1.var_3d8.var_119));
+                                    sub_538(combineInts(var1.var_3d8.x, var1.var_3d8.y));
                                     var_2c9 = true;
                                     break;
                                  case 5:
@@ -1322,8 +1331,8 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                               if (var1.var_3d8 != null) {
                                  var1.var_1ec = (byte)Class_1b0.sub_21(0, 6);
                                  if (var1.var_1a6 == 5) {
-                                    byte var6 = var1.var_3d8.var_4c;
-                                    var1.var_3d8 = new SomeLevelDataCLass((byte)9, var1.var_bb, var1.var_123, var1.var_17b, (byte)0, var1.var_451[var1.var_47f], (byte)0);
+                                    byte var6 = var1.var_3d8.objectType;
+                                    var1.var_3d8 = new LevelObject((byte)9, var1.var_bb, var1.var_123, var1.var_17b, (byte)0, var1.var_451[var1.var_47f], (byte)0);
                                     var1.var_3d8.var_1bc[0] = Class_205.toolUsingTimeStats[var6][Class_178.sub_e5c(var1.var_451[var1.var_47f])];
                                     var_84c.put(combineInts(var1.var_bb, var1.var_123), var1.var_3d8);
                                     ++var1.var_341;
@@ -1331,7 +1340,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                                     var_2c9 = true;
                                  } else if (var1.var_1a6 == 4) {
                                     if (var1.var_3d8.var_1bc[0] == 120) {
-                                       var1.var_3d8.var_1bc[0] = Class_205.toolUsingTimeStats[var1.var_3d8.var_4c][Class_178.sub_e5c(var1.var_451[var1.var_47f])];
+                                       var1.var_3d8.var_1bc[0] = Class_205.toolUsingTimeStats[var1.var_3d8.objectType][Class_178.sub_e5c(var1.var_451[var1.var_47f])];
                                     }
 
                                     ++var1.var_341;
@@ -1413,14 +1422,14 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
          Enumeration var0 = var_84c.elements();
 
          while(true) {
-            SomeLevelDataCLass var1;
+            LevelObject var1;
             do {
                do {
                   do {
                      if (!var0.hasMoreElements()) {
                         return;
                      }
-                  } while((var1 = (SomeLevelDataCLass)var0.nextElement()).var_1bc[0] > 0);
+                  } while((var1 = (LevelObject)var0.nextElement()).var_1bc[0] > 0);
 
                   ++var1.var_22c;
                } while(var1.var_22c < 12);
@@ -1430,16 +1439,16 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
 
             --var1.var_1bc[1];
             if (var1.var_1bc[1] == 0) {
-               sub_75c(var1.var_71, var1.var_119, false, false, 0, var1.var_1f5 == 114, false);
+               sub_75c(var1.x, var1.y, false, false, 0, var1.var_1f5 == 114, false);
                if (var1.var_1f5 == 114) {
-                  sub_75c(var1.var_71, var1.var_119, false, false, 0, var1.var_1f5 == 114, true);
+                  sub_75c(var1.x, var1.y, false, false, 0, var1.var_1f5 == 114, true);
                }
 
                Enumeration var2 = var_99f.elements();
 
                while(var2.hasMoreElements()) {
                   Class_205 var3;
-                  if (Math.abs((var3 = (Class_205)var2.nextElement()).var_bb - var1.var_71) <= 1 && Math.abs(var3.var_123 - var1.var_119) <= 1) {
+                  if (Math.abs((var3 = (Class_205)var2.nextElement()).var_bb - var1.x) <= 1 && Math.abs(var3.var_123 - var1.y) <= 1) {
                      var3.var_24a = 10;
                   }
                }
@@ -1459,7 +1468,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
          Enumeration var0 = var_84c.elements();
 
          while(var0.hasMoreElements()) {
-            if (((SomeLevelDataCLass)var0.nextElement()).var_18d == Class_205.var_4aa + 1) {
+            if (((LevelObject)var0.nextElement()).var_18d == Class_205.var_4aa + 1) {
                sub_702();
             }
          }
@@ -1480,14 +1489,14 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
          int var7 = var0 + (var6 ? var_42b[0][var9] : var_3e7[0][var9]);
          int var8 = var1 + (var6 ? var_42b[1][var9] : var_3e7[1][var9]);
          Integer var10 = combineInts(var7, var8);
-         if (someLevelDataHashMap.containsKey(var10)) {
+         if (levelObjectsMap.containsKey(var10)) {
             if (!var2) {
                sub_538(var10);
                sub_574(var5);
             }
 
-            SomeLevelDataCLass var11;
-            if ((var11 = (SomeLevelDataCLass)someLevelDataHashMap.get(var10)).var_4c != 6 && var11.var_4c != 9 && var11.var_4c != 4 && !Class_1b0.sub_678(SomeLevelDataVariablesInterface.var_da[var11.var_4c][5], (byte)5) && (var5 || mapArray[var11.var_71][var11.var_119] > 12 || sub_ae6(var11, var0, var1))) {
+            LevelObject var11;
+            if ((var11 = (LevelObject)levelObjectsMap.get(var10)).objectType != 6 && var11.objectType != 9 && var11.objectType != 4 && !Class_1b0.sub_678(LevelObjectData.var_da[var11.objectType][5], (byte)5) && (var5 || mapArray[var11.x][var11.y] > 12 || sub_ae6(var11, var0, var1))) {
                if (var2) {
                   if (var3) {
                      if (var11.var_18d == var4) {
@@ -1696,12 +1705,12 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                default:
                   return;
                case 6:
-                  SomeLevelDataCLass var1;
+                  LevelObject var1;
                   if (var_a5a == 0 && (var1 = sub_912(var_983)) != null) {
                      var2 = 0;
 
                      for(int var3 = 0; var3 < 12; ++var3) {
-                        if (Class_205.toolUsingTimeStats[var1.var_4c][var3] > 0) {
+                        if (Class_205.toolUsingTimeStats[var1.objectType][var3] > 0) {
                            ++var2;
                         }
                      }
@@ -1713,10 +1722,10 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                         var2 = 0;
 
                         for(int var6 = 0; var6 < 12; ++var6) {
-                           if (Class_205.toolUsingTimeStats[var1.var_4c][var6] > 0) {
+                           if (Class_205.toolUsingTimeStats[var1.objectType][var6] > 0) {
                               var9[var2][0] = 8;
                               var9[var2][1] = (byte)Class_178.toolStats[var6][2];
-                              var5[var2][0] = new Integer(Class_205.toolUsingTimeStats[var1.var_4c][var6]);
+                              var5[var2][0] = new Integer(Class_205.toolUsingTimeStats[var1.objectType][var6]);
                               var4[var2] = (short)(85 + var6);
                               ++var2;
                            }
@@ -1776,26 +1785,26 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
 
    }
 
-   public static SomeLevelDataCLass sub_912(Class_205 var0) {
+   public static LevelObject sub_912(Class_205 var0) {
       int var1 = var0.var_bb + var_3e7[0][var0.var_17b];
       int var2 = var0.var_123 + var_3e7[1][var0.var_17b];
       Integer var3 = combineInts(var1, var2);
-      if (someLevelDataHashMap.containsKey(var3)) {
-         SomeLevelDataCLass var4;
-         return (var4 = (SomeLevelDataCLass)someLevelDataHashMap.get(var3)).var_4c == 6 && var_7f3 > 0 ? null : var4;
+      if (levelObjectsMap.containsKey(var3)) {
+         LevelObject var4;
+         return (var4 = (LevelObject)levelObjectsMap.get(var3)).objectType == 6 && var_7f3 > 0 ? null : var4;
       } else {
          return null;
       }
    }
 
-   private static boolean sub_950(SomeLevelDataCLass var0) {
+   private static boolean sub_950(LevelObject var0) {
       boolean var1 = false;
       if (var_a5a == 0) {
          if (var0.var_18d > 0 && var0.var_18d <= Class_205.var_4aa) {
-            var1 = Class_1b0.sub_678(SomeLevelDataVariablesInterface.var_da[var0.var_4c][5], (byte)4);
+            var1 = Class_1b0.sub_678(LevelObjectData.var_da[var0.objectType][5], (byte)4);
          }
       } else if (var0.var_1bc[0] <= 0) {
-         var1 = Class_1b0.sub_678(SomeLevelDataVariablesInterface.var_da[var0.var_4c][5], (byte)4);
+         var1 = Class_1b0.sub_678(LevelObjectData.var_da[var0.objectType][5], (byte)4);
       }
 
       return var1;
@@ -1872,24 +1881,24 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                      default:
                         return false;
                      case 4:
-                        if (Class_205.var_4aa + Class_205.toolUsingTimeStats[var11.var_3d8.var_4c][var5] > 599) {
+                        if (Class_205.var_4aa + Class_205.toolUsingTimeStats[var11.var_3d8.objectType][var5] > 599) {
                            return false;
                         }
 
                         var11.var_1a6 = var6;
-                        var11.sub_2da(Class_205.toolUsingTimeStats[var11.var_3d8.var_4c][var5], true);
+                        var11.sub_2da(Class_205.toolUsingTimeStats[var11.var_3d8.objectType][var5], true);
                         if (var_a5a == 1 && var11.var_3d8.var_1bc[0] == 120) {
-                           var11.var_3d8.var_1bc[0] = Class_205.toolUsingTimeStats[var11.var_3d8.var_4c][var5];
+                           var11.var_3d8.var_1bc[0] = Class_205.toolUsingTimeStats[var11.var_3d8.objectType][var5];
                         }
 
                         return false;
                      case 5:
-                        if (Class_205.var_4aa + Class_205.toolUsingTimeStats[var11.var_3d8.var_4c][var5] > 599) {
+                        if (Class_205.var_4aa + Class_205.toolUsingTimeStats[var11.var_3d8.objectType][var5] > 599) {
                            return false;
                         }
 
-                        SomeLevelDataCLass var7;
-                        if (var_a5a == 0 && var_84c.containsKey(combineInts(var11.var_bb, var11.var_123)) && (var7 = (SomeLevelDataCLass)var_84c.get(combineInts(var11.var_bb, var11.var_123))) != null) {
+                        LevelObject var7;
+                        if (var_a5a == 0 && var_84c.containsKey(combineInts(var11.var_bb, var11.var_123)) && (var7 = (LevelObject)var_84c.get(combineInts(var11.var_bb, var11.var_123))) != null) {
                            int var8 = var7.var_18d / 60;
                            int var9 = (var7.var_18d - var8 * 60) / 10;
                            int var10 = var7.var_18d - var8 * 60 - var9 * 10;
@@ -1898,7 +1907,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                         }
 
                         var11.var_1a6 = var6;
-                        var11.sub_2da(Class_205.toolUsingTimeStats[var11.var_3d8.var_4c][var5], true);
+                        var11.sub_2da(Class_205.toolUsingTimeStats[var11.var_3d8.objectType][var5], true);
                         return false;
                      }
                   }
@@ -1963,34 +1972,34 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
       byte var0 = 5;
       switch(Class_178.var_dc6) {
       case 1:
-         if (((SomeLevelDataCLass)someLevelDataHashMap.get(combineInts(4, 4))).var_1bc[0] <= 0) {
+         if (((LevelObject)levelObjectsMap.get(combineInts(4, 4))).var_1bc[0] <= 0) {
             var0 = 4;
          }
          break;
       case 2:
-         if (((SomeLevelDataCLass)someLevelDataHashMap.get(combineInts(3, 5))).var_1bc[1] <= 0) {
+         if (((LevelObject)levelObjectsMap.get(combineInts(3, 5))).var_1bc[1] <= 0) {
             var0 = 4;
          }
          break;
       case 3:
-         if (((SomeLevelDataCLass)someLevelDataHashMap.get(combineInts(3, 11))).var_1bc[1] <= 0) {
+         if (((LevelObject)levelObjectsMap.get(combineInts(3, 11))).var_1bc[1] <= 0) {
             var0 = 4;
          }
          break;
       case 4:
-         if (((SomeLevelDataCLass)someLevelDataHashMap.get(combineInts(5, 6))).var_1bc[1] <= 0) {
+         if (((LevelObject)levelObjectsMap.get(combineInts(5, 6))).var_1bc[1] <= 0) {
             var0 = 4;
          }
          break;
       case 5:
-         SomeLevelDataCLass var1 = (SomeLevelDataCLass)var_84c.get(combineInts(4, 5));
-         SomeLevelDataCLass var2 = (SomeLevelDataCLass)var_84c.get(combineInts(8, 5));
-         if (var1 != null && var2 != null && var1.var_1f5 == 113 && var2.var_1f5 == 114 && var1.var_1bc[1] <= 0 && var2.var_1bc[1] <= 0 && ((SomeLevelDataCLass)someLevelDataHashMap.get(combineInts(9, 5))).var_1bc[1] <= 0) {
+         LevelObject var1 = (LevelObject)var_84c.get(combineInts(4, 5));
+         LevelObject var2 = (LevelObject)var_84c.get(combineInts(8, 5));
+         if (var1 != null && var2 != null && var1.var_1f5 == 113 && var2.var_1f5 == 114 && var1.var_1bc[1] <= 0 && var2.var_1bc[1] <= 0 && ((LevelObject)levelObjectsMap.get(combineInts(9, 5))).var_1bc[1] <= 0) {
             var0 = 4;
          }
          break;
       case 6:
-         if (((SomeLevelDataCLass)someLevelDataHashMap.get(combineInts(3, 6))).var_1bc[1] <= 0) {
+         if (((LevelObject)levelObjectsMap.get(combineInts(3, 6))).var_1bc[1] <= 0) {
             var0 = 4;
          }
       }
@@ -2049,8 +2058,8 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
    public static void sub_a53(Class_205 var0) {
       var0.var_3d8 = sub_912(var0);
       if (var0.var_3d8 != null) {
-         if (!Class_1b0.sub_678(SomeLevelDataVariablesInterface.var_da[var0.var_3d8.var_4c][5], (byte)5)) {
-            if (mapArray[var0.var_3d8.var_71][var0.var_3d8.var_119] > 12 || sub_ae6(var0.var_3d8, var0.var_bb, var0.var_123)) {
+         if (!Class_1b0.sub_678(LevelObjectData.var_da[var0.var_3d8.objectType][5], (byte)5)) {
+            if (mapArray[var0.var_3d8.x][var0.var_3d8.y] > 12 || sub_ae6(var0.var_3d8, var0.var_bb, var0.var_123)) {
                if (var_a5a == 0) {
                   if (var0.var_3d8.var_1a5 > 0 && var0.var_3d8.var_1a5 <= Class_205.var_4aa) {
                      return;
@@ -2059,8 +2068,8 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                   return;
                }
 
-               SomeLevelDataCLass var1;
-               if ((var1 = (SomeLevelDataCLass)var_84c.get(combineInts(var0.var_bb, var0.var_123))) != null && var_a5a == 1 && var1.var_1bc[1] >= 0) {
+               LevelObject var1;
+               if ((var1 = (LevelObject)var_84c.get(combineInts(var0.var_bb, var0.var_123))) != null && var_a5a == 1 && var1.var_1bc[1] >= 0) {
                   Class_178.sub_2c8((byte)0, (byte[])null, (short)171, (Object[])null, new short[]{126}, (short)137);
                } else {
                   int var2 = 0;
@@ -2108,7 +2117,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
 
    private static byte sub_a94(Class_205 var0, byte var1) {
       byte var2 = -1;
-      if (Class_205.toolUsingTimeStats[var0.var_3d8.var_4c][var1] > 0) {
+      if (Class_205.toolUsingTimeStats[var0.var_3d8.objectType][var1] > 0) {
          if (sub_bc9(var1) != 113 && sub_bc9(var1) != 114) {
             var2 = 4;
          } else {
@@ -2123,7 +2132,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
       return var2;
    }
 
-   private static boolean sub_ae6(SomeLevelDataCLass var0, int var1, int var2) {
+   private static boolean sub_ae6(LevelObject var0, int var1, int var2) {
       boolean var3 = false;
 
       int var5;
@@ -2133,12 +2142,12 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
             var4 -= 4;
          }
 
-         if (var1 == var0.var_71 + var_3e7[0][var4] && var2 == var0.var_119 + var_3e7[1][var4]) {
+         if (var1 == var0.x + var_3e7[0][var4] && var2 == var0.y + var_3e7[1][var4]) {
             break;
          }
       }
 
-      if (Class_1b0.sub_678(SomeLevelDataVariablesInterface.var_da[var0.var_4c][5], (byte)var5)) {
+      if (Class_1b0.sub_678(LevelObjectData.var_da[var0.objectType][5], (byte)var5)) {
          var3 = true;
       }
 
@@ -2175,7 +2184,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
    }
 
    static {
-      var_d80 = -SomeLevelDataVariablesInterface.var_b6[14][2];
+      var_d80 = -LevelObjectData.var_b6[14][2];
       var_e52 = 0;
    }
 }
