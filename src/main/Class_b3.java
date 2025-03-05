@@ -76,7 +76,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
 
    public static void sub_48() {
       Class_178.sub_3b5(1);
-      Class_178.var_55f.sub_8c(1, -1);
+      Class_178.musicManager.switchMusicPlayer(1, -1);
       Class_178.var_ff4 = null;
       Class_178.var_6bc = false;
       Class_178.var_93a = 999999;
@@ -99,7 +99,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
       if (Class_178.var_dc6 <= 6 && var_99f.size() == 0) {
          Class_178.sub_2c8((byte)0, (byte[])null, (short)167, (Object[])null, new short[]{126}, (short)137);
       } else {
-         Class_178.var_55f.sub_8c(3, -1);
+         Class_178.musicManager.switchMusicPlayer(3, -1);
          var_25f = null;
          Class_178.sub_187(10L);
          var_2a1 = null;
@@ -253,7 +253,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
                }
 
                Class_178.sub_2c8((byte)36, new byte[]{48, 0}, var4, (Object[])null, new short[]{126}, (short)142);
-               Class_178.var_55f.sub_8c(4, 1);
+               Class_178.musicManager.switchMusicPlayer(4, 1);
                return;
             }
 
@@ -524,19 +524,19 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
       }
    }
 
-   private static void sub_2d2(Graphics var0) {
-      var0.setClip(0, var_b0 - SomeLevelDataVariablesInterface.var_b6[9][3], var_1d, SomeLevelDataVariablesInterface.var_b6[9][3]);
-      var0.drawImage(var_25f, 0, 0, 0);
+   private static void sub_2d2(Graphics g) {
+      g.setClip(0, var_b0 - SomeLevelDataVariablesInterface.var_b6[9][3], var_1d, SomeLevelDataVariablesInterface.var_b6[9][3]);
+      g.drawImage(var_25f, 0, 0, 0);
       if (var_a5a == 1 && var_983 != null && var_983.var_3d8 != null && var_983.sub_311()) {
          byte var1 = var_983.var_1a6 == 5 ? 1 : var_983.var_3d8.var_4c;
          byte var2 = var_983.var_1a6 == 3 ? 8 : Class_205.toolUsingTimeStats[var1][Class_178.sub_e5c(var_983.var_451[var_983.var_47f])];
-         var_983.var_3d8.sub_92(var0, var2, var_983.var_1a6 != 3);
+         var_983.var_3d8.sub_92(g, var2, var_983.var_1a6 != 3);
       }
 
       if (var_983 != null) {
          int var9 = var_1d < 130 ? 2 : 4;
-         Class_1b0.sub_2db(var0, (byte)24, 0, var9, var_b0 - SomeLevelDataVariablesInterface.var_b6[24][3]);
-         Class_1b0.sub_2db(var0, (byte)5, var_983.var_3a, var9 + (SomeLevelDataVariablesInterface.var_b6[24][2] >> 1) - (SomeLevelDataVariablesInterface.var_b6[5][2] >> 1), var_b0 - SomeLevelDataVariablesInterface.var_b6[24][3] + (SomeLevelDataVariablesInterface.var_b6[24][3] >> 1) - (SomeLevelDataVariablesInterface.var_b6[5][3] >> 1) + 1);
+         Class_1b0.sub_2db(g, (byte)24, 0, var9, var_b0 - SomeLevelDataVariablesInterface.var_b6[24][3]);
+         Class_1b0.sub_2db(g, (byte)5, var_983.var_3a, var9 + (SomeLevelDataVariablesInterface.var_b6[24][2] >> 1) - (SomeLevelDataVariablesInterface.var_b6[5][2] >> 1), var_b0 - SomeLevelDataVariablesInterface.var_b6[24][3] + (SomeLevelDataVariablesInterface.var_b6[24][3] >> 1) - (SomeLevelDataVariablesInterface.var_b6[5][3] >> 1) + 1);
          if (var_a5a == 0 && Class_178.var_80 > 6 && var_983.var_29a < var_983.var_2d2) {
             int var10 = var_b0 - SomeLevelDataVariablesInterface.var_b6[9][3];
             int var3 = SomeLevelDataVariablesInterface.var_b6[9][3] - SomeLevelDataVariablesInterface.var_b6[26][3] + 1 >> 1;
@@ -545,10 +545,10 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
             int var6 = var10 + var3 + 1;
             int var7 = SomeLevelDataVariablesInterface.var_b6[25][2] - 2;
             int var8 = SomeLevelDataVariablesInterface.var_b6[25][3] - 2;
-            Class_1b0.sub_2db(var0, (byte)25, 0, var4, var10 + var3);
-            var0.setColor(0);
-            var0.setClip(0, 0, var_1d, var_b0);
-            var0.fillRect(var5, var6, var7, var8 - var8 * var_983.var_2d2 / thiefStats[var_983.var_3a][0]);
+            Class_1b0.sub_2db(g, (byte)25, 0, var4, var10 + var3);
+            g.setColor(0);
+            g.setClip(0, 0, var_1d, var_b0);
+            g.fillRect(var5, var6, var7, var8 - var8 * var_983.var_2d2 / thiefStats[var_983.var_3a][0]);
          }
       }
 
@@ -710,7 +710,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
       case 5:
          var_cdc -= var_de4;
          if (var_cdc <= var_1dc + someLevelDataVar1 * 24 - 12) {
-            Class_178.var_55f.sub_8c(2, -1);
+            Class_178.musicManager.switchMusicPlayer(2, -1);
             var_e52 = 0;
          }
       }
@@ -1142,7 +1142,7 @@ public final class Class_b3 implements SomeLevelDataVariablesInterface {
             if (var_a5a == 1 && Class_178.var_91 == 0 && var_e52 != 5) {
                ++Class_205.var_4aa;
                if (Class_205.var_4aa > someLevelDataVarLast - 10 && Class_178.var_5bb > -1 && !var_b69) {
-                  Class_178.var_55f.sub_8c(6, -1);
+                  Class_178.musicManager.switchMusicPlayer(6, -1);
                   var_b69 = true;
                } else if (Class_205.var_4aa == someLevelDataVarLast - 1 && Class_178.var_5bb > -1) {
                   if (someLevelDataVar1 == Class_178.var_d34[0].var_bb && someLevelDataVar2 == Class_178.var_d34[0].var_123 && !Class_178.var_d34[0].var_210 && var_e52 == 0) {

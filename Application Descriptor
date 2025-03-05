@@ -8,5 +8,5 @@ MIDlet-Icon: /icons/icon.png
 MicroEdition-Configuration: CLDC-1.1
 MIDlet-Name: StolenIn60SecMod
 MIDlet-1: MIDlet-1,,main.MM
-MicroEdition-Profile: MIDP-2.1
+MicroEdition-Profile: MIDP-1.0
 MIDlet-Jar-URL: StolenIn60SecMod.jar

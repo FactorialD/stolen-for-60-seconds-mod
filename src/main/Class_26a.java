@@ -5,7 +5,7 @@ import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
 
 public abstract class Class_26a extends Canvas implements SomeLevelDataVariablesInterface {
-   public static int var_78;
+   public static int musicManagerPriorityLevel;
    public static int var_140 = 21;
    public static int var_1d5 = 22;
    public static int var_223 = -20;
@@ -16,8 +16,8 @@ public abstract class Class_26a extends Canvas implements SomeLevelDataVariables
       this.setFullScreenMode(true);
    }
 
-   public void paint(Graphics var1) {
-      this.sub_12a(var1);
+   public void paint(Graphics g) {
+      this.sub_12a(g);
    }
 
    public final void sub_5b() {
@@ -25,7 +25,7 @@ public abstract class Class_26a extends Canvas implements SomeLevelDataVariables
       this.serviceRepaints();
    }
 
-   public abstract void sub_12a(Graphics var1);
+   public abstract void sub_12a(Graphics g);
 
    public final int sub_97(int var1) {
       if (var1 != var_140 && var1 != var_223) {
@@ -103,11 +103,11 @@ public abstract class Class_26a extends Canvas implements SomeLevelDataVariables
       return sub_ee(Class_1b0.sub_5a0((short)266));
    }
 
-   public void commandAction(Command var1, Displayable var2) {
-      if (var1.getCommandType() == 4) {
+   public void commandAction(Command command, Displayable var2) {
+      if (command.getCommandType() == 4) {
          this.keyPressed(var_140);
       } else {
-         if (var1.getCommandType() == 1) {
+         if (command.getCommandType() == 1) {
             this.keyPressed(var_1d5);
          }
 

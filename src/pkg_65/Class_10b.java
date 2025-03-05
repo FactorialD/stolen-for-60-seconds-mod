@@ -10,7 +10,7 @@ import java.util.Random;
 import javax.microedition.midlet.MIDlet;
 
 public class Class_10b {
-   private static Random var_35 = new Random();
+   private static Random random = new Random();
    private static String var_7a = "0123456789ABCDEF";
    private static String var_c1 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -138,7 +138,7 @@ public class Class_10b {
    }
 
    public static final int sub_319(int var0, int var1) {
-      return Math.abs(var_35.nextInt()) % (var1 - var0) + var0;
+      return Math.abs(random.nextInt()) % (var1 - var0) + var0;
    }
 
    public static final long sub_360(int var0) {

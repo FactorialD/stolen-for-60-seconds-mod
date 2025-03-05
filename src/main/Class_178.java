@@ -34,7 +34,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    private static Thread var_463;
    private static boolean var_4b9;
    public static boolean var_511;
-   public static Class_115 var_55f;
+   public static MusicManager musicManager;
    public static byte var_5bb;
    public static boolean var_5e0 = true;
    public static boolean var_5ed = true;
@@ -142,8 +142,8 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          var_4b9 = false;
          var_26f = -1;
          var_338 = false;
-         if (var_55f != null) {
-            var_55f.sub_db();
+         if (musicManager != null) {
+            musicManager.clearCurrentMusicPlayer();
          }
 
          Class_3d.callGc();
@@ -154,20 +154,20 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       var_2b9 = var_26f;
       var_4b9 = false;
       var_26f = -1;
-      if (var_55f != null) {
-         var_55f.sub_11b();
+      if (musicManager != null) {
+         musicManager.closeAllMusicPlayers();
       }
 
       var_463 = null;
-      var_55f = null;
+      musicManager = null;
       Class_3d.callGc();
    }
 
    private void sub_bd() {
       var_ca0 = 0;
       sub_e28();
-      Class_115.var_1ae = var_129e[0];
-      Class_115.var_179 = var_129e[1];
+      MusicManager.someMusicIndexVar2 = var_129e[0];
+      MusicManager.someMusicIndexVar = var_129e[1];
 
       byte var1;
       for(var1 = 1; var1 <= 2; ++var1) {
@@ -178,7 +178,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          this.setCommandListener(this);
       }
 
-      sub_10b();
+      createMusicManager();
       Class_19e.var_790 = this;
       Class_b3.var_f0 = this;
 
@@ -189,10 +189,9 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       sub_ba6();
    }
 
-   private static void sub_10b() {
-      var_55f = new Class_115(new String[]{"/dat/menu", "/dat/plan", "/dat/rob", "/dat/tik", "/dat/fail", "/dat/succ", "/dat/alarm", "/dat/prison"});
-      var_55f.sub_165(Class_26a.var_78);
-      int[] var10000 = new int[]{0, 4, 5, 3};
+   private static void createMusicManager() {
+      musicManager = new MusicManager(new String[]{"/dat/menu", "/dat/plan", "/dat/rob", "/dat/tik", "/dat/fail", "/dat/succ", "/dat/alarm", "/dat/prison"});
+      musicManager.setPriorityLevel(Class_26a.musicManagerPriorityLevel);
    }
 
    public final void sub_12a(Graphics var1) {
@@ -363,7 +362,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       } else {
          var_129e[var0] = true;
          if (var_26f == 3) {
-            var_55f.sub_8c(3, -1);
+            musicManager.switchMusicPlayer(3, -1);
          }
 
          sub_2c8((byte)42, var1 == -1 ? null : new byte[]{var1, var2}, (short)(2 + var0 - 3), (Object[])null, new short[]{126}, (short)135);
@@ -490,8 +489,8 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       this.sub_3d3();
       var_26f = 3;
       var_5e0 = true;
-      if (var_55f.var_1ee != 0 && var_ea3 != 9 && var_ea3 != 2) {
-         var_55f.sub_8c(0, -1);
+      if (musicManager.currentPlayerIndex != 0 && var_ea3 != 9 && var_ea3 != 2) {
+         musicManager.switchMusicPlayer(0, -1);
       }
 
    }
@@ -736,14 +735,14 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       switch(Class_19e.var_7ed) {
       case 4:
          sub_670();
-         if (Class_115.var_1ae != var_129e[0]) {
-            Class_115.var_1ae = var_129e[0];
-            if (!Class_115.var_1ae) {
-               var_55f.sub_db();
+         if (MusicManager.someMusicIndexVar2 != var_129e[0]) {
+            MusicManager.someMusicIndexVar2 = var_129e[0];
+            if (!MusicManager.someMusicIndexVar2) {
+               musicManager.clearCurrentMusicPlayer();
             }
          }
 
-         Class_115.var_179 = var_129e[1];
+         MusicManager.someMusicIndexVar = var_129e[1];
          sub_6dd();
          return true;
       case 21:
@@ -1393,27 +1392,27 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             sub_ae7();
             break;
          case 150:
-            var_55f.sub_8c(5, 1);
+            musicManager.switchMusicPlayer(5, 1);
             sub_2c8((byte)11, (byte[])null, var_ea3, var_eff, new short[]{126}, (short)140);
             break;
          case 151:
-            var_55f.sub_8c(4, 1);
+            musicManager.switchMusicPlayer(4, 1);
             sub_2c8((byte)11, (byte[])null, var_ea3, var_eff, new short[]{126}, (short)140);
             break;
          case 152:
-            var_55f.sub_8c(4, 1);
+            musicManager.switchMusicPlayer(4, 1);
             sub_2c8((byte)31, (byte[])null, (short)152, var_eff, new short[]{126}, (short)140);
             break;
          case 153:
-            var_55f.sub_8c(5, 1);
+            musicManager.switchMusicPlayer(5, 1);
             sub_2c8((byte)38, (byte[])null, (short)153, (Object[])null, new short[]{126}, (short)141);
             break;
          case 164:
-            var_55f.sub_8c(5, 1);
+            musicManager.switchMusicPlayer(5, 1);
             sub_2c8((byte)15, (byte[])null, (short)164, (Object[])null, new short[]{126}, (short)131);
             break;
          case 165:
-            var_55f.sub_8c(5, 1);
+            musicManager.switchMusicPlayer(5, 1);
             sub_2c8((byte)40, (byte[])null, (short)165, (Object[])null, new short[]{126}, (short)132);
          }
 
@@ -1632,7 +1631,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    }
 
    private static void sub_ae7() {
-      var_55f.sub_8c(3, -1);
+      musicManager.switchMusicPlayer(3, -1);
       int var0;
       int var1 = (var0 = Class_b3.levelAdditionalData_TimerEtc[var_dc6 - 1][0] + 0) / 60;
       int var2 = (var0 - var1 * 60) / 10;
@@ -1743,11 +1742,11 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       if (var_123b) {
          var_123b = false;
          var_157e = true;
-         int[] var10000;
+
          switch(var_1217) {
          case 1:
             var_1217 = 0;
-            var10000 = new int[]{2, 4, 5, 3, 6};
+            //var10000 = new int[]{2, 4, 5, 3, 6};
             Class_3d.callGc();
             sub_187(10L);
             sub_187(10L);
@@ -1755,14 +1754,14 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             break;
          case 2:
             var_1217 = 0;
-            var10000 = new int[]{1, 4, 5, 3};
+            //var10000 = new int[]{1, 4, 5, 3};
             Class_b3.sub_48();
             break;
          case 3:
             var_1217 = 0;
             var_13a7.sub_36d();
-            if (var_55f.var_1ee != 0) {
-               var10000 = new int[]{0, 4, 5, 3};
+            if (musicManager.currentPlayerIndex != 0) {
+               //var10000 = new int[]{0, 4, 5, 3};
             }
             break;
          case 4:
@@ -1880,16 +1879,16 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             return true;
          case 4:
             sub_670();
-            if (Class_115.var_1ae != var_129e[0]) {
-               Class_115.var_1ae = var_129e[0];
-               if (Class_115.var_1ae) {
-                  var_55f.sub_8c(0, -1);
+            if (MusicManager.someMusicIndexVar2 != var_129e[0]) {
+               MusicManager.someMusicIndexVar2 = var_129e[0];
+               if (MusicManager.someMusicIndexVar2) {
+                  musicManager.switchMusicPlayer(0, -1);
                } else {
-                  var_55f.sub_db();
+                  musicManager.clearCurrentMusicPlayer();
                }
             }
 
-            Class_115.var_179 = var_129e[1];
+            MusicManager.someMusicIndexVar = var_129e[1];
          case 5:
          case 7:
          case 8:
@@ -1979,7 +1978,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                   }
                }
 
-               var_55f.sub_8c(4, 1);
+               musicManager.switchMusicPlayer(4, 1);
                sub_2c8((byte)13, new byte[]{48, 0}, (short)159, var6, new short[]{126}, (short)136);
             }
 
@@ -2104,13 +2103,13 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             sub_3f1();
             return true;
          case 41:
-            if (var_55f.var_1ee != 0) {
-               var_55f.sub_8c(0, -1);
+            if (musicManager.currentPlayerIndex != 0) {
+               musicManager.switchMusicPlayer(0, -1);
             }
             break;
          case 42:
-            if (var_55f.var_1ee != 0 && var_ea3 != 9) {
-               var_55f.sub_8c(0, -1);
+            if (musicManager.currentPlayerIndex != 0 && var_ea3 != 9) {
+               musicManager.switchMusicPlayer(0, -1);
             }
          }
 

@@ -300,9 +300,9 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
       sub_250(var0, var1, var2, var3, var4, var5, var6, 12500156, 4342338);
    }
 
-   public static void sub_250(Graphics var0, int var1, int var2, int var3, int var4, boolean var5, int var6, int var7, int var8) {
-      var0.setStrokeStyle(0);
-      var0.setClip(var1, var2, var3, var4);
+   public static void sub_250(Graphics g, int var1, int var2, int var3, int var4, boolean var5, int var6, int var7, int var8) {
+      g.setStrokeStyle(0);
+      g.setClip(var1, var2, var3, var4);
       int var9;
       int var10;
       if (var5) {
@@ -314,37 +314,45 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
       }
 
       if (var6 >= 0) {
-         var0.setColor(var6);
-         var0.fillRect(var1, var2, var3 - 1, var4 - 1);
+         g.setColor(var6);
+         g.fillRect(var1, var2, var3 - 1, var4 - 1);
       }
 
-      var0.setColor(var10);
-      var0.drawRect(var1, var2, var3 - 1, var4 - 1);
-      var0.setColor(var9);
-      var0.drawLine(var1, var2, var1 + var3 - 1, var2);
-      var0.drawLine(var1, var2, var1, var2 + var4 - 2);
+      g.setColor(var10);
+      g.drawRect(var1, var2, var3 - 1, var4 - 1);
+      g.setColor(var9);
+      g.drawLine(var1, var2, var1 + var3 - 1, var2);
+      g.drawLine(var1, var2, var1, var2 + var4 - 2);
    }
 
    /** Return stream with bias at level data position
     * */
+//   public static DataInputStream getLevelDataStream(byte level) throws IOException {
+//      DataInputStream levelStream = getDataInputStreamFromDat("m");
+//      byte var2 = 1;
+//
+//      // Get level data size from first 2 bytes
+//      // Then skip current level data, until get to needed level data
+//      for(short var3 = levelStream.readShort(); var2 != level; ++var2) {
+//         levelStream.skipBytes(var3);
+//         var3 = levelStream.readShort();
+//      }
+//
+//      return levelStream;
+//   }
+   
+   /** Return stream with bias at level data position
+    * */
    public static DataInputStream getLevelDataStream(byte level) throws IOException {
-      DataInputStream levelStream = getDataInputStreamFromDat("m");
-      byte var2 = 1;
-
-      // Get level data size from first 2 bytes
-      // Then skip current level data, until get to needed level data
-      for(short var3 = levelStream.readShort(); var2 != level; ++var2) {
-         levelStream.skipBytes(var3);
-         var3 = levelStream.readShort();
-      }
+      DataInputStream levelStream = getDataInputStreamFromDat("map" + (level < 10 ? "0" : "") + level + ".dat");
 
       return levelStream;
    }
 
-   public static void sub_2c5(Graphics var0, byte var1, byte var2, int var3, int var4, int var5) {
+   public static void sub_2c5(Graphics g, byte var1, byte var2, int var3, int var4, int var5) {
       if (var1 >= 0) {
-         var0.setColor(var5);
-         var0.setClip(var3, var4, 24, 24);
+         g.setColor(var5);
+         g.setClip(var3, var4, 24, 24);
          int var13 = var_13b[var1].length;
 
          for(int var14 = 0; var14 < var13; var14 += 4) {
@@ -362,7 +370,7 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
                var10 = var12;
             }
 
-            var0.drawRect(var3 + var7, var4 + var8, var9 - var7, var10 - var8);
+            g.drawRect(var3 + var7, var4 + var8, var9 - var7, var10 - var8);
          }
 
       }
@@ -372,7 +380,7 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
       sub_2e7(var0, var1, var2, var3, var4, 0, 0, 0, 0);
    }
 
-   public static void sub_2e7(Graphics var0, int var1, int var2, int var3, int var4, int var5, int var6, int var7, int var8) {
+   public static void sub_2e7(Graphics g, int var1, int var2, int var3, int var4, int var5, int var6, int var7, int var8) {
       short var9 = SomeLevelDataVariablesInterface.var_b6[var1][2];
       short var10 = SomeLevelDataVariablesInterface.var_b6[var1][3];
       if (var3 + var9 > 0 && var3 < Class_b3.var_1d && var4 + var10 > 0 && var4 < Class_b3.var_b0) {
@@ -388,10 +396,11 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
             var2 -= var17 * SomeLevelDataVariablesInterface.var_b6[var1][4];
          }
 
-         var0.setClip(var3 + var13, var4 + var15, SomeLevelDataVariablesInterface.var_b6[var1][2] - var14 - var13, SomeLevelDataVariablesInterface.var_b6[var1][3] - var16 - var15);
-         Image var18;
-         if ((var18 = mainImages[SomeLevelDataVariablesInterface.var_b6[var1][5]]) != null) {
-            var0.drawImage(var18, var3 - var2 * SomeLevelDataVariablesInterface.var_b6[var1][2] - SomeLevelDataVariablesInterface.var_b6[var1][0], var4 - SomeLevelDataVariablesInterface.var_b6[var1][1] - var17 * SomeLevelDataVariablesInterface.var_b6[var1][3], 20);
+         g.setClip(var3 + var13, var4 + var15, SomeLevelDataVariablesInterface.var_b6[var1][2] - var14 - var13, SomeLevelDataVariablesInterface.var_b6[var1][3] - var16 - var15);
+         Image var18 = mainImages[SomeLevelDataVariablesInterface.var_b6[var1][5]];
+         // maybe here loading maptiles
+         if (var18 != null) {
+            g.drawImage(var18, var3 - var2 * SomeLevelDataVariablesInterface.var_b6[var1][2] - SomeLevelDataVariablesInterface.var_b6[var1][0], var4 - SomeLevelDataVariablesInterface.var_b6[var1][1] - var17 * SomeLevelDataVariablesInterface.var_b6[var1][3], 20);
          }
       }
    }
@@ -493,7 +502,7 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
                         Class_26a.var_27f = var5;
                         break;
                      case 273:
-                        Class_26a.var_78 = var5;
+                        Class_26a.musicManagerPriorityLevel = var5;
                         break;
                      case 274:
                         Class_26a.var_2bb = var5 == 1;
@@ -1133,15 +1142,15 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
    }
 
    public static void sub_870() {
-      ByteArrayOutputStream var0 = new ByteArrayOutputStream();
-      DataOutputStream var1 = null;
+      ByteArrayOutputStream byteArrOutStream = new ByteArrayOutputStream();
+      DataOutputStream outStream = null;
       RecordStore var2 = null;
       boolean var20 = false;
 
       label352: {
          try {
             var20 = true;
-            var1 = new DataOutputStream(var0);
+            outStream = new DataOutputStream(byteArrOutStream);
             sub_8fa();
             var2 = RecordStore.openRecordStore("path", true);
 
@@ -1150,44 +1159,44 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
                var2.deleteRecord(var3);
             }
 
-            var1.writeByte(Class_178.var_dc6);
-            var1.writeInt(Class_178.var_e38);
-            var1.writeByte(Class_b3.var_c64);
+            outStream.writeByte(Class_178.var_dc6);
+            outStream.writeInt(Class_178.var_e38);
+            outStream.writeByte(Class_b3.var_c64);
 
             for(var3 = 0; var3 < Class_b3.var_7a3.length; ++var3) {
-               var1.writeInt(Class_b3.var_7a3[var3]);
+               outStream.writeInt(Class_b3.var_7a3[var3]);
             }
 
-            var1.writeInt(Class_b3.var_7f3);
+            outStream.writeInt(Class_b3.var_7f3);
             var3 = Class_b3.var_99f.size();
-            var1.writeByte(var3);
+            outStream.writeByte(var3);
 
             int var4;
             int var6;
             for(var4 = 0; var4 < var3; ++var4) {
                Class_205 var5 = (Class_205)Class_b3.var_99f.elementAt(var4);
-               var1.writeByte(var5.var_3a);
-               var1.write(var5.var_451);
+               outStream.writeByte(var5.var_3a);
+               outStream.write(var5.var_451);
 
                for(var6 = 0; var6 < var5.var_3fa.length; ++var6) {
-                  var1.writeShort(var5.var_3fa[var6]);
+                  outStream.writeShort(var5.var_3fa[var6]);
                }
             }
 
-            var1.write(Class_178.var_d34[0].var_451);
+            outStream.write(Class_178.var_d34[0].var_451);
             var4 = Class_178.var_d50.size();
-            var1.writeByte(var4);
+            outStream.writeByte(var4);
 
             int var26;
             for(var26 = 0; var26 < var4; ++var26) {
-               var1.writeByte(((Class_205)Class_178.var_d50.elementAt(var26)).var_3a);
+               outStream.writeByte(((Class_205)Class_178.var_d50.elementAt(var26)).var_3a);
             }
 
             for(var26 = 1; var26 < Class_178.var_d34.length; ++var26) {
                int var7;
                Class_205 var27;
                if ((var7 = (var27 = Class_178.var_d34[var26]).var_39c.size()) <= 1) {
-                  var1.writeShort(0);
+                  outStream.writeShort(0);
                } else {
                   Class_240 var8 = (Class_240)var27.var_39c.elementAt(0);
                   short var9 = 0;
@@ -1205,7 +1214,7 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
                   }
 
                   var10 = -1;
-                  var1.writeShort(var9);
+                  outStream.writeShort(var9);
                   var11 = 0;
                   int var32 = 0;
 
@@ -1213,8 +1222,8 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
                      ++var10;
                      Class_240 var13 = (Class_240)var27.var_39c.elementAt(var32);
                      if (var8.var_df != var13.var_df || var10 > 125) {
-                        var1.writeByte(var8.var_df);
-                        var1.writeByte(var10);
+                        outStream.writeByte(var8.var_df);
+                        outStream.writeByte(var10);
                         var10 = 0;
                         var8 = var13;
                         ++var11;
@@ -1227,26 +1236,26 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
                for(var6 = 0; var6 < Class_b3.mapHeight; ++var6) {
                   SomeLevelDataCLass var29;
                   if ((var29 = (SomeLevelDataCLass)Class_b3.someLevelDataHashMap.get(Class_b3.combineInts(var26, var6))) != null) {
-                     var1.writeShort(var29.var_18d);
-                     var1.writeShort(var29.var_1a5);
-                     var1.writeByte(var29.var_22c);
+                     outStream.writeShort(var29.var_18d);
+                     outStream.writeShort(var29.var_1a5);
+                     outStream.writeByte(var29.var_22c);
                   }
                }
             }
 
-            var1.writeByte(Class_b3.var_84c.size());
+            outStream.writeByte(Class_b3.var_84c.size());
             Enumeration var28 = Class_b3.var_84c.elements();
 
             while(var28.hasMoreElements()) {
                SomeLevelDataCLass var31 = (SomeLevelDataCLass)var28.nextElement();
-               var1.writeByte(var31.var_71);
-               var1.writeByte(var31.var_119);
-               var1.writeShort(var31.var_18d);
-               var1.writeShort(var31.var_1a5);
-               var1.writeByte(var31.var_1f5);
+               outStream.writeByte(var31.var_71);
+               outStream.writeByte(var31.var_119);
+               outStream.writeShort(var31.var_18d);
+               outStream.writeShort(var31.var_1a5);
+               outStream.writeByte(var31.var_1f5);
             }
 
-            byte[] var30 = var0.toByteArray();
+            byte[] var30 = byteArrOutStream.toByteArray();
             if (var2.getNumRecords() == 0) {
                var2.addRecord(var30, 0, var30.length);
                var20 = false;
@@ -1264,8 +1273,8 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
                      var2.closeRecordStore();
                   }
 
-                  if (var1 != null) {
-                     var1.close();
+                  if (outStream != null) {
+                     outStream.close();
                   }
                } catch (Exception var22) {
                }
@@ -1278,8 +1287,8 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
                var2.closeRecordStore();
             }
 
-            if (var1 != null) {
-               var1.close();
+            if (outStream != null) {
+               outStream.close();
             }
 
             return;
@@ -1293,7 +1302,7 @@ public final class Class_1b0 implements SomeLevelDataVariablesInterface {
             var2.closeRecordStore();
          }
 
-         var1.close();
+         outStream.close();
       } catch (Exception var23) {
       }
    }

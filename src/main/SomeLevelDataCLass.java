@@ -127,14 +127,14 @@ public final class SomeLevelDataCLass implements SomeLevelDataVariablesInterface
 
    }
 
-   public final void sub_92(Graphics var1, byte var2, boolean var3) {
+   public final void sub_92(Graphics g, byte var2, boolean var3) {
       if (var2 > 0) {
          int var4 = 360 * (var3 ? this.var_1bc[0] : this.var_1bc[1]) / var2;
-         var1.setClip(0, 0, 16, 16);
-         var1.setColor(var3 ? 10027008 : 26112);
-         var1.fillArc(0, 0, 15, 15, 0, 360);
-         var1.setColor(16777215);
-         var1.fillArc(0, 0, 15, 15, 90, var4);
+         g.setClip(0, 0, 16, 16);
+         g.setColor(var3 ? 10027008 : 26112);
+         g.fillArc(0, 0, 15, 15, 0, 360);
+         g.setColor(16777215);
+         g.fillArc(0, 0, 15, 15, 90, var4);
       }
 
    }
