@@ -91,8 +91,8 @@ public final class Class_205 implements LevelObjectData {
          var2.sub_4c(this.var_17b);
          var2.sub_7a(this.var_47f);
          if (this.var_1a6 == 1) {
-            var3 = (byte)(var3 + LevelManager.var_3e7[0][this.var_17b]);
-            var4 = (byte)(var4 + LevelManager.var_3e7[1][this.var_17b]);
+            var3 = (byte)(var3 + LevelManager.offsetTypes[0][this.var_17b]);
+            var4 = (byte)(var4 + LevelManager.offsetTypes[1][this.var_17b]);
          }
 
          this.var_39c.addElement(new Class_240(var3, var4, (byte)0, this.var_17b, (byte)0));
@@ -121,13 +121,13 @@ public final class Class_205 implements LevelObjectData {
                break;
             case 5:
                var6 = true;
-               this.var_3d8 = (LevelObject)LevelManager.var_84c.get(LevelManager.combineInts(this.var_bb, this.var_123));
+               this.var_3d8 = (LevelObject)LevelManager.levelObjects.get(LevelManager.combineInts(this.var_bb, this.var_123));
                LevelManager.sub_75c(this.var_bb, this.var_123, true, true, this.var_341 + 1 + 5, this.var_3d8.var_1f5 == 114, false);
                if (this.var_3d8.var_1f5 == 114) {
                   LevelManager.sub_75c(this.var_bb, this.var_123, true, true, this.var_341 + 1 + 5, this.var_3d8.var_1f5 == 114, true);
                }
 
-               LevelManager.var_84c.remove(LevelManager.combineInts(this.var_bb, this.var_123));
+               LevelManager.levelObjects.remove(LevelManager.combineInts(this.var_bb, this.var_123));
             }
          }
       }
@@ -144,8 +144,8 @@ public final class Class_205 implements LevelObjectData {
          this.sub_7b(!var2);
          if (this.var_1a6 == 1) {
             this.var_341 = var_4aa;
-            this.var_bb = (byte)(this.var_bb + LevelManager.var_3e7[0][this.var_17b]);
-            this.var_123 = (byte)(this.var_123 + LevelManager.var_3e7[1][this.var_17b]);
+            this.var_bb = (byte)(this.var_bb + LevelManager.offsetTypes[0][this.var_17b]);
+            this.var_123 = (byte)(this.var_123 + LevelManager.offsetTypes[1][this.var_17b]);
          }
 
          if (this.var_1a6 == 2) {
@@ -196,17 +196,17 @@ public final class Class_205 implements LevelObjectData {
       int var2 = 0;
       int var3 = 0;
       if (this.var_1a6 == 1 && this.var_24a <= 0) {
-         var2 = LevelManager.var_3e7[0][this.var_17b] * (this.var_1ec * 24 / 12);
-         var3 = LevelManager.var_3e7[1][this.var_17b] * (this.var_1ec * 24 / 12);
+         var2 = LevelManager.offsetTypes[0][this.var_17b] * (this.var_1ec * 24 / 12);
+         var3 = LevelManager.offsetTypes[1][this.var_17b] * (this.var_1ec * 24 / 12);
       }
 
       if (this.sub_311() && this.var_3d8 != null) {
-         var2 = LevelManager.var_3e7[0][this.var_17b] * LevelObjectData.var_da[this.var_3d8.objectType][6];
-         var3 = LevelManager.var_3e7[1][this.var_17b] * LevelObjectData.var_da[this.var_3d8.objectType][6];
+         var2 = LevelManager.offsetTypes[0][this.var_17b] * LevelObjectData.spriteIndexes[this.var_3d8.objectType][6];
+         var3 = LevelManager.offsetTypes[1][this.var_17b] * LevelObjectData.spriteIndexes[this.var_3d8.objectType][6];
       }
 
-      int var4 = LevelManager.var_1dc + this.var_bb * 24 + var2;
-      int var5 = LevelManager.var_1fb + this.var_123 * 24 + var3;
+      int var4 = LevelManager.mapOffsetX + this.var_bb * 24 + var2;
+      int var5 = LevelManager.mapOffsetY + this.var_123 * 24 + var3;
       if (LevelManager.var_a5a == 1) {
          if (LevelManager.someLevelDataVar1 == this.var_bb && LevelManager.someLevelDataVar2 == this.var_123) {
             if (var2 == 0 && var3 == 0) {
@@ -220,7 +220,7 @@ public final class Class_205 implements LevelObjectData {
             }
          }
 
-         if (LevelManager.someLevelDataVar1 == this.var_bb + LevelManager.var_3e7[0][this.var_17b] && LevelManager.someLevelDataVar2 == this.var_123 + LevelManager.var_3e7[1][this.var_17b]) {
+         if (LevelManager.someLevelDataVar1 == this.var_bb + LevelManager.offsetTypes[0][this.var_17b] && LevelManager.someLevelDataVar2 == this.var_123 + LevelManager.offsetTypes[1][this.var_17b]) {
             if (var3 < 0) {
                LevelManager.var_d39 = true;
             } else if (var3 > 0) {
@@ -228,15 +228,15 @@ public final class Class_205 implements LevelObjectData {
             }
          }
 
-         Class_1b0.drawSprite2(var1, (byte)1, this.var_24a > 0 ? (LevelManager.var_52f[15][0] == LevelManager.var_52f[14][0] ? LevelManager.var_52f[14][0] : LevelManager.var_52f[15][0] + (this.var_17b << 2)) : LevelManager.var_52f[this.var_1a6 == 4 ? Class_178.toolStats[Class_178.sub_e5c(this.var_451[this.var_47f])][3] : this.var_1a6][this.var_1ec] + (this.var_17b << 2), var4, var5);
+         ReadingDrawingClass.drawSpriteNoOffset(var1, (byte)1, this.var_24a > 0 ? (LevelManager.var_52f[15][0] == LevelManager.var_52f[14][0] ? LevelManager.var_52f[14][0] : LevelManager.var_52f[15][0] + (this.var_17b << 2)) : LevelManager.var_52f[this.var_1a6 == 4 ? Class_178.toolStats[Class_178.sub_e5c(this.var_451[this.var_47f])][3] : this.var_1a6][this.var_1ec] + (this.var_17b << 2), var4, var5);
          if (LevelManager.var_983 != null && LevelManager.var_983.var_3a == this.var_3a) {
-            Class_1b0.drawSprite2(var1, (byte)1, 7, var4, var5);
+            ReadingDrawingClass.drawSpriteNoOffset(var1, (byte)1, 7, var4, var5);
             return;
          }
       } else {
-         Class_1b0.drawSprite2(var1, (byte)50, this.var_17b, var4 + this.var_3a, var5 + this.var_3a);
+         ReadingDrawingClass.drawSpriteNoOffset(var1, (byte)50, this.var_17b, var4 + this.var_3a, var5 + this.var_3a);
          if (LevelManager.var_983 != null && LevelManager.var_983.var_3a == this.var_3a && Class_178.var_91 > 6 && !this.var_210) {
-            Class_1b0.drawSprite2(var1, (byte)51, LevelManager.var_983.var_3a - 1, var4 + 12 - 3 + this.var_3a, var5 + 12 - 3 + this.var_3a);
+            ReadingDrawingClass.drawSpriteNoOffset(var1, (byte)51, LevelManager.var_983.var_3a - 1, var4 + 12 - 3 + this.var_3a, var5 + 12 - 3 + this.var_3a);
             if (LevelManager.var_983.var_bb == LevelManager.someLevelDataVar1 && LevelManager.var_983.var_123 == LevelManager.someLevelDataVar2) {
                LevelManager.var_983.var_2d2 = LevelManager.var_983.var_29a;
             }
@@ -319,7 +319,7 @@ public final class Class_205 implements LevelObjectData {
    public final void sub_2da(byte var1, boolean var2) {
       this.var_210 = true;
       if (LevelManager.var_a5a == 0) {
-         if (this.var_1a6 == 5 && LevelManager.var_84c.containsKey(LevelManager.combineInts(this.var_bb, this.var_123))) {
+         if (this.var_1a6 == 5 && LevelManager.levelObjects.containsKey(LevelManager.combineInts(this.var_bb, this.var_123))) {
             Class_178.sub_2c8((byte)0, (byte[])null, (short)172, (Object[])null, new short[]{126}, (short)137);
             return;
          }
@@ -359,7 +359,7 @@ public final class Class_205 implements LevelObjectData {
                   LevelManager.sub_75c(this.var_bb, this.var_123, true, false, var_4aa + 5, this.var_3d8.var_1f5 == 114, true);
                }
 
-               LevelManager.var_84c.put(LevelManager.combineInts(this.var_bb, this.var_123), this.var_3d8);
+               LevelManager.levelObjects.put(LevelManager.combineInts(this.var_bb, this.var_123), this.var_3d8);
                this.var_3d8.var_18d = (short)(var_4aa + 5);
                LevelManager.sub_702();
             }
@@ -368,7 +368,7 @@ public final class Class_205 implements LevelObjectData {
 
       if (LevelManager.var_a5a == 1 && this.var_1a6 == 5) {
          this.var_3d8 = new LevelObject((byte)9, this.var_bb, this.var_123, this.var_17b, (byte)0, this.var_451[this.var_47f], (byte)0);
-         LevelManager.var_84c.put(LevelManager.combineInts(this.var_bb, this.var_123), this.var_3d8);
+         LevelManager.levelObjects.put(LevelManager.combineInts(this.var_bb, this.var_123), this.var_3d8);
          this.var_3d8.var_1bc[0] = var1;
       }
 
@@ -396,8 +396,8 @@ public final class Class_205 implements LevelObjectData {
    }
 
    public final boolean sub_3a5() {
-      var_4ca = this.var_bb + LevelManager.var_3e7[0][this.var_17b];
-      var_51f = this.var_123 + LevelManager.var_3e7[1][this.var_17b];
+      var_4ca = this.var_bb + LevelManager.offsetTypes[0][this.var_17b];
+      var_51f = this.var_123 + LevelManager.offsetTypes[1][this.var_17b];
       return var_4ca >= 0 && var_4ca < LevelManager.mapWidth && var_51f >= 0 && var_51f < LevelManager.mapHeight;
    }
 

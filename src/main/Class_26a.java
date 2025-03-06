@@ -100,7 +100,7 @@ public abstract class Class_26a extends Canvas implements LevelObjectData {
    }
 
    public static final boolean sub_180() {
-      return sub_ee(Class_1b0.sub_5a0((short)266));
+      return sub_ee(ReadingDrawingClass.sub_5a0((short)266));
    }
 
    public void commandAction(Command command, Displayable var2) {

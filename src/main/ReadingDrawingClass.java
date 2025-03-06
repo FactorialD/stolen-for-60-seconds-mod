@@ -13,7 +13,7 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.rms.RecordStore;
 
-public final class Class_1b0 implements LevelObjectData {
+public final class ReadingDrawingClass implements LevelObjectData {
    public static byte var_12 = 7;
    public static byte var_a9 = 9;
    private static final Random var_e3 = new Random();
@@ -376,7 +376,7 @@ public final class Class_1b0 implements LevelObjectData {
       }
    }
 
-   public static void drawSprite2(Graphics g, byte spriteId, int var2, int spriteXPos, int spriteYPos) {
+   public static void drawSpriteNoOffset(Graphics g, int spriteId, int var2, int spriteXPos, int spriteYPos) {
       drawSprite(g, spriteId, var2, spriteXPos, spriteYPos, 0, 0, 0, 0);
    }
 
@@ -664,7 +664,7 @@ public final class Class_1b0 implements LevelObjectData {
                      var6 = var2 + var7 * var_12;
                   }
                } else {
-                  drawSprite2(g, (byte)43, var8, var6, var3);
+                  drawSpriteNoOffset(g, (byte)43, var8, var6, var3);
                }
             }
          }
@@ -785,7 +785,7 @@ public final class Class_1b0 implements LevelObjectData {
             if (Class_178.var_dc6 != var3) {
                LevelManager.loadLevel(Class_178.var_dc6);
             } else {
-               LevelManager.var_84c.clear();
+               LevelManager.levelObjects.clear();
                LevelManager.sub_192(true);
             }
 
@@ -1273,8 +1273,8 @@ public final class Class_1b0 implements LevelObjectData {
                }
             }
 
-            outStream.writeByte(LevelManager.var_84c.size());
-            Enumeration var28 = LevelManager.var_84c.elements();
+            outStream.writeByte(LevelManager.levelObjects.size());
+            Enumeration var28 = LevelManager.levelObjects.elements();
 
             while(var28.hasMoreElements()) {
                LevelObject var31 = (LevelObject)var28.nextElement();
@@ -1432,8 +1432,8 @@ public final class Class_1b0 implements LevelObjectData {
                               }
 
                               if (var10 == 1) {
-                                 var38 = (byte)(var38 + LevelManager.var_3e7[0][var11]);
-                                 var9 = (byte)(var9 + LevelManager.var_3e7[1][var11]);
+                                 var38 = (byte)(var38 + LevelManager.offsetTypes[0][var11]);
+                                 var9 = (byte)(var9 + LevelManager.offsetTypes[1][var11]);
                               }
 
                               var7.var_39c.addElement(new Class_240(var38, var9, (byte)0, var11, (byte)0));
@@ -1459,14 +1459,14 @@ public final class Class_1b0 implements LevelObjectData {
                      }
                   }
 
-                  LevelManager.var_84c.clear();
+                  LevelManager.levelObjects.clear();
                   var6 = var2.readByte();
 
                   for(var37 = 0; var37 < var6; ++var37) {
                      (var39 = new LevelObject((byte)9, var2.readByte(), var2.readByte(), (byte)3, (byte)0, (byte)0, (byte)0)).var_18d = var2.readShort();
                      var39.var_1a5 = var2.readShort();
                      var39.var_1f5 = var2.readByte();
-                     LevelManager.var_84c.put(LevelManager.combineInts(var39.x, var39.y), var39);
+                     LevelManager.levelObjects.put(LevelManager.combineInts(var39.x, var39.y), var39);
                   }
 
                   var26 = false;

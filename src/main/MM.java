@@ -33,7 +33,7 @@ public final class MM extends MIDlet {
 
 	public final void destroyApp(boolean var1) {
 		if (Class_178.var_511 && LevelManager.var_a5a != 1) {
-			Class_1b0.sub_870();
+			ReadingDrawingClass.sub_870();
 		}
 
 		Class_178.sub_9b();

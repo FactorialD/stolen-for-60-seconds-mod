@@ -92,7 +92,7 @@ public final class Class_19e implements LevelObjectData {
          var0 += 4;
       }
 
-      var_45d = (byte)(Class_1b0.var_a9 + Class_1b0.var_a9 / 5);
+      var_45d = (byte)(ReadingDrawingClass.var_a9 + ReadingDrawingClass.var_a9 / 5);
       var_202 = 4 + var_45d;
       var_1bd = var_882.length + 6;
       if (var_7c6 == 0) {
@@ -106,8 +106,8 @@ public final class Class_19e implements LevelObjectData {
          var_3ad = var_18c + var_202 + 4;
       }
 
-      var_3e5 = var_12e + (var_1bd - var_882.length * Class_1b0.var_12 >> 1);
-      var_424 = var_18c + 2 + (var_202 - Class_1b0.var_a9 >> 1);
+      var_3e5 = var_12e + (var_1bd - var_882.length * ReadingDrawingClass.var_12 >> 1);
+      var_424 = var_18c + 2 + (var_202 - ReadingDrawingClass.var_a9 >> 1);
       if (var_673) {
          var_5ff = var_327 - LevelObjectData.spriteTypesArr[44][3] * 2;
          var_644 = var_12e + var_1bd - var_662 - 2 - 1;
@@ -119,7 +119,7 @@ public final class Class_19e implements LevelObjectData {
    }
 
    private static void sub_c6(int var0) {
-      int var1 = (var0 - 4 - 5 - 5) / Class_1b0.var_12;
+      int var1 = (var0 - 4 - 5 - 5) / ReadingDrawingClass.var_12;
       int var2 = sub_19b();
       var_2e2 = var_1bd;
       if (var_b16.length > var1 * var2) {
@@ -145,13 +145,13 @@ public final class Class_19e implements LevelObjectData {
          }
       }
 
-      var_4fa = Class_1b0.sub_1e5(var_b16, var_2e2);
-      var_2b5 = var_2e2 * Class_1b0.var_12;
+      var_4fa = ReadingDrawingClass.sub_1e5(var_b16, var_2e2);
+      var_2b5 = var_2e2 * ReadingDrawingClass.var_12;
       if (var_4fa > var2) {
          var_46d = var2;
          var_2b5 -= var_662;
          var_2e2 = sub_500(var_2b5);
-         var_4fa = Class_1b0.sub_1e5(var_b16, var_2e2);
+         var_4fa = ReadingDrawingClass.sub_1e5(var_b16, var_2e2);
          var_673 = true;
       } else {
          var_46d = var_4fa;
@@ -182,7 +182,7 @@ public final class Class_19e implements LevelObjectData {
       }
 
       int var3;
-      int var2 = (var3 = sub_500(var1 + 4 + 5 + 5)) * Class_1b0.var_12;
+      int var2 = (var3 = sub_500(var1 + 4 + 5 + 5)) * ReadingDrawingClass.var_12;
       var_1bd += 2;
 
       int var4;
@@ -190,7 +190,7 @@ public final class Class_19e implements LevelObjectData {
          var_1bd = Math.max(var_1bd, sub_1fc(var4).length + 1 + var3);
       }
 
-      var_1bd = Math.min(var_1bd * Class_1b0.var_12, var0);
+      var_1bd = Math.min(var_1bd * ReadingDrawingClass.var_12, var0);
       var_4fa = sub_ef(var_1bd - var2);
       if ((var4 = sub_19b()) >= var_4fa) {
          var4 = var_4fa;
@@ -198,7 +198,7 @@ public final class Class_19e implements LevelObjectData {
       } else {
          var_673 = true;
          var_4fa = sub_ef(var_1bd - var2);
-         var_2b5 = -Class_1b0.var_12;
+         var_2b5 = -ReadingDrawingClass.var_12;
       }
 
       var_4fa = var_8ca.length;
@@ -216,7 +216,7 @@ public final class Class_19e implements LevelObjectData {
       int var2 = sub_500(var0);
 
       for(int var3 = 0; var3 < var_8ca.length; ++var3) {
-         var_95a[var3] = Class_1b0.sub_1e5(sub_1fc(var3), var2);
+         var_95a[var3] = ReadingDrawingClass.sub_1e5(sub_1fc(var3), var2);
          if (var_abc != null) {
             int var4 = var_abc[var3] == null ? 1 : LevelObjectData.spriteTypesArr[var_abc[var3][0]][3];
 
@@ -249,7 +249,7 @@ public final class Class_19e implements LevelObjectData {
 
    private static int sub_19b() {
       int var0;
-      return (var0 = var_257 - 4 - var_202 - 3 - 2 - sub_1ea()) / var_45d + Class_1b0.sub_619(var0, var_45d);
+      return (var0 = var_257 - 4 - var_202 - 3 - 2 - sub_1ea()) / var_45d + ReadingDrawingClass.sub_619(var0, var_45d);
    }
 
    private static int sub_1ea() {
@@ -259,9 +259,9 @@ public final class Class_19e implements LevelObjectData {
    private static short[] sub_1fc(int var0) {
       short[] var1;
       if (var_914 != null) {
-         var1 = Class_1b0.sub_569(var_8ca[var0], var_914[var0]);
+         var1 = ReadingDrawingClass.sub_569(var_8ca[var0], var_914[var0]);
       } else {
-         var1 = Class_1b0.readTextFromLng(var_8ca[var0]);
+         var1 = ReadingDrawingClass.readTextFromLng(var_8ca[var0]);
       }
 
       return var1;
@@ -280,20 +280,20 @@ public final class Class_19e implements LevelObjectData {
       }
 
       var0.setStrokeStyle(0);
-      Class_1b0.sub_20e(var0, var1, var2, var3, var4, true, var5 > 0 ? 9211020 : 11446175);
+      ReadingDrawingClass.sub_20e(var0, var1, var2, var3, var4, true, var5 > 0 ? 9211020 : 11446175);
       if (var5 > 0) {
-         Class_1b0.sub_20e(var0, var1 + var5, var2 + var5, var3 - (var5 << 1), var4 - (var5 << 1), false, 11446175);
+         ReadingDrawingClass.sub_20e(var0, var1 + var5, var2 + var5, var3 - (var5 << 1), var4 - (var5 << 1), false, 11446175);
       }
 
-      Class_1b0.sub_20e(var0, var1 + var5, var2 + var5, var3 - (var5 << 1), var6, false, 6518395);
-      Class_1b0.drawSprite2(var0, (byte)45, 0, var1 + var5 + 2, var2 + var5 + 2);
-      Class_1b0.drawSprite2(var0, (byte)45, 0, var1 + var5 + var3 - (var5 << 1) - 2 - LevelObjectData.spriteTypesArr[45][2], var2 + var5 + 2);
+      ReadingDrawingClass.sub_20e(var0, var1 + var5, var2 + var5, var3 - (var5 << 1), var6, false, 6518395);
+      ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)45, 0, var1 + var5 + 2, var2 + var5 + 2);
+      ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)45, 0, var1 + var5 + var3 - (var5 << 1) - 2 - LevelObjectData.spriteTypesArr[45][2], var2 + var5 + 2);
    }
 
    public static void sub_29c(Graphics var0) {
       for(int var1 = 0; var1 < LevelManager.var_12a + 2; ++var1) {
          for(int var2 = 0; var2 < LevelManager.var_18b + 2; ++var2) {
-            Class_1b0.drawSprite2(var0, (byte)19, 0, var1 * 24, var2 * 24);
+            ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)19, 0, var1 * 24, var2 * 24);
          }
       }
 
@@ -312,13 +312,13 @@ public final class Class_19e implements LevelObjectData {
             var0.setColor(0);
             if (!var_c24) {
                sub_25f(var0, var_12e, var_18c, var_1bd, var_1cf, 2, var_202, true);
-               Class_1b0.sub_47c(var0, var_882, var_3e5, var_424);
+               ReadingDrawingClass.sub_47c(var0, var_882, var_3e5, var_424);
                if (var_850 != null) {
                   if (var_850.length == 3) {
-                     Class_1b0.drawSprite2(var0, var_850[0], var_850[2], var_34f, var_3ad);
+                     ReadingDrawingClass.drawSpriteNoOffset(var0, var_850[0], var_850[2], var_34f, var_3ad);
                   }
 
-                  Class_1b0.drawSprite2(var0, var_850[0], var_850[1], var_34f, var_3ad);
+                  ReadingDrawingClass.drawSpriteNoOffset(var0, var_850[0], var_850[1], var_34f, var_3ad);
                }
             }
 
@@ -356,7 +356,7 @@ public final class Class_19e implements LevelObjectData {
          }
 
          Class_3d.callGc();
-         Class_1b0.sub_5d(var0, var_b16, var_508, var_285, var_297, var_2e2, var_46d, var_45d);
+         ReadingDrawingClass.sub_5d(var0, var_b16, var_508, var_285, var_297, var_2e2, var_46d, var_45d);
          var_6ce = false;
       } else {
          var1.drawImage(LevelManager.var_25f, 0, 0, 0);
@@ -425,15 +425,15 @@ public final class Class_19e implements LevelObjectData {
 
                if (var_abc[var5] != null) {
                   if (var_c2e) {
-                     Class_1b0.sub_2c5(var0, var_abc[var5][1], (byte)1, var_12e + 5 + var9, var4, 0);
+                     ReadingDrawingClass.sub_2c5(var0, var_abc[var5][1], (byte)1, var_12e + 5 + var9, var4, 0);
                   } else {
-                     Class_1b0.drawSprite2(var0, var_abc[var5][0], var_abc[var5][1], var_12e + 5 + var9, var4);
+                     ReadingDrawingClass.drawSpriteNoOffset(var0, var_abc[var5][0], var_abc[var5][1], var_12e + 5 + var9, var4);
                   }
                }
             }
 
             if (var_a80) {
-               Class_1b0.drawSprite2(var0, (byte)6, (byte)(var_a44[var5] ? 1 : 0), var_12e + 5, var4 + 1);
+               ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)6, (byte)(var_a44[var5] ? 1 : 0), var_12e + 5, var4 + 1);
             }
 
             if (var5 < var_508) {
@@ -442,14 +442,14 @@ public final class Class_19e implements LevelObjectData {
 
             short[] var10;
             if (var_914 == null) {
-               var10 = Class_1b0.readTextFromLng(var_8ca[var5]);
+               var10 = ReadingDrawingClass.readTextFromLng(var_8ca[var5]);
             } else {
-               var10 = Class_1b0.sub_569(var_8ca[var5], var_914[var5]);
+               var10 = ReadingDrawingClass.sub_569(var_8ca[var5], var_914[var5]);
             }
 
             int var7 = 0;
             if (var_7c6 != 2 && var10.length < var_2e2) {
-               var7 = var_2b5 - var10.length * Class_1b0.var_12 >> 1;
+               var7 = var_2b5 - var10.length * ReadingDrawingClass.var_12 >> 1;
             }
 
             if (var_abc != null && var_abc[var5] == null) {
@@ -465,9 +465,9 @@ public final class Class_19e implements LevelObjectData {
             }
 
             if (var_95a[var5] == 1) {
-               Class_1b0.sub_47c(var0, var10, var_285 + var7, var4);
+               ReadingDrawingClass.sub_47c(var0, var10, var_285 + var7, var4);
             } else {
-               Class_1b0.sub_5d(var0, var10, 0, var_285 + var7, var4, var_2e2, var_95a[var5], var_45d);
+               ReadingDrawingClass.sub_5d(var0, var10, 0, var_285 + var7, var4, var_2e2, var_95a[var5], var_45d);
             }
 
             var4 += var_45d * var_95a[var5];
@@ -488,8 +488,8 @@ public final class Class_19e implements LevelObjectData {
          }
 
          if (var_7ed == 22) {
-            Class_1b0.drawSprite2(var1, (byte)16, 0, var_285 - (LevelObjectData.spriteTypesArr[16][2] << 1) + Math.abs(12 - Class_178.var_115), var_297 + var_45d * var_9a0 - 2);
-            Class_1b0.drawSprite2(var1, (byte)16, 0, var_285 + (LevelObjectData.spriteTypesArr[16][2] >> 1) + var2 - Math.abs(12 - Class_178.var_115), var_297 + var_45d * var_9a0 - 2);
+            ReadingDrawingClass.drawSpriteNoOffset(var1, (byte)16, 0, var_285 - (LevelObjectData.spriteTypesArr[16][2] << 1) + Math.abs(12 - Class_178.var_115), var_297 + var_45d * var_9a0 - 2);
+            ReadingDrawingClass.drawSpriteNoOffset(var1, (byte)16, 0, var_285 + (LevelObjectData.spriteTypesArr[16][2] >> 1) + var2 - Math.abs(12 - Class_178.var_115), var_297 + var_45d * var_9a0 - 2);
          } else {
             if (!var_c2e) {
                var3 = 0;
@@ -498,7 +498,7 @@ public final class Class_19e implements LevelObjectData {
                }
 
                try {
-                  Class_1b0.sub_250(var1, var_285 - 2, var_297 + var_45d * var_9a0 - 2, var2, var_45d * var_95a[var_508], true, -1, var3, var3);
+                  ReadingDrawingClass.sub_250(var1, var_285 - 2, var_297 + var_45d * var_9a0 - 2, var2, var_45d * var_95a[var_508], true, -1, var3, var3);
                   return;
                } catch (Exception var8) {
                }
@@ -512,10 +512,10 @@ public final class Class_19e implements LevelObjectData {
       if (Class_178.var_46) {
          var_790.removeCommand(Class_178.var_3bb);
          var_790.removeCommand(Class_178.var_392);
-         Class_178.var_3bb = new Command(Class_1b0.sub_5a0(var_89d[0]), 4, 1);
+         Class_178.var_3bb = new Command(ReadingDrawingClass.sub_5a0(var_89d[0]), 4, 1);
          var_790.addCommand(Class_178.var_3bb);
          if (var_89d.length > 1) {
-            Class_178.var_392 = new Command(Class_1b0.sub_5a0(var_89d[1]), 1, 2);
+            Class_178.var_392 = new Command(ReadingDrawingClass.sub_5a0(var_89d[1]), 1, 2);
             var_790.addCommand(Class_178.var_392);
          }
 
@@ -523,7 +523,7 @@ public final class Class_19e implements LevelObjectData {
          int var1 = LevelManager.screenHeight - LevelObjectData.spriteTypesArr[9][3];
 
          for(int var2 = 0; var2 < LevelManager.screenWidth; var2 += LevelObjectData.spriteTypesArr[9][2]) {
-            Class_1b0.drawSprite2(var0, (byte)9, 0, var2, var1);
+            ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)9, 0, var2, var1);
          }
 
          sub_388(var0, 2, var1 + var_ac, var_89d[0] - 126, 4);
@@ -536,17 +536,17 @@ public final class Class_19e implements LevelObjectData {
    }
 
    public static void sub_388(Graphics var0, int var1, int var2, int var3, int var4) {
-      Class_1b0.drawSprite2(var0, (byte)38, 0, var1, var2);
-      Class_1b0.drawSprite2(var0, (byte)39, (byte)var3, var1 + (LevelObjectData.spriteTypesArr[38][2] >> 1) - (LevelObjectData.spriteTypesArr[39][2] >> 1), var2 + (LevelObjectData.spriteTypesArr[38][3] >> 1) - (LevelObjectData.spriteTypesArr[39][3] >> 1));
+      ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)38, 0, var1, var2);
+      ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)39, (byte)var3, var1 + (LevelObjectData.spriteTypesArr[38][2] >> 1) - (LevelObjectData.spriteTypesArr[39][2] >> 1), var2 + (LevelObjectData.spriteTypesArr[38][3] >> 1) - (LevelObjectData.spriteTypesArr[39][3] >> 1));
    }
 
    private static void sub_3a6(Graphics var0, int var1, int var2) {
       for(int var3 = var_297 + LevelObjectData.spriteTypesArr[44][3]; var3 < var_297 + var_327 - LevelObjectData.spriteTypesArr[44][3]; var3 += LevelObjectData.spriteTypesArr[44][3]) {
-         Class_1b0.drawSprite2(var0, (byte)44, 2, var_644, var3);
+         ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)44, 2, var_644, var3);
       }
 
-      Class_1b0.drawSprite2(var0, (byte)44, 0, var_644, var_297);
-      Class_1b0.drawSprite2(var0, (byte)44, 1, var_644, var_297 + var_327 - LevelObjectData.spriteTypesArr[44][3]);
+      ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)44, 0, var_644, var_297);
+      ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)44, 1, var_644, var_297 + var_327 - LevelObjectData.spriteTypesArr[44][3]);
       int var4 = Math.max(100 * var1 / var_4fa * var_5ff / 100, 4);
       int var5 = 100 * var2 / var_4fa * var_5ff / 100;
       var5 = Math.min(var_5ff - var4, var5);
@@ -554,8 +554,8 @@ public final class Class_19e implements LevelObjectData {
          var5 = var_5ff - var4;
       }
 
-      Class_1b0.sub_20e(var0, var_644 + 1, var_297 + LevelObjectData.spriteTypesArr[44][3] + var5, var_662 - 2, var4, true, 6518395);
-      Class_1b0.drawSprite2(var0, (byte)45, 0, var_644 + 1 + (var_662 - 2 >> 1) - (LevelObjectData.spriteTypesArr[45][2] >> 1), var_297 + LevelObjectData.spriteTypesArr[44][3] + var5 + (var4 >> 1) - (LevelObjectData.spriteTypesArr[45][3] >> 1));
+      ReadingDrawingClass.sub_20e(var0, var_644 + 1, var_297 + LevelObjectData.spriteTypesArr[44][3] + var5, var_662 - 2, var4, true, 6518395);
+      ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)45, 0, var_644 + 1 + (var_662 - 2 >> 1) - (LevelObjectData.spriteTypesArr[45][2] >> 1), var_297 + LevelObjectData.spriteTypesArr[44][3] + var5 + (var4 >> 1) - (LevelObjectData.spriteTypesArr[45][3] >> 1));
    }
 
    private static void sub_3c5(Graphics var0, int var1, int var2) {
@@ -565,11 +565,11 @@ public final class Class_19e implements LevelObjectData {
       }
 
       if (var2 > 0 || var_7c6 != 0 && var_673) {
-         Class_1b0.sub_250(var0, var_644, var_297, LevelObjectData.spriteTypesArr[44][2], LevelObjectData.spriteTypesArr[44][3], true, -1, var3, var3);
+         ReadingDrawingClass.sub_250(var0, var_644, var_297, LevelObjectData.spriteTypesArr[44][2], LevelObjectData.spriteTypesArr[44][3], true, -1, var3, var3);
       }
 
       if (var_4fa - var2 > var1 || var_7c6 != 0 && var_673) {
-         Class_1b0.sub_250(var0, var_644, var_297 + var_327 - LevelObjectData.spriteTypesArr[44][3], LevelObjectData.spriteTypesArr[44][2], LevelObjectData.spriteTypesArr[44][3], true, -1, var3, var3);
+         ReadingDrawingClass.sub_250(var0, var_644, var_297 + var_327 - LevelObjectData.spriteTypesArr[44][3], LevelObjectData.spriteTypesArr[44][2], LevelObjectData.spriteTypesArr[44][3], true, -1, var3, var3);
       }
 
    }
@@ -615,7 +615,7 @@ public final class Class_19e implements LevelObjectData {
             if (var0 == 3) {
                Class_178.var_e38 = 1000000;
             } else if (var0 == 9) {
-               var_b16 = Class_1b0.sub_533(Runtime.getRuntime().totalMemory() + "_" + Runtime.getRuntime().freeMemory());
+               var_b16 = ReadingDrawingClass.sub_533(Runtime.getRuntime().totalMemory() + "_" + Runtime.getRuntime().freeMemory());
             } else if (var0 == 4) {
                Class_178.var_5bb = 0;
             } else if (var0 == 5) {
@@ -752,19 +752,19 @@ public final class Class_19e implements LevelObjectData {
    }
 
    public static void sub_4ac(short var0, Object[] var1) {
-      var_b16 = Class_1b0.sub_569(var0, var1);
+      var_b16 = ReadingDrawingClass.sub_569(var0, var1);
    }
 
    public static void sub_4bd(short var0) {
-      var_882 = Class_1b0.readTextFromLng(var0);
+      var_882 = ReadingDrawingClass.readTextFromLng(var0);
    }
 
    public static void sub_4ea(short var0, Object[] var1) {
-      var_882 = Class_1b0.sub_569(var0, var1);
+      var_882 = ReadingDrawingClass.sub_569(var0, var1);
    }
 
    private static int sub_500(int var0) {
-      return var0 / Class_1b0.var_12 + Class_1b0.sub_619(var0, Class_1b0.var_12);
+      return var0 / ReadingDrawingClass.var_12 + ReadingDrawingClass.sub_619(var0, ReadingDrawingClass.var_12);
    }
 
    static {

@@ -13,18 +13,18 @@ public final class LevelManager implements LevelObjectData {
    public static Class_178 var_f0;
    public static int var_12a;
    public static int var_18b;
-   public static int var_1dc;
-   public static int var_1fb;
+   public static int mapOffsetX;
+   public static int mapOffsetY;
    public static byte mapWidth;
    public static byte mapHeight;
    public static short var_247 = -1;
    public static Image var_25f;
-   public static Graphics var_2a1;
+   public static Graphics graphics;
    public static boolean var_2c9 = true;
    public static boolean var_314;
    private static boolean var_35f = true;
    private static int var_390;
-   public static final short[][] var_3e7 = new short[][]{{-1, 0, 1, 0}, {0, -1, 0, 1}};
+   public static final short[][] offsetTypes = new short[][]{{-1, 0, 1, 0}, {0, -1, 0, 1}};
    private static final short[][] var_42b = new short[][]{{-1, 1, 1, -1}, {-1, -1, 1, 1}};
    public static final byte[] var_475 = new byte[]{-6, 0, -4, 0, -3, 0, -2, 0, -1, 0, -1, 0};
    public static byte var_4a5;
@@ -42,7 +42,7 @@ public final class LevelManager implements LevelObjectData {
    public static int[] var_7a3 = new int[7];
    public static int var_7f3;
    public static final Hashtable levelObjectsMap = new Hashtable();
-   public static final Hashtable var_84c = new Hashtable();
+   public static final Hashtable levelObjects = new Hashtable();
    public static final Hashtable var_896 = new Hashtable();
    public static final Hashtable alarmWithZonesMap = new Hashtable();
    public static final Hashtable var_8ff = new Hashtable();
@@ -102,14 +102,14 @@ public final class LevelManager implements LevelObjectData {
          Class_178.musicManager.switchMusicPlayer(3, -1);
          var_25f = null;
          Class_178.threadSleep(10L);
-         var_2a1 = null;
+         graphics = null;
          Class_178.sub_3b5(0);
          sub_c2();
          Class_3d.callGc();
          Class_178.threadSleep(50L);
          Class_178.var_26f = 1;
          var_25f = Image.createImage(screenWidth, screenHeight);
-         var_2a1 = var_25f.getGraphics();
+         graphics = var_25f.getGraphics();
          Class_3d.callGc();
          Class_178.threadSleep(10L);
          Class_178.var_ff4 = null;
@@ -144,8 +144,8 @@ public final class LevelManager implements LevelObjectData {
          }
 
          sub_140(alarmWithZonesMap, var_8ff);
-         sub_f0(var_84c, var_896);
-         var_84c.clear();
+         sub_f0(levelObjects, var_896);
+         levelObjects.clear();
          sub_192(false);
          if (Class_178.var_5bb > -1 || Class_178.var_dc6 == 6) {
             var_99f.addElement(Class_178.var_d34[0]);
@@ -173,7 +173,7 @@ public final class LevelManager implements LevelObjectData {
 
    private static void sub_c2() {
       if (!var_e7f) {
-         int var0 = Class_1b0.mainImages[6].getHeight() * Class_1b0.mainImages[6].getWidth() / 576;
+         int var0 = ReadingDrawingClass.mainImages[6].getHeight() * ReadingDrawingClass.mainImages[6].getWidth() / 576;
 
          int var1;
          int var2;
@@ -183,23 +183,23 @@ public final class LevelManager implements LevelObjectData {
             }
          }
 
-         var0 = Class_1b0.mainImages[5].getHeight() * Class_1b0.mainImages[5].getWidth() / 576;
+         var0 = ReadingDrawingClass.mainImages[5].getHeight() * ReadingDrawingClass.mainImages[5].getWidth() / 576;
 
-         for(var1 = 0; var1 < LevelObjectData.var_da.length; ++var1) {
-            for(var2 = 0; var2 < var_64c[var1].length && LevelObjectData.var_da[var1][0] >= var0; ++var2) {
+         for(var1 = 0; var1 < LevelObjectData.spriteIndexes.length; ++var1) {
+            for(var2 = 0; var2 < var_64c[var1].length && LevelObjectData.spriteIndexes[var1][0] >= var0; ++var2) {
                if (var_64c[var1][0] == -1) {
-                  LevelObjectData.var_da[var1][0] = LevelObjectData.var_da[var1][1] = LevelObjectData.var_da[var1][2] = LevelObjectData.var_da[var1][3] = (byte)var0;
-                  LevelObjectData.var_da[var1][4] = -1;
+                  LevelObjectData.spriteIndexes[var1][0] = LevelObjectData.spriteIndexes[var1][1] = LevelObjectData.spriteIndexes[var1][2] = LevelObjectData.spriteIndexes[var1][3] = (byte)var0;
+                  LevelObjectData.spriteIndexes[var1][4] = -1;
                   break;
                }
 
-               LevelObjectData.var_da[var1][0] = LevelObjectData.var_da[var_64c[var1][var2 + 1]][0];
-               LevelObjectData.var_da[var1][1] = LevelObjectData.var_da[var_64c[var1][var2 + 1]][1];
-               LevelObjectData.var_da[var1][2] = LevelObjectData.var_da[var_64c[var1][var2 + 1]][2];
-               LevelObjectData.var_da[var1][3] = LevelObjectData.var_da[var_64c[var1][var2 + 1]][3];
-               LevelObjectData.var_da[var1][5] = Class_1b0.sub_6b7(LevelObjectData.var_da[var1][5], (byte)6, Class_1b0.sub_678(LevelObjectData.var_da[var_64c[var1][var2 + 1]][5], (byte)6));
-               LevelObjectData.var_da[var1][5] = Class_1b0.sub_6b7(LevelObjectData.var_da[var1][5], (byte)7, Class_1b0.sub_678(LevelObjectData.var_da[var_64c[var1][var2 + 1]][5], (byte)7));
-               LevelObjectData.var_da[var1][6] = LevelObjectData.var_da[var_64c[var1][var2 + 1]][6];
+               LevelObjectData.spriteIndexes[var1][0] = LevelObjectData.spriteIndexes[var_64c[var1][var2 + 1]][0];
+               LevelObjectData.spriteIndexes[var1][1] = LevelObjectData.spriteIndexes[var_64c[var1][var2 + 1]][1];
+               LevelObjectData.spriteIndexes[var1][2] = LevelObjectData.spriteIndexes[var_64c[var1][var2 + 1]][2];
+               LevelObjectData.spriteIndexes[var1][3] = LevelObjectData.spriteIndexes[var_64c[var1][var2 + 1]][3];
+               LevelObjectData.spriteIndexes[var1][5] = ReadingDrawingClass.sub_6b7(LevelObjectData.spriteIndexes[var1][5], (byte)6, ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var_64c[var1][var2 + 1]][5], (byte)6));
+               LevelObjectData.spriteIndexes[var1][5] = ReadingDrawingClass.sub_6b7(LevelObjectData.spriteIndexes[var1][5], (byte)7, ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var_64c[var1][var2 + 1]][5], (byte)7));
+               LevelObjectData.spriteIndexes[var1][6] = LevelObjectData.spriteIndexes[var_64c[var1][var2 + 1]][6];
             }
          }
 
@@ -214,7 +214,7 @@ public final class LevelManager implements LevelObjectData {
       while(var2.hasMoreElements()) {
          LevelObject var3 = (LevelObject)var2.nextElement();
          LevelObject var4;
-         (var4 = new LevelObject(var3.objectType, var3.x, var3.y, var3.var_163, (byte)0, var3.var_1f5, var3.var_22c)).var_18d = var3.var_18d;
+         (var4 = new LevelObject(var3.objectType, var3.x, var3.y, var3.offsetType, (byte)0, var3.var_1f5, var3.var_22c)).var_18d = var3.var_18d;
          var4.var_1a5 = var3.var_1a5;
          var1.put(combineInts(var3.x, var3.y), var4);
       }
@@ -312,12 +312,12 @@ public final class LevelManager implements LevelObjectData {
    public static void loadLevel(byte level) {
       someLevelDataVarLast = 180;
       levelObjectsMap.clear();
-      var_84c.clear();
+      levelObjects.clear();
       alarmWithZonesMap.clear();
       DataInputStream dataConfig = null;
 
       try {
-    	 dataConfig = Class_1b0.getLevelDataStream(level);
+    	 dataConfig = ReadingDrawingClass.getLevelDataStream(level);
     	 // Two first bytes is height and width
     	  
     	 // Read height and width
@@ -419,7 +419,7 @@ public final class LevelManager implements LevelObjectData {
       while(var22.hasMoreElements()) {
          var20 = (LevelObject)var22.nextElement();
          var25 = new Integer[3];
-         if (var20.var_22c > 0 && var20.var_1f5 != 0 && Class_1b0.sub_678(LevelObjectData.var_da[var20.objectType][5], (byte)4)) {
+         if (var20.var_22c > 0 && var20.var_1f5 != 0 && ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var20.objectType][5], (byte)4)) {
             var21 = combineInts(var20.var_1f5, var20.var_22c);
             if (var18.containsKey(var21)) {
                (var25 = (Integer[])((Integer[])var18.get(var21)))[0] = new Integer(var20.var_22c);
@@ -449,7 +449,7 @@ public final class LevelManager implements LevelObjectData {
 
                            while(var22.hasMoreElements()) {
                               var20 = (LevelObject)var22.nextElement();
-                              if (Class_1b0.sub_678(LevelObjectData.var_da[var20.objectType][5], (byte)4) && var20.var_1f5 < 6) {
+                              if (ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var20.objectType][5], (byte)4) && var20.var_1f5 < 6) {
                                  int[] var27 = var_779;
                                  var27[0] += var20.var_22c * var_71c[var20.var_1f5][0];
                                  var27 = var_779;
@@ -459,12 +459,12 @@ public final class LevelManager implements LevelObjectData {
                            }
 
                            var_779[0] = var_779[0] / 1000 * 1000;
-                           someLevelDataVarLast = levelAdditionalData_TimerEtc[level - 1][0] + Class_1b0.sub_21(0, 10);
+                           someLevelDataVarLast = levelAdditionalData_TimerEtc[level - 1][0] + ReadingDrawingClass.sub_21(0, 10);
                            return;
                         }
                      } while((var20 = (LevelObject)var22.nextElement()).var_22c <= 0);
                   } while(var20.var_1f5 == 0);
-               } while(!Class_1b0.sub_678(LevelObjectData.var_da[var20.objectType][5], (byte)4));
+               } while(!ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var20.objectType][5], (byte)4));
 
                var21 = combineInts(var20.var_1f5, var20.var_22c);
             } while(!var18.containsKey(var21));
@@ -473,13 +473,13 @@ public final class LevelManager implements LevelObjectData {
                var20.var_22c = 0;
                if (var25[1].intValue() == 2 && var25[2].intValue() == 2) {
                   int var23;
-                  if ((var23 = Class_1b0.sub_21(0, 2)) == 1) {
-                     var20.var_22c = (byte)Class_1b0.sub_21(0, var25[0].intValue());
+                  if ((var23 = ReadingDrawingClass.sub_21(0, 2)) == 1) {
+                     var20.var_22c = (byte)ReadingDrawingClass.sub_21(0, var25[0].intValue());
                   } else if (var23 == 2) {
                      var20.var_22c = (byte)var25[0].byteValue();
                   }
-               } else if (Class_1b0.sub_21(0, 1) == 1) {
-                  var20.var_22c = (byte)Math.min(Class_1b0.sub_21(0, var25[0].intValue() >> 1), var25[0].intValue());
+               } else if (ReadingDrawingClass.sub_21(0, 1) == 1) {
+                  var20.var_22c = (byte)Math.min(ReadingDrawingClass.sub_21(0, var25[0].intValue() >> 1), var25[0].intValue());
                }
 
                var25[0] = new Integer(var25[0].intValue() - var20.var_22c);
@@ -499,29 +499,29 @@ public final class LevelManager implements LevelObjectData {
       }
    }
 
-   public static void sub_26f(Graphics var0) {
-      if (var_2a1 != null) {
+   public static void sub_26f(Graphics g) {
+      if (graphics != null) {
          Class_178.var_338 = true;
          if (var_2c9 && (mapWidth * 24 < screenWidth || mapHeight * 24 < var_cf)) {
-            var_2a1.setColor(var_a5a == 0 ? 0 : 10066329);
-            var_2a1.setClip(0, 0, screenWidth, screenHeight);
-            var_2a1.fillRect(0, 0, screenWidth, screenHeight);
+            graphics.setColor(var_a5a == 0 ? 0 : 10066329);
+            graphics.setClip(0, 0, screenWidth, screenHeight);
+            graphics.fillRect(0, 0, screenWidth, screenHeight);
          }
 
-         sub_45a(var0);
+         sub_45a(g);
          if (var_a5a == 1) {
-            sub_44c(var0);
-            sub_38e(var0);
+            drawAllObjects(g);
+            sub_38e(g);
          }
 
-         sub_422(var0);
+         sub_422(g);
          if (var_a5a == 1) {
-            sub_3a8(var0);
+            sub_3a8(g);
          }
 
-         sub_2d2(var0);
-         sub_33b(var0);
-         Class_178.sub_94f(var0, Class_178.var_b74, Class_178.var_bca, false);
+         sub_2d2(g);
+         sub_33b(g);
+         Class_178.sub_94f(g, Class_178.var_b74, Class_178.var_bca, false);
          var_2c9 = false;
          var_35f = false;
          if (var_314) {
@@ -539,13 +539,13 @@ public final class LevelManager implements LevelObjectData {
       if (var_a5a == 1 && var_983 != null && var_983.var_3d8 != null && var_983.sub_311()) {
          byte var1 = var_983.var_1a6 == 5 ? 1 : var_983.var_3d8.objectType;
          byte var2 = var_983.var_1a6 == 3 ? 8 : Class_205.toolUsingTimeStats[var1][Class_178.sub_e5c(var_983.var_451[var_983.var_47f])];
-         var_983.var_3d8.sub_92(g, var2, var_983.var_1a6 != 3);
+         var_983.var_3d8.drawTimerCircle(g, var2, var_983.var_1a6 != 3);
       }
 
       if (var_983 != null) {
          int var9 = screenWidth < 130 ? 2 : 4;
-         Class_1b0.drawSprite2(g, (byte)24, 0, var9, screenHeight - LevelObjectData.spriteTypesArr[24][3]);
-         Class_1b0.drawSprite2(g, (byte)5, var_983.var_3a, var9 + (LevelObjectData.spriteTypesArr[24][2] >> 1) - (LevelObjectData.spriteTypesArr[5][2] >> 1), screenHeight - LevelObjectData.spriteTypesArr[24][3] + (LevelObjectData.spriteTypesArr[24][3] >> 1) - (LevelObjectData.spriteTypesArr[5][3] >> 1) + 1);
+         ReadingDrawingClass.drawSpriteNoOffset(g, (byte)24, 0, var9, screenHeight - LevelObjectData.spriteTypesArr[24][3]);
+         ReadingDrawingClass.drawSpriteNoOffset(g, (byte)5, var_983.var_3a, var9 + (LevelObjectData.spriteTypesArr[24][2] >> 1) - (LevelObjectData.spriteTypesArr[5][2] >> 1), screenHeight - LevelObjectData.spriteTypesArr[24][3] + (LevelObjectData.spriteTypesArr[24][3] >> 1) - (LevelObjectData.spriteTypesArr[5][3] >> 1) + 1);
          if (var_a5a == 0 && Class_178.var_80 > 6 && var_983.var_29a < var_983.var_2d2) {
             int var10 = screenHeight - LevelObjectData.spriteTypesArr[9][3];
             int var3 = LevelObjectData.spriteTypesArr[9][3] - LevelObjectData.spriteTypesArr[26][3] + 1 >> 1;
@@ -554,7 +554,7 @@ public final class LevelManager implements LevelObjectData {
             int var6 = var10 + var3 + 1;
             int var7 = LevelObjectData.spriteTypesArr[25][2] - 2;
             int var8 = LevelObjectData.spriteTypesArr[25][3] - 2;
-            Class_1b0.drawSprite2(g, (byte)25, 0, var4, var10 + var3);
+            ReadingDrawingClass.drawSpriteNoOffset(g, (byte)25, 0, var4, var10 + var3);
             g.setColor(0);
             g.setClip(0, 0, screenWidth, screenHeight);
             g.fillRect(var5, var6, var7, var8 - var8 * var_983.var_2d2 / thiefStats[var_983.var_3a][0]);
@@ -573,24 +573,24 @@ public final class LevelManager implements LevelObjectData {
       }
 
       while(var4 < screenWidth) {
-         Class_1b0.drawSprite2(var0, (byte)(var1 ? 9 : 12), 0, var4, var2);
+         ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)(var1 ? 9 : 12), 0, var4, var2);
          var4 += LevelObjectData.spriteTypesArr[var1 ? 9 : 12][2];
       }
 
       if (var_983 != null) {
-         Class_1b0.drawSprite2(var0, (byte)24, 0, var5, screenHeight - LevelObjectData.spriteTypesArr[24][3]);
-         Class_1b0.drawSprite2(var0, (byte)5, var_983.var_3a, var5 + (LevelObjectData.spriteTypesArr[24][2] >> 1) - (LevelObjectData.spriteTypesArr[5][2] >> 1), screenHeight - LevelObjectData.spriteTypesArr[24][3] + (LevelObjectData.spriteTypesArr[24][3] >> 1) - (LevelObjectData.spriteTypesArr[5][3] >> 1) + 1);
+         ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)24, 0, var5, screenHeight - LevelObjectData.spriteTypesArr[24][3]);
+         ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)5, var_983.var_3a, var5 + (LevelObjectData.spriteTypesArr[24][2] >> 1) - (LevelObjectData.spriteTypesArr[5][2] >> 1), screenHeight - LevelObjectData.spriteTypesArr[24][3] + (LevelObjectData.spriteTypesArr[24][3] >> 1) - (LevelObjectData.spriteTypesArr[5][3] >> 1) + 1);
          int var6 = (var4 = var5 + LevelObjectData.spriteTypesArr[24][2] + var5) + 1;
          int var7 = var2 + var3 + 1;
          int var8 = LevelObjectData.spriteTypesArr[25][2] - 2;
          int var9 = LevelObjectData.spriteTypesArr[25][3] - 2;
-         Class_1b0.drawSprite2(var0, (byte)25, 0, var4, var2 + var3);
+         ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)25, 0, var4, var2 + var3);
          var4 += LevelObjectData.spriteTypesArr[25][2] + var5;
 
          for(int var10 = 0; var10 < var_983.var_451.length; ++var10) {
-            Class_1b0.drawSprite2(var0, (byte)26, 0, var4, var2 + var3);
+            ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)26, 0, var4, var2 + var3);
             if (var_983.var_451[var10] != 116) {
-               Class_1b0.drawSprite2(var0, (byte)8, Class_178.sub_e5c(var_983.var_451[var10]), var4 + 2, var2 + var3 + 2);
+               ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)8, Class_178.sub_e5c(var_983.var_451[var10]), var4 + 2, var2 + var3 + 2);
             }
 
             var4 += LevelObjectData.spriteTypesArr[26][2] + var5;
@@ -602,7 +602,7 @@ public final class LevelManager implements LevelObjectData {
       } else {
          Class_19e.sub_388(var0, 2, var2 + Class_19e.var_ac, 1, 4);
          var4 = 2 + LevelObjectData.spriteTypesArr[38][2] + 5;
-         Class_1b0.sub_47c(var0, Class_1b0.readTextFromLng((short)262), var4, var2 + (LevelObjectData.spriteTypesArr[9][3] >> 1) - (Class_1b0.var_a9 >> 1));
+         ReadingDrawingClass.sub_47c(var0, ReadingDrawingClass.readTextFromLng((short)262), var4, var2 + (LevelObjectData.spriteTypesArr[9][3] >> 1) - (ReadingDrawingClass.var_a9 >> 1));
       }
    }
 
@@ -618,9 +618,9 @@ public final class LevelManager implements LevelObjectData {
          }
 
          String var5 = String.valueOf(var1) + ':' + (var2 < 10 ? "0" : "") + var2;
-         if (Class_1b0.var_19d) {
-            int var6 = 5 * Class_1b0.var_12 + 4;
-            int var7 = Class_1b0.var_a9 + 4;
+         if (ReadingDrawingClass.var_19d) {
+            int var6 = 5 * ReadingDrawingClass.var_12 + 4;
+            int var7 = ReadingDrawingClass.var_a9 + 4;
             var0.setClip(0, 0, screenWidth, screenHeight);
             var0.setColor(11446175);
             var0.fillRect(screenWidth - var6 - 2, screenHeight - LevelObjectData.spriteTypesArr[9][3] - var7 + 4, var6, var7);
@@ -629,41 +629,41 @@ public final class LevelManager implements LevelObjectData {
                var0.fillRect(screenWidth - var6 - 2, screenHeight - LevelObjectData.spriteTypesArr[9][3] - var7 + 4, var6, var7);
             }
 
-            Class_1b0.sub_46a(var0, var5, screenWidth - var6 - 2 + (var6 - var5.length() * Class_1b0.var_12 >> 1), screenHeight - LevelObjectData.spriteTypesArr[9][3] - var7 + 2 + 4);
+            ReadingDrawingClass.sub_46a(var0, var5, screenWidth - var6 - 2 + (var6 - var5.length() * ReadingDrawingClass.var_12 >> 1), screenHeight - LevelObjectData.spriteTypesArr[9][3] - var7 + 2 + 4);
          } else {
-            Class_1b0.drawSprite2(var0, (byte)27, 0, screenWidth - LevelObjectData.spriteTypesArr[27][2] - 2, screenHeight - LevelObjectData.spriteTypesArr[9][3] - 10);
+            ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)27, 0, screenWidth - LevelObjectData.spriteTypesArr[27][2] - 2, screenHeight - LevelObjectData.spriteTypesArr[9][3] - 10);
             if (Class_205.var_4aa > var3 && Class_178.var_80 > 6) {
                var0.setColor(16711680);
                var0.fillRect(screenWidth - LevelObjectData.spriteTypesArr[27][2] - 2 + 4, screenHeight - LevelObjectData.spriteTypesArr[9][3] - 10 + 4, LevelObjectData.spriteTypesArr[27][2] - 8, LevelObjectData.spriteTypesArr[27][3] - 4);
             }
 
-            Class_1b0.sub_46a(var0, var5, screenWidth - LevelObjectData.spriteTypesArr[27][2] - 2 + (LevelObjectData.spriteTypesArr[27][2] - 4 * Class_1b0.var_12 >> 1), screenHeight - LevelObjectData.spriteTypesArr[9][3] - 10 + 4);
+            ReadingDrawingClass.sub_46a(var0, var5, screenWidth - LevelObjectData.spriteTypesArr[27][2] - 2 + (LevelObjectData.spriteTypesArr[27][2] - 4 * ReadingDrawingClass.var_12 >> 1), screenHeight - LevelObjectData.spriteTypesArr[9][3] - 10 + 4);
          }
       }
    }
 
    private static void sub_38e(Graphics var0) {
       if (var_a5a == 1) {
-         Class_1b0.drawSprite2(var0, (byte)(var_d39 ? 20 : 21), 0, var_cdc + 17, var_cf8 + 19);
-         Class_1b0.drawSprite2(var0, (byte)(var_d55 ? 22 : 23), 0, var_cdc + 17, var_cf8 + 5 - LevelObjectData.spriteTypesArr[var_d55 ? 22 : 23][3]);
+         ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)(var_d39 ? 20 : 21), 0, var_cdc + 17, var_cf8 + 19);
+         ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)(var_d55 ? 22 : 23), 0, var_cdc + 17, var_cf8 + 5 - LevelObjectData.spriteTypesArr[var_d55 ? 22 : 23][3]);
       }
 
    }
 
    private static void sub_3a8(Graphics var0) {
       if (var_a5a == 1) {
-         Class_1b0.drawSprite(var0, 10, 0, var_cdc, var_cf8, 0, 0, 0, var_cf8 + LevelObjectData.spriteTypesArr[46][3] - var_cf);
-         Class_1b0.drawSprite2(var0, (byte)14, 0, var_d80, var_dc9);
+         ReadingDrawingClass.drawSprite(var0, 10, 0, var_cdc, var_cf8, 0, 0, 0, var_cf8 + LevelObjectData.spriteTypesArr[46][3] - var_cf);
+         ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)14, 0, var_d80, var_dc9);
       } else if (var_2c9 && var_cf8 <= var_cf) {
-         Class_1b0.drawSprite(var_2a1, 46, 0, var_cdc, var_cf8, 0, 0, 0, var_cf8 + LevelObjectData.spriteTypesArr[46][3] - var_cf);
-         var_2a1.setClip(0, 0, screenWidth, screenHeight);
+         ReadingDrawingClass.drawSprite(graphics, 46, 0, var_cdc, var_cf8, 0, 0, 0, var_cf8 + LevelObjectData.spriteTypesArr[46][3] - var_cf);
+         graphics.setClip(0, 0, screenWidth, screenHeight);
       }
    }
 
    public static void sub_3d2() {
       if (var_e52 == 0 || var_e52 == 2) {
-         var_cdc = var_1dc + someLevelDataVar1 * 24 - 12;
-         var_cf8 = var_1fb + someLevelDataVar2 * 24;
+         var_cdc = mapOffsetX + someLevelDataVar1 * 24 - 12;
+         var_cf8 = mapOffsetY + someLevelDataVar2 * 24;
       }
 
       if (var_e52 != 4) {
@@ -701,7 +701,7 @@ public final class LevelManager implements LevelObjectData {
          break;
       case 4:
          int var0;
-         if ((var0 = var_1dc + someLevelDataVar1 * 24 - 12 - 4 - (var_d80 + LevelObjectData.spriteTypesArr[14][2])) > 0) {
+         if ((var0 = mapOffsetX + someLevelDataVar1 * 24 - 12 - 4 - (var_d80 + LevelObjectData.spriteTypesArr[14][2])) > 0) {
             var_d80 += Math.max(var_de4, 1);
             if (var0 < 15) {
                --var_de4;
@@ -718,7 +718,7 @@ public final class LevelManager implements LevelObjectData {
          break;
       case 5:
          var_cdc -= var_de4;
-         if (var_cdc <= var_1dc + someLevelDataVar1 * 24 - 12) {
+         if (var_cdc <= mapOffsetX + someLevelDataVar1 * 24 - 12) {
             Class_178.musicManager.switchMusicPlayer(2, -1);
             var_e52 = 0;
          }
@@ -751,24 +751,24 @@ public final class LevelManager implements LevelObjectData {
       }
    }
 
-   private static void sub_44c(Graphics var0) {
-      if (var_84c.size() > 0) {
-         Enumeration var1;
+   private static void drawAllObjects(Graphics g) {
+      if (levelObjects.size() > 0) {
+         Enumeration allObjects;
          if (var_a5a == 1) {
-            var1 = var_84c.elements();
+            allObjects = levelObjects.elements();
 
-            while(var1.hasMoreElements()) {
-               ((LevelObject)var1.nextElement()).sub_59(var0);
+            while(allObjects.hasMoreElements()) {
+               ((LevelObject)allObjects.nextElement()).drawObject(g);
             }
          }
 
          if (var_a5a == 0) {
-            var1 = var_84c.elements();
+            allObjects = levelObjects.elements();
 
-            while(var1.hasMoreElements()) {
-               LevelObject var2;
-               if ((var2 = (LevelObject)var1.nextElement()).var_18d - 5 <= Class_205.var_4aa) {
-                  var2.sub_59(var0);
+            while(allObjects.hasMoreElements()) {
+               LevelObject levelObject = (LevelObject)allObjects.nextElement();
+               if (levelObject.var_18d - 5 <= Class_205.var_4aa) {
+                  levelObject.drawObject(g);
                }
             }
          }
@@ -779,11 +779,11 @@ public final class LevelManager implements LevelObjectData {
    private static void sub_45a(Graphics g) {
       if (var_2c9) {
          var_35f = true;
-         int var1 = var_a5a == 0 ? 2 : 0;
+         int spriteTypeId = var_a5a == 0 ? 2 : 0;
          int var3;
-         int var4 = (var3 = -var_1dc / 24) + var_12a + 2;
+         int var4 = (var3 = -mapOffsetX / 24) + var_12a + 2;
          int var5;
-         int var6 = (var5 = -var_1fb / 24) + var_18b + 2;
+         int var6 = (var5 = -mapOffsetY / 24) + var_18b + 2;
          boolean[] var9 = new boolean[4];
          if (var_a5a == 1) {
             boolean var11 = false;
@@ -796,7 +796,7 @@ public final class LevelManager implements LevelObjectData {
                      int var7;
                      byte var10;
                      for(var7 = 0; var7 < 4; ++var7) {
-                        if ((var10 = sub_49a(var13 + var_3e7[0][var7], var12 + var_3e7[1][var7], true)) > 12) {
+                        if ((var10 = sub_49a(var13 + offsetTypes[0][var7], var12 + offsetTypes[1][var7], true)) > 12) {
                            if ((var7 == 0 || var7 == 2) && (var10 == 14 || var10 == 15)) {
                               var10 = 13;
                            }
@@ -805,7 +805,7 @@ public final class LevelManager implements LevelObjectData {
                               var10 = 16;
                            }
 
-                           Class_1b0.drawSprite(var_2a1, var1, var10, var_1dc + var13 * 24, var_1fb + var12 * 24, var7 == 2 ? 12 : 0, var7 == 0 ? 12 : 0, var7 == 3 ? 12 : 0, var7 == 1 ? 12 : 0);
+                           ReadingDrawingClass.drawSprite(graphics, spriteTypeId, var10, mapOffsetX + var13 * 24, mapOffsetY + var12 * 24, var7 == 2 ? 12 : 0, var7 == 0 ? 12 : 0, var7 == 3 ? 12 : 0, var7 == 1 ? 12 : 0);
                            var9[var7] = var9[var7 == 0 ? 3 : var7 - 1] = true;
                         }
                      }
@@ -826,7 +826,7 @@ public final class LevelManager implements LevelObjectData {
                               var10 = 16;
                            }
 
-                           Class_1b0.drawSprite(var_2a1, var1, var10, var_1dc + var13 * 24, var_1fb + var12 * 24, var_42b[0][var7] == -1 ? 0 : 12, var_42b[0][var7] == 1 ? 0 : 12, var_42b[1][var7] == -1 ? 0 : 12, var_42b[1][var7] == 1 ? 0 : 12);
+                           ReadingDrawingClass.drawSprite(graphics, spriteTypeId, var10, mapOffsetX + var13 * 24, mapOffsetY + var12 * 24, var_42b[0][var7] == -1 ? 0 : 12, var_42b[0][var7] == 1 ? 0 : 12, var_42b[1][var7] == -1 ? 0 : 12, var_42b[1][var7] == 1 ? 0 : 12);
                         }
                      }
                   }
@@ -834,22 +834,22 @@ public final class LevelManager implements LevelObjectData {
             }
          }
 
-         for(int var24 = var5; var24 <= var6; ++var24) {
-            for(int var20 = var3; var20 <= var4; ++var20) {
-               byte var2;
-               if (var20 >= 0 && var20 < mapWidth && var24 >= 0 && var24 < mapHeight) {
-                  var2 = mapArray[var20][var24];
-                  if (var_a5a == 0 && var2 > 12) {
-                     var2 = 13;
+         for(int i = var5; i <= var6; ++i) {
+            for(int j = var3; j <= var4; ++j) {
+               byte mapTileCode;
+               if (j >= 0 && j < mapWidth && i >= 0 && i < mapHeight) {
+                  mapTileCode = mapArray[j][i];
+                  if (var_a5a == 0 && mapTileCode > 12) {
+                     mapTileCode = 13;
                   }
                } else {
-                  var2 = 16;
+                  mapTileCode = 16;
                   if (var_a5a == 0) {
-                     var2 = 14;
+                     mapTileCode = 14;
                   }
                }
 
-               Integer var22 = combineInts(var20, var24);
+               Integer var22 = combineInts(j, i);
                LevelObject var25 = null;
                boolean var14 = false;
                if (levelObjectsMap.containsKey(var22)) {
@@ -858,24 +858,24 @@ public final class LevelManager implements LevelObjectData {
 
                if (!var14 || var_a5a == 0) {
                   if (var_a5a == 0) {
-                     Class_1b0.drawSprite2(var_2a1, (byte)var1, 13, var_1dc + var20 * 24, var_1fb + var24 * 24);
+                     ReadingDrawingClass.drawSpriteNoOffset(graphics, (byte)spriteTypeId, 13, mapOffsetX + j * 24, mapOffsetY + i * 24);
                   }
 
-                  Class_1b0.drawSprite2(var_2a1, (byte)var1, var2, var_1dc + var20 * 24, var_1fb + var24 * 24);
+                  ReadingDrawingClass.drawSpriteNoOffset(graphics, (byte)spriteTypeId, mapTileCode, mapOffsetX + j * 24, mapOffsetY + i * 24);
                }
 
                if (var_a5a == 0 && alarmWithZonesMap.containsKey(var22) && var_7f3 == 0) {
-                  Class_1b0.drawSprite2(var_2a1, (byte)var1, (byte)(15 + ((LevelObject)levelObjectsMap.get(alarmWithZonesMap.get(var22))).var_22c), var_1dc + var20 * 24, var_1fb + var24 * 24);
+                  ReadingDrawingClass.drawSpriteNoOffset(graphics, (byte)spriteTypeId, (byte)(15 + ((LevelObject)levelObjectsMap.get(alarmWithZonesMap.get(var22))).var_22c), mapOffsetX + j * 24, mapOffsetY + i * 24);
                }
 
                if (var25 != null) {
-                  var25.sub_59(var_2a1);
+                  var25.drawObject(graphics);
                }
             }
          }
 
          if (var_a5a == 0) {
-            var_2a1.setClip(0, 0, screenWidth, screenHeight);
+            graphics.setClip(0, 0, screenWidth, screenHeight);
             Enumeration var21 = var_99f.elements();
 
             while(var21.hasMoreElements()) {
@@ -886,14 +886,14 @@ public final class LevelManager implements LevelObjectData {
                for(int var28 = 0; var28 < Class_205.var_4aa && var28 < var23.var_39c.size(); ++var28) {
                   Class_240 var26;
                   if ((var26 = var23.sub_ff(var28)).sub_a2() == 1 && var26.var_29 >= var3 && var26.var_29 <= var4 && var26.var_86 >= var5 && var26.var_86 <= var6) {
-                     short var15 = var_3e7[0][var26.sub_106()];
-                     short var16 = var_3e7[1][var26.sub_106()];
-                     int var17 = var_1dc + var26.var_29 * 24;
-                     int var18 = var_1fb + var26.var_86 * 24;
-                     var_2a1.setColor(var_c58[var23.var_3a]);
+                     short var15 = offsetTypes[0][var26.sub_106()];
+                     short var16 = offsetTypes[1][var26.sub_106()];
+                     int var17 = mapOffsetX + var26.var_29 * 24;
+                     int var18 = mapOffsetY + var26.var_86 * 24;
+                     graphics.setColor(var_c58[var23.var_3a]);
 
                      for(int var19 = 0; var19 < 24; var19 += 2) {
-                        var_2a1.fillRect(var17 + 12 - 1 + var23.var_3a + var19 * var15, var18 + 12 - 1 + var23.var_3a + var19 * var16, 2, 2);
+                        graphics.fillRect(var17 + 12 - 1 + var23.var_3a + var19 * var15, var18 + 12 - 1 + var23.var_3a + var19 * var16, 2, 2);
                      }
                   }
 
@@ -924,13 +924,13 @@ public final class LevelManager implements LevelObjectData {
                }
             }
 
-            sub_3a8(var_2a1);
-            sub_44c(var_2a1);
+            sub_3a8(graphics);
+            drawAllObjects(graphics);
          }
       }
 
       if (var_35f) {
-         sub_2df(var_2a1, false);
+         sub_2df(graphics, false);
       }
 
       g.drawImage(var_25f, 0, 0 - var_4a5, 0);
@@ -980,8 +980,8 @@ public final class LevelManager implements LevelObjectData {
                         var5 = var4.var_bb;
                         var6 = var4.var_123;
                         if (var4.var_1a6 == 1 && var4 != var0) {
-                           var5 = var4.var_bb + var_3e7[0][var4.var_17b];
-                           var6 = var4.var_123 + var_3e7[1][var4.var_17b];
+                           var5 = var4.var_bb + offsetTypes[0][var4.var_17b];
+                           var6 = var4.var_123 + offsetTypes[1][var4.var_17b];
                         }
                      } while(var5 != Class_205.var_4ca);
                   } while(var6 != Class_205.var_51f);
@@ -1041,7 +1041,7 @@ public final class LevelManager implements LevelObjectData {
             Class_178.sub_2c8((byte)39, (byte[])null, (short)156, (Object[])null, new short[]{126}, (short)137);
          } else {
             if (!var_a93) {
-               someLevelDataVarLast = Math.min(someLevelDataVarLast, Class_205.var_4aa + Class_1b0.sub_21(20, 30));
+               someLevelDataVarLast = Math.min(someLevelDataVarLast, Class_205.var_4aa + ReadingDrawingClass.sub_21(20, 30));
                var_a93 = true;
                Class_178.sub_2c8((byte)0, (byte[])null, (short)146, (Object[])null, new short[]{126}, (short)137);
             }
@@ -1055,16 +1055,16 @@ public final class LevelManager implements LevelObjectData {
          if (var0) {
             if (!var_b0a) {
                if (var_aad) {
-                  someLevelDataVarLast -= Class_1b0.sub_21(0, 30);
+                  someLevelDataVarLast -= ReadingDrawingClass.sub_21(0, 30);
                } else {
-                  someLevelDataVarLast -= Class_1b0.sub_21(30, 50);
+                  someLevelDataVarLast -= ReadingDrawingClass.sub_21(30, 50);
                }
 
                var_b0a = true;
                return;
             }
          } else if (!var_aad && !var_b0a) {
-            someLevelDataVarLast -= Class_1b0.sub_21(10, 30);
+            someLevelDataVarLast -= ReadingDrawingClass.sub_21(10, 30);
             var_aad = true;
          }
 
@@ -1098,8 +1098,8 @@ public final class LevelManager implements LevelObjectData {
                   var3.sub_7b(true);
                   var3.var_210 = var1;
                   if (var3.var_1a6 == 1 && var_f0.sub_97(Class_178.var_93a) == 1) {
-                     var3.var_bb = (byte)(var3.var_bb + var_3e7[0][var3.var_17b]);
-                     var3.var_123 = (byte)(var3.var_123 + var_3e7[1][var3.var_17b]);
+                     var3.var_bb = (byte)(var3.var_bb + offsetTypes[0][var3.var_17b]);
+                     var3.var_123 = (byte)(var3.var_123 + offsetTypes[1][var3.var_17b]);
                   }
 
                   if (var3.var_1a6 == 4 && var4 != 4 || var3.var_1a6 == 3 && var4 != 3) {
@@ -1116,15 +1116,15 @@ public final class LevelManager implements LevelObjectData {
          int var1 = 0;
          int var2 = 0;
          if (var0.var_1a6 == 1) {
-            var1 = var_3e7[0][var0.var_17b] * (var0.var_1ec * 24 / 12);
-            var2 = var_3e7[1][var0.var_17b] * (var0.var_1ec * 24 / 12);
+            var1 = offsetTypes[0][var0.var_17b] * (var0.var_1ec * 24 / 12);
+            var2 = offsetTypes[1][var0.var_17b] * (var0.var_1ec * 24 / 12);
          }
 
-         int var4 = var_1dc + var0.var_bb * 24 + var1;
-         int var5 = var_1fb + var0.var_123 * 24 + var2;
-         var_2a1.setColor(var_c58[var0.var_3a]);
-         var_2a1.setClip(0, 0, screenWidth, var_cf);
-         var_2a1.fillRect(var4 + 12 - 1 + var0.var_3a, var5 + 12 - 1 + var0.var_3a, 2, 2);
+         int var4 = mapOffsetX + var0.var_bb * 24 + var1;
+         int var5 = mapOffsetY + var0.var_123 * 24 + var2;
+         graphics.setColor(var_c58[var0.var_3a]);
+         graphics.setClip(0, 0, screenWidth, var_cf);
+         graphics.fillRect(var4 + 12 - 1 + var0.var_3a, var5 + 12 - 1 + var0.var_3a, 2, 2);
       }
 
    }
@@ -1197,8 +1197,8 @@ public final class LevelManager implements LevelObjectData {
                      if (var1.var_1ec >= 12) {
                         var1.var_1ec = 0;
                         if (var1.var_1a6 == 1) {
-                           var1.var_bb = (byte)(var1.var_bb + var_3e7[0][var1.var_17b]);
-                           var1.var_123 = (byte)(var1.var_123 + var_3e7[1][var1.var_17b]);
+                           var1.var_bb = (byte)(var1.var_bb + offsetTypes[0][var1.var_17b]);
+                           var1.var_123 = (byte)(var1.var_123 + offsetTypes[1][var1.var_17b]);
                            var1.var_210 = false;
                            if (var1.var_bb == someLevelDataVar1 && var1.var_123 == someLevelDataVar2) {
                               sub_65f();
@@ -1329,12 +1329,12 @@ public final class LevelManager implements LevelObjectData {
                            } else {
                               var1.var_3d8 = sub_912(var1);
                               if (var1.var_3d8 != null) {
-                                 var1.var_1ec = (byte)Class_1b0.sub_21(0, 6);
+                                 var1.var_1ec = (byte)ReadingDrawingClass.sub_21(0, 6);
                                  if (var1.var_1a6 == 5) {
                                     byte var6 = var1.var_3d8.objectType;
                                     var1.var_3d8 = new LevelObject((byte)9, var1.var_bb, var1.var_123, var1.var_17b, (byte)0, var1.var_451[var1.var_47f], (byte)0);
                                     var1.var_3d8.var_1bc[0] = Class_205.toolUsingTimeStats[var6][Class_178.sub_e5c(var1.var_451[var1.var_47f])];
-                                    var_84c.put(combineInts(var1.var_bb, var1.var_123), var1.var_3d8);
+                                    levelObjects.put(combineInts(var1.var_bb, var1.var_123), var1.var_3d8);
                                     ++var1.var_341;
                                     var1.var_210 = true;
                                     var_2c9 = true;
@@ -1418,8 +1418,8 @@ public final class LevelManager implements LevelObjectData {
    }
 
    private static void sub_68d() {
-      if (var_84c.size() > 0 && var_a5a == 1) {
-         Enumeration var0 = var_84c.elements();
+      if (levelObjects.size() > 0 && var_a5a == 1) {
+         Enumeration var0 = levelObjects.elements();
 
          while(true) {
             LevelObject var1;
@@ -1464,8 +1464,8 @@ public final class LevelManager implements LevelObjectData {
    }
 
    private static void sub_6bc() {
-      if (var_84c.size() > 0 && var_a5a == 0) {
-         Enumeration var0 = var_84c.elements();
+      if (levelObjects.size() > 0 && var_a5a == 0) {
+         Enumeration var0 = levelObjects.elements();
 
          while(var0.hasMoreElements()) {
             if (((LevelObject)var0.nextElement()).var_18d == Class_205.var_4aa + 1) {
@@ -1486,8 +1486,8 @@ public final class LevelManager implements LevelObjectData {
 
    public static void sub_75c(int var0, int var1, boolean var2, boolean var3, int var4, boolean var5, boolean var6) {
       for(int var9 = 0; var9 < 4; ++var9) {
-         int var7 = var0 + (var6 ? var_42b[0][var9] : var_3e7[0][var9]);
-         int var8 = var1 + (var6 ? var_42b[1][var9] : var_3e7[1][var9]);
+         int var7 = var0 + (var6 ? var_42b[0][var9] : offsetTypes[0][var9]);
+         int var8 = var1 + (var6 ? var_42b[1][var9] : offsetTypes[1][var9]);
          Integer var10 = combineInts(var7, var8);
          if (levelObjectsMap.containsKey(var10)) {
             if (!var2) {
@@ -1496,7 +1496,7 @@ public final class LevelManager implements LevelObjectData {
             }
 
             LevelObject var11;
-            if ((var11 = (LevelObject)levelObjectsMap.get(var10)).objectType != 6 && var11.objectType != 9 && var11.objectType != 4 && !Class_1b0.sub_678(LevelObjectData.var_da[var11.objectType][5], (byte)5) && (var5 || mapArray[var11.x][var11.y] > 12 || sub_ae6(var11, var0, var1))) {
+            if ((var11 = (LevelObject)levelObjectsMap.get(var10)).objectType != 6 && var11.objectType != 9 && var11.objectType != 4 && !ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var11.objectType][5], (byte)5) && (var5 || mapArray[var11.x][var11.y] > 12 || sub_ae6(var11, var0, var1))) {
                if (var2) {
                   if (var3) {
                      if (var11.var_18d == var4) {
@@ -1519,53 +1519,53 @@ public final class LevelManager implements LevelObjectData {
    }
 
    private static void sub_80d(int var0, int var1, boolean var2, boolean var3, boolean var4) {
-      int var5 = var_1dc;
-      int var6 = var_1fb;
+      int var5 = mapOffsetX;
+      int var6 = mapOffsetY;
       if (mapWidth * 24 <= screenWidth) {
-         var_1dc = screenWidth - var_12a * 24 >> 1;
+         mapOffsetX = screenWidth - var_12a * 24 >> 1;
       } else {
          if (var4) {
-            var_1dc -= var0;
+            mapOffsetX -= var0;
          } else if (var2) {
-            var_1dc = -(24 * var0) + (screenWidth >> 1) - 12;
-         } else if (var_1dc + 24 * var0 > screenWidth - 36 && var_1dc > -(mapWidth * 24 - screenWidth)) {
-            var_1dc = -(24 * var0) + 24;
-         } else if (var_1dc + 24 * var0 < 12) {
-            var_1dc = -(24 * var0 - (screenWidth - 48));
+            mapOffsetX = -(24 * var0) + (screenWidth >> 1) - 12;
+         } else if (mapOffsetX + 24 * var0 > screenWidth - 36 && mapOffsetX > -(mapWidth * 24 - screenWidth)) {
+            mapOffsetX = -(24 * var0) + 24;
+         } else if (mapOffsetX + 24 * var0 < 12) {
+            mapOffsetX = -(24 * var0 - (screenWidth - 48));
          }
 
-         if (var5 != var_1dc) {
+         if (var5 != mapOffsetX) {
             if (var3) {
-               var_1dc = -(24 * var0) + (screenWidth >> 1) - 12;
+               mapOffsetX = -(24 * var0) + (screenWidth >> 1) - 12;
             }
 
-            var_1dc = Math.min(Math.max(var_1dc, -(mapWidth * 24 - screenWidth)), 0);
+            mapOffsetX = Math.min(Math.max(mapOffsetX, -(mapWidth * 24 - screenWidth)), 0);
          }
       }
 
       if (mapHeight * 24 < var_cf) {
-         var_1fb = var_cf - var_18b * 24 >> 1;
+         mapOffsetY = var_cf - var_18b * 24 >> 1;
       } else {
          if (var4) {
-            var_1fb -= var1;
+            mapOffsetY -= var1;
          } else if (var2) {
-            var_1fb = -(24 * var1) + (var_cf >> 1) - 12;
-         } else if (var_1fb + 24 * var1 > var_cf - 36 && var_1fb > -(mapHeight * 24 - var_cf)) {
-            var_1fb = -(24 * var1) + 24;
-         } else if (var_1fb + 24 * var1 < 12) {
-            var_1fb = -(24 * var1 - (var_cf - 48));
+            mapOffsetY = -(24 * var1) + (var_cf >> 1) - 12;
+         } else if (mapOffsetY + 24 * var1 > var_cf - 36 && mapOffsetY > -(mapHeight * 24 - var_cf)) {
+            mapOffsetY = -(24 * var1) + 24;
+         } else if (mapOffsetY + 24 * var1 < 12) {
+            mapOffsetY = -(24 * var1 - (var_cf - 48));
          }
 
-         if (var6 != var_1fb) {
+         if (var6 != mapOffsetY) {
             if (var3) {
-               var_1fb = -(24 * var1) + (var_cf >> 1) - 12;
+               mapOffsetY = -(24 * var1) + (var_cf >> 1) - 12;
             }
 
-            var_1fb = Math.min(Math.max(var_1fb, -(mapHeight * 24 - var_cf)), 0);
+            mapOffsetY = Math.min(Math.max(mapOffsetY, -(mapHeight * 24 - var_cf)), 0);
          }
       }
 
-      if (var5 != var_1dc || var6 != var_1fb) {
+      if (var5 != mapOffsetX || var6 != mapOffsetY) {
          sub_3d2();
          sub_702();
       }
@@ -1786,8 +1786,8 @@ public final class LevelManager implements LevelObjectData {
    }
 
    public static LevelObject sub_912(Class_205 var0) {
-      int var1 = var0.var_bb + var_3e7[0][var0.var_17b];
-      int var2 = var0.var_123 + var_3e7[1][var0.var_17b];
+      int var1 = var0.var_bb + offsetTypes[0][var0.var_17b];
+      int var2 = var0.var_123 + offsetTypes[1][var0.var_17b];
       Integer var3 = combineInts(var1, var2);
       if (levelObjectsMap.containsKey(var3)) {
          LevelObject var4;
@@ -1801,10 +1801,10 @@ public final class LevelManager implements LevelObjectData {
       boolean var1 = false;
       if (var_a5a == 0) {
          if (var0.var_18d > 0 && var0.var_18d <= Class_205.var_4aa) {
-            var1 = Class_1b0.sub_678(LevelObjectData.var_da[var0.objectType][5], (byte)4);
+            var1 = ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var0.objectType][5], (byte)4);
          }
       } else if (var0.var_1bc[0] <= 0) {
-         var1 = Class_1b0.sub_678(LevelObjectData.var_da[var0.objectType][5], (byte)4);
+         var1 = ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var0.objectType][5], (byte)4);
       }
 
       return var1;
@@ -1898,7 +1898,7 @@ public final class LevelManager implements LevelObjectData {
                         }
 
                         LevelObject var7;
-                        if (var_a5a == 0 && var_84c.containsKey(combineInts(var11.var_bb, var11.var_123)) && (var7 = (LevelObject)var_84c.get(combineInts(var11.var_bb, var11.var_123))) != null) {
+                        if (var_a5a == 0 && levelObjects.containsKey(combineInts(var11.var_bb, var11.var_123)) && (var7 = (LevelObject)levelObjects.get(combineInts(var11.var_bb, var11.var_123))) != null) {
                            int var8 = var7.var_18d / 60;
                            int var9 = (var7.var_18d - var8 * 60) / 10;
                            int var10 = var7.var_18d - var8 * 60 - var9 * 10;
@@ -1936,12 +1936,12 @@ public final class LevelManager implements LevelObjectData {
             }
             break;
          case 32:
-            Class_1b0.sub_759();
+            ReadingDrawingClass.sub_759();
             Class_178.var_ab2 = 0;
             Class_178.sub_7c1();
             return true;
          case 35:
-            Class_1b0.sub_71d();
+            ReadingDrawingClass.sub_71d();
             Class_178.sub_c15();
             Class_178.var_1217 = 3;
             return true;
@@ -1992,8 +1992,8 @@ public final class LevelManager implements LevelObjectData {
          }
          break;
       case 5:
-         LevelObject var1 = (LevelObject)var_84c.get(combineInts(4, 5));
-         LevelObject var2 = (LevelObject)var_84c.get(combineInts(8, 5));
+         LevelObject var1 = (LevelObject)levelObjects.get(combineInts(4, 5));
+         LevelObject var2 = (LevelObject)levelObjects.get(combineInts(8, 5));
          if (var1 != null && var2 != null && var1.var_1f5 == 113 && var2.var_1f5 == 114 && var1.var_1bc[1] <= 0 && var2.var_1bc[1] <= 0 && ((LevelObject)levelObjectsMap.get(combineInts(9, 5))).var_1bc[1] <= 0) {
             var0 = 4;
          }
@@ -2058,7 +2058,7 @@ public final class LevelManager implements LevelObjectData {
    public static void sub_a53(Class_205 var0) {
       var0.var_3d8 = sub_912(var0);
       if (var0.var_3d8 != null) {
-         if (!Class_1b0.sub_678(LevelObjectData.var_da[var0.var_3d8.objectType][5], (byte)5)) {
+         if (!ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var0.var_3d8.objectType][5], (byte)5)) {
             if (mapArray[var0.var_3d8.x][var0.var_3d8.y] > 12 || sub_ae6(var0.var_3d8, var0.var_bb, var0.var_123)) {
                if (var_a5a == 0) {
                   if (var0.var_3d8.var_1a5 > 0 && var0.var_3d8.var_1a5 <= Class_205.var_4aa) {
@@ -2069,7 +2069,7 @@ public final class LevelManager implements LevelObjectData {
                }
 
                LevelObject var1;
-               if ((var1 = (LevelObject)var_84c.get(combineInts(var0.var_bb, var0.var_123))) != null && var_a5a == 1 && var1.var_1bc[1] >= 0) {
+               if ((var1 = (LevelObject)levelObjects.get(combineInts(var0.var_bb, var0.var_123))) != null && var_a5a == 1 && var1.var_1bc[1] >= 0) {
                   Class_178.sub_2c8((byte)0, (byte[])null, (short)171, (Object[])null, new short[]{126}, (short)137);
                } else {
                   int var2 = 0;
@@ -2138,16 +2138,16 @@ public final class LevelManager implements LevelObjectData {
       int var5;
       for(var5 = 0; var5 < 4; ++var5) {
          int var4;
-         if ((var4 = var0.var_163 + var5) > 3) {
+         if ((var4 = var0.offsetType + var5) > 3) {
             var4 -= 4;
          }
 
-         if (var1 == var0.x + var_3e7[0][var4] && var2 == var0.y + var_3e7[1][var4]) {
+         if (var1 == var0.x + offsetTypes[0][var4] && var2 == var0.y + offsetTypes[1][var4]) {
             break;
          }
       }
 
-      if (Class_1b0.sub_678(LevelObjectData.var_da[var0.objectType][5], (byte)var5)) {
+      if (ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var0.objectType][5], (byte)var5)) {
          var3 = true;
       }
 
@@ -2176,7 +2176,7 @@ public final class LevelManager implements LevelObjectData {
          }
       }
 
-      Class_178.sub_22b((byte)2, new byte[]{5, sub_b2d().var_3a}, var0, Class_1b0.readTextFromLng((short)138), (byte)2);
+      Class_178.sub_22b((byte)2, new byte[]{5, sub_b2d().var_3a}, var0, ReadingDrawingClass.readTextFromLng((short)138), (byte)2);
    }
 
    public static short sub_bc9(byte var0) {

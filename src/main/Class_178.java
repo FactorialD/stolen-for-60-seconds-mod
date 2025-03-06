@@ -171,7 +171,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
       byte var1;
       for(var1 = 1; var1 <= 2; ++var1) {
-         var_1cd = var_1cd || Class_1b0.sub_7ad(var1);
+         var_1cd = var_1cd || ReadingDrawingClass.sub_7ad(var1);
       }
 
       if (var_46) {
@@ -207,7 +207,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                   sub_167(var1);
                   break;
                case 2:
-                  Class_19e.sub_2c9(LevelManager.var_2a1, var1);
+                  Class_19e.sub_2c9(LevelManager.graphics, var1);
                   break;
                case 3:
                   sub_8d4(var1);
@@ -253,7 +253,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
                var_26f = 5;
 
-               var_130f = Class_1b0.loadImagePng("nor");
+               var_130f = ReadingDrawingClass.loadImagePng("nor");
             }
 
             this.sub_1aa(var1);
@@ -366,14 +366,14 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          }
 
          sub_2c8((byte)42, var1 == -1 ? null : new byte[]{var1, var2}, (short)(2 + var0 - 3), (Object[])null, new short[]{126}, (short)135);
-         Class_1b0.sub_7c6();
+         ReadingDrawingClass.sub_7c6();
          return true;
       }
    }
 
    private static void sub_21a() {
       short[] var0 = new short[]{190, 209, 199};
-      sub_22b((byte)3, (byte[])null, var0, Class_1b0.readTextFromLng((short)128), (byte)2);
+      sub_22b((byte)3, (byte[])null, var0, ReadingDrawingClass.readTextFromLng((short)128), (byte)2);
    }
 
    public static void sub_22b(byte var0, byte[] var1, short[] var2, short[] var3, byte var4) {
@@ -499,40 +499,40 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       var_22b = true;
       switch(var0) {
       case 0:
-         if (Class_1b0.mainImages[4] == null) {
-            Class_1b0.mainImages[2] = null;
-            Class_1b0.mainImages[3] = null;
+         if (ReadingDrawingClass.mainImages[4] == null) {
+            ReadingDrawingClass.mainImages[2] = null;
+            ReadingDrawingClass.mainImages[3] = null;
             Class_3d.callGc();
             threadSleep(100L);
-            Class_1b0.loadMainImage(4);
+            ReadingDrawingClass.loadMainImage(4);
             threadSleep(500L);
-            Class_1b0.loadMainImage(5);
+            ReadingDrawingClass.loadMainImage(5);
             threadSleep(500L);
-            Class_1b0.loadMainImage(6);
+            ReadingDrawingClass.loadMainImage(6);
             threadSleep(500L);
          }
          break;
       case 1:
-         if (Class_1b0.mainImages[3] == null) {
-            Class_1b0.mainImages[2] = null;
-            Class_1b0.mainImages[4] = null;
-            Class_1b0.mainImages[5] = null;
-            Class_1b0.mainImages[6] = null;
+         if (ReadingDrawingClass.mainImages[3] == null) {
+            ReadingDrawingClass.mainImages[2] = null;
+            ReadingDrawingClass.mainImages[4] = null;
+            ReadingDrawingClass.mainImages[5] = null;
+            ReadingDrawingClass.mainImages[6] = null;
             Class_3d.callGc();
             threadSleep(50L);
-            Class_1b0.loadMainImage(3);
+            ReadingDrawingClass.loadMainImage(3);
             threadSleep(50L);
          }
          break;
       case 2:
-         if (Class_1b0.mainImages[2] == null) {
-            Class_1b0.mainImages[3] = null;
-            Class_1b0.mainImages[4] = null;
-            Class_1b0.mainImages[5] = null;
-            Class_1b0.mainImages[6] = null;
+         if (ReadingDrawingClass.mainImages[2] == null) {
+            ReadingDrawingClass.mainImages[3] = null;
+            ReadingDrawingClass.mainImages[4] = null;
+            ReadingDrawingClass.mainImages[5] = null;
+            ReadingDrawingClass.mainImages[6] = null;
             Class_3d.callGc();
             threadSleep(50L);
-            Class_1b0.loadMainImage(2);
+            ReadingDrawingClass.loadMainImage(2);
             threadSleep(50L);
          }
       }
@@ -546,15 +546,15 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          this.removeCommand(var_3bb);
          this.removeCommand(var_392);
          if (var_26f == 3) {
-            var_3bb = new Command(Class_1b0.sub_5a0((short)258), 4, 1);
-            var_392 = new Command(Class_1b0.sub_5a0((short)261), 1, 2);
+            var_3bb = new Command(ReadingDrawingClass.sub_5a0((short)258), 4, 1);
+            var_392 = new Command(ReadingDrawingClass.sub_5a0((short)261), 1, 2);
             this.addCommand(var_3bb);
             this.addCommand(var_392);
             return;
          }
 
          if (var_26f == 1) {
-            var_392 = new Command(Class_1b0.sub_5a0((short)261), 1, 2);
+            var_392 = new Command(ReadingDrawingClass.sub_5a0((short)261), 1, 2);
             this.addCommand(var_392);
          }
       }
@@ -594,14 +594,14 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       case 21:
       case 23:
          var1.setColor(16777215);
-         Class_1b0.sub_20e(var1, 0, var_11cf - 4, (var_114a - 6 >> 1) * var_1180 / 9, 4, true, 11665470);
+         ReadingDrawingClass.sub_20e(var1, 0, var_11cf - 4, (var_114a - 6 >> 1) * var_1180 / 9, 4, true, 11665470);
          ++var_114a;
          return;
       case 25:
          var1.setColor(0);
          var1.setClip(0, 0, var_1180, var_11cf);
          var1.fillRect(0, 0, var_1180, var_11cf);
-         Class_1b0.drawSprite2(var1, (byte)7, 0, var_ce9, var_d24);
+         ReadingDrawingClass.drawSpriteNoOffset(var1, (byte)7, 0, var_ce9, var_d24);
          Class_19e.sub_29c(var1);
          ++var_114a;
       case 1:
@@ -635,13 +635,13 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          return;
       case 6:
       case 8:
-         Class_1b0.loadMainImage(var_114a - 6 >> 1);
+         ReadingDrawingClass.loadMainImage(var_114a - 6 >> 1);
          ++var_114a;
          return;
       case 10:
-         Class_1b0.loadMainImage(var_114a - 6 >> 1);
-         if (Class_1b0.mainImages[2] != null && var_1180 > 176) {
-            LevelObjectData.spriteTypesArr[7][2] = (short)Class_1b0.mainImages[2].getWidth();
+         ReadingDrawingClass.loadMainImage(var_114a - 6 >> 1);
+         if (ReadingDrawingClass.mainImages[2] != null && var_1180 > 176) {
+            LevelObjectData.spriteTypesArr[7][2] = (short)ReadingDrawingClass.mainImages[2].getWidth();
          }
 
          LevelManager.var_cf = var_11cf - LevelObjectData.spriteTypesArr[9][3];
@@ -677,10 +677,10 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          ++var_114a;
          return;
       case 18:
-         Class_1b0.readCharactersFromLng();
+         ReadingDrawingClass.readCharactersFromLng();
 
          try {
-            var_13cf = Integer.parseInt(Class_1b0.sub_5a0((short)276));
+            var_13cf = Integer.parseInt(ReadingDrawingClass.sub_5a0((short)276));
          } catch (NumberFormatException var2) {
          }
 
@@ -688,7 +688,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          return;
       case 20:
          LevelManager.var_25f = Image.createImage(LevelManager.screenWidth, LevelManager.screenHeight);
-         LevelManager.var_2a1 = LevelManager.var_25f.getGraphics();
+         LevelManager.graphics = LevelManager.var_25f.getGraphics();
          LevelManager.sub_1aa();
          ++var_114a;
          return;
@@ -752,9 +752,9 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          switch(((Short)Class_19e.var_838).shortValue()) {
          case 200:
             if (var_1cd) {
-               sub_22b((byte)27, (byte[])null, new short[]{193, 194}, Class_1b0.readTextFromLng((short)130), (byte)2);
+               sub_22b((byte)27, (byte[])null, new short[]{193, 194}, ReadingDrawingClass.readTextFromLng((short)130), (byte)2);
             } else {
-               sub_22b((byte)37, (byte[])null, new short[]{201, 195, 196, 197}, Class_1b0.readTextFromLng((short)198), (byte)2);
+               sub_22b((byte)37, (byte[])null, new short[]{201, 195, 196, 197}, ReadingDrawingClass.readTextFromLng((short)198), (byte)2);
             }
 
             return true;
@@ -798,13 +798,13 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          } else {
             switch(((Short)Class_19e.var_838).shortValue()) {
             case 193:
-               Class_1b0.sub_6da();
-               Class_1b0.sub_8ce();
+               ReadingDrawingClass.sub_6da();
+               ReadingDrawingClass.sub_8ce();
                var_1217 = 3;
             default:
                return true;
             case 194:
-               sub_22b((byte)37, (byte[])null, new short[]{201, 195, 196, 197}, Class_1b0.readTextFromLng((short)198), (byte)2);
+               sub_22b((byte)37, (byte[])null, new short[]{201, 195, 196, 197}, ReadingDrawingClass.readTextFromLng((short)198), (byte)2);
                return true;
             }
          }
@@ -888,13 +888,13 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    }
 
    private static void sub_4f8() {
-      Class_1b0.sub_759();
+      ReadingDrawingClass.sub_759();
       var_dc6 = -1;
       var_10ff = 3;
       var_e38 = var_5bb == -1 ? 50 : 4000;
       sub_d4e((byte)(var_5bb == -1 ? 1 : 7));
-      Class_1b0.sub_6f5();
-      Class_1b0.sub_837();
+      ReadingDrawingClass.sub_6f5();
+      ReadingDrawingClass.sub_837();
    }
 
    private void sub_531(Graphics var1) {
@@ -923,11 +923,11 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    private void sub_57d(String var1, String var2, int var3, int var4, boolean var5) {
       if (var1 != null) {
-	    this.var_1403 = Class_1b0.loadImagePng(var1);
+	    this.var_1403 = ReadingDrawingClass.loadImagePng(var1);
 	 }
 
       if (var2 != null) {
-	    this.var_1453 = Class_1b0.loadImagePng(var2);
+	    this.var_1453 = ReadingDrawingClass.loadImagePng(var2);
 	 }
 
       if (this.var_1403 != null || this.var_1453 != null) {
@@ -946,14 +946,14 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    }
 
    private static void sub_5d0() {
-      Class_1b0.sub_7ec(new short[][]{Class_1b0.readTextFromLng((short)251), Class_1b0.readTextFromLng((short)252), Class_1b0.readTextFromLng((short)253), Class_1b0.readTextFromLng((short)254), Class_1b0.readTextFromLng((short)255)}, new int[]{100000, 50000, 30000, 20000, 10000});
+      ReadingDrawingClass.sub_7ec(new short[][]{ReadingDrawingClass.readTextFromLng((short)251), ReadingDrawingClass.readTextFromLng((short)252), ReadingDrawingClass.readTextFromLng((short)253), ReadingDrawingClass.readTextFromLng((short)254), ReadingDrawingClass.readTextFromLng((short)255)}, new int[]{100000, 50000, 30000, 20000, 10000});
    }
 
    private static void sub_611() {
       var_130f = null;
       if (var_1369) {
          sub_5d0();
-         if (Class_1b0.var_19d) {
+         if (ReadingDrawingClass.var_19d) {
             sub_6dd();
          } else {
             sub_76b();
@@ -972,10 +972,10 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          String var0 = (String)Class_19e.var_838;
 
          for(byte var1 = 1; var1 <= 2; ++var1) {
-            var_129e[var1 - 1] = "true".equals(Class_1b0.sub_1f4(var0, var1));
+            var_129e[var1 - 1] = "true".equals(ReadingDrawingClass.sub_1f4(var0, var1));
          }
 
-         Class_1b0.sub_7c6();
+         ReadingDrawingClass.sub_7c6();
       }
 
    }
@@ -991,7 +991,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          var1 -= 2;
       }
 
-      if (Class_1b0.var_19d) {
+      if (ReadingDrawingClass.var_19d) {
          --var1;
       }
 
@@ -1000,7 +1000,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       var0[1] = 208;
       var0[2] = 209;
       var1 = 3;
-      if (!Class_1b0.var_19d) {
+      if (!ReadingDrawingClass.var_19d) {
          ++var1;
          var0[3] = 210;
       }
@@ -1014,7 +1014,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
       var0[var1] = 211;
       var_114a = 25;
-      sub_22b((byte)22, (byte[])null, var0, Class_1b0.readTextFromLng((short)129), (byte)1);
+      sub_22b((byte)22, (byte[])null, var0, ReadingDrawingClass.readTextFromLng((short)129), (byte)1);
    }
 
    private static void sub_707() {
@@ -1026,7 +1026,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       }
 
       var_114a = 25;
-      sub_22b((byte)45, (byte[])null, var0, Class_1b0.readTextFromLng((short)203), (byte)2);
+      sub_22b((byte)45, (byte[])null, var0, ReadingDrawingClass.readTextFromLng((short)203), (byte)2);
    }
 
    private static void sub_76b() {
@@ -1036,9 +1036,9 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    public static void sub_7c1() {
       sub_3b5(2);
-      var_a60 = Class_1b0.sub_80d();
-      var_150d = (LevelManager.var_cf >> 1) - (6 * (Class_1b0.var_a9 + 3) >> 1);
-      var_1566 = var_150d + Class_1b0.var_a9 + 3;
+      var_a60 = ReadingDrawingClass.sub_80d();
+      var_150d = (LevelManager.var_cf >> 1) - (6 * (ReadingDrawingClass.var_a9 + 3) >> 1);
+      var_1566 = var_150d + ReadingDrawingClass.var_a9 + 3;
       if (var_ab2 > -1) {
          var_ab2 = -1;
 
@@ -1051,7 +1051,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                   ((short[][])((short[][])var_a60.elementAt(1)))[var1 + 1] = ((short[][])((short[][])var_a60.elementAt(1)))[var1];
                }
 
-               ((short[][])((short[][])var_a60.elementAt(0)))[var_ab2] = Class_1b0.readTextFromLng((short)207);
+               ((short[][])((short[][])var_a60.elementAt(0)))[var_ab2] = ReadingDrawingClass.readTextFromLng((short)207);
                ((int[])((int[])var_a60.elementAt(1)))[var0] = var_e38;
                var_afa = 0;
                break;
@@ -1065,7 +1065,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    private static void sub_7f0(Graphics var0) {
       var_338 = true;
-      int var2 = 16 * Class_1b0.var_12;
+      int var2 = 16 * ReadingDrawingClass.var_12;
       int var3 = (var_1180 >> 1) - (var2 >> 1);
       int var1;
       int var4;
@@ -1073,29 +1073,29 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          short[][] var5 = (short[][])((short[][])var_a60.elementAt(0));
          int[] var6 = (int[])((int[])var_a60.elementAt(1));
          if (var_ce9 > 0 || var_d24 > LevelObjectData.spriteTypesArr[28][3]) {
-            LevelManager.var_2a1.setColor(0);
-            LevelManager.var_2a1.setClip(0, 0, var_1180, var_11cf);
-            LevelManager.var_2a1.fillRect(0, 0, var_1180, var_11cf);
+            LevelManager.graphics.setColor(0);
+            LevelManager.graphics.setClip(0, 0, var_1180, var_11cf);
+            LevelManager.graphics.fillRect(0, 0, var_1180, var_11cf);
          }
 
-         Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)7, 0, var_ce9, var_d24);
-         Class_19e.sub_29c(LevelManager.var_2a1);
-         Class_1b0.sub_47c(LevelManager.var_2a1, Class_1b0.readTextFromLng((short)203), (var_1180 >> 1) - (Class_1b0.readTextFromLng((short)203).length * Class_1b0.var_12 >> 1), var_150d);
+         ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)7, 0, var_ce9, var_d24);
+         Class_19e.sub_29c(LevelManager.graphics);
+         ReadingDrawingClass.sub_47c(LevelManager.graphics, ReadingDrawingClass.readTextFromLng((short)203), (var_1180 >> 1) - (ReadingDrawingClass.readTextFromLng((short)203).length * ReadingDrawingClass.var_12 >> 1), var_150d);
          var1 = var_1566;
 
          for(int var7 = 0; var7 < 5; ++var7) {
             if (var_ab2 != var7) {
-               Class_1b0.sub_47c(LevelManager.var_2a1, var5[var7], var3, var1);
+               ReadingDrawingClass.sub_47c(LevelManager.graphics, var5[var7], var3, var1);
             }
 
-            var4 = var3 + var2 - String.valueOf(var6[var7]).length() * Class_1b0.var_12;
-            Class_1b0.sub_46a(LevelManager.var_2a1, "$", var4 - Class_1b0.var_12, var1);
-            Class_1b0.sub_46a(LevelManager.var_2a1, String.valueOf(var6[var7]), var4, var1);
-            var1 += Class_1b0.var_a9 + 3;
+            var4 = var3 + var2 - String.valueOf(var6[var7]).length() * ReadingDrawingClass.var_12;
+            ReadingDrawingClass.sub_46a(LevelManager.graphics, "$", var4 - ReadingDrawingClass.var_12, var1);
+            ReadingDrawingClass.sub_46a(LevelManager.graphics, String.valueOf(var6[var7]), var4, var1);
+            var1 += ReadingDrawingClass.var_a9 + 3;
          }
 
          Class_19e.var_89d = new short[]{126};
-         Class_19e.sub_36c(LevelManager.var_2a1);
+         Class_19e.sub_36c(LevelManager.graphics);
          var_5ed = false;
       }
 
@@ -1105,7 +1105,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          label42:
          for(var4 = 0; var4 < 5; ++var4) {
             if (var_ab2 == var4) {
-               Class_1b0.sub_47c(var0, ((short[][])((short[][])var_a60.elementAt(0)))[var4], var3, var1);
+               ReadingDrawingClass.sub_47c(var0, ((short[][])((short[][])var_a60.elementAt(0)))[var4], var3, var1);
                int var8 = 0;
 
                while(true) {
@@ -1114,14 +1114,14 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                   }
 
                   if (var8 == var_afa && var_115 > 12) {
-                     Class_1b0.sub_47c(var0, Class_1b0.readTextFromLng((short)256), var3 + var8 * Class_1b0.var_12, var1 + 2);
+                     ReadingDrawingClass.sub_47c(var0, ReadingDrawingClass.readTextFromLng((short)256), var3 + var8 * ReadingDrawingClass.var_12, var1 + 2);
                   }
 
                   ++var8;
                }
             }
 
-            var1 += Class_1b0.var_a9 + 3;
+            var1 += ReadingDrawingClass.var_a9 + 3;
          }
       }
 
@@ -1141,7 +1141,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       int var0;
       if ((var0 = var_13a7.sub_97(var_93a)) == 12 || var0 == 0) {
          if (var_ab2 >= 0) {
-            Class_1b0.sub_7ec((short[][])((short[][])var_a60.elementAt(0)), (int[])((int[])var_a60.elementAt(1)));
+            ReadingDrawingClass.sub_7ec((short[][])((short[][])var_a60.elementAt(0)), (int[])((int[])var_a60.elementAt(1)));
          }
 
          sub_3f1();
@@ -1177,15 +1177,15 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    private static void sub_8d4(Graphics var0) {
       var_338 = true;
       if (var_5e0 && (var_ce9 > 0 || var_d24 > LevelObjectData.spriteTypesArr[28][3])) {
-         LevelManager.var_2a1.setColor(0);
-         LevelManager.var_2a1.setClip(0, 0, var_1180, var_11cf);
-         LevelManager.var_2a1.fillRect(0, 0, var_1180, var_11cf);
+         LevelManager.graphics.setColor(0);
+         LevelManager.graphics.setClip(0, 0, var_1180, var_11cf);
+         LevelManager.graphics.fillRect(0, 0, var_1180, var_11cf);
       }
 
       sub_8f3(var0);
-      Class_1b0.drawSprite2(var0, (byte)40, 0, var_b74, var_bca);
+      ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)40, 0, var_b74, var_bca);
       if (var_6bc && var_115 > 12) {
-         Class_1b0.drawSprite2(var0, (byte)39, 2, var_b74 + LevelObjectData.spriteTypesArr[40][2], var_bca);
+         ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)39, 2, var_b74 + LevelObjectData.spriteTypesArr[40][2], var_bca);
       }
 
       sub_94f(var0, var_b74, var_bca, true);
@@ -1195,43 +1195,43 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    private static void sub_8f3(Graphics var0) {
       if (var_5e0) {
          boolean var1 = false;
-         Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)7, 0, var_ce9, var_d24);
+         ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)7, 0, var_ce9, var_d24);
 
          for(int var2 = 1; var2 < 5; ++var2) {
             if (!var_d50.contains(var_d34[var2]) && LevelManager.levelAdditionalData_TimerEtc[var_dc6 - 1][6 + var2] == 1) {
-               Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)(34 + var2 - 1), 0, LevelObjectData.var_9d[var2][0], LevelObjectData.var_9d[var2][1]);
+               ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)(34 + var2 - 1), 0, LevelObjectData.var_9d[var2][0], LevelObjectData.var_9d[var2][1]);
             }
 
             if (LevelManager.var_99f.contains(var_d34[var2])) {
-               Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)39, 0, LevelObjectData.var_65[(short)(2 + var2)][0] - (LevelObjectData.spriteTypesArr[39][2] >> 1), LevelObjectData.var_65[(short)(2 + var2)][1]);
+               ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)39, 0, LevelObjectData.var_65[(short)(2 + var2)][0] - (LevelObjectData.spriteTypesArr[39][2] >> 1), LevelObjectData.var_65[(short)(2 + var2)][1]);
             }
          }
 
-         Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)29, 0, 0, 0);
+         ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)29, 0, 0, 0);
          LevelObjectData.var_65[8][0] = LevelObjectData.spriteTypesArr[29][2] >> 1;
          LevelObjectData.var_65[8][1] = LevelObjectData.spriteTypesArr[29][3] >> 1;
 
          for(int var3 = 0 + LevelObjectData.spriteTypesArr[29][2]; var3 < var_1180 - LevelObjectData.spriteTypesArr[30][2]; var3 += LevelObjectData.spriteTypesArr[28][2]) {
-            Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)28, 0, var3, 0);
+            ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)28, 0, var3, 0);
          }
 
-         Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)30, 0, var_1180 - LevelObjectData.spriteTypesArr[30][2], 0);
+         ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)30, 0, var_1180 - LevelObjectData.spriteTypesArr[30][2], 0);
          LevelObjectData.var_65[1][0] = var_1180 - (LevelObjectData.spriteTypesArr[30][2] >> 1);
          LevelObjectData.var_65[1][1] = LevelObjectData.spriteTypesArr[30][3] >> 1;
-         sub_96d(LevelManager.var_2a1);
-         sub_9cc(LevelManager.var_2a1);
+         sub_96d(LevelManager.graphics);
+         sub_9cc(LevelManager.graphics);
          var_62c = true;
       }
 
       var_5e0 = false;
       if (var_649) {
-         sub_9f8(LevelManager.var_2a1);
+         sub_9f8(LevelManager.graphics);
       }
 
       var_649 = false;
       if (var_62c && (var_ca0 == 3 || var_ca0 == 4 || var_ca0 == 5 || var_ca0 == 6 || var_ca0 == 2)) {
          LevelManager.var_983 = var_900;
-         LevelManager.sub_2df(LevelManager.var_2a1, true);
+         LevelManager.sub_2df(LevelManager.graphics, true);
          var_62c = false;
       }
 
@@ -1250,23 +1250,23 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                for(var7 = 2; var7 > -1; --var7) {
                   var6 += (var_1180 >> 1) - var6 >> 1;
                   var5 += var4;
-                  Class_1b0.drawSprite2(var0, (byte)(15 + var7), 0, var6 - (LevelObjectData.spriteTypesArr[15 + var7][2] >> 1), var5 - (LevelObjectData.spriteTypesArr[15 + var7][3] >> 1));
+                  ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)(15 + var7), 0, var6 - (LevelObjectData.spriteTypesArr[15 + var7][2] >> 1), var5 - (LevelObjectData.spriteTypesArr[15 + var7][3] >> 1));
                }
 
                var6 = (var_1180 >> 1) - (7 * LevelObjectData.spriteTypesArr[18][2] >> 1);
                var5 += var4 - (LevelObjectData.spriteTypesArr[3][3] >> 1);
                var_102d = var6;
-               var_105e = var5 + (LevelObjectData.spriteTypesArr[3][3] - Class_1b0.var_a9 >> 1);
+               var_105e = var5 + (LevelObjectData.spriteTypesArr[3][3] - ReadingDrawingClass.var_a9 >> 1);
                var_109d = 7 * LevelObjectData.spriteTypesArr[18][2];
                if (var_10ea > var_102d + var_109d) {
                   var_10ea = var_102d + var_109d;
                }
 
-               Class_1b0.drawSprite2(var0, (byte)3, 0, var6 - (LevelObjectData.spriteTypesArr[3][2] >> 1), var5);
-               Class_1b0.drawSprite2(var0, (byte)3, 0, var6 + 7 * LevelObjectData.spriteTypesArr[18][2] - (LevelObjectData.spriteTypesArr[3][2] >> 1), var5);
+               ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)3, 0, var6 - (LevelObjectData.spriteTypesArr[3][2] >> 1), var5);
+               ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)3, 0, var6 + 7 * LevelObjectData.spriteTypesArr[18][2] - (LevelObjectData.spriteTypesArr[3][2] >> 1), var5);
 
                for(var7 = 0; var7 < 7; ++var7) {
-                  Class_1b0.drawSprite2(var0, (byte)18, 0, var6, var5);
+                  ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)18, 0, var6, var5);
                   var6 += LevelObjectData.spriteTypesArr[18][2];
                }
 
@@ -1277,43 +1277,43 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    private static void sub_96d(Graphics var0) {
       short[] var1;
-      int var2 = (var1 = Class_1b0.sub_533(String.valueOf(var_e38))).length * Class_1b0.var_12;
+      int var2 = (var1 = ReadingDrawingClass.sub_533(String.valueOf(var_e38))).length * ReadingDrawingClass.var_12;
       int var3 = LevelObjectData.spriteTypesArr[29][2] + 2;
       int var4 = var_1180 - LevelObjectData.spriteTypesArr[30][2] - 2 - LevelObjectData.spriteTypesArr[31][2];
       int var5 = LevelObjectData.spriteTypesArr[28][3] - LevelObjectData.spriteTypesArr[32][3] - 1 >> 1;
       int var6 = var3 + LevelObjectData.spriteTypesArr[31][2] - 1;
-      int var7 = var5 + (LevelObjectData.spriteTypesArr[32][3] - Class_1b0.var_a9 >> 1);
-      Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)31, 0, var3, var5);
+      int var7 = var5 + (LevelObjectData.spriteTypesArr[32][3] - ReadingDrawingClass.var_a9 >> 1);
+      ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)31, 0, var3, var5);
       if (var3 + 1 < var4) {
          boolean var8 = var4 - var3 > LevelObjectData.spriteTypesArr[31][2];
-         Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)31, 0, var4, var5);
-         Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)32, 0, var4, var5);
+         ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)31, 0, var4, var5);
+         ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)32, 0, var4, var5);
          var6 = var4 + LevelObjectData.spriteTypesArr[31][2] - 1;
 
          for(var3 = var4 - LevelObjectData.spriteTypesArr[32][2]; var3 > LevelObjectData.spriteTypesArr[29][2] + 2; var3 -= LevelObjectData.spriteTypesArr[32][2]) {
-            Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)32, 0, var3, var5);
+            ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)32, 0, var3, var5);
          }
 
          if (var8) {
-            Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)33, 0, LevelObjectData.spriteTypesArr[29][2] + 4, var7);
+            ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)33, 0, LevelObjectData.spriteTypesArr[29][2] + 4, var7);
          }
       }
 
-      Class_1b0.sub_47c(var0, var1, var6 - var2, var7 + 1);
+      ReadingDrawingClass.sub_47c(var0, var1, var6 - var2, var7 + 1);
    }
 
    private static void sub_9cc(Graphics var0) {
       if (var_5bb > 0) {
-         int var1 = var_11cf - Class_1b0.var_a9 - 3;
+         int var1 = var_11cf - ReadingDrawingClass.var_a9 - 3;
          boolean var2 = false;
-         Class_1b0.sub_47c(var0, Class_1b0.readTextFromLng((short)260), 3, var1);
-         int var3 = 3 + Class_1b0.var_12;
-         Class_1b0.sub_46a(var0, String.valueOf(var_10ff), var3, var1);
+         ReadingDrawingClass.sub_47c(var0, ReadingDrawingClass.readTextFromLng((short)260), 3, var1);
+         int var3 = 3 + ReadingDrawingClass.var_12;
+         ReadingDrawingClass.sub_46a(var0, String.valueOf(var_10ff), var3, var1);
       }
    }
 
    private static void sub_9f8(Graphics var0) {
-      int var2 = Class_1b0.var_a9 + 2;
+      int var2 = ReadingDrawingClass.var_a9 + 2;
       var_7d3 = var_11cf < 111 ? 0 : (var_11cf < 161 ? 1 : (var_11cf < 221 ? 2 : 3));
       var_798 = var_1180 < 121 ? -1 : (var_1180 < 133 ? 0 : (var_1180 < 180 ? 2 : 3));
       int var3 = 6 * (LevelObjectData.spriteTypesArr[26][2] + var_798) + 6 + 2 + var_798;
@@ -1344,14 +1344,14 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          var_e17[var8][var9] = var16;
          int var10 = var_729 + var8 * (LevelObjectData.spriteTypesArr[26][2] + var_798);
          int var11 = var_762 + var9 * (LevelObjectData.spriteTypesArr[26][3] + var_7d3);
-         Class_1b0.drawSprite2(var0, (byte)26, 0, var10, var11);
-         Class_1b0.drawSprite2(var0, (byte)8, (byte)toolStats[var15][2], var10 + 2, var11 + 2);
+         ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)26, 0, var10, var11);
+         ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)8, (byte)toolStats[var15][2], var10 + 2, var11 + 2);
          if (var_900.var_451[0] != var16 && var_900.var_451[1] != var16 && var_900.var_451[2] != var16) {
             if (toolStats[var15][0] > var_e38 || LevelManager.levelAdditionalData_TimerEtc[var_dc6 - 1][13 + sub_e5c(var16)] == 0) {
-               Class_1b0.drawSprite2(var0, (byte)41, 0, var10 + 2, var11 + 2);
+               ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)41, 0, var10 + 2, var11 + 2);
             }
          } else {
-            Class_1b0.drawSprite2(var0, (byte)39, 0, var10, var11);
+            ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)39, 0, var10, var11);
          }
 
          if (var8 >= 5) {
@@ -1368,15 +1368,15 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          int var14 = var_729 + (var13 - var_729 >> 1);
          Class_19e.sub_388(var0, var_729, var12, 1, 4);
          Class_19e.sub_388(var0, var13, var12, 2, 5);
-         Class_1b0.drawSprite2(var0, (byte)38, 0, var14, var12);
+         ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)38, 0, var14, var12);
          LevelObjectData.spriteTypesArr[43][2] = 7;
          LevelObjectData.spriteTypesArr[43][3] = 9;
-         Class_1b0.drawSprite2(var0, (byte)43, Class_1b0.readTextFromLng((short)241)[0], var14 + (LevelObjectData.spriteTypesArr[38][2] >> 1) - (LevelObjectData.spriteTypesArr[43][2] >> 1), var12 + (LevelObjectData.spriteTypesArr[38][3] >> 1) - (LevelObjectData.spriteTypesArr[43][3] >> 1));
-         LevelObjectData.spriteTypesArr[43][2] = (short)Class_1b0.var_12;
-         LevelObjectData.spriteTypesArr[43][3] = (short)Class_1b0.var_a9;
+         ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)43, ReadingDrawingClass.readTextFromLng((short)241)[0], var14 + (LevelObjectData.spriteTypesArr[38][2] >> 1) - (LevelObjectData.spriteTypesArr[43][2] >> 1), var12 + (LevelObjectData.spriteTypesArr[38][3] >> 1) - (LevelObjectData.spriteTypesArr[43][3] >> 1));
+         LevelObjectData.spriteTypesArr[43][2] = (short)ReadingDrawingClass.var_12;
+         LevelObjectData.spriteTypesArr[43][3] = (short)ReadingDrawingClass.var_a9;
       }
 
-      sub_96d(LevelManager.var_2a1);
+      sub_96d(LevelManager.graphics);
       var_bfe = var_729 + var_6c8 * (LevelObjectData.spriteTypesArr[26][2] + var_798) + (LevelObjectData.spriteTypesArr[26][2] >> 1);
       var_c60 = var_762 + var_6d8 * (LevelObjectData.spriteTypesArr[26][3] + var_7d3) + (LevelObjectData.spriteTypesArr[26][3] >> 1);
       sub_b52();
@@ -1561,7 +1561,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
                short[] var6 = new short[var2];
                Class_3d.sub_1cf(var5, 0, var6, 0, var2);
-               sub_22b((byte)6, new byte[]{13, 0}, var6, Class_1b0.readTextFromLng((short)136), (byte)2);
+               sub_22b((byte)6, new byte[]{13, 0}, var6, ReadingDrawingClass.readTextFromLng((short)136), (byte)2);
                break;
             case 1:
                var_13a7.sub_3d3();
@@ -1572,7 +1572,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                if (var_dc6 < 6) {
                   sub_2c8((byte)0, (byte[])null, (short)183, (Object[])null, new short[]{126}, (short)137);
                } else {
-                  sub_22b((byte)2, new byte[]{5, var_f0d}, new short[]{125, 122}, Class_1b0.readTextFromLng((short)41), (byte)2);
+                  sub_22b((byte)2, new byte[]{5, var_f0d}, new short[]{125, 122}, ReadingDrawingClass.readTextFromLng((short)41), (byte)2);
                }
                break;
             case 3:
@@ -1587,7 +1587,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                   var4 = new short[]{124, 122};
                }
 
-               sub_22b((byte)2, new byte[]{5, var_f0d}, var4, Class_1b0.readTextFromLng((short)(41 + var_f0d)), (byte)2);
+               sub_22b((byte)2, new byte[]{5, var_f0d}, var4, ReadingDrawingClass.readTextFromLng((short)(41 + var_f0d)), (byte)2);
                break;
             case 7:
                if (LevelManager.var_99f.size() == 0 && var_dc6 == 1) {
@@ -1730,7 +1730,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    private static void sub_b52() {
       if (var_e17[var_6c8][var_6d8] != 0) {
-         short[] var0 = Class_1b0.sub_569((short)263, new Object[]{new Short((short)var_e17[var_6c8][var_6d8]), String.valueOf(toolStats[sub_e5c(var_e17[var_6c8][var_6d8])][0]), String.valueOf(toolStats[sub_e5c(var_e17[var_6c8][var_6d8])][1])});
+         short[] var0 = ReadingDrawingClass.sub_569((short)263, new Object[]{new Short((short)var_e17[var_6c8][var_6d8]), String.valueOf(toolStats[sub_e5c(var_e17[var_6c8][var_6d8])][0]), String.valueOf(toolStats[sub_e5c(var_e17[var_6c8][var_6d8])][1])});
          var_8a4 = 0;
          sub_daa(var0, var_7f5, var_810, var_870, -2);
          var_10ea = var_7f5;
@@ -1778,12 +1778,12 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    private static void sub_b8e(Graphics var0) {
       if (var_1217 != 0) {
          short[] var1;
-         int var2 = (var1 = Class_1b0.readTextFromLng((short)130)).length * Class_1b0.var_12;
-         byte var3 = Class_1b0.var_a9;
+         int var2 = (var1 = ReadingDrawingClass.readTextFromLng((short)130)).length * ReadingDrawingClass.var_12;
+         byte var3 = ReadingDrawingClass.var_a9;
          int var4 = (var_1180 >> 1) - (var2 >> 1);
          int var5 = (var_11cf >> 1) - (var3 >> 1);
-         Class_1b0.sub_20e(var0, var4 - 8, var5 - 4, var2 + 16, var3 + 8, true, 11665470);
-         Class_1b0.sub_47c(var0, var1, var4, var5);
+         ReadingDrawingClass.sub_20e(var0, var4 - 8, var5 - 4, var2 + 16, var3 + 8, true, 11665470);
+         ReadingDrawingClass.sub_47c(var0, var1, var4, var5);
          var_123b = true;
       }
    }
@@ -1793,13 +1793,13 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       short[] var0 = new short[]{0};
       if (!var_6ac) {
          var_f69 = 0;
-         var_f83 = var_11cf - Class_1b0.var_a9 - 2;
+         var_f83 = var_11cf - ReadingDrawingClass.var_a9 - 2;
          var_fa9 = var_1180;
-         var0 = Class_1b0.readTextFromLng((short)LevelObjectData.var_65[var_ca0][2]);
+         var0 = ReadingDrawingClass.readTextFromLng((short)LevelObjectData.var_65[var_ca0][2]);
          var_6bc = !var_129e[7 + var_ca0] && var_5bb == -1;
          if (var_12fc && var_6bc) {
             var_129e[7 + var_ca0] = true;
-            Class_1b0.sub_7c6();
+            ReadingDrawingClass.sub_7c6();
             var_6bc = false;
          }
       }
@@ -1868,7 +1868,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                sub_682();
                break;
             case 199:
-               Class_1b0.sub_870();
+               ReadingDrawingClass.sub_870();
                sub_3f1();
                break;
             case 209:
@@ -2004,7 +2004,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             }
             break;
          case 15:
-            Class_1b0.sub_759();
+            ReadingDrawingClass.sub_759();
             var_ab2 = 0;
             sub_7c1();
             return true;
@@ -2099,7 +2099,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             sub_cec();
             return true;
          case 40:
-            Class_1b0.sub_759();
+            ReadingDrawingClass.sub_759();
             sub_3f1();
             return true;
          case 41:
@@ -2121,7 +2121,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       var_e38 = var_e86;
       LevelManager.someLevelDataVarLast = LevelManager.var_c9e;
       LevelManager.sub_140(LevelManager.var_8ff, LevelManager.alarmWithZonesMap);
-      LevelManager.sub_f0(LevelManager.var_896, LevelManager.var_84c);
+      LevelManager.sub_f0(LevelManager.var_896, LevelManager.levelObjects);
       LevelManager.var_99f.removeAllElements();
       Enumeration var0 = LevelManager.var_9d3.elements();
 
@@ -2146,7 +2146,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       var_d34[0].sub_41a();
       var_d34[0].sub_2a1();
       sub_d4e(var_dc6);
-      Class_1b0.sub_71d();
+      ReadingDrawingClass.sub_71d();
    }
 
    private static boolean sub_c29() {
@@ -2170,7 +2170,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       }
 
       if (var0 > 0) {
-         sub_260((byte)20, (byte[])null, var4, var2, Class_1b0.readTextFromLng((short)143), (byte)2);
+         sub_260((byte)20, (byte[])null, var4, var2, ReadingDrawingClass.readTextFromLng((short)143), (byte)2);
          return true;
       } else {
          return false;
@@ -2227,7 +2227,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                var4[var2][0] = new Short((short)(51 + var1));
                var4[var2][1] = new Integer(Class_205.toolUsingTimeStats[var1][var0]);
                var5[var2][0] = 4;
-               var5[var2][1] = LevelObjectData.var_da[var1][4];
+               var5[var2][1] = LevelObjectData.spriteIndexes[var1][4];
                ++var2;
             }
          }
@@ -2246,7 +2246,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          var0 = new short[]{192};
       }
 
-      sub_22b((byte)14, (byte[])null, var0, Class_1b0.readTextFromLng((short)130), (byte)1);
+      sub_22b((byte)14, (byte[])null, var0, ReadingDrawingClass.readTextFromLng((short)130), (byte)1);
    }
 
    private static void sub_d10() {
@@ -2269,8 +2269,8 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       var_d34[0].var_29a = 0;
       var_e86 = var_e38;
       sub_d4e((byte)(var_dc6 + 1));
-      Class_1b0.sub_6f5();
-      Class_1b0.sub_837();
+      ReadingDrawingClass.sub_6f5();
+      ReadingDrawingClass.sub_837();
    }
 
    public static void sub_d4e(byte var0) {
@@ -2302,7 +2302,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                   var_129e[var2] = false;
                }
 
-               Class_1b0.sub_7c6();
+               ReadingDrawingClass.sub_7c6();
             } else {
                var_ea3 = 9;
             }
@@ -2323,7 +2323,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    private static void sub_ddc(Graphics var0) {
       if (var_ff4 != null && (var_b74 == var_bfe && var_bca == var_c60 || var_26f == 1) && (var_12fc || var_6ac)) {
-         Class_1b0.drawText(var0, var_ff4, var_10ea, var_105e, var_102d, var_102d + var_109d);
+         ReadingDrawingClass.drawText(var0, var_ff4, var_10ea, var_105e, var_102d, var_102d + var_109d);
       }
 
    }
@@ -2334,7 +2334,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             var_10c8 = -1;
          }
 
-         if (var_10c8 == -1 && var_10ea + var_ff4.length * Class_1b0.var_12 < var_102d + var_109d) {
+         if (var_10c8 == -1 && var_10ea + var_ff4.length * ReadingDrawingClass.var_12 < var_102d + var_109d) {
             return;
          }
 
@@ -2342,7 +2342,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             --var_10ea;
          }
 
-         if (var_10ea + var_ff4.length * Class_1b0.var_12 < var_102d) {
+         if (var_10ea + var_ff4.length * ReadingDrawingClass.var_12 < var_102d) {
             var_10ea = var_102d + var_109d;
             if (var_10c8 > -1) {
                --var_10c8;
@@ -2418,14 +2418,14 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    }
 
    private static boolean sub_f0c() {
-      String var1 = Class_1b0.sub_5a0((short)275);
-      var_a60 = Class_1b0.sub_80d();
+      String var1 = ReadingDrawingClass.sub_5a0((short)275);
+      var_a60 = ReadingDrawingClass.sub_80d();
       short[][] var2 = (short[][])((short[][])var_a60.elementAt(0));
       int[] var3 = (int[])((int[])var_a60.elementAt(1));
 
       int var0;
       for(var0 = 0; var0 < 5; ++var0) {
-         var1 = var1 + "&n" + var0 + "=" + Class_1b0.sub_5df(var2[var0]) + "&s" + var0 + "=" + var3[var0];
+         var1 = var1 + "&n" + var0 + "=" + ReadingDrawingClass.sub_5df(var2[var0]) + "&s" + var0 + "=" + var3[var0];
       }
 
       var1 = var1.replace(' ', '_');
@@ -2473,7 +2473,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                      }
 
                      var11 = var11.replace('_', ' ');
-                     var2[var0] = Class_1b0.sub_533(var11);
+                     var2[var0] = ReadingDrawingClass.sub_533(var11);
                      ++var0;
                   } catch (Exception var30) {
                   }
@@ -2499,7 +2499,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
       }
 
-      Class_1b0.sub_7ec(var2, var3);
+      ReadingDrawingClass.sub_7ec(var2, var3);
       Class_3d.callGc();
       return var7;
    }
