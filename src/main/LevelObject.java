@@ -76,9 +76,9 @@ public final class LevelObject implements LevelObjectData {
                var10 = this.var_163 == 3 ? 12 : 0;
             }
 
-            Class_1b0.sub_2e7(g, 4, (byte)(LevelObjectData.var_da[var3][this.var_163] + var2), LevelManager.var_1dc + this.x * 24 + var5, LevelManager.var_1fb + this.y * 24 + var6, var7, var8, var9, var10);
+            Class_1b0.drawSprite(g, 4, (byte)(LevelObjectData.var_da[var3][this.var_163] + var2), LevelManager.var_1dc + this.x * 24 + var5, LevelManager.var_1fb + this.y * 24 + var6, var7, var8, var9, var10);
          } else {
-            Class_1b0.sub_2db(g, (byte)4, (byte)(LevelObjectData.var_da[var3][this.var_163] + var2), LevelManager.var_1dc + this.x * 24, LevelManager.var_1fb + this.y * 24);
+            Class_1b0.drawSprite2(g, (byte)4, (byte)(LevelObjectData.var_da[var3][this.var_163] + var2), LevelManager.var_1dc + this.x * 24, LevelManager.var_1fb + this.y * 24);
          }
 
          if (var3 == 9) {
@@ -87,7 +87,7 @@ public final class LevelObject implements LevelObjectData {
             }
 
             if (this.var_1bc[1] == 0) {
-               Class_1b0.sub_2db(g, (byte)11, LevelManager.var_4e5[this.var_22c], LevelManager.var_1dc + this.x * 24, LevelManager.var_1fb + this.y * 24);
+               Class_1b0.drawSprite2(g, (byte)11, LevelManager.var_4e5[this.var_22c], LevelManager.var_1dc + this.x * 24, LevelManager.var_1fb + this.y * 24);
                LevelManager.var_4a5 = LevelManager.var_475[this.var_22c];
             }
          }
@@ -118,15 +118,15 @@ public final class LevelObject implements LevelObjectData {
 
             Class_1b0.sub_2c5(g, LevelObjectData.var_da[this.objectType][4], this.var_163, LevelManager.var_1dc + this.x * 24, LevelManager.var_1fb + this.y * 24, var2);
          } else {
-            Class_1b0.sub_2db(g, (byte)47, 0, LevelManager.var_1dc + this.x * 24, LevelManager.var_1fb + this.y * 24);
+            Class_1b0.drawSprite2(g, (byte)47, 0, LevelManager.var_1dc + this.x * 24, LevelManager.var_1fb + this.y * 24);
          }
 
          if (this.var_18d > 0 && this.var_18d <= Class_205.var_4aa) {
-            Class_1b0.sub_2db(g, (byte)2, 18, LevelManager.var_1dc + this.x * 24, LevelManager.var_1fb + this.y * 24);
+            Class_1b0.drawSprite2(g, (byte)2, 18, LevelManager.var_1dc + this.x * 24, LevelManager.var_1fb + this.y * 24);
          }
 
          if (this.var_1a5 > 0 && this.var_1a5 <= Class_205.var_4aa) {
-            Class_1b0.sub_2db(g, (byte)2, 19, LevelManager.var_1dc + this.x * 24, LevelManager.var_1fb + this.y * 24);
+            Class_1b0.drawSprite2(g, (byte)2, 19, LevelManager.var_1dc + this.x * 24, LevelManager.var_1fb + this.y * 24);
             return;
          }
       }

@@ -228,15 +228,15 @@ public final class Class_205 implements LevelObjectData {
             }
          }
 
-         Class_1b0.sub_2db(var1, (byte)1, this.var_24a > 0 ? (LevelManager.var_52f[15][0] == LevelManager.var_52f[14][0] ? LevelManager.var_52f[14][0] : LevelManager.var_52f[15][0] + (this.var_17b << 2)) : LevelManager.var_52f[this.var_1a6 == 4 ? Class_178.toolStats[Class_178.sub_e5c(this.var_451[this.var_47f])][3] : this.var_1a6][this.var_1ec] + (this.var_17b << 2), var4, var5);
+         Class_1b0.drawSprite2(var1, (byte)1, this.var_24a > 0 ? (LevelManager.var_52f[15][0] == LevelManager.var_52f[14][0] ? LevelManager.var_52f[14][0] : LevelManager.var_52f[15][0] + (this.var_17b << 2)) : LevelManager.var_52f[this.var_1a6 == 4 ? Class_178.toolStats[Class_178.sub_e5c(this.var_451[this.var_47f])][3] : this.var_1a6][this.var_1ec] + (this.var_17b << 2), var4, var5);
          if (LevelManager.var_983 != null && LevelManager.var_983.var_3a == this.var_3a) {
-            Class_1b0.sub_2db(var1, (byte)1, 7, var4, var5);
+            Class_1b0.drawSprite2(var1, (byte)1, 7, var4, var5);
             return;
          }
       } else {
-         Class_1b0.sub_2db(var1, (byte)50, this.var_17b, var4 + this.var_3a, var5 + this.var_3a);
+         Class_1b0.drawSprite2(var1, (byte)50, this.var_17b, var4 + this.var_3a, var5 + this.var_3a);
          if (LevelManager.var_983 != null && LevelManager.var_983.var_3a == this.var_3a && Class_178.var_91 > 6 && !this.var_210) {
-            Class_1b0.sub_2db(var1, (byte)51, LevelManager.var_983.var_3a - 1, var4 + 12 - 3 + this.var_3a, var5 + 12 - 3 + this.var_3a);
+            Class_1b0.drawSprite2(var1, (byte)51, LevelManager.var_983.var_3a - 1, var4 + 12 - 3 + this.var_3a, var5 + 12 - 3 + this.var_3a);
             if (LevelManager.var_983.var_bb == LevelManager.someLevelDataVar1 && LevelManager.var_983.var_123 == LevelManager.someLevelDataVar2) {
                LevelManager.var_983.var_2d2 = LevelManager.var_983.var_29a;
             }

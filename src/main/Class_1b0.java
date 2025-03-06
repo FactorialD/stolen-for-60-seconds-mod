@@ -376,31 +376,61 @@ public final class Class_1b0 implements LevelObjectData {
       }
    }
 
-   public static void sub_2db(Graphics var0, byte var1, int var2, int var3, int var4) {
-      sub_2e7(var0, var1, var2, var3, var4, 0, 0, 0, 0);
+   public static void drawSprite2(Graphics g, byte spriteId, int var2, int spriteXPos, int spriteYPos) {
+      drawSprite(g, spriteId, var2, spriteXPos, spriteYPos, 0, 0, 0, 0);
    }
 
-   public static void sub_2e7(Graphics g, int var1, int var2, int var3, int var4, int var5, int var6, int var7, int var8) {
-      short var9 = LevelObjectData.var_b6[var1][2];
-      short var10 = LevelObjectData.var_b6[var1][3];
-      if (var3 + var9 > 0 && var3 < LevelManager.var_1d && var4 + var10 > 0 && var4 < LevelManager.var_b0) {
-         int var11 = var3 + var9 - LevelManager.var_1d;
-         int var12 = var4 + var10 - LevelManager.var_b0;
-         int var13 = Math.max(var5, var3 < 0 ? -var3 : 0);
-         int var14 = Math.max(var6, var11 > 0 ? var11 : 0);
-         int var15 = Math.max(var7, var4 < 0 ? -var4 : 0);
-         int var16 = Math.max(var8, var12 > 0 ? var12 : 0);
-         int var17 = 0;
-         if (var2 >= LevelObjectData.var_b6[var1][4]) {
-            var17 = var2 / LevelObjectData.var_b6[var1][4];
-            var2 -= var17 * LevelObjectData.var_b6[var1][4];
+   /**
+    * 
+    * */
+   public static void drawSprite(Graphics g, int spriteId, int spriteIndex, int spriteXPos, int spriteYPos, int minLeftOffset, int minRightOffset, int minTopOffset, int minBottomOffset) {
+	   //var5 - x offset in sprite
+	   //var7 - y offset in sprite
+	   int spriteAdditionalOffsetX = LevelObjectData.spriteTypesArr[spriteId][0];
+	   int spriteAdditionalOffsetY = LevelObjectData.spriteTypesArr[spriteId][1];
+	   short spriteWidth = 			 LevelObjectData.spriteTypesArr[spriteId][2];
+	   short spriteHeight = 		 LevelObjectData.spriteTypesArr[spriteId][3];
+	   int spriteCountInRow = 	     LevelObjectData.spriteTypesArr[spriteId][4];
+	   int imageNameIndex =          LevelObjectData.spriteTypesArr[spriteId][5];
+	   
+	   
+	   //var2 - row on image
+	   if(LevelObjectData.spriteTypesArr[spriteId][5] == 5) {
+		   int i = 1;
+	   }
+      
+      //if sprite is visible on the screen
+      if (spriteXPos + spriteWidth > 0 && spriteXPos < LevelManager.screenWidth && spriteYPos + spriteHeight > 0 && spriteYPos < LevelManager.screenHeight) {
+         int clippedPixelsRight = spriteXPos + spriteWidth - LevelManager.screenWidth;
+         int clippedPixelsBottom = spriteYPos + spriteHeight - LevelManager.screenHeight;
+         int leftOffset = Math.max(minLeftOffset, spriteXPos < 0 ? -spriteXPos : 0);
+         int rightOffset = Math.max(minRightOffset, clippedPixelsRight > 0 ? clippedPixelsRight : 0);
+         int topOffset = Math.max(minTopOffset, spriteYPos < 0 ? -spriteYPos : 0);
+         int bottomOffset = Math.max(minBottomOffset, clippedPixelsBottom > 0 ? clippedPixelsBottom : 0);
+         int needSpriteRow = 0;
+         if (spriteIndex >= spriteCountInRow) {
+            needSpriteRow = spriteIndex / spriteCountInRow;
+            spriteIndex -= needSpriteRow * spriteCountInRow;
          }
 
-         g.setClip(var3 + var13, var4 + var15, LevelObjectData.var_b6[var1][2] - var14 - var13, LevelObjectData.var_b6[var1][3] - var16 - var15);
-         Image var18 = mainImages[LevelObjectData.var_b6[var1][5]];
-         // maybe here loading maptiles
-         if (var18 != null) {
-            g.drawImage(var18, var3 - var2 * LevelObjectData.var_b6[var1][2] - LevelObjectData.var_b6[var1][0], var4 - LevelObjectData.var_b6[var1][1] - var17 * LevelObjectData.var_b6[var1][3], 20);
+         int spriteClipXPos = spriteXPos + leftOffset;
+         int spriteClipYPos = spriteYPos + topOffset;
+         int spriteClipWidth =  spriteWidth - rightOffset - leftOffset;
+         int spriteClipHeight = spriteHeight - bottomOffset - topOffset;
+         
+         g.setClip(spriteClipXPos, spriteClipYPos, spriteClipWidth, spriteClipHeight);
+         
+         Image image = mainImages[imageNameIndex];
+         
+         //coordinates where to pick clipped sprite on image
+         int clippedSpriteXPos = spriteIndex * spriteWidth + spriteAdditionalOffsetX;
+         int clippedSpriteYPos = needSpriteRow * spriteHeight + spriteAdditionalOffsetY;
+         
+         // Positioning image to place sprite in need place
+         if (image != null) {
+        	 int imageXPos = spriteXPos - clippedSpriteXPos;
+        	 int imageYPos = spriteYPos - clippedSpriteYPos;
+            g.drawImage(image, imageXPos, imageYPos, 20);
          }
       }
    }
@@ -434,7 +464,7 @@ public final class Class_1b0 implements LevelObjectData {
    public static void readCharactersFromLng() {
       Class_3d.callGc();
       var_12d = (short)((byte)(mainImages[0].getWidth() / var_12));
-      LevelObjectData.var_b6[43][4] = var_12d;
+      LevelObjectData.spriteTypesArr[43][4] = var_12d;
       DataInputStream dataStream = null;
 
       try {
@@ -446,8 +476,8 @@ public final class Class_1b0 implements LevelObjectData {
          if (var_19d) {
             var_12 = (byte)Font.getDefaultFont().charWidth('W');
             var_a9 = (byte)Font.getDefaultFont().getHeight();
-            LevelObjectData.var_b6[43][2] = (short)var_12;
-            LevelObjectData.var_b6[43][3] = (short)var_a9;
+            LevelObjectData.spriteTypesArr[43][2] = (short)var_12;
+            LevelObjectData.spriteTypesArr[43][3] = (short)var_a9;
          }
 
          short var2 = dataStream.readShort();
@@ -609,7 +639,7 @@ public final class Class_1b0 implements LevelObjectData {
 
    public static void drawText(Graphics g, short[] textCodes, int var2, int var3, int var4, int var5) {
       if (var_19d && g != null) {
-         g.setClip(0, 0, LevelManager.var_1d, LevelManager.var_b0);
+         g.setClip(0, 0, LevelManager.screenWidth, LevelManager.screenHeight);
       }
 
       int var6 = var2;
@@ -622,7 +652,7 @@ public final class Class_1b0 implements LevelObjectData {
             }
 
             boolean var9;
-            if (var3 + var_a9 > 0 && var3 < LevelManager.var_b0 && (!(var9 = var4 != var5) && var6 + var_12 > 0 && var6 < LevelManager.var_1d || var9 && var6 >= var4 && var6 + var_12 <= var5)) {
+            if (var3 + var_a9 > 0 && var3 < LevelManager.screenHeight && (!(var9 = var4 != var5) && var6 + var_12 > 0 && var6 < LevelManager.screenWidth || var9 && var6 >= var4 && var6 + var_12 <= var5)) {
                if (var_19d) {
                   try {
                      g.setColor(5, 5, 5);
@@ -634,7 +664,7 @@ public final class Class_1b0 implements LevelObjectData {
                      var6 = var2 + var7 * var_12;
                   }
                } else {
-                  sub_2db(g, (byte)43, var8, var6, var3);
+                  drawSprite2(g, (byte)43, var8, var6, var3);
                }
             }
          }

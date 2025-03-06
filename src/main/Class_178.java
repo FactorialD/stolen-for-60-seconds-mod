@@ -233,7 +233,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    private static void sub_167(Graphics var0) {
       if (var_6bc && !var_6ac && var_b74 == var_bfe && var_bca == var_c60 && var_115 > 12) {
-         Class_19e.sub_388(var0, LevelManager.var_1d - LevelObjectData.var_b6[38][2] - 2, var_11cf - LevelObjectData.var_b6[9][3] + Class_19e.var_ac, 2, 5);
+         Class_19e.sub_388(var0, LevelManager.screenWidth - LevelObjectData.spriteTypesArr[38][2] - 2, var_11cf - LevelObjectData.spriteTypesArr[9][3] + Class_19e.var_ac, 2, 5);
       }
 
    }
@@ -577,8 +577,8 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       case 0:
          var1.setColor(16777215);
          var1.fillRect(0, 0, 500, 500);
-         var_1180 = LevelManager.var_1d = this.getWidth();
-         var_11cf = LevelManager.var_b0 = this.getHeight();
+         var_1180 = LevelManager.screenWidth = this.getWidth();
+         var_11cf = LevelManager.screenHeight = this.getHeight();
          ++var_114a;
          return;
       case 2:
@@ -601,7 +601,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          var1.setColor(0);
          var1.setClip(0, 0, var_1180, var_11cf);
          var1.fillRect(0, 0, var_1180, var_11cf);
-         Class_1b0.sub_2db(var1, (byte)7, 0, var_ce9, var_d24);
+         Class_1b0.drawSprite2(var1, (byte)7, 0, var_ce9, var_d24);
          Class_19e.sub_29c(var1);
          ++var_114a;
       case 1:
@@ -641,12 +641,12 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       case 10:
          Class_1b0.loadMainImage(var_114a - 6 >> 1);
          if (Class_1b0.mainImages[2] != null && var_1180 > 176) {
-            LevelObjectData.var_b6[7][2] = (short)Class_1b0.mainImages[2].getWidth();
+            LevelObjectData.spriteTypesArr[7][2] = (short)Class_1b0.mainImages[2].getWidth();
          }
 
-         LevelManager.var_cf = var_11cf - LevelObjectData.var_b6[9][3];
-         var_ce9 = var_1180 - LevelObjectData.var_b6[7][2] >> 1;
-         var_d24 = LevelObjectData.var_b6[28][3] + (var_11cf - LevelObjectData.var_b6[28][3] - LevelObjectData.var_b6[7][3] >> 1);
+         LevelManager.var_cf = var_11cf - LevelObjectData.spriteTypesArr[9][3];
+         var_ce9 = var_1180 - LevelObjectData.spriteTypesArr[7][2] >> 1;
+         var_d24 = LevelObjectData.spriteTypesArr[28][3] + (var_11cf - LevelObjectData.spriteTypesArr[28][3] - LevelObjectData.spriteTypesArr[7][3] >> 1);
          if (var_11cf < 120) {
             var_d24 += 10;
          }
@@ -687,7 +687,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          ++var_114a;
          return;
       case 20:
-         LevelManager.var_25f = Image.createImage(LevelManager.var_1d, LevelManager.var_b0);
+         LevelManager.var_25f = Image.createImage(LevelManager.screenWidth, LevelManager.screenHeight);
          LevelManager.var_2a1 = LevelManager.var_25f.getGraphics();
          LevelManager.sub_1aa();
          ++var_114a;
@@ -1072,13 +1072,13 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       if (var_5ed) {
          short[][] var5 = (short[][])((short[][])var_a60.elementAt(0));
          int[] var6 = (int[])((int[])var_a60.elementAt(1));
-         if (var_ce9 > 0 || var_d24 > LevelObjectData.var_b6[28][3]) {
+         if (var_ce9 > 0 || var_d24 > LevelObjectData.spriteTypesArr[28][3]) {
             LevelManager.var_2a1.setColor(0);
             LevelManager.var_2a1.setClip(0, 0, var_1180, var_11cf);
             LevelManager.var_2a1.fillRect(0, 0, var_1180, var_11cf);
          }
 
-         Class_1b0.sub_2db(LevelManager.var_2a1, (byte)7, 0, var_ce9, var_d24);
+         Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)7, 0, var_ce9, var_d24);
          Class_19e.sub_29c(LevelManager.var_2a1);
          Class_1b0.sub_47c(LevelManager.var_2a1, Class_1b0.readTextFromLng((short)203), (var_1180 >> 1) - (Class_1b0.readTextFromLng((short)203).length * Class_1b0.var_12 >> 1), var_150d);
          var1 = var_1566;
@@ -1176,16 +1176,16 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    private static void sub_8d4(Graphics var0) {
       var_338 = true;
-      if (var_5e0 && (var_ce9 > 0 || var_d24 > LevelObjectData.var_b6[28][3])) {
+      if (var_5e0 && (var_ce9 > 0 || var_d24 > LevelObjectData.spriteTypesArr[28][3])) {
          LevelManager.var_2a1.setColor(0);
          LevelManager.var_2a1.setClip(0, 0, var_1180, var_11cf);
          LevelManager.var_2a1.fillRect(0, 0, var_1180, var_11cf);
       }
 
       sub_8f3(var0);
-      Class_1b0.sub_2db(var0, (byte)40, 0, var_b74, var_bca);
+      Class_1b0.drawSprite2(var0, (byte)40, 0, var_b74, var_bca);
       if (var_6bc && var_115 > 12) {
-         Class_1b0.sub_2db(var0, (byte)39, 2, var_b74 + LevelObjectData.var_b6[40][2], var_bca);
+         Class_1b0.drawSprite2(var0, (byte)39, 2, var_b74 + LevelObjectData.spriteTypesArr[40][2], var_bca);
       }
 
       sub_94f(var0, var_b74, var_bca, true);
@@ -1195,29 +1195,29 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    private static void sub_8f3(Graphics var0) {
       if (var_5e0) {
          boolean var1 = false;
-         Class_1b0.sub_2db(LevelManager.var_2a1, (byte)7, 0, var_ce9, var_d24);
+         Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)7, 0, var_ce9, var_d24);
 
          for(int var2 = 1; var2 < 5; ++var2) {
             if (!var_d50.contains(var_d34[var2]) && LevelManager.levelAdditionalData_TimerEtc[var_dc6 - 1][6 + var2] == 1) {
-               Class_1b0.sub_2db(LevelManager.var_2a1, (byte)(34 + var2 - 1), 0, LevelObjectData.var_9d[var2][0], LevelObjectData.var_9d[var2][1]);
+               Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)(34 + var2 - 1), 0, LevelObjectData.var_9d[var2][0], LevelObjectData.var_9d[var2][1]);
             }
 
             if (LevelManager.var_99f.contains(var_d34[var2])) {
-               Class_1b0.sub_2db(LevelManager.var_2a1, (byte)39, 0, LevelObjectData.var_65[(short)(2 + var2)][0] - (LevelObjectData.var_b6[39][2] >> 1), LevelObjectData.var_65[(short)(2 + var2)][1]);
+               Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)39, 0, LevelObjectData.var_65[(short)(2 + var2)][0] - (LevelObjectData.spriteTypesArr[39][2] >> 1), LevelObjectData.var_65[(short)(2 + var2)][1]);
             }
          }
 
-         Class_1b0.sub_2db(LevelManager.var_2a1, (byte)29, 0, 0, 0);
-         LevelObjectData.var_65[8][0] = LevelObjectData.var_b6[29][2] >> 1;
-         LevelObjectData.var_65[8][1] = LevelObjectData.var_b6[29][3] >> 1;
+         Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)29, 0, 0, 0);
+         LevelObjectData.var_65[8][0] = LevelObjectData.spriteTypesArr[29][2] >> 1;
+         LevelObjectData.var_65[8][1] = LevelObjectData.spriteTypesArr[29][3] >> 1;
 
-         for(int var3 = 0 + LevelObjectData.var_b6[29][2]; var3 < var_1180 - LevelObjectData.var_b6[30][2]; var3 += LevelObjectData.var_b6[28][2]) {
-            Class_1b0.sub_2db(LevelManager.var_2a1, (byte)28, 0, var3, 0);
+         for(int var3 = 0 + LevelObjectData.spriteTypesArr[29][2]; var3 < var_1180 - LevelObjectData.spriteTypesArr[30][2]; var3 += LevelObjectData.spriteTypesArr[28][2]) {
+            Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)28, 0, var3, 0);
          }
 
-         Class_1b0.sub_2db(LevelManager.var_2a1, (byte)30, 0, var_1180 - LevelObjectData.var_b6[30][2], 0);
-         LevelObjectData.var_65[1][0] = var_1180 - (LevelObjectData.var_b6[30][2] >> 1);
-         LevelObjectData.var_65[1][1] = LevelObjectData.var_b6[30][3] >> 1;
+         Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)30, 0, var_1180 - LevelObjectData.spriteTypesArr[30][2], 0);
+         LevelObjectData.var_65[1][0] = var_1180 - (LevelObjectData.spriteTypesArr[30][2] >> 1);
+         LevelObjectData.var_65[1][1] = LevelObjectData.spriteTypesArr[30][3] >> 1;
          sub_96d(LevelManager.var_2a1);
          sub_9cc(LevelManager.var_2a1);
          var_62c = true;
@@ -1250,24 +1250,24 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                for(var7 = 2; var7 > -1; --var7) {
                   var6 += (var_1180 >> 1) - var6 >> 1;
                   var5 += var4;
-                  Class_1b0.sub_2db(var0, (byte)(15 + var7), 0, var6 - (LevelObjectData.var_b6[15 + var7][2] >> 1), var5 - (LevelObjectData.var_b6[15 + var7][3] >> 1));
+                  Class_1b0.drawSprite2(var0, (byte)(15 + var7), 0, var6 - (LevelObjectData.spriteTypesArr[15 + var7][2] >> 1), var5 - (LevelObjectData.spriteTypesArr[15 + var7][3] >> 1));
                }
 
-               var6 = (var_1180 >> 1) - (7 * LevelObjectData.var_b6[18][2] >> 1);
-               var5 += var4 - (LevelObjectData.var_b6[3][3] >> 1);
+               var6 = (var_1180 >> 1) - (7 * LevelObjectData.spriteTypesArr[18][2] >> 1);
+               var5 += var4 - (LevelObjectData.spriteTypesArr[3][3] >> 1);
                var_102d = var6;
-               var_105e = var5 + (LevelObjectData.var_b6[3][3] - Class_1b0.var_a9 >> 1);
-               var_109d = 7 * LevelObjectData.var_b6[18][2];
+               var_105e = var5 + (LevelObjectData.spriteTypesArr[3][3] - Class_1b0.var_a9 >> 1);
+               var_109d = 7 * LevelObjectData.spriteTypesArr[18][2];
                if (var_10ea > var_102d + var_109d) {
                   var_10ea = var_102d + var_109d;
                }
 
-               Class_1b0.sub_2db(var0, (byte)3, 0, var6 - (LevelObjectData.var_b6[3][2] >> 1), var5);
-               Class_1b0.sub_2db(var0, (byte)3, 0, var6 + 7 * LevelObjectData.var_b6[18][2] - (LevelObjectData.var_b6[3][2] >> 1), var5);
+               Class_1b0.drawSprite2(var0, (byte)3, 0, var6 - (LevelObjectData.spriteTypesArr[3][2] >> 1), var5);
+               Class_1b0.drawSprite2(var0, (byte)3, 0, var6 + 7 * LevelObjectData.spriteTypesArr[18][2] - (LevelObjectData.spriteTypesArr[3][2] >> 1), var5);
 
                for(var7 = 0; var7 < 7; ++var7) {
-                  Class_1b0.sub_2db(var0, (byte)18, 0, var6, var5);
-                  var6 += LevelObjectData.var_b6[18][2];
+                  Class_1b0.drawSprite2(var0, (byte)18, 0, var6, var5);
+                  var6 += LevelObjectData.spriteTypesArr[18][2];
                }
 
             }
@@ -1278,24 +1278,24 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    private static void sub_96d(Graphics var0) {
       short[] var1;
       int var2 = (var1 = Class_1b0.sub_533(String.valueOf(var_e38))).length * Class_1b0.var_12;
-      int var3 = LevelObjectData.var_b6[29][2] + 2;
-      int var4 = var_1180 - LevelObjectData.var_b6[30][2] - 2 - LevelObjectData.var_b6[31][2];
-      int var5 = LevelObjectData.var_b6[28][3] - LevelObjectData.var_b6[32][3] - 1 >> 1;
-      int var6 = var3 + LevelObjectData.var_b6[31][2] - 1;
-      int var7 = var5 + (LevelObjectData.var_b6[32][3] - Class_1b0.var_a9 >> 1);
-      Class_1b0.sub_2db(LevelManager.var_2a1, (byte)31, 0, var3, var5);
+      int var3 = LevelObjectData.spriteTypesArr[29][2] + 2;
+      int var4 = var_1180 - LevelObjectData.spriteTypesArr[30][2] - 2 - LevelObjectData.spriteTypesArr[31][2];
+      int var5 = LevelObjectData.spriteTypesArr[28][3] - LevelObjectData.spriteTypesArr[32][3] - 1 >> 1;
+      int var6 = var3 + LevelObjectData.spriteTypesArr[31][2] - 1;
+      int var7 = var5 + (LevelObjectData.spriteTypesArr[32][3] - Class_1b0.var_a9 >> 1);
+      Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)31, 0, var3, var5);
       if (var3 + 1 < var4) {
-         boolean var8 = var4 - var3 > LevelObjectData.var_b6[31][2];
-         Class_1b0.sub_2db(LevelManager.var_2a1, (byte)31, 0, var4, var5);
-         Class_1b0.sub_2db(LevelManager.var_2a1, (byte)32, 0, var4, var5);
-         var6 = var4 + LevelObjectData.var_b6[31][2] - 1;
+         boolean var8 = var4 - var3 > LevelObjectData.spriteTypesArr[31][2];
+         Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)31, 0, var4, var5);
+         Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)32, 0, var4, var5);
+         var6 = var4 + LevelObjectData.spriteTypesArr[31][2] - 1;
 
-         for(var3 = var4 - LevelObjectData.var_b6[32][2]; var3 > LevelObjectData.var_b6[29][2] + 2; var3 -= LevelObjectData.var_b6[32][2]) {
-            Class_1b0.sub_2db(LevelManager.var_2a1, (byte)32, 0, var3, var5);
+         for(var3 = var4 - LevelObjectData.spriteTypesArr[32][2]; var3 > LevelObjectData.spriteTypesArr[29][2] + 2; var3 -= LevelObjectData.spriteTypesArr[32][2]) {
+            Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)32, 0, var3, var5);
          }
 
          if (var8) {
-            Class_1b0.sub_2db(LevelManager.var_2a1, (byte)33, 0, LevelObjectData.var_b6[29][2] + 4, var7);
+            Class_1b0.drawSprite2(LevelManager.var_2a1, (byte)33, 0, LevelObjectData.spriteTypesArr[29][2] + 4, var7);
          }
       }
 
@@ -1316,12 +1316,12 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       int var2 = Class_1b0.var_a9 + 2;
       var_7d3 = var_11cf < 111 ? 0 : (var_11cf < 161 ? 1 : (var_11cf < 221 ? 2 : 3));
       var_798 = var_1180 < 121 ? -1 : (var_1180 < 133 ? 0 : (var_1180 < 180 ? 2 : 3));
-      int var3 = 6 * (LevelObjectData.var_b6[26][2] + var_798) + 6 + 2 + var_798;
-      int var4 = var2 + (var_7d3 << 1) + 6 + 2 + var_7d3 + LevelObjectData.var_b6[26][3] * toolStats.length / 6;
-      boolean var5 = var_11cf - LevelObjectData.var_b6[9][3] - LevelObjectData.var_b6[28][3] > var4;
-      var4 += var5 ? LevelObjectData.var_b6[38][3] + var_7d3 : 0;
+      int var3 = 6 * (LevelObjectData.spriteTypesArr[26][2] + var_798) + 6 + 2 + var_798;
+      int var4 = var2 + (var_7d3 << 1) + 6 + 2 + var_7d3 + LevelObjectData.spriteTypesArr[26][3] * toolStats.length / 6;
+      boolean var5 = var_11cf - LevelObjectData.spriteTypesArr[9][3] - LevelObjectData.spriteTypesArr[28][3] > var4;
+      var4 += var5 ? LevelObjectData.spriteTypesArr[38][3] + var_7d3 : 0;
       int var6 = (var_1180 >> 1) - (var3 >> 1);
-      int var7 = (var_11cf + LevelObjectData.var_b6[28][3] - LevelObjectData.var_b6[24][3] >> 1) - (var4 >> 1);
+      int var7 = (var_11cf + LevelObjectData.spriteTypesArr[28][3] - LevelObjectData.spriteTypesArr[24][3] >> 1) - (var4 >> 1);
       var_729 = var6 + var_798 + 3 + 1;
       var_762 = var7 + var_7d3 + 3 + 1 + var2;
       var_7f5 = var6 + 3 + 2;
@@ -1342,16 +1342,16 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       for(byte var15 = 0; var15 < toolStats.length; ++var15) {
          byte var16 = (byte)LevelManager.sub_bc9(var15);
          var_e17[var8][var9] = var16;
-         int var10 = var_729 + var8 * (LevelObjectData.var_b6[26][2] + var_798);
-         int var11 = var_762 + var9 * (LevelObjectData.var_b6[26][3] + var_7d3);
-         Class_1b0.sub_2db(var0, (byte)26, 0, var10, var11);
-         Class_1b0.sub_2db(var0, (byte)8, (byte)toolStats[var15][2], var10 + 2, var11 + 2);
+         int var10 = var_729 + var8 * (LevelObjectData.spriteTypesArr[26][2] + var_798);
+         int var11 = var_762 + var9 * (LevelObjectData.spriteTypesArr[26][3] + var_7d3);
+         Class_1b0.drawSprite2(var0, (byte)26, 0, var10, var11);
+         Class_1b0.drawSprite2(var0, (byte)8, (byte)toolStats[var15][2], var10 + 2, var11 + 2);
          if (var_900.var_451[0] != var16 && var_900.var_451[1] != var16 && var_900.var_451[2] != var16) {
             if (toolStats[var15][0] > var_e38 || LevelManager.levelAdditionalData_TimerEtc[var_dc6 - 1][13 + sub_e5c(var16)] == 0) {
-               Class_1b0.sub_2db(var0, (byte)41, 0, var10 + 2, var11 + 2);
+               Class_1b0.drawSprite2(var0, (byte)41, 0, var10 + 2, var11 + 2);
             }
          } else {
-            Class_1b0.sub_2db(var0, (byte)39, 0, var10, var11);
+            Class_1b0.drawSprite2(var0, (byte)39, 0, var10, var11);
          }
 
          if (var8 >= 5) {
@@ -1363,22 +1363,22 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       }
 
       if (var5) {
-         var12 = var_762 + var9 * (LevelObjectData.var_b6[26][3] + var_7d3);
-         var13 = var6 + var3 - 3 - 1 - LevelObjectData.var_b6[38][2] - var_798;
+         var12 = var_762 + var9 * (LevelObjectData.spriteTypesArr[26][3] + var_7d3);
+         var13 = var6 + var3 - 3 - 1 - LevelObjectData.spriteTypesArr[38][2] - var_798;
          int var14 = var_729 + (var13 - var_729 >> 1);
          Class_19e.sub_388(var0, var_729, var12, 1, 4);
          Class_19e.sub_388(var0, var13, var12, 2, 5);
-         Class_1b0.sub_2db(var0, (byte)38, 0, var14, var12);
-         LevelObjectData.var_b6[43][2] = 7;
-         LevelObjectData.var_b6[43][3] = 9;
-         Class_1b0.sub_2db(var0, (byte)43, Class_1b0.readTextFromLng((short)241)[0], var14 + (LevelObjectData.var_b6[38][2] >> 1) - (LevelObjectData.var_b6[43][2] >> 1), var12 + (LevelObjectData.var_b6[38][3] >> 1) - (LevelObjectData.var_b6[43][3] >> 1));
-         LevelObjectData.var_b6[43][2] = (short)Class_1b0.var_12;
-         LevelObjectData.var_b6[43][3] = (short)Class_1b0.var_a9;
+         Class_1b0.drawSprite2(var0, (byte)38, 0, var14, var12);
+         LevelObjectData.spriteTypesArr[43][2] = 7;
+         LevelObjectData.spriteTypesArr[43][3] = 9;
+         Class_1b0.drawSprite2(var0, (byte)43, Class_1b0.readTextFromLng((short)241)[0], var14 + (LevelObjectData.spriteTypesArr[38][2] >> 1) - (LevelObjectData.spriteTypesArr[43][2] >> 1), var12 + (LevelObjectData.spriteTypesArr[38][3] >> 1) - (LevelObjectData.spriteTypesArr[43][3] >> 1));
+         LevelObjectData.spriteTypesArr[43][2] = (short)Class_1b0.var_12;
+         LevelObjectData.spriteTypesArr[43][3] = (short)Class_1b0.var_a9;
       }
 
       sub_96d(LevelManager.var_2a1);
-      var_bfe = var_729 + var_6c8 * (LevelObjectData.var_b6[26][2] + var_798) + (LevelObjectData.var_b6[26][2] >> 1);
-      var_c60 = var_762 + var_6d8 * (LevelObjectData.var_b6[26][3] + var_7d3) + (LevelObjectData.var_b6[26][3] >> 1);
+      var_bfe = var_729 + var_6c8 * (LevelObjectData.spriteTypesArr[26][2] + var_798) + (LevelObjectData.spriteTypesArr[26][2] >> 1);
+      var_c60 = var_762 + var_6d8 * (LevelObjectData.spriteTypesArr[26][3] + var_7d3) + (LevelObjectData.spriteTypesArr[26][3] >> 1);
       sub_b52();
    }
 
@@ -1671,8 +1671,8 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             }
          }
 
-         var_bfe = var_729 + var_6c8 * (LevelObjectData.var_b6[26][2] + var_798) + (LevelObjectData.var_b6[26][2] >> 1);
-         var_c60 = var_762 + var_6d8 * (LevelObjectData.var_b6[26][3] + var_7d3) + (LevelObjectData.var_b6[26][3] >> 1);
+         var_bfe = var_729 + var_6c8 * (LevelObjectData.spriteTypesArr[26][2] + var_798) + (LevelObjectData.spriteTypesArr[26][2] >> 1);
+         var_c60 = var_762 + var_6d8 * (LevelObjectData.spriteTypesArr[26][3] + var_7d3) + (LevelObjectData.spriteTypesArr[26][3] >> 1);
          sub_b52();
       } else {
          var_ca0 = var_b4c[var_ca0][var0];
@@ -2515,8 +2515,8 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    public final void sizeChanged(int var1, int var2) {
       if (var_13cf != -1 && var_26f == 5) {
          var_26f = var_2b9;
-         var_1180 = LevelManager.var_1d = this.getWidth();
-         var_11cf = LevelManager.var_b0 = this.getHeight();
+         var_1180 = LevelManager.screenWidth = this.getWidth();
+         var_11cf = LevelManager.screenHeight = this.getHeight();
          var_130f = null;
       }
 
