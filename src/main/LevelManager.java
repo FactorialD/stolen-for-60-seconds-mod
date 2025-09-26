@@ -314,19 +314,19 @@ public final class LevelManager implements LevelObjectData {
       levelObjectsMap.clear();
       levelObjects.clear();
       alarmWithZonesMap.clear();
-      DataInputStream dataConfig = null;
+      DataInputStream dataInputStream = null;
 
       try {
-    	 dataConfig = ReadingDrawingClass.getLevelDataStream(level);
+    	 dataInputStream = ReadingDrawingClass.getLevelDataStream(level);
     	 // Two first bytes is height and width
     	  
     	 // Read height and width
-         mapWidth = dataConfig.readByte();
-         mapHeight = dataConfig.readByte();
+         mapWidth = dataInputStream.readByte();
+         mapHeight = dataInputStream.readByte();
          
          mapArray = new byte[mapWidth][mapHeight];
          byte[] levelDataBytesBuffer = new byte[mapWidth * mapHeight];
-         dataConfig.readFully(levelDataBytesBuffer);
+         dataInputStream.readFully(levelDataBytesBuffer);
          
 
          // Filling map array with data from dataBytes
@@ -337,17 +337,19 @@ public final class LevelManager implements LevelObjectData {
             }
          }
 
+         //At next, read all object on map
+         
          // Read next two bytes as 16-bit number
          // Then multiply it by 7 and thus get length of next data block
          // Read this data block
-         short dataBlock1 = dataConfig.readShort();
-         levelDataBytesBuffer = new byte[dataBlock1  * 7];
-         dataConfig.readFully(levelDataBytesBuffer);
+         short objectBaseLength = dataInputStream.readShort();
+         levelDataBytesBuffer = new byte[objectBaseLength  * 7];
+         dataInputStream.readFully(levelDataBytesBuffer);
 
          // Puts in HashTable object,
-         // where key is second and third bytes, paired in one Short, (coordinates of game object)
+         // Key - 2nd + 3rd bytes as Short - coordinates of game object
          // and value is object with data of 1-7 bytes
-         for(tmpCounter = 0; tmpCounter < dataBlock1; ++tmpCounter) {
+         for(tmpCounter = 0; tmpCounter < objectBaseLength; ++tmpCounter) {
             int index = tmpCounter * 7;
             levelObjectsMap.put(
             		combineInts(levelDataBytesBuffer[index + 1], levelDataBytesBuffer[index + 2]), //hash key is coordinates
@@ -361,20 +363,20 @@ public final class LevelManager implements LevelObjectData {
             				levelDataBytesBuffer[index]));
          }
 
-         // Read next byte for next data block length
+         // Read next byte for next data object length
          // it is count of alarms with zones 
-         byte alarms = dataConfig.readByte();
+         byte alarmsCount = dataInputStream.readByte();
 
          // for that byte, read next 2 bytes and combine them
-         for(tmpCounter = 0; tmpCounter < alarms; ++tmpCounter) {
-            Integer alarmCoods = combineInts(dataConfig.readByte(), dataConfig.readByte());
+         for(tmpCounter = 0; tmpCounter < alarmsCount; ++tmpCounter) {
+            Integer alarmCoods = combineInts(dataInputStream.readByte(), dataInputStream.readByte());
             
             // then read next byte (its count of alarm zones)
             // and for that byte create new buffer of its size
             // and from that buffer read paired bytes in HashTable (coords of alarm zones)
-            byte alarmZonesCount = dataConfig.readByte();
+            byte alarmZonesCount = dataInputStream.readByte();
             levelDataBytesBuffer = new byte[alarmZonesCount];
-            dataConfig.readFully(levelDataBytesBuffer);
+            dataInputStream.readFully(levelDataBytesBuffer);
 
             for(int i = 0; i < alarmZonesCount; i += 2) {
                alarmWithZonesMap.put(combineInts(levelDataBytesBuffer[i], levelDataBytesBuffer[i + 1]), alarmCoods);
@@ -385,17 +387,17 @@ public final class LevelManager implements LevelObjectData {
          // then read 2 more bytes and write it to some variables
          // then read (skip) one short and write one more byte to some variable
 
-         if (dataConfig.readByte() > 0) {
-            someLevelDataVar1 = (byte)dataConfig.readShort();
-            someLevelDataVar2 = (byte)dataConfig.readShort();
-            dataConfig.readShort();
-            someLevelDataVarLast = dataConfig.readShort();
+         if (dataInputStream.readByte() > 0) {
+            someLevelDataVar1 = (byte)dataInputStream.readShort();
+            someLevelDataVar2 = (byte)dataInputStream.readShort();
+            dataInputStream.readShort();
+            someLevelDataVarLast = dataInputStream.readShort();
          }
       } catch (Exception var16) {
       } finally {
          try {
-            if (dataConfig != null) {
-               dataConfig.close();
+            if (dataInputStream != null) {
+               dataInputStream.close();
             }
          } catch (Exception var15) {
          }
@@ -403,21 +405,30 @@ public final class LevelManager implements LevelObjectData {
          Class_3d.callGc();
       }
 
-      var_7a3 = new int[]{0, levelAdditionalData_TimerEtc[level - 1][1] * 100, levelAdditionalData_TimerEtc[level - 1][2] * 100, levelAdditionalData_TimerEtc[level - 1][3] * 100, levelAdditionalData_TimerEtc[level - 1][4] * 100, levelAdditionalData_TimerEtc[level - 1][5] * 100, levelAdditionalData_TimerEtc[level - 1][11] * 100};
+      var_7a3 = new int[]{
+    		  0, 
+    		  levelAdditionalData_TimerEtc[level - 1][1] * 100, 
+    		  levelAdditionalData_TimerEtc[level - 1][2] * 100, 
+    		  levelAdditionalData_TimerEtc[level - 1][3] * 100, 
+    		  levelAdditionalData_TimerEtc[level - 1][4] * 100, 
+    		  levelAdditionalData_TimerEtc[level - 1][5] * 100, 
+    		  levelAdditionalData_TimerEtc[level - 1][11] * 100
+      };
       var_7f3 = levelAdditionalData_TimerEtc[level - 1][6] * 100;
+      
       if (Class_178.var_5bb == -1) {
          Class_178.var_e38 = levelAdditionalData_TimerEtc[level - 1][12];
       }
 
       var_779 = new int[6];
       Hashtable var18 = new Hashtable();
-      Enumeration var22 = levelObjectsMap.elements();
+      Enumeration levelObjectsList = levelObjectsMap.elements();
 
       LevelObject var20;
       Integer var21;
       Integer[] var25;
-      while(var22.hasMoreElements()) {
-         var20 = (LevelObject)var22.nextElement();
+      while(levelObjectsList.hasMoreElements()) {
+         var20 = (LevelObject)levelObjectsList.nextElement();
          var25 = new Integer[3];
          if (var20.var_22c > 0 && var20.var_1f5 != 0 && ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var20.objectType][5], (byte)4)) {
             var21 = combineInts(var20.var_1f5, var20.var_22c);
@@ -436,7 +447,7 @@ public final class LevelManager implements LevelObjectData {
          }
       }
 
-      var22 = levelObjectsMap.elements();
+      levelObjectsList = levelObjectsMap.elements();
 
       while(true) {
          while(true) {
@@ -444,11 +455,11 @@ public final class LevelManager implements LevelObjectData {
                do {
                   do {
                      do {
-                        if (!var22.hasMoreElements()) {
-                           var22 = levelObjectsMap.elements();
+                        if (!levelObjectsList.hasMoreElements()) {
+                           levelObjectsList = levelObjectsMap.elements();
 
-                           while(var22.hasMoreElements()) {
-                              var20 = (LevelObject)var22.nextElement();
+                           while(levelObjectsList.hasMoreElements()) {
+                              var20 = (LevelObject)levelObjectsList.nextElement();
                               if (ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var20.objectType][5], (byte)4) && var20.var_1f5 < 6) {
                                  int[] var27 = var_779;
                                  var27[0] += var20.var_22c * var_71c[var20.var_1f5][0];
@@ -462,7 +473,7 @@ public final class LevelManager implements LevelObjectData {
                            someLevelDataVarLast = levelAdditionalData_TimerEtc[level - 1][0] + ReadingDrawingClass.sub_21(0, 10);
                            return;
                         }
-                     } while((var20 = (LevelObject)var22.nextElement()).var_22c <= 0);
+                     } while((var20 = (LevelObject)levelObjectsList.nextElement()).var_22c <= 0);
                   } while(var20.var_1f5 == 0);
                } while(!ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var20.objectType][5], (byte)4));
 
