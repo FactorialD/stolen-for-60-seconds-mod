@@ -45,7 +45,7 @@ public final class GlomoFileClass {
             var2 = var2 + "+runs";
          }
 
-         if (Class_5e.sub_247().compareTo(main.Class_3d.sub_46("microedition.platform")) != 0) {
+         if (Class_5e.sub_247().compareTo(main.HackManager.sub_46("microedition.platform")) != 0) {
             var2 = var2 + "+platform";
          }
 

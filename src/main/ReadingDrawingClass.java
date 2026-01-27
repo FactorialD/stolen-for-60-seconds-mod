@@ -140,7 +140,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
             }
          }
       } else {
-         Class_3d.sub_1cf(var3, var0, var6, 0, var4);
+         HackManager.arrayCopy(var3, var0, var6, 0, var4);
       }
 
       return var6;
@@ -436,7 +436,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
    }
 
    public static void loadMainImage(int imageIndex) {
-      Class_3d.callGc();
+      HackManager.callGc();
 
       try {
          if (mainImages == null) {
@@ -447,11 +447,11 @@ public final class ReadingDrawingClass implements LevelObjectData {
       } catch (Exception var1) {
       }
 
-      Class_3d.callGc();
+      HackManager.callGc();
    }
 
    public static Image loadImagePng(String imageName) {
-      Class_3d.callGc();
+      HackManager.callGc();
       try {
 		return Image.createImage("/dat/" + imageName + ".png");
 	} catch (IOException e) {
@@ -462,7 +462,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
    }
 
    public static void readCharactersFromLng() {
-      Class_3d.callGc();
+      HackManager.callGc();
       var_12d = (short)((byte)(mainImages[0].getWidth() / var_12));
       LevelObjectData.spriteTypesArr[43][4] = var_12d;
       DataInputStream dataStream = null;
@@ -563,7 +563,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
          }
 
          var_2c7 = readTextFromLng((short)264);
-         Class_3d.callGc();
+         HackManager.callGc();
       }
    }
 
@@ -818,7 +818,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
                   }
                }
 
-               Class_3d.callGc();
+               HackManager.callGc();
             }
          }
 
@@ -836,7 +836,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
             }
          }
 
-         Class_3d.callGc();
+         HackManager.callGc();
          return;
       }
 
@@ -849,7 +849,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
          }
       }
 
-      Class_3d.callGc();
+      HackManager.callGc();
    }
 
    public static void sub_6f5() {
@@ -899,7 +899,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
                } catch (Exception var12) {
                }
 
-               Class_3d.callGc();
+               HackManager.callGc();
             }
          }
 
@@ -913,7 +913,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
          } catch (Exception var13) {
          }
 
-         Class_3d.callGc();
+         HackManager.callGc();
          return;
       }
 
@@ -924,7 +924,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
       } catch (Exception var14) {
       }
 
-      Class_3d.callGc();
+      HackManager.callGc();
    }
 
    public static void sub_71d() {
@@ -942,7 +942,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
          } catch (Exception var8) {
          }
 
-         Class_3d.callGc();
+         HackManager.callGc();
       }
 
    }
@@ -1129,7 +1129,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
                   }
                }
 
-               Class_3d.callGc();
+               HackManager.callGc();
             }
          }
 
@@ -1147,7 +1147,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
             }
          }
 
-         Class_3d.callGc();
+         HackManager.callGc();
          return var0;
       }
 
@@ -1160,7 +1160,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
          }
       }
 
-      Class_3d.callGc();
+      HackManager.callGc();
       return var0;
    }
 
@@ -1365,7 +1365,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
                      var0 = null;
                      var2 = null;
                      var1 = null;
-                     Class_3d.callGc();
+                     HackManager.callGc();
                      var26 = false;
                      break label371;
                   }
@@ -1500,7 +1500,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
                      }
                   }
 
-                  Class_3d.callGc();
+                  HackManager.callGc();
                }
             }
 
@@ -1518,7 +1518,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
                }
             }
 
-            Class_3d.callGc();
+            HackManager.callGc();
             return;
          }
 
@@ -1531,11 +1531,11 @@ public final class ReadingDrawingClass implements LevelObjectData {
             }
          }
 
-         Class_3d.callGc();
+         HackManager.callGc();
          return;
       }
 
-      Class_3d.callGc();
+      HackManager.callGc();
    }
 
    private static void sub_8fa() {

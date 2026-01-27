@@ -468,7 +468,7 @@ public class Class_217 extends Class_1d6 {
             var2 = var5 != null ? var5.sub_f5() : var3;
          }
 
-         main.Class_3d.var_6f.println("name = " + var3 + " code = " + var2);
+         main.HackManager.var_6f.println("name = " + var3 + " code = " + var2);
          ((Class_1b)var_76.elementAt(this.sub_a5d(var4, var6, var3, var2))).sub_110(var6);
       }
 

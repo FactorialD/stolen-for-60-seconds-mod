@@ -38,7 +38,7 @@ public class Class_5e implements Class_17f {
    }
 
    public static final long sub_184() {
-      return sub_13a(main.Class_3d.sub_161());
+      return sub_13a(main.HackManager.currentTimeMillis());
    }
 
    public static final long sub_1a5() {
@@ -50,7 +50,7 @@ public class Class_5e implements Class_17f {
    }
 
    public static final String sub_1ec() {
-      return (String)sub_732("generalInfo", 4, main.Class_3d.sub_46("microedition.platform"));
+      return (String)sub_732("generalInfo", 4, main.HackManager.sub_46("microedition.platform"));
    }
 
    public static final String sub_247() {

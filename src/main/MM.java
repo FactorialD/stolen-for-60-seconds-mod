@@ -10,7 +10,7 @@ public final class MM extends MIDlet {
 
 	public final void startApp() {
 		//Class_293.sub_4d(this);
-		Class_3d.callGc();
+		HackManager.callGc();
 		if (isFirstStart) {
 			gameVersion = this.getAppProperty("MIDlet-Version");
 			if (gameVersion == null) {

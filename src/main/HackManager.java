@@ -3,7 +3,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import javax.microedition.rms.RecordStore;
 
-public class Class_3d {
+public class HackManager {
    public static PrintStream var_52;
    public static PrintStream var_6f;
    public static String var_87;
@@ -134,7 +134,7 @@ public class Class_3d {
       }
    }
 
-   public static long sub_161() {
+   public static long currentTimeMillis() {
       try {
          return System.currentTimeMillis();
       } catch (Exception var1) {
@@ -150,7 +150,7 @@ public class Class_3d {
 
    }
 
-   public static void sub_1cf(Object var0, int var1, Object var2, int var3, int var4) {
+   public static void arrayCopy(Object var0, int var1, Object var2, int var3, int var4) {
       try {
          System.arraycopy(var0, var1, var2, var3, var4);
       } catch (Exception var6) {
@@ -158,7 +158,7 @@ public class Class_3d {
 
    }
 
-   public static int sub_1e8(Object var0) {
+   public static int hashCode(Object var0) {
       try {
          return System.identityHashCode(var0);
       } catch (Exception var2) {

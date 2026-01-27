@@ -355,7 +355,7 @@ public final class DialogManager implements LevelObjectData {
             sub_3a6(var0, var_46d, var_508);
          }
 
-         Class_3d.callGc();
+         HackManager.callGc();
          ReadingDrawingClass.sub_5d(var0, var_b16, var_508, var_285, var_297, var_2e2, var_46d, var_45d);
          var_6ce = false;
       } else {
@@ -475,7 +475,7 @@ public final class DialogManager implements LevelObjectData {
 
          var_790.hasPointerEvents();
          var_6ce = false;
-         Class_3d.callGc();
+         HackManager.callGc();
       } else {
          var1.drawImage(LevelManager.var_25f, 0, 0, 0);
          if (var_673) {

@@ -126,7 +126,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          var_4b9 = true;
          var_463 = new Thread(this);
          var_463.start();
-         Class_3d.callGc();
+         HackManager.callGc();
       }
    }
 
@@ -146,7 +146,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             musicManager.clearCurrentMusicPlayer();
          }
 
-         Class_3d.callGc();
+         HackManager.callGc();
       }
    }
 
@@ -160,7 +160,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
 
       var_463 = null;
       musicManager = null;
-      Class_3d.callGc();
+      HackManager.callGc();
    }
 
    private void sub_bd() {
@@ -239,7 +239,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
    }
 
    public final void run() {
-      long var1 = Class_3d.sub_161();
+      long var1 = HackManager.currentTimeMillis();
 
       while(var_4b9) {
          if (!needRepaint) {
@@ -257,9 +257,9 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             }
 
             this.sub_1aa(var1);
-            var1 = Class_3d.sub_161();
+            var1 = HackManager.currentTimeMillis();
             this.forceRepaint();
-            this.var_13db = 60L - (Class_3d.sub_161() - var1);
+            this.var_13db = 60L - (HackManager.currentTimeMillis() - var1);
             if (this.var_13db < 0L) {
                this.var_13db = 1L;
             }
@@ -278,7 +278,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
    }
 
    private void sub_1aa(long var1) {
-      var_17e = (int)((long)var_17e + (Class_3d.sub_161() - var1));
+      var_17e = (int)((long)var_17e + (HackManager.currentTimeMillis() - var1));
       if (var_17e > 500) {
          var_17e = 0;
       }
@@ -424,7 +424,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
 
       DialogManager.var_a44 = new boolean[var3.length];
       if (var6 != null) {
-         Class_3d.sub_1cf(var6, 0, DialogManager.var_a44, 0, var6.length);
+         HackManager.arrayCopy(var6, 0, DialogManager.var_a44, 0, var6.length);
       }
 
       sub_360();
@@ -471,7 +471,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
 
       var_13a7.sub_3d3();
       keyCodePressed = 999999;
-      Class_3d.callGc();
+      HackManager.callGc();
    }
 
    private static void sub_360() {
@@ -502,7 +502,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          if (ReadingDrawingClass.mainImages[4] == null) {
             ReadingDrawingClass.mainImages[2] = null;
             ReadingDrawingClass.mainImages[3] = null;
-            Class_3d.callGc();
+            HackManager.callGc();
             threadSleep(100L);
             ReadingDrawingClass.loadMainImage(4);
             threadSleep(500L);
@@ -518,7 +518,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             ReadingDrawingClass.mainImages[4] = null;
             ReadingDrawingClass.mainImages[5] = null;
             ReadingDrawingClass.mainImages[6] = null;
-            Class_3d.callGc();
+            HackManager.callGc();
             threadSleep(50L);
             ReadingDrawingClass.loadMainImage(3);
             threadSleep(50L);
@@ -530,14 +530,14 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             ReadingDrawingClass.mainImages[4] = null;
             ReadingDrawingClass.mainImages[5] = null;
             ReadingDrawingClass.mainImages[6] = null;
-            Class_3d.callGc();
+            HackManager.callGc();
             threadSleep(50L);
             ReadingDrawingClass.loadMainImage(2);
             threadSleep(50L);
          }
       }
 
-      Class_3d.callGc();
+      HackManager.callGc();
       var_22b = false;
    }
 
@@ -941,7 +941,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          threadSleep((long)var4);
          this.var_1403 = null;
          this.var_1453 = null;
-         Class_3d.callGc();
+         HackManager.callGc();
       }
    }
 
@@ -964,7 +964,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          sub_6dd();
       }
 
-      Class_3d.callGc();
+      HackManager.callGc();
    }
 
    private static void sub_670() {
@@ -1560,7 +1560,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
                }
 
                short[] var6 = new short[var2];
-               Class_3d.sub_1cf(var5, 0, var6, 0, var2);
+               HackManager.arrayCopy(var5, 0, var6, 0, var2);
                sub_22b((byte)6, new byte[]{13, 0}, var6, ReadingDrawingClass.readTextFromLng((short)136), (byte)2);
                break;
             case 1:
@@ -1747,7 +1747,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          case 1:
             var_1217 = 0;
             //var10000 = new int[]{2, 4, 5, 3, 6};
-            Class_3d.callGc();
+            HackManager.callGc();
             threadSleep(10L);
             threadSleep(10L);
             LevelManager.initLevelInPlanningMode();
@@ -1849,7 +1849,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
                var_6d8 = 0;
                cursorXTarget = 24;
                var_c60 = 44;
-               Class_3d.sub_1cf(var12.inventoryTools, 0, var_1123, 0, var_1123.length);
+               HackManager.arrayCopy(var12.inventoryTools, 0, var_1123, 0, var_1123.length);
                return sub_1b8((byte)5, (byte)5, var12.thiefId, false);
             case 125:
                var_6ac = true;
@@ -1857,7 +1857,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
                var_12fc = false;
                var_6c8 = 0;
                var_6d8 = 0;
-               Class_3d.sub_1cf(var12.inventoryTools, 0, var_1123, 0, var_1123.length);
+               HackManager.arrayCopy(var12.inventoryTools, 0, var_1123, 0, var_1123.length);
                return false;
             default:
                return false;
@@ -2500,7 +2500,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
       }
 
       ReadingDrawingClass.sub_7ec(var2, var3);
-      Class_3d.callGc();
+      HackManager.callGc();
       return var7;
    }
 

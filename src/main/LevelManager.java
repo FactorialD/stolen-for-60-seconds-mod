@@ -105,12 +105,12 @@ public final class LevelManager implements LevelObjectData {
          graphics = null;
          GlobalManager.sub_3b5(0);
          sub_c2();
-         Class_3d.callGc();
+         HackManager.callGc();
          GlobalManager.threadSleep(50L);
          GlobalManager.gameState = 1;
          var_25f = Image.createImage(screenWidth, screenHeight);
          graphics = var_25f.getGraphics();
-         Class_3d.callGc();
+         HackManager.callGc();
          GlobalManager.threadSleep(10L);
          GlobalManager.var_ff4 = null;
          var_a93 = false;
@@ -402,7 +402,7 @@ public final class LevelManager implements LevelObjectData {
          } catch (Exception var15) {
          }
 
-         Class_3d.callGc();
+         HackManager.callGc();
       }
 
       var_7a3 = new int[]{
