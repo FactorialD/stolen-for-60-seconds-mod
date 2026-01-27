@@ -291,8 +291,8 @@ public final class DialogManager implements LevelObjectData {
    }
 
    public static void sub_29c(Graphics var0) {
-      for(int var1 = 0; var1 < LevelManager.var_12a + 2; ++var1) {
-         for(int var2 = 0; var2 < LevelManager.var_18b + 2; ++var2) {
+      for(int var1 = 0; var1 < LevelManager.tilesInScreenX + 2; ++var1) {
+         for(int var2 = 0; var2 < LevelManager.tilesInScreenY + 2; ++var2) {
             ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)19, 0, var1 * 24, var2 * 24);
          }
       }
@@ -512,10 +512,10 @@ public final class DialogManager implements LevelObjectData {
       if (GlobalManager.var_46) {
          var_790.removeCommand(GlobalManager.var_3bb);
          var_790.removeCommand(GlobalManager.var_392);
-         GlobalManager.var_3bb = new Command(ReadingDrawingClass.sub_5a0(var_89d[0]), 4, 1);
+         GlobalManager.var_3bb = new Command(ReadingDrawingClass.getTextById(var_89d[0]), 4, 1);
          var_790.addCommand(GlobalManager.var_3bb);
          if (var_89d.length > 1) {
-            GlobalManager.var_392 = new Command(ReadingDrawingClass.sub_5a0(var_89d[1]), 1, 2);
+            GlobalManager.var_392 = new Command(ReadingDrawingClass.getTextById(var_89d[1]), 1, 2);
             var_790.addCommand(GlobalManager.var_392);
          }
 

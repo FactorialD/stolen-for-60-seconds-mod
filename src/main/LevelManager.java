@@ -10,9 +10,9 @@ public final class LevelManager implements LevelObjectData {
    public static int screenWidth;
    public static int screenHeight;
    public static int var_cf;
-   public static GlobalManager var_f0;
-   public static int var_12a;
-   public static int var_18b;
+   public static GlobalManager instance;
+   public static int tilesInScreenX;
+   public static int tilesInScreenY;
    public static int mapOffsetX;
    public static int mapOffsetY;
    public static byte mapWidth;
@@ -23,7 +23,7 @@ public final class LevelManager implements LevelObjectData {
    public static boolean needRepaint = true;
    public static boolean var_314;
    private static boolean var_35f = true;
-   private static int var_390;
+   private static int totalLootValue;
    public static final short[][] offsetTypes = new short[][]{{-1, 0, 1, 0}, {0, -1, 0, 1}};
    private static final short[][] var_42b = new short[][]{{-1, 1, 1, -1}, {-1, -1, 1, 1}};
    public static final byte[] var_475 = new byte[]{-6, 0, -4, 0, -3, 0, -2, 0, -1, 0, -1, 0};
@@ -37,7 +37,7 @@ public final class LevelManager implements LevelObjectData {
    public static final short[][] levelAdditionalData_TimerEtc = new short[][]{{500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 50, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 9}, {500, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 50, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 10}, {500, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 50, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 11}, {500, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 300, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 12}, {500, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 11100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 13}, {140, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1800, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 14}, {140, 0, 3, 0, 5, 0, 9, 0, 0, 0, 1, 2, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 15, 35}, {200, 12, 5, 0, 15, 0, 22, 0, 1, 0, 1, 10, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 16, 36}, {260, 0, 0, 50, 40, 0, 30, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 17}, {250, 0, 30, 60, 20, 0, 50, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 18}, {160, 100, 0, 0, 0, 0, 50, 1, 0, 0, 1, 30, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 19, 37}, {320, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 40, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 20, 38}, {230, 0, 0, 0, 10, 250, 70, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 21}, {150, 0, 43, 50, 10, 0, 35, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 33}, {200, 45, 26, 0, 3, 0, 60, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 22}, {320, 0, 0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 23}, {150, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 26}, {185, 0, 0, 0, 65, 0, 50, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 24}, {210, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 45, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 32, 39}, {340, 0, 0, 0, 0, 150, 80, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 25}, {180, 0, 70, 0, 40, 0, 60, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 28}, {110, 0, 0, 70, 0, 0, 55, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 31}, {240, 0, 0, 0, 0, 0, 70, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 27}, {135, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 30}, {130, 100, 0, 0, 0, 0, 50, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 29}, {170, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 50, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 34, 40}};
    public static final byte[][] thiefStats = new byte[][]{{18, 0, 0}, {30, 20, 30}, {25, 15, 12}, {22, 12, 10}, {20, 10, 8}};
    public static final short[][] var_71c = new short[][]{{0, 0}, {1000, 2}, {1000, 1}, {1000, 0}, {1000, 1}, {1000, 3}};
-   private static byte[][] mapArray;
+   private static byte[][] mapArray; // > 12: Стены/препятствия. <= 12: Проходимый пол.
    public static int[] lootValues = new int[6];
    public static int[] var_7a3 = new int[7];
    public static int var_7f3;
@@ -60,7 +60,7 @@ public final class LevelManager implements LevelObjectData {
    public static byte exitX;
    public static byte exitY;
    public static final int[] var_c58 = new int[]{0, 16711680, 65280, 255, 16711935};
-   public static byte var_c64;
+   public static byte winState; // 0: Игра идет.  2: Победа (ушли с лутом).  5: Провал (поймали/время вышло).
    public static int timeLimitSeconds;
    public static int var_c9e;
    private static int var_cdc;
@@ -71,11 +71,11 @@ public final class LevelManager implements LevelObjectData {
    private static int var_dc9;
    private static int var_de4;
    private static int var_e2f;
-   public static byte var_e52;
+   public static byte cameraState; //0: Свободная камера / слежение за вором.  1, 3, 4: Автоматический скроллинг (паннинг) к выходу или событию.
    private static boolean var_e7f;
 
    public static void switchLevelToActionMode() {
-      GlobalManager.sub_3b5(1);
+      GlobalManager.loadResourcesForState(1);
       GlobalManager.musicManager.switchMusicPlayer(1, -1);
       GlobalManager.var_ff4 = null;
       GlobalManager.var_6bc = false;
@@ -84,12 +84,12 @@ public final class LevelManager implements LevelObjectData {
       gameState = 0;
       thievesList.removeElement(GlobalManager.allThievesArray[0]);
       if (thievesList.size() > 0) {
-         sub_8c6(-1);
+         selectThief(-1);
       } else {
          selectedThief = null;
       }
 
-      sub_80d(exitX, exitY, true, false, false);
+      setCameraPos(exitX, exitY, true, false, false);
       sub_3d2();
       GlobalManager.gameState = 1;
       needRepaint = true;
@@ -97,13 +97,13 @@ public final class LevelManager implements LevelObjectData {
 
    public static void initLevelInPlanningMode() {
       if (GlobalManager.levelId <= 6 && thievesList.size() == 0) {
-         GlobalManager.sub_2c8((byte)0, (byte[])null, (short)167, (Object[])null, new short[]{126}, (short)137);
+         GlobalManager.showDialog((byte)0, (byte[])null, (short)167, (Object[])null, new short[]{126}, (short)137);
       } else {
          GlobalManager.musicManager.switchMusicPlayer(3, -1);
          var_25f = null;
          GlobalManager.threadSleep(10L);
          graphics = null;
-         GlobalManager.sub_3b5(0);
+         GlobalManager.loadResourcesForState(0);
          sub_c2();
          HackManager.callGc();
          GlobalManager.threadSleep(50L);
@@ -149,18 +149,18 @@ public final class LevelManager implements LevelObjectData {
          sub_192(false);
          if (GlobalManager.gameMode > -1 || GlobalManager.levelId == 6) {
             thievesList.addElement(GlobalManager.allThievesArray[0]);
-            GlobalManager.allThievesArray[0].sub_1e();
+            GlobalManager.allThievesArray[0].resetToSpawn();
          }
 
          selectedThiefIndex = (byte)(thievesList.size() - 1);
          selectedThief = sub_b2d();
          Thief.globalTimer = 0;
          GlobalManager.var_17e = 0;
-         sub_80d(selectedThief.positionX, selectedThief.positionY, true, false, false);
+         setCameraPos(selectedThief.positionX, selectedThief.positionY, true, false, false);
          sub_3d2();
          var_de4 = 2;
-         var_e52 = 5;
-         var_390 = 0;
+         cameraState = 5;
+         totalLootValue = 0;
          var_cdc = screenWidth;
 
          for(var2 = 0; var2 < Thief.exitAnimationProgress.length; ++var2) {
@@ -197,8 +197,8 @@ public final class LevelManager implements LevelObjectData {
                LevelObjectData.spriteIndexes[var1][1] = LevelObjectData.spriteIndexes[var_64c[var1][var2 + 1]][1];
                LevelObjectData.spriteIndexes[var1][2] = LevelObjectData.spriteIndexes[var_64c[var1][var2 + 1]][2];
                LevelObjectData.spriteIndexes[var1][3] = LevelObjectData.spriteIndexes[var_64c[var1][var2 + 1]][3];
-               LevelObjectData.spriteIndexes[var1][5] = ReadingDrawingClass.sub_6b7(LevelObjectData.spriteIndexes[var1][5], (byte)6, ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var_64c[var1][var2 + 1]][5], (byte)6));
-               LevelObjectData.spriteIndexes[var1][5] = ReadingDrawingClass.sub_6b7(LevelObjectData.spriteIndexes[var1][5], (byte)7, ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var_64c[var1][var2 + 1]][5], (byte)7));
+               LevelObjectData.spriteIndexes[var1][5] = ReadingDrawingClass.sub_6b7(LevelObjectData.spriteIndexes[var1][5], (byte)6, ReadingDrawingClass.checkBit(LevelObjectData.spriteIndexes[var_64c[var1][var2 + 1]][5], (byte)6));
+               LevelObjectData.spriteIndexes[var1][5] = ReadingDrawingClass.sub_6b7(LevelObjectData.spriteIndexes[var1][5], (byte)7, ReadingDrawingClass.checkBit(LevelObjectData.spriteIndexes[var_64c[var1][var2 + 1]][5], (byte)7));
                LevelObjectData.spriteIndexes[var1][6] = LevelObjectData.spriteIndexes[var_64c[var1][var2 + 1]][6];
             }
          }
@@ -233,18 +233,18 @@ public final class LevelManager implements LevelObjectData {
 
    }
 
-   private static void sub_181() {
+   private static void finishLevel() {
       GlobalManager.var_ff4 = null;
-      var_e52 = 0;
-      if (var_c64 == 5) {
+      cameraState = 0;
+      if (winState == 5) {
          thievesList.removeElement(GlobalManager.allThievesArray[0]);
-         GlobalManager.sub_2c8((byte)36, (byte[])null, (short)155, (Object[])null, new short[]{126}, (short)142);
+         GlobalManager.showDialog((byte)36, (byte[])null, (short)155, (Object[])null, new short[]{126}, (short)142);
       } else {
-         if (var_c64 == 4) {
+         if (winState == 4) {
             thievesList.removeElement(GlobalManager.allThievesArray[0]);
             GlobalManager.var_ea3 = 153;
          } else {
-            if (var_c64 == 2) {
+            if (winState == 2) {
                short var4;
                if (GlobalManager.selectedThieves.contains(GlobalManager.allThievesArray[0]) && !thievesList.isEmpty()) {
                   var4 = 157;
@@ -252,7 +252,7 @@ public final class LevelManager implements LevelObjectData {
                   var4 = 154;
                }
 
-               GlobalManager.sub_2c8((byte)36, new byte[]{48, 0}, var4, (Object[])null, new short[]{126}, (short)142);
+               GlobalManager.showDialog((byte)36, new byte[]{48, 0}, var4, (Object[])null, new short[]{126}, (short)142);
                GlobalManager.musicManager.switchMusicPlayer(4, 1);
                return;
             }
@@ -270,8 +270,8 @@ public final class LevelManager implements LevelObjectData {
             thievesList.removeElement(GlobalManager.allThievesArray[0]);
             var1 = 0;
             if (var0 > 0) {
-               if (var_c64 == 3) {
-                  var0 -= var_390;
+               if (winState == 3) {
+                  var0 -= totalLootValue;
                }
 
                for(int var5 = thievesList.size() - 1; var5 >= 0; --var5) {
@@ -280,7 +280,7 @@ public final class LevelManager implements LevelObjectData {
                }
 
                GlobalManager.currentMoney += var0 - var1;
-               GlobalManager.var_ea3 = (short)(var_390 > 0 ? 151 : 150);
+               GlobalManager.var_ea3 = (short)(totalLootValue > 0 ? 151 : 150);
                GlobalManager.var_eff = new Object[]{new Integer(100 * var0 / lootValues[0]), new Integer(var0), new Integer(var0 - var1)};
             } else {
                GlobalManager.var_ea3 = 152;
@@ -301,8 +301,8 @@ public final class LevelManager implements LevelObjectData {
    }
 
    public static void sub_1aa() {
-      var_12a = screenWidth / 24 - 1 - var_12a % 2;
-      var_18b = screenHeight / 24 - 1 - var_18b % 2;
+      tilesInScreenX = screenWidth / 24 - 1 - tilesInScreenX % 2;
+      tilesInScreenY = screenHeight / 24 - 1 - tilesInScreenY % 2;
    }
 
    public static Integer combineInts(int high, int low) {
@@ -430,7 +430,7 @@ public final class LevelManager implements LevelObjectData {
       while(levelObjectsList.hasMoreElements()) {
          var20 = (LevelObject)levelObjectsList.nextElement();
          var25 = new Integer[3];
-         if (var20.var_22c > 0 && var20.var_1f5 != 0 && ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var20.objectType][5], (byte)4)) {
+         if (var20.var_22c > 0 && var20.var_1f5 != 0 && ReadingDrawingClass.checkBit(LevelObjectData.spriteIndexes[var20.objectType][5], (byte)4)) {
             var21 = combineInts(var20.var_1f5, var20.var_22c);
             if (var18.containsKey(var21)) {
                (var25 = (Integer[])((Integer[])var18.get(var21)))[0] = new Integer(var20.var_22c);
@@ -460,7 +460,7 @@ public final class LevelManager implements LevelObjectData {
 
                            while(levelObjectsList.hasMoreElements()) {
                               var20 = (LevelObject)levelObjectsList.nextElement();
-                              if (ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var20.objectType][5], (byte)4) && var20.var_1f5 < 6) {
+                              if (ReadingDrawingClass.checkBit(LevelObjectData.spriteIndexes[var20.objectType][5], (byte)4) && var20.var_1f5 < 6) {
                                  int[] var27 = lootValues;
                                  var27[0] += var20.var_22c * var_71c[var20.var_1f5][0];
                                  var27 = lootValues;
@@ -470,12 +470,12 @@ public final class LevelManager implements LevelObjectData {
                            }
 
                            lootValues[0] = lootValues[0] / 1000 * 1000;
-                           timeLimitSeconds = levelAdditionalData_TimerEtc[level - 1][0] + ReadingDrawingClass.sub_21(0, 10);
+                           timeLimitSeconds = levelAdditionalData_TimerEtc[level - 1][0] + ReadingDrawingClass.randomRange(0, 10);
                            return;
                         }
                      } while((var20 = (LevelObject)levelObjectsList.nextElement()).var_22c <= 0);
                   } while(var20.var_1f5 == 0);
-               } while(!ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var20.objectType][5], (byte)4));
+               } while(!ReadingDrawingClass.checkBit(LevelObjectData.spriteIndexes[var20.objectType][5], (byte)4));
 
                var21 = combineInts(var20.var_1f5, var20.var_22c);
             } while(!var18.containsKey(var21));
@@ -484,13 +484,13 @@ public final class LevelManager implements LevelObjectData {
                var20.var_22c = 0;
                if (var25[1].intValue() == 2 && var25[2].intValue() == 2) {
                   int var23;
-                  if ((var23 = ReadingDrawingClass.sub_21(0, 2)) == 1) {
-                     var20.var_22c = (byte)ReadingDrawingClass.sub_21(0, var25[0].intValue());
+                  if ((var23 = ReadingDrawingClass.randomRange(0, 2)) == 1) {
+                     var20.var_22c = (byte)ReadingDrawingClass.randomRange(0, var25[0].intValue());
                   } else if (var23 == 2) {
                      var20.var_22c = (byte)var25[0].byteValue();
                   }
-               } else if (ReadingDrawingClass.sub_21(0, 1) == 1) {
-                  var20.var_22c = (byte)Math.min(ReadingDrawingClass.sub_21(0, var25[0].intValue() >> 1), var25[0].intValue());
+               } else if (ReadingDrawingClass.randomRange(0, 1) == 1) {
+                  var20.var_22c = (byte)Math.min(ReadingDrawingClass.randomRange(0, var25[0].intValue() >> 1), var25[0].intValue());
                }
 
                var25[0] = new Integer(var25[0].intValue() - var20.var_22c);
@@ -547,7 +547,7 @@ public final class LevelManager implements LevelObjectData {
    private static void drawHud(Graphics g) {
       g.setClip(0, screenHeight - LevelObjectData.spriteTypesArr[9][3], screenWidth, LevelObjectData.spriteTypesArr[9][3]);
       g.drawImage(var_25f, 0, 0, 0);
-      if (gameState == 1 && selectedThief != null && selectedThief.targetObject != null && selectedThief.sub_311()) {
+      if (gameState == 1 && selectedThief != null && selectedThief.targetObject != null && selectedThief.isInteracting()) {
          byte var1 = selectedThief.actionState == 5 ? 1 : selectedThief.targetObject.objectType;
          byte var2 = selectedThief.actionState == 3 ? 8 : Thief.toolUsingTimeStats[var1][GlobalManager.sub_e5c(selectedThief.inventoryTools[selectedThief.selectedToolSlot])];
          selectedThief.targetObject.drawTimerCircle(g, var2, selectedThief.actionState != 3);
@@ -629,7 +629,7 @@ public final class LevelManager implements LevelObjectData {
          }
 
          String var5 = String.valueOf(var1) + ':' + (var2 < 10 ? "0" : "") + var2;
-         if (ReadingDrawingClass.var_19d) {
+         if (ReadingDrawingClass.useSystemFont) {
             int var6 = 5 * ReadingDrawingClass.var_12 + 4;
             int var7 = ReadingDrawingClass.var_a9 + 4;
             var0.setClip(0, 0, screenWidth, screenHeight);
@@ -672,23 +672,23 @@ public final class LevelManager implements LevelObjectData {
    }
 
    public static void sub_3d2() {
-      if (var_e52 == 0 || var_e52 == 2) {
+      if (cameraState == 0 || cameraState == 2) {
          var_cdc = mapOffsetX + exitX * 24 - 12;
          var_cf8 = mapOffsetY + exitY * 24;
       }
 
-      if (var_e52 != 4) {
+      if (cameraState != 4) {
          var_d80 = -LevelObjectData.spriteTypesArr[14][2];
          var_dc9 = var_cf8;
       }
 
-      switch(var_e52) {
+      switch(cameraState) {
       case 0:
          return;
       case 1:
          var_cdc -= var_de4++;
          if (var_cdc + 48 < 0 && var_e2f++ > 48) {
-            sub_181();
+            finishLevel();
             return;
          }
          break;
@@ -701,12 +701,12 @@ public final class LevelManager implements LevelObjectData {
             if (Thief.globalTimer > timeLimitSeconds - 30) {
                sub_7b0();
                var_e2f = 0;
-               var_e52 = 4;
+               cameraState = 4;
                var_de4 = 2;
                return;
             }
 
-            sub_181();
+            finishLevel();
             return;
          }
          break;
@@ -723,7 +723,7 @@ public final class LevelManager implements LevelObjectData {
 
          var_dc9 = var_cf8;
          if (var_e2f > 48) {
-            sub_181();
+            finishLevel();
             return;
          }
          break;
@@ -731,7 +731,7 @@ public final class LevelManager implements LevelObjectData {
          var_cdc -= var_de4;
          if (var_cdc <= mapOffsetX + exitX * 24 - 12) {
             GlobalManager.musicManager.switchMusicPlayer(2, -1);
-            var_e52 = 0;
+            cameraState = 0;
          }
       }
 
@@ -747,7 +747,7 @@ public final class LevelManager implements LevelObjectData {
             ((Thief)var1.nextElement()).sub_1f3(var0);
          }
 
-         if (var_e52 == 2 || var_e52 == 3) {
+         if (cameraState == 2 || cameraState == 3) {
             var1 = GlobalManager.selectedThieves.elements();
 
             while(var1.hasMoreElements()) {
@@ -792,22 +792,22 @@ public final class LevelManager implements LevelObjectData {
          var_35f = true;
          int spriteTypeId = gameState == 0 ? 2 : 0;
          int var3;
-         int var4 = (var3 = -mapOffsetX / 24) + var_12a + 2;
+         int var4 = (var3 = -mapOffsetX / 24) + tilesInScreenX + 2;
          int var5;
-         int var6 = (var5 = -mapOffsetY / 24) + var_18b + 2;
+         int var6 = (var5 = -mapOffsetY / 24) + tilesInScreenY + 2;
          boolean[] var9 = new boolean[4];
          if (gameState == 1) {
             boolean var11 = false;
 
             for(int var12 = var5; var12 <= var6; ++var12) {
                for(int var13 = var3; var13 <= var4; ++var13) {
-                  if (var13 >= 0 && var13 < mapWidth && var12 >= 0 && var12 < mapHeight && sub_49a(var13, var12, false) <= 12) {
+                  if (var13 >= 0 && var13 < mapWidth && var12 >= 0 && var12 < mapHeight && getTileAt(var13, var12, false) <= 12) {
                      var9[0] = var9[1] = var9[2] = var9[3] = false;
 
                      int var7;
                      byte var10;
                      for(var7 = 0; var7 < 4; ++var7) {
-                        if ((var10 = sub_49a(var13 + offsetTypes[0][var7], var12 + offsetTypes[1][var7], true)) > 12) {
+                        if ((var10 = getTileAt(var13 + offsetTypes[0][var7], var12 + offsetTypes[1][var7], true)) > 12) {
                            if ((var7 == 0 || var7 == 2) && (var10 == 14 || var10 == 15)) {
                               var10 = 13;
                            }
@@ -824,7 +824,7 @@ public final class LevelManager implements LevelObjectData {
                      for(var7 = 0; var7 < 4; ++var7) {
                         if (!var9[var7]) {
                            label300: {
-                              if ((var10 = sub_49a(var13 + var_42b[0][var7], var12 + var_42b[1][var7], true)) > 12) {
+                              if ((var10 = getTileAt(var13 + var_42b[0][var7], var12 + var_42b[1][var7], true)) > 12) {
                                  if (var10 == 14 || var10 == 15) {
                                     var10 = 13;
                                  }
@@ -947,7 +947,7 @@ public final class LevelManager implements LevelObjectData {
       g.drawImage(var_25f, 0, 0 - var_4a5, 0);
    }
 
-   private static byte sub_49a(int var0, int var1, boolean var2) {
+   private static byte getTileAt(int var0, int var1, boolean var2) {
       if (var0 >= 0 && var0 < mapWidth && var1 >= 0 && var1 < mapHeight) {
          byte var3;
          if ((var3 = mapArray[var0][var1]) <= 12) {
@@ -965,14 +965,14 @@ public final class LevelManager implements LevelObjectData {
       }
    }
 
-   public static boolean sub_4d1(Thief var0, boolean var1) {
-      if (!var0.sub_3a5()) {
+   public static boolean checkWallCollision(Thief thief, boolean var1) {
+      if (!thief.calculateNextPosition()) {
          return false;
-      } else if (Thief.var_51f == exitY && (Thief.var_4ca == exitX - 1 || Thief.var_4ca == exitX + 1)) {
+      } else if (Thief.targetY == exitY && (Thief.targetX == exitX - 1 || Thief.targetX == exitX + 1)) {
          return false;
       } else {
          boolean var2;
-         if ((var2 = mapArray[Thief.var_4ca][Thief.var_51f] > 12) && !var1) {
+         if ((var2 = mapArray[Thief.targetX][Thief.targetY] > 12) && !var1) {
             Enumeration var3 = thievesList.elements();
 
             label59: {
@@ -990,19 +990,19 @@ public final class LevelManager implements LevelObjectData {
 
                         var5 = var4.positionX;
                         var6 = var4.positionY;
-                        if (var4.actionState == 1 && var4 != var0) {
+                        if (var4.actionState == 1 && var4 != thief) {
                            var5 = var4.positionX + offsetTypes[0][var4.direction];
                            var6 = var4.positionY + offsetTypes[1][var4.direction];
                         }
-                     } while(var5 != Thief.var_4ca);
-                  } while(var6 != Thief.var_51f);
+                     } while(var5 != Thief.targetX);
+                  } while(var6 != Thief.targetY);
                } while(var5 == exitX && var6 == exitY);
 
                var2 = false;
             }
 
             if (var2 && gameState == 1) {
-               sub_538(combineInts(Thief.var_4ca, Thief.var_51f));
+               sub_538(combineInts(Thief.targetX, Thief.targetY));
             }
          }
 
@@ -1010,11 +1010,11 @@ public final class LevelManager implements LevelObjectData {
       }
    }
 
-   public static boolean sub_4f6(Thief var0, boolean var1) {
-      if (!var0.sub_3a5()) {
+   public static boolean checkObjectInteraction(Thief thief, boolean var1) {
+      if (!thief.calculateNextPosition()) {
          return false;
       } else {
-         Integer var2 = combineInts(Thief.var_4ca, Thief.var_51f);
+         Integer var2 = combineInts(Thief.targetX, Thief.targetY);
          boolean var3;
          if (var3 = levelObjectsMap.containsKey(var2)) {
             LevelObject var4;
@@ -1048,13 +1048,13 @@ public final class LevelManager implements LevelObjectData {
    private static void sub_538(Integer var0) {
       if (alarmWithZonesMap.containsKey(var0)) {
          if (GlobalManager.gameMode == -1) {
-            var_c64 = 5;
-            GlobalManager.sub_2c8((byte)39, (byte[])null, (short)156, (Object[])null, new short[]{126}, (short)137);
+            winState = 5;
+            GlobalManager.showDialog((byte)39, (byte[])null, (short)156, (Object[])null, new short[]{126}, (short)137);
          } else {
             if (!var_a93) {
-               timeLimitSeconds = Math.min(timeLimitSeconds, Thief.globalTimer + ReadingDrawingClass.sub_21(20, 30));
+               timeLimitSeconds = Math.min(timeLimitSeconds, Thief.globalTimer + ReadingDrawingClass.randomRange(20, 30));
                var_a93 = true;
-               GlobalManager.sub_2c8((byte)0, (byte[])null, (short)146, (Object[])null, new short[]{126}, (short)137);
+               GlobalManager.showDialog((byte)0, (byte[])null, (short)146, (Object[])null, new short[]{126}, (short)137);
             }
 
          }
@@ -1066,16 +1066,16 @@ public final class LevelManager implements LevelObjectData {
          if (var0) {
             if (!var_b0a) {
                if (var_aad) {
-                  timeLimitSeconds -= ReadingDrawingClass.sub_21(0, 30);
+                  timeLimitSeconds -= ReadingDrawingClass.randomRange(0, 30);
                } else {
-                  timeLimitSeconds -= ReadingDrawingClass.sub_21(30, 50);
+                  timeLimitSeconds -= ReadingDrawingClass.randomRange(30, 50);
                }
 
                var_b0a = true;
                return;
             }
          } else if (!var_aad && !var_b0a) {
-            timeLimitSeconds -= ReadingDrawingClass.sub_21(10, 30);
+            timeLimitSeconds -= ReadingDrawingClass.randomRange(10, 30);
             var_aad = true;
          }
 
@@ -1108,7 +1108,7 @@ public final class LevelManager implements LevelObjectData {
                   var3.timelineIndex = Thief.globalTimer;
                   var3.applyTimelineState(true);
                   var3.isBusy = var1;
-                  if (var3.actionState == 1 && var_f0.mapInputToGameAction(GlobalManager.keyCodePressed) == 1) {
+                  if (var3.actionState == 1 && instance.mapInputToGameAction(GlobalManager.keyCodePressed) == 1) {
                      var3.positionX = (byte)(var3.positionX + offsetTypes[0][var3.direction]);
                      var3.positionY = (byte)(var3.positionY + offsetTypes[1][var3.direction]);
                   }
@@ -1146,10 +1146,10 @@ public final class LevelManager implements LevelObjectData {
          var_247 = -1;
          switch(var0) {
          case 185:
-            GlobalManager.sub_2c8((byte)0, new byte[]{5, selectedThief.thiefId}, (short)185, (Object[])null, new short[]{126}, (short)(41 + selectedThief.thiefId));
+            GlobalManager.showDialog((byte)0, new byte[]{5, selectedThief.thiefId}, (short)185, (Object[])null, new short[]{126}, (short)(41 + selectedThief.thiefId));
             return;
          case 186:
-            GlobalManager.sub_2c8((byte)0, new byte[]{5, selectedThief.thiefId}, (short)186, (Object[])null, new short[]{126}, (short)(41 + selectedThief.thiefId));
+            GlobalManager.showDialog((byte)0, new byte[]{5, selectedThief.thiefId}, (short)186, (Object[])null, new short[]{126}, (short)(41 + selectedThief.thiefId));
             return;
          }
       }
@@ -1159,36 +1159,36 @@ public final class LevelManager implements LevelObjectData {
             selectedThief = null;
             sub_702();
          } else {
-            if (gameState == 1 && GlobalManager.var_91 == 0 && var_e52 != 5) {
+            if (gameState == 1 && GlobalManager.var_91 == 0 && cameraState != 5) {
                ++Thief.globalTimer;
                if (Thief.globalTimer > timeLimitSeconds - 10 && GlobalManager.gameMode > -1 && !var_b69) {
                   GlobalManager.musicManager.switchMusicPlayer(6, -1);
                   var_b69 = true;
                } else if (Thief.globalTimer == timeLimitSeconds - 1 && GlobalManager.gameMode > -1) {
-                  if (exitX == GlobalManager.allThievesArray[0].positionX && exitY == GlobalManager.allThievesArray[0].positionY && !GlobalManager.allThievesArray[0].isBusy && var_e52 == 0) {
+                  if (exitX == GlobalManager.allThievesArray[0].positionX && exitY == GlobalManager.allThievesArray[0].positionY && !GlobalManager.allThievesArray[0].isBusy && cameraState == 0) {
                      checkWinCondition();
                   }
                } else if (Thief.globalTimer > timeLimitSeconds) {
                   if (GlobalManager.gameMode == -1) {
-                     var_c64 = 5;
-                     sub_181();
-                  } else if (var_e52 == 0) {
-                     var_c64 = 2;
+                     winState = 5;
+                     finishLevel();
+                  } else if (cameraState == 0) {
+                     winState = 2;
                      var_de4 = 4;
                      var_e2f = 0;
                      sub_7b0();
                      sub_3d2();
-                     var_e52 = 4;
+                     cameraState = 4;
                   }
                }
             }
 
             Enumeration var5 = thievesList.elements();
 
-            while(var5.hasMoreElements() && var_e52 != 5) {
+            while(var5.hasMoreElements() && cameraState != 5) {
                Thief var1 = (Thief)var5.nextElement();
-               if (selectedThief.thiefId == var1.thiefId && var_e52 == 0) {
-                  sub_80d(var1.positionX, var1.positionY, false, false, false);
+               if (selectedThief.thiefId == var1.thiefId && cameraState == 0) {
+                  setCameraPos(var1.positionX, var1.positionY, false, false, false);
                }
 
                if (var1.stunTimer > 0) {
@@ -1303,13 +1303,13 @@ public final class LevelManager implements LevelObjectData {
                         if (selectedThief.thiefId == var1.thiefId && var1.handleInputAndCollision()) {
                            var1.isBusy = true;
                            sub_585(var1, true);
-                           var1.recordWaitTimes((byte)1);
+                           var1.addWaitAction((byte)1);
                            ++Thief.globalTimer;
                         }
                      } else {
                         if (var1.thiefId == 0) {
-                           if (var_e52 != 2 && var_e52 != 3) {
-                              if (selectedThief.thiefId == var1.thiefId && var_e52 == 0) {
+                           if (cameraState != 2 && cameraState != 3) {
+                              if (selectedThief.thiefId == var1.thiefId && cameraState == 0) {
                                  var1.handleInputAndCollision();
                               }
                            } else {
@@ -1321,10 +1321,10 @@ public final class LevelManager implements LevelObjectData {
 
                         if (var1.actionState != 0) {
                            if (var1.actionState == 1) {
-                              if (!sub_4f6(var1, false) && sub_4d1(var1, false)) {
+                              if (!checkObjectInteraction(var1, false) && checkWallCollision(var1, false)) {
                                  var1.actionState = 1;
                                  ++var1.timelineIndex;
-                                 if (var_e52 == 2) {
+                                 if (cameraState == 2) {
                                     int var10002 = Thief.exitAnimationProgress[var1.thiefId]++;
                                  }
 
@@ -1340,7 +1340,7 @@ public final class LevelManager implements LevelObjectData {
                            } else {
                               var1.targetObject = sub_912(var1);
                               if (var1.targetObject != null) {
-                                 var1.moveInterpolation = (byte)ReadingDrawingClass.sub_21(0, 6);
+                                 var1.moveInterpolation = (byte)ReadingDrawingClass.randomRange(0, 6);
                                  if (var1.actionState == 5) {
                                     byte var6 = var1.targetObject.objectType;
                                     var1.targetObject = new LevelObject((byte)9, var1.positionX, var1.positionY, var1.direction, (byte)0, var1.inventoryTools[var1.selectedToolSlot], (byte)0);
@@ -1396,9 +1396,9 @@ public final class LevelManager implements LevelObjectData {
                   return;
                }
 
-               if (var_e52 != 2) {
-                  if (var_e52 == 0) {
-                     GlobalManager.sub_2c8((byte)17, (byte[])null, (short)173, (Object[])null, new short[]{126, 127}, (short)137);
+               if (cameraState != 2) {
+                  if (cameraState == 0) {
+                     GlobalManager.showDialog((byte)17, (byte[])null, (short)173, (Object[])null, new short[]{126, 127}, (short)137);
                   }
 
                   return;
@@ -1407,7 +1407,7 @@ public final class LevelManager implements LevelObjectData {
                sub_7b0();
                var_de4 = 1;
                var_e2f = 0;
-               var_e52 = 3;
+               cameraState = 3;
                break;
             }
 
@@ -1507,7 +1507,7 @@ public final class LevelManager implements LevelObjectData {
             }
 
             LevelObject var11;
-            if ((var11 = (LevelObject)levelObjectsMap.get(var10)).objectType != 6 && var11.objectType != 9 && var11.objectType != 4 && !ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var11.objectType][5], (byte)5) && (var5 || mapArray[var11.x][var11.y] > 12 || sub_ae6(var11, var0, var1))) {
+            if ((var11 = (LevelObject)levelObjectsMap.get(var10)).objectType != 6 && var11.objectType != 9 && var11.objectType != 4 && !ReadingDrawingClass.checkBit(LevelObjectData.spriteIndexes[var11.objectType][5], (byte)5) && (var5 || mapArray[var11.x][var11.y] > 12 || sub_ae6(var11, var0, var1))) {
                if (var2) {
                   if (var3) {
                      if (var11.interactionTickTimestamp == var4) {
@@ -1526,14 +1526,14 @@ public final class LevelManager implements LevelObjectData {
    }
 
    private static void sub_7b0() {
-      sub_80d(exitX, exitY, true, false, false);
+      setCameraPos(exitX, exitY, true, false, false);
    }
 
-   private static void sub_80d(int var0, int var1, boolean var2, boolean var3, boolean var4) {
+   private static void setCameraPos(int var0, int var1, boolean var2, boolean var3, boolean var4) {
       int var5 = mapOffsetX;
       int var6 = mapOffsetY;
       if (mapWidth * 24 <= screenWidth) {
-         mapOffsetX = screenWidth - var_12a * 24 >> 1;
+         mapOffsetX = screenWidth - tilesInScreenX * 24 >> 1;
       } else {
          if (var4) {
             mapOffsetX -= var0;
@@ -1555,7 +1555,7 @@ public final class LevelManager implements LevelObjectData {
       }
 
       if (mapHeight * 24 < var_cf) {
-         mapOffsetY = var_cf - var_18b * 24 >> 1;
+         mapOffsetY = var_cf - tilesInScreenY * 24 >> 1;
       } else {
          if (var4) {
             mapOffsetY -= var1;
@@ -1586,9 +1586,9 @@ public final class LevelManager implements LevelObjectData {
    public static void sub_85b() {
       if (selectedThief != null) {
          if (gameState != 0 || !selectedThief.isBusy) {
-            if (GlobalManager.keyCodePressed != 999999 && var_e52 == 0) {
+            if (GlobalManager.keyCodePressed != 999999 && cameraState == 0) {
                Thief var1;
-               switch(var_f0.mapInputToGameAction(GlobalManager.keyCodePressed)) {
+               switch(instance.mapInputToGameAction(GlobalManager.keyCodePressed)) {
                case 0:
                   if (gameState == 0 && (GlobalManager.var_80 == 0 || GlobalManager.var_80 == 6 || GlobalManager.var_80 == 3 || GlobalManager.var_80 == 9) && GlobalManager.var_165 > 2) {
                      var1 = sub_b2d();
@@ -1618,17 +1618,17 @@ public final class LevelManager implements LevelObjectData {
    }
 
    public static void sub_896() {
-      if (GlobalManager.keyCodePressed != 999999 && var_e52 == 0) {
+      if (GlobalManager.keyCodePressed != 999999 && cameraState == 0) {
          if (gameState != 0 || selectedThief == null || !selectedThief.isBusy) {
             GlobalManager.var_9af = GlobalManager.keyCodePressed;
             int var0;
-            if ((var0 = var_f0.mapInputToGameAction(GlobalManager.keyCodePressed)) == 12) {
+            if ((var0 = instance.mapInputToGameAction(GlobalManager.keyCodePressed)) == 12) {
                if (selectedThief == null) {
                   if (thievesList.size() == 0) {
                      GlobalManager.var_1217 = 3;
                   } else {
                      GlobalManager.keyCodePressed = 999999;
-                     sub_8c6(var_96a);
+                     selectThief(var_96a);
                   }
                }
             } else if (var0 == 13) {
@@ -1661,7 +1661,7 @@ public final class LevelManager implements LevelObjectData {
                   }
 
                   GlobalManager.keyCodePressed = 999999;
-                  sub_8c6(var_96a);
+                  selectThief(var_96a);
                   return;
                case 1:
                default:
@@ -1679,7 +1679,7 @@ public final class LevelManager implements LevelObjectData {
                   var8 = screenWidth >> 1;
                }
 
-               sub_80d(var8, var2, false, false, true);
+               setCameraPos(var8, var2, false, false, true);
             } else {
                Thief var7;
                switch(var0) {
@@ -1747,7 +1747,7 @@ public final class LevelManager implements LevelObjectData {
                   }
                   break;
                case 7:
-                  sub_80d(selectedThief.positionX, selectedThief.positionY, true, false, false);
+                  setCameraPos(selectedThief.positionX, selectedThief.positionY, true, false, false);
                   break;
                case 9:
                   var_96a = selectedThiefIndex;
@@ -1759,7 +1759,7 @@ public final class LevelManager implements LevelObjectData {
                   return;
                case 11:
                   GlobalManager.keyCodePressed = 999999;
-                  sub_8c6(-1);
+                  selectThief(-1);
                   return;
                }
 
@@ -1769,16 +1769,16 @@ public final class LevelManager implements LevelObjectData {
       }
    }
 
-   private static void sub_8c6(int var0) {
+   private static void selectThief(int thiefIndex) {
       boolean var1 = selectedThief == null;
-      if (var0 == -1) {
+      if (thiefIndex == -1) {
          ++selectedThiefIndex;
          var_35f = true;
          if (selectedThiefIndex >= thievesList.size() || selectedThief == null) {
             selectedThiefIndex = 0;
          }
       } else {
-         selectedThiefIndex = (byte)var0;
+         selectedThiefIndex = (byte)thiefIndex;
       }
 
       selectedThief = sub_b2d();
@@ -1789,7 +1789,7 @@ public final class LevelManager implements LevelObjectData {
          sub_585(selectedThief, false);
       }
 
-      sub_80d(selectedThief.positionX, selectedThief.positionY, false, true, false);
+      setCameraPos(selectedThief.positionX, selectedThief.positionY, false, true, false);
       if (gameState == 0 || var1) {
          sub_702();
       }
@@ -1812,10 +1812,10 @@ public final class LevelManager implements LevelObjectData {
       boolean var1 = false;
       if (gameState == 0) {
          if (var0.interactionTickTimestamp > 0 && var0.interactionTickTimestamp <= Thief.globalTimer) {
-            var1 = ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var0.objectType][5], (byte)4);
+            var1 = ReadingDrawingClass.checkBit(LevelObjectData.spriteIndexes[var0.objectType][5], (byte)4);
          }
       } else if (var0.progressData[0] <= 0) {
-         var1 = ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var0.objectType][5], (byte)4);
+         var1 = ReadingDrawingClass.checkBit(LevelObjectData.spriteIndexes[var0.objectType][5], (byte)4);
       }
 
       return var1;
@@ -1835,7 +1835,7 @@ public final class LevelManager implements LevelObjectData {
                return false;
             case 118:
                Thief var10000 = selectedThief;
-               var10000.currentLoad -= selectedThief.sub_46a();
+               var10000.currentLoad -= selectedThief.calculateCurrentWeight();
                selectedThief.projectedLoad = selectedThief.currentLoad;
                selectedThief.clearThievesState(false);
                selectedThief.currentLoad = selectedThief.projectedLoad;
@@ -1848,14 +1848,14 @@ public final class LevelManager implements LevelObjectData {
                return false;
             case 121:
                selectedThief.sub_19d();
-               sub_80d(selectedThief.positionX, selectedThief.positionY, true, false, false);
+               setCameraPos(selectedThief.positionX, selectedThief.positionY, true, false, false);
                return false;
             }
          case 8:
             Thief var11 = sub_b2d();
             byte var2 = Byte.parseByte((String)var0);
             if (var11.targetObject == null) {
-               GlobalManager.sub_2c8((byte)0, (byte[])null, (short)169, (Object[])null, new short[]{126}, (short)137);
+               GlobalManager.showDialog((byte)0, (byte[])null, (short)169, (Object[])null, new short[]{126}, (short)137);
                return true;
             }
 
@@ -1880,10 +1880,10 @@ public final class LevelManager implements LevelObjectData {
                      var11.selectedToolSlot = var13;
                      switch(var6) {
                      case -2:
-                        GlobalManager.sub_2c8((byte)0, (byte[])null, (short)168, (Object[])null, new short[]{126}, (short)137);
+                        GlobalManager.showDialog((byte)0, (byte[])null, (short)168, (Object[])null, new short[]{126}, (short)137);
                         return true;
                      case -1:
-                        GlobalManager.sub_2c8((byte)0, (byte[])null, (short)166, (Object[])null, new short[]{126}, (short)137);
+                        GlobalManager.showDialog((byte)0, (byte[])null, (short)166, (Object[])null, new short[]{126}, (short)137);
                         return true;
                      case 0:
                      case 1:
@@ -1913,7 +1913,7 @@ public final class LevelManager implements LevelObjectData {
                            int var8 = var7.interactionTickTimestamp / 60;
                            int var9 = (var7.interactionTickTimestamp - var8 * 60) / 10;
                            int var10 = var7.interactionTickTimestamp - var8 * 60 - var9 * 10;
-                           GlobalManager.sub_2c8((byte)0, (byte[])null, (short)172, new Object[]{new Integer(var8), new Integer(var9), new Integer(var10)}, new short[]{126}, (short)137);
+                           GlobalManager.showDialog((byte)0, (byte[])null, (short)172, new Object[]{new Integer(var8), new Integer(var9), new Integer(var10)}, new short[]{126}, (short)137);
                            return true;
                         }
 
@@ -1929,9 +1929,9 @@ public final class LevelManager implements LevelObjectData {
          case 17:
             if (var0.equals(String.valueOf(126))) {
                if (GlobalManager.gameMode == -1) {
-                  var_c64 = sub_9c4();
+                  winState = sub_9c4();
                } else {
-                  var_c64 = 1;
+                  winState = 1;
                }
 
                for(int var3 = thievesList.size() - 1; var3 >= 0; --var3) {
@@ -1943,13 +1943,13 @@ public final class LevelManager implements LevelObjectData {
 
                var_de4 = 1;
                var_e2f = 0;
-               var_e52 = 1;
+               cameraState = 1;
             }
             break;
          case 32:
             ReadingDrawingClass.sub_759();
             GlobalManager.var_ab2 = 0;
-            GlobalManager.sub_7c1();
+            GlobalManager.initShop();
             return true;
          case 35:
             ReadingDrawingClass.sub_71d();
@@ -1967,11 +1967,11 @@ public final class LevelManager implements LevelObjectData {
                   var1 = new Object[]{new Short((short)257)};
                }
 
-               GlobalManager.sub_2c8((byte)35, (byte[])null, (short)158, var1, new short[]{126}, (short)191);
+               GlobalManager.showDialog((byte)35, (byte[])null, (short)158, var1, new short[]{126}, (short)191);
                return true;
             }
 
-            GlobalManager.sub_2c8((byte)32, new byte[]{5, 6}, (short)162, (Object[])null, new short[]{126}, (short)163);
+            GlobalManager.showDialog((byte)32, new byte[]{5, 6}, (short)162, (Object[])null, new short[]{126}, (short)163);
             return true;
          }
 
@@ -2020,11 +2020,11 @@ public final class LevelManager implements LevelObjectData {
 
    private static void checkWinCondition() {
       sub_7b0();
-      var_e52 = 2;
+      cameraState = 2;
       if (GlobalManager.gameMode == -1) {
-         var_c64 = sub_9c4();
+         winState = sub_9c4();
       } else {
-         var_c64 = 3;
+         winState = 3;
       }
 
       int var0 = timeLimitSeconds - Thief.globalTimer;
@@ -2039,7 +2039,7 @@ public final class LevelManager implements LevelObjectData {
             GlobalManager.selectedThieves.addElement(var2);
             thievesList.removeElement(var2);
             if (var2.thiefId == 0) {
-               var_c64 = 2;
+               winState = 2;
             }
          } else if (var2.positionX == exitX && var2.positionY == exitY) {
             if (var2.actionState == 1) {
@@ -2048,7 +2048,7 @@ public final class LevelManager implements LevelObjectData {
                var2.isBusy = false;
             }
          } else {
-            var_390 += (var2.collectedLoot[1] * var_71c[1][0] + var2.collectedLoot[2] * var_71c[2][0] + var2.collectedLoot[3] * var_71c[3][0] + var2.collectedLoot[4] * var_71c[4][0] + var2.collectedLoot[5] * var_71c[5][0]) * 50 / 100;
+            totalLootValue += (var2.collectedLoot[1] * var_71c[1][0] + var2.collectedLoot[2] * var_71c[2][0] + var2.collectedLoot[3] * var_71c[3][0] + var2.collectedLoot[4] * var_71c[4][0] + var2.collectedLoot[5] * var_71c[5][0]) * 50 / 100;
             var2.moveInterpolation = 0;
             var2.isBusy = false;
             var2.positionX = (byte)(exitX + var_5cd[0][var2.thiefId]);
@@ -2058,7 +2058,7 @@ public final class LevelManager implements LevelObjectData {
 
       if (thievesList.isEmpty()) {
          var_e2f = 0;
-         var_e52 = 4;
+         cameraState = 4;
          var_de4 = 4;
       }
 
@@ -2069,7 +2069,7 @@ public final class LevelManager implements LevelObjectData {
    public static void sub_a53(Thief var0) {
       var0.targetObject = sub_912(var0);
       if (var0.targetObject != null) {
-         if (!ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var0.targetObject.objectType][5], (byte)5)) {
+         if (!ReadingDrawingClass.checkBit(LevelObjectData.spriteIndexes[var0.targetObject.objectType][5], (byte)5)) {
             if (mapArray[var0.targetObject.x][var0.targetObject.y] > 12 || sub_ae6(var0.targetObject, var0.positionX, var0.positionY)) {
                if (gameState == 0) {
                   if (var0.targetObject.var_1a5 > 0 && var0.targetObject.var_1a5 <= Thief.globalTimer) {
@@ -2081,7 +2081,7 @@ public final class LevelManager implements LevelObjectData {
 
                LevelObject var1;
                if ((var1 = (LevelObject)levelObjects.get(combineInts(var0.positionX, var0.positionY))) != null && gameState == 1 && var1.progressData[1] >= 0) {
-                  GlobalManager.sub_2c8((byte)0, (byte[])null, (short)171, (Object[])null, new short[]{126}, (short)137);
+                  GlobalManager.showDialog((byte)0, (byte[])null, (short)171, (Object[])null, new short[]{126}, (short)137);
                } else {
                   int var2 = 0;
                   int var3;
@@ -2099,7 +2099,7 @@ public final class LevelManager implements LevelObjectData {
                   }
 
                   if (var3 == 0) {
-                     GlobalManager.sub_2c8((byte)0, (byte[])null, (short)170, (Object[])null, new short[]{126}, (short)137);
+                     GlobalManager.showDialog((byte)0, (byte[])null, (short)170, (Object[])null, new short[]{126}, (short)137);
                   } else {
                      byte[][] var8 = new byte[var3][2];
                      short[] var6 = new short[var3];
@@ -2158,7 +2158,7 @@ public final class LevelManager implements LevelObjectData {
          }
       }
 
-      if (ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[var0.objectType][5], (byte)var5)) {
+      if (ReadingDrawingClass.checkBit(LevelObjectData.spriteIndexes[var0.objectType][5], (byte)var5)) {
          var3 = true;
       }
 
@@ -2179,7 +2179,7 @@ public final class LevelManager implements LevelObjectData {
             return;
          }
 
-         if (selectedThief.thiefId == 0 && selectedThief.sub_46a() > 0 && !selectedThief.isBusy) {
+         if (selectedThief.thiefId == 0 && selectedThief.calculateCurrentWeight() > 0 && !selectedThief.isBusy) {
             (var0 = new short[2])[0] = 117;
             var0[1] = 118;
          } else {
@@ -2196,6 +2196,6 @@ public final class LevelManager implements LevelObjectData {
 
    static {
       var_d80 = -LevelObjectData.spriteTypesArr[14][2];
-      var_e52 = 0;
+      cameraState = 0;
    }
 }

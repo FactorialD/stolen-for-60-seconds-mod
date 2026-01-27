@@ -180,7 +180,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
 
       createMusicManager();
       DialogManager.var_790 = this;
-      LevelManager.var_f0 = this;
+      LevelManager.instance = this;
 
       for(var1 = 0; var1 < 5; ++var1) {
          allThievesArray[var1] = new Thief(var1);
@@ -214,7 +214,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
                   sub_167(g);
                   break;
                case 4:
-                  sub_7f0(g);
+                  paintShop(g);
                   break;
                case 5:
                   g.setColor(192, 192, 192);
@@ -365,7 +365,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             musicManager.switchMusicPlayer(3, -1);
          }
 
-         sub_2c8((byte)42, var1 == -1 ? null : new byte[]{var1, var2}, (short)(2 + var0 - 3), (Object[])null, new short[]{126}, (short)135);
+         showDialog((byte)42, var1 == -1 ? null : new byte[]{var1, var2}, (short)(2 + var0 - 3), (Object[])null, new short[]{126}, (short)135);
          ReadingDrawingClass.sub_7c6();
          return true;
       }
@@ -430,7 +430,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
       sub_360();
    }
 
-   public static void sub_2c8(byte var0, byte[] var1, short var2, Object[] var3, short[] var4, short var5) {
+   public static void showDialog(byte var0, byte[] var1, short var2, Object[] var3, short[] var4, short var5) {
       DialogManager.var_7c6 = 0;
       DialogManager.sub_23();
       DialogManager.var_7ed = var0;
@@ -485,7 +485,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
    }
 
    private void sub_36d() {
-      sub_3b5(2);
+      loadResourcesForState(2);
       this.sub_3d3();
       gameState = 3;
       var_5e0 = true;
@@ -495,7 +495,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
 
    }
 
-   public static void sub_3b5(int var0) {
+   public static void loadResourcesForState(int var0) {
       var_22b = true;
       switch(var0) {
       case 0:
@@ -546,15 +546,15 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          this.removeCommand(var_3bb);
          this.removeCommand(var_392);
          if (gameState == 3) {
-            var_3bb = new Command(ReadingDrawingClass.sub_5a0((short)258), 4, 1);
-            var_392 = new Command(ReadingDrawingClass.sub_5a0((short)261), 1, 2);
+            var_3bb = new Command(ReadingDrawingClass.getTextById((short)258), 4, 1);
+            var_392 = new Command(ReadingDrawingClass.getTextById((short)261), 1, 2);
             this.addCommand(var_3bb);
             this.addCommand(var_392);
             return;
          }
 
          if (gameState == 1) {
-            var_392 = new Command(ReadingDrawingClass.sub_5a0((short)261), 1, 2);
+            var_392 = new Command(ReadingDrawingClass.getTextById((short)261), 1, 2);
             this.addCommand(var_392);
          }
       }
@@ -680,7 +680,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          ReadingDrawingClass.readCharactersFromLng();
 
          try {
-            var_13cf = Integer.parseInt(ReadingDrawingClass.sub_5a0((short)276));
+            var_13cf = Integer.parseInt(ReadingDrawingClass.getTextById((short)276));
          } catch (NumberFormatException var2) {
          }
 
@@ -764,22 +764,22 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          default:
             break;
          case 202:
-            sub_2c8((byte)21, (byte[])null, (short)144, new Object[]{MM.gameVersion}, new short[]{126}, (short)202);
+            showDialog((byte)21, (byte[])null, (short)144, new Object[]{MM.gameVersion}, new short[]{126}, (short)202);
             return true;
          case 203:
             sub_707();
             return true;
          case 204:
-            sub_2c8((byte)44, (byte[])null, (short)145, new Object[]{MM.gameVersion}, new short[]{126, 127}, (short)204);
+            showDialog((byte)44, (byte[])null, (short)145, new Object[]{MM.gameVersion}, new short[]{126, 127}, (short)204);
             return true;
          case 205:
-            sub_2c8((byte)43, (byte[])null, (short)145, new Object[]{MM.gameVersion}, new short[]{126, 127}, (short)205);
+            showDialog((byte)43, (byte[])null, (short)145, new Object[]{MM.gameVersion}, new short[]{126, 127}, (short)205);
             return true;
          case 208:
             sub_682();
             return true;
          case 209:
-            sub_2c8((byte)0, (byte[])null, (short)8, (Object[])null, new short[]{126}, (short)135);
+            showDialog((byte)0, (byte[])null, (short)8, (Object[])null, new short[]{126}, (short)135);
             return true;
          case 210:
             sub_76b();
@@ -870,12 +870,12 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             switch(((Short)DialogManager.var_838).shortValue()) {
             case 214:
                var_ab2 = -1;
-               sub_7c1();
+               initShop();
                return true;
             case 215:
                sub_5d0();
                var_ab2 = -1;
-               sub_7c1();
+               initShop();
                return true;
             case 216:
                var_1217 = 4;
@@ -953,7 +953,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
       var_130f = null;
       if (var_1369) {
          sub_5d0();
-         if (ReadingDrawingClass.var_19d) {
+         if (ReadingDrawingClass.useSystemFont) {
             sub_6dd();
          } else {
             sub_76b();
@@ -991,7 +991,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          var1 -= 2;
       }
 
-      if (ReadingDrawingClass.var_19d) {
+      if (ReadingDrawingClass.useSystemFont) {
          --var1;
       }
 
@@ -1000,7 +1000,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
       var0[1] = 208;
       var0[2] = 209;
       var1 = 3;
-      if (!ReadingDrawingClass.var_19d) {
+      if (!ReadingDrawingClass.useSystemFont) {
          ++var1;
          var0[3] = 210;
       }
@@ -1031,11 +1031,11 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
 
    private static void sub_76b() {
       var_114a = 25;
-      sub_2c8((byte)21, new byte[]{5, 6}, (short)1, (Object[])null, new short[]{126}, (short)210);
+      showDialog((byte)21, new byte[]{5, 6}, (short)1, (Object[])null, new short[]{126}, (short)210);
    }
 
-   public static void sub_7c1() {
-      sub_3b5(2);
+   public static void initShop() {
+      loadResourcesForState(2);
       var_a60 = ReadingDrawingClass.sub_80d();
       var_150d = (LevelManager.var_cf >> 1) - (6 * (ReadingDrawingClass.var_a9 + 3) >> 1);
       var_1566 = var_150d + ReadingDrawingClass.var_a9 + 3;
@@ -1063,7 +1063,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
       var_5ed = true;
    }
 
-   private static void sub_7f0(Graphics var0) {
+   private static void paintShop(Graphics g) {
       needRepaint = true;
       int var2 = 16 * ReadingDrawingClass.var_12;
       int var3 = (var_1180 >> 1) - (var2 >> 1);
@@ -1099,13 +1099,13 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          var_5ed = false;
       }
 
-      var0.drawImage(LevelManager.var_25f, 0, 0, 0);
+      g.drawImage(LevelManager.var_25f, 0, 0, 0);
       var1 = var_1566;
       if (var_ab2 >= 0) {
          label42:
          for(var4 = 0; var4 < 5; ++var4) {
             if (var_ab2 == var4) {
-               ReadingDrawingClass.sub_47c(var0, ((short[][])((short[][])var_a60.elementAt(0)))[var4], var3, var1);
+               ReadingDrawingClass.sub_47c(g, ((short[][])((short[][])var_a60.elementAt(0)))[var4], var3, var1);
                int var8 = 0;
 
                while(true) {
@@ -1114,7 +1114,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
                   }
 
                   if (var8 == var_afa && var_115 > 12) {
-                     ReadingDrawingClass.sub_47c(var0, ReadingDrawingClass.readTextFromLng((short)256), var3 + var8 * ReadingDrawingClass.var_12, var1 + 2);
+                     ReadingDrawingClass.sub_47c(g, ReadingDrawingClass.readTextFromLng((short)256), var3 + var8 * ReadingDrawingClass.var_12, var1 + 2);
                   }
 
                   ++var8;
@@ -1393,27 +1393,27 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             break;
          case 150:
             musicManager.switchMusicPlayer(5, 1);
-            sub_2c8((byte)11, (byte[])null, var_ea3, var_eff, new short[]{126}, (short)140);
+            showDialog((byte)11, (byte[])null, var_ea3, var_eff, new short[]{126}, (short)140);
             break;
          case 151:
             musicManager.switchMusicPlayer(4, 1);
-            sub_2c8((byte)11, (byte[])null, var_ea3, var_eff, new short[]{126}, (short)140);
+            showDialog((byte)11, (byte[])null, var_ea3, var_eff, new short[]{126}, (short)140);
             break;
          case 152:
             musicManager.switchMusicPlayer(4, 1);
-            sub_2c8((byte)31, (byte[])null, (short)152, var_eff, new short[]{126}, (short)140);
+            showDialog((byte)31, (byte[])null, (short)152, var_eff, new short[]{126}, (short)140);
             break;
          case 153:
             musicManager.switchMusicPlayer(5, 1);
-            sub_2c8((byte)38, (byte[])null, (short)153, (Object[])null, new short[]{126}, (short)141);
+            showDialog((byte)38, (byte[])null, (short)153, (Object[])null, new short[]{126}, (short)141);
             break;
          case 164:
             musicManager.switchMusicPlayer(5, 1);
-            sub_2c8((byte)15, (byte[])null, (short)164, (Object[])null, new short[]{126}, (short)131);
+            showDialog((byte)15, (byte[])null, (short)164, (Object[])null, new short[]{126}, (short)131);
             break;
          case 165:
             musicManager.switchMusicPlayer(5, 1);
-            sub_2c8((byte)40, (byte[])null, (short)165, (Object[])null, new short[]{126}, (short)132);
+            showDialog((byte)40, (byte[])null, (short)165, (Object[])null, new short[]{126}, (short)132);
          }
 
          if (var_ea3 == 2) {
@@ -1445,16 +1445,16 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
       int var0;
       switch(var0 = var_13a7.mapInputToGameAction(keyCodePressed)) {
       case 2:
-         sub_b3f((byte)2);
+         moveCursorInMenu((byte)2);
          break;
       case 3:
-         sub_b3f((byte)3);
+         moveCursorInMenu((byte)3);
          break;
       case 4:
-         sub_b3f((byte)0);
+         moveCursorInMenu((byte)0);
          break;
       case 5:
-         sub_b3f((byte)1);
+         moveCursorInMenu((byte)1);
          break;
       case 6:
       case 7:
@@ -1493,7 +1493,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             Thief var10000;
             if (var_900.inventoryTools[0] != var1 && var_900.inventoryTools[1] != var1 && var_900.inventoryTools[2] != var1) {
                if (toolStats[sub_e5c(var1)][0] > currentMoney) {
-                  sub_2c8((byte)0, (byte[])null, (short)181, new Object[]{new Integer(toolStats[sub_e5c(var1)][0]), new Integer(currentMoney)}, new short[]{126}, (short)136);
+                  showDialog((byte)0, (byte[])null, (short)181, new Object[]{new Integer(toolStats[sub_e5c(var1)][0]), new Integer(currentMoney)}, new short[]{126}, (short)136);
                   keyCodePressed = 999999;
                   var_649 = true;
                   var_62c = true;
@@ -1501,7 +1501,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
                }
 
                if (LevelManager.levelAdditionalData_TimerEtc[levelId - 1][13 + sub_e5c(var1)] == 0) {
-                  sub_2c8((byte)0, (byte[])null, (short)182, (Object[])null, new short[]{126}, (short)136);
+                  showDialog((byte)0, (byte[])null, (short)182, (Object[])null, new short[]{126}, (short)136);
                   keyCodePressed = 999999;
                   var_649 = true;
                   var_62c = true;
@@ -1510,7 +1510,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
 
                var2 = LevelManager.thiefStats[var_f0d][0] - var_900.currentLoad;
                if (toolStats[sub_e5c(var1)][1] > var2) {
-                  sub_2c8((byte)0, (byte[])null, (short)(var2 == 0 ? 188 : 187), new Object[]{new Integer(toolStats[sub_e5c(var1)][1]), new Short((short)(41 + var_f0d)), new Integer(var2)}, new short[]{126}, (short)136);
+                  showDialog((byte)0, (byte[])null, (short)(var2 == 0 ? 188 : 187), new Object[]{new Integer(toolStats[sub_e5c(var1)][1]), new Short((short)(41 + var_f0d)), new Integer(var2)}, new short[]{126}, (short)136);
                   keyCodePressed = 999999;
                   var_649 = true;
                   var_62c = true;
@@ -1570,7 +1570,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             case 2:
                var_f0d = 0;
                if (levelId < 6) {
-                  sub_2c8((byte)0, (byte[])null, (short)183, (Object[])null, new short[]{126}, (short)137);
+                  showDialog((byte)0, (byte[])null, (short)183, (Object[])null, new short[]{126}, (short)137);
                } else {
                   sub_22b((byte)2, new byte[]{5, var_f0d}, new short[]{125, 122}, ReadingDrawingClass.readTextFromLng((short)41), (byte)2);
                }
@@ -1591,7 +1591,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
                break;
             case 7:
                if (LevelManager.thievesList.size() == 0 && levelId == 1) {
-                  sub_2c8((byte)33, (byte[])null, (short)149, (Object[])null, new short[]{126}, (short)136);
+                  showDialog((byte)33, (byte[])null, (short)149, (Object[])null, new short[]{126}, (short)136);
                   return;
                }
 
@@ -1637,15 +1637,15 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
       int var2 = (var0 - var1 * 60) / 10;
       int var3 = var0 - var1 * 60 - var2 * 10;
       if (levelId < 7) {
-         sub_2c8((byte)41, new byte[]{5, 5}, LevelManager.levelAdditionalData_TimerEtc[levelId - 1][25], new Object[]{new Integer(var1), new Integer(var2), new Integer(var3)}, new short[]{126}, (short)133);
+         showDialog((byte)41, new byte[]{5, 5}, LevelManager.levelAdditionalData_TimerEtc[levelId - 1][25], new Object[]{new Integer(var1), new Integer(var2), new Integer(var3)}, new short[]{126}, (short)133);
       } else {
          sub_2db((byte)41, new byte[]{5, 5}, LevelManager.levelAdditionalData_TimerEtc[levelId - 1][25], new Object[]{new Integer(var1), new Integer(var2), new Integer(var3)}, new short[]{126}, (short)134, new Object[]{new Integer(levelId - 6)});
       }
    }
 
-   private static void sub_b3f(byte var0) {
+   private static void moveCursorInMenu(byte direction) {
       if (var_6ac) {
-         switch(var0) {
+         switch(direction) {
          case 0:
             --var_6c8;
             if (var_6c8 < 0) {
@@ -1675,7 +1675,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          var_c60 = var_762 + var_6d8 * (LevelObjectData.spriteTypesArr[26][3] + var_7d3) + (LevelObjectData.spriteTypesArr[26][3] >> 1);
          sub_b52();
       } else {
-         var_ca0 = var_b4c[var_ca0][var0];
+         var_ca0 = var_b4c[var_ca0][direction];
          cursorXTarget = LevelObjectData.var_65[var_ca0][0];
          var_c60 = LevelObjectData.var_65[var_ca0][1];
          switch(var_ca0) {
@@ -1684,8 +1684,8 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             break;
          case 3:
             if (selectedThieves.contains(allThievesArray[1]) || LevelManager.levelAdditionalData_TimerEtc[levelId - 1][7] == 0) {
-               var_ca0 = var_b5a[0][var0];
-               sub_b3f(var0);
+               var_ca0 = var_b5a[0][direction];
+               moveCursorInMenu(direction);
                return;
             }
 
@@ -1693,8 +1693,8 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             break;
          case 4:
             if (selectedThieves.contains(allThievesArray[2]) || LevelManager.levelAdditionalData_TimerEtc[levelId - 1][8] == 0) {
-               var_ca0 = var_b5a[1][var0];
-               sub_b3f(var0);
+               var_ca0 = var_b5a[1][direction];
+               moveCursorInMenu(direction);
                return;
             }
 
@@ -1706,13 +1706,13 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
                break;
             }
 
-            var_ca0 = var_b5a[2][var0];
-            sub_b3f(var0);
+            var_ca0 = var_b5a[2][direction];
+            moveCursorInMenu(direction);
             return;
          case 6:
             if (selectedThieves.contains(allThievesArray[4]) || LevelManager.levelAdditionalData_TimerEtc[levelId - 1][10] == 0) {
-               var_ca0 = var_b5a[3][var0];
-               sub_b3f(var0);
+               var_ca0 = var_b5a[3][direction];
+               moveCursorInMenu(direction);
                return;
             }
 
@@ -1768,7 +1768,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             var_1217 = 0;
             sub_f0c();
             var_ab2 = -1;
-            sub_7c1();
+            initShop();
          }
 
          var_157e = false;
@@ -1832,7 +1832,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             Thief var12 = allThievesArray[var_f0d];
             switch(var1) {
             case 122:
-               sub_2c8((byte)0, new byte[]{5, var12.thiefId}, (short)(var12.thiefId == 0 ? 147 : 148), new Object[]{new Integer(LevelManager.thiefStats[var12.thiefId][0]), new Integer(LevelManager.thiefStats[var12.thiefId][1]), new Short((short)(var12.thiefId + 99))}, new short[]{126}, (short)(41 + var12.thiefId));
+               showDialog((byte)0, new byte[]{5, var12.thiefId}, (short)(var12.thiefId == 0 ? 147 : 148), new Object[]{new Integer(LevelManager.thiefStats[var12.thiefId][0]), new Integer(LevelManager.thiefStats[var12.thiefId][1]), new Short((short)(var12.thiefId + 99))}, new short[]{126}, (short)(41 + var12.thiefId));
                return true;
             case 123:
                var12.sub_19d();
@@ -1841,7 +1841,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
                return false;
             case 124:
                LevelManager.thievesList.addElement(allThievesArray[var_f0d]);
-               allThievesArray[var_f0d].sub_1e();
+               allThievesArray[var_f0d].resetToSpawn();
                var_6ac = true;
                var_12fc = false;
                var_649 = true;
@@ -1872,7 +1872,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
                sub_3f1();
                break;
             case 209:
-               sub_2c8((byte)0, (byte[])null, (short)8, (Object[])null, new short[]{126}, (short)135);
+               showDialog((byte)0, (byte[])null, (short)8, (Object[])null, new short[]{126}, (short)135);
                return true;
             }
 
@@ -1915,7 +1915,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
                return true;
             case 218:
                if (LevelManager.var_7f3 > 0) {
-                  sub_2c8((byte)28, new byte[]{5, 5}, (short)177, new Object[]{new Integer(LevelManager.var_7f3)}, new short[]{126, 127}, (short)189);
+                  showDialog((byte)28, new byte[]{5, 5}, (short)177, new Object[]{new Integer(LevelManager.var_7f3)}, new short[]{126, 127}, (short)189);
                   return true;
                }
 
@@ -1950,7 +1950,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
                   }
                }
 
-               sub_2c8((byte)25, (byte[])null, (short)174, var14, new short[]{126, 127}, (short)137);
+               showDialog((byte)25, (byte[])null, (short)174, var14, new short[]{126, 127}, (short)137);
                return true;
             case 220:
                return sub_c62();
@@ -1979,7 +1979,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
                }
 
                musicManager.switchMusicPlayer(4, 1);
-               sub_2c8((byte)13, new byte[]{48, 0}, (short)159, var6, new short[]{126}, (short)136);
+               showDialog((byte)13, new byte[]{48, 0}, (short)159, var6, new short[]{126}, (short)136);
             }
 
             return true;
@@ -1994,7 +1994,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
 
             if (var1 == 191) {
                if (gameMode > 0) {
-                  sub_2c8((byte)35, (byte[])null, (short)158, new Object[]{new Integer(var_10ff)}, new short[]{126}, (short)191);
+                  showDialog((byte)35, (byte[])null, (short)158, new Object[]{new Integer(var_10ff)}, new short[]{126}, (short)191);
                   --var_10ff;
                } else {
                   sub_c15();
@@ -2006,7 +2006,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          case 15:
             ReadingDrawingClass.sub_759();
             var_ab2 = 0;
-            sub_7c1();
+            initShop();
             return true;
          case 19:
             if (var1 == 199) {
@@ -2016,7 +2016,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             return true;
          case 20:
             var_9fe = var1 - 228;
-            sub_2c8((byte)26, new byte[]{5, 5}, (short)(var1 == 234 ? 180 : 179), new Object[]{new Short((short)(221 + var_9fe)), new Integer(LevelManager.var_7a3[var_9fe])}, new short[]{126, 127}, (short)189);
+            showDialog((byte)26, new byte[]{5, 5}, (short)(var1 == 234 ? 180 : 179), new Object[]{new Short((short)(221 + var_9fe)), new Integer(LevelManager.var_7a3[var_9fe])}, new short[]{126, 127}, (short)189);
             return true;
          case 25:
             if (var0.equals(String.valueOf(126))) {
@@ -2029,21 +2029,21 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
                   currentMoney -= LevelManager.var_7a3[var_9fe];
                   LevelManager.var_7a3[var_9fe] = 0;
                   if (221 + var_9fe == 227) {
-                     sub_2c8((byte)34, new byte[]{5, 5}, LevelManager.levelAdditionalData_TimerEtc[levelId - 1][26], (Object[])null, new short[]{126}, (short)189);
+                     showDialog((byte)34, new byte[]{5, 5}, LevelManager.levelAdditionalData_TimerEtc[levelId - 1][26], (Object[])null, new short[]{126}, (short)189);
                      return true;
                   }
 
                   return sub_c29();
                }
 
-               sub_2c8((byte)0, (byte[])null, (short)181, new Object[]{new Integer(LevelManager.var_7a3[var_9fe]), new Integer(currentMoney)}, new short[]{126}, (short)136);
+               showDialog((byte)0, (byte[])null, (short)181, new Object[]{new Integer(LevelManager.var_7a3[var_9fe]), new Integer(currentMoney)}, new short[]{126}, (short)136);
                return true;
             }
             break;
          case 28:
             if (var0.equals(String.valueOf(126))) {
                if (currentMoney < LevelManager.var_7f3) {
-                  sub_2c8((byte)0, (byte[])null, (short)181, new Object[]{new Integer(LevelManager.var_7f3), new Integer(currentMoney)}, new short[]{126}, (short)136);
+                  showDialog((byte)0, (byte[])null, (short)181, new Object[]{new Integer(LevelManager.var_7f3), new Integer(currentMoney)}, new short[]{126}, (short)136);
                   return true;
                }
 
@@ -2058,7 +2058,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
                Thief var4 = (Thief)selectedThieves.elementAt(var3);
                if (var9 == var3) {
                   var_900 = var4;
-                  sub_2c8((byte)30, new byte[]{5, var4.thiefId}, (short)178, new Object[]{new Integer(var4.collectedLoot[0] * 1000)}, new short[]{126, 127}, (short)(41 + var4.thiefId));
+                  showDialog((byte)30, new byte[]{5, var4.thiefId}, (short)178, new Object[]{new Integer(var4.collectedLoot[0] * 1000)}, new short[]{126, 127}, (short)(41 + var4.thiefId));
                   return true;
                }
             }
@@ -2068,7 +2068,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             if (var0.equals(String.valueOf(126))) {
                int var2 = var_900.collectedLoot[0] * 1000;
                if (currentMoney < var2) {
-                  sub_2c8((byte)0, (byte[])null, (short)181, new Object[]{new Integer(var2), new Integer(currentMoney)}, new short[]{126}, (short)136);
+                  showDialog((byte)0, (byte[])null, (short)181, new Object[]{new Integer(var2), new Integer(currentMoney)}, new short[]{126}, (short)136);
                   return true;
                }
 
@@ -2081,7 +2081,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             break;
          case 32:
             var_ab2 = 0;
-            sub_7c1();
+            initShop();
             return true;
          case 33:
             var_1217 = 2;
@@ -2234,7 +2234,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
 
          sub_29b((byte)0, new byte[]{8, var0}, var3, var4, var5, (boolean[])null, LevelManager.sub_bc9(var0), (byte)1);
       } else {
-         sub_2c8((byte)0, new byte[]{8, var0}, (short)(LevelManager.sub_bc9(var0) == 113 ? 83 : 84), new Object[]{new Integer(Thief.toolUsingTimeStats[0][var0])}, new short[]{126}, LevelManager.sub_bc9(var0));
+         showDialog((byte)0, new byte[]{8, var0}, (short)(LevelManager.sub_bc9(var0) == 113 ? 83 : 84), new Object[]{new Integer(Thief.toolUsingTimeStats[0][var0])}, new short[]{126}, LevelManager.sub_bc9(var0));
       }
    }
 
@@ -2289,7 +2289,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             }
 
             for(int var1 = 0; var1 < allThievesArray.length; ++var1) {
-               allThievesArray[var1].sub_1e();
+               allThievesArray[var1].resetToSpawn();
                allThievesArray[var1].clearThievesState(false);
                allThievesArray[var1].sub_41a();
                allThievesArray[var1].currentLoad = 0;
@@ -2308,7 +2308,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             }
          }
 
-         LevelManager.var_c64 = 0;
+         LevelManager.winState = 0;
       }
    }
 
@@ -2418,7 +2418,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
    }
 
    private static boolean sub_f0c() {
-      String var1 = ReadingDrawingClass.sub_5a0((short)275);
+      String var1 = ReadingDrawingClass.getTextById((short)275);
       var_a60 = ReadingDrawingClass.sub_80d();
       short[][] var2 = (short[][])((short[][])var_a60.elementAt(0));
       int[] var3 = (int[])((int[])var_a60.elementAt(1));

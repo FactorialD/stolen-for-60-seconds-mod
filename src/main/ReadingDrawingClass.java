@@ -21,7 +21,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
    public static short var_12d;
    private static final short[][] var_13b = new short[][]{{64, 11, 116, 106, 54, 25, 64, 93, 46, 41, 54, 77}, {49, 0, 77, 15, 49, 112, 77, 127, 56, 15, 70, 112, 48, 26, 56, 42, 70, 25, 78, 42}, {49, 0, 77, 15, 49, 112, 77, 127, 56, 15, 70, 112, 43, 15, 82, 112, 37, 26, 43, 44, 82, 26, 92, 44}, {55, 8, 113, 118, 17, 38, 55, 78, 28, 38, 41, 78}, {34, 13, 49, 113, 31, 23, 34, 105}, {27, 0, 100, 127, 40, 0, 87, 127}, {4, 22, 30, 56, 20, 100, 30, 111, 13, 36, 30, 44, 20, 73, 30, 85, 30, 0, 48, 127}, {27, 0, 100, 127, 40, 47, 88, 94, 65, 68, 79, 79, 50, 54, 71, 55, 51, 70, 54, 77}, {43, 1, 111, 125, 1, 27, 43, 76, 13, 27, 25, 76, 83, 22, 94, 97, 56, 93, 66, 102}, {12, 11, 113, 116, 35, 32, 91, 92, 12, 45, 35, 82, 45, 92, 85, 116, 43, 11, 84, 32, 91, 44, 113, 83}, {42, 32, 81, 86, 34, 99, 89, 124, 57, 50, 64, 61, 51, 86, 73, 99}, {32, 10, 48, 118, 4, 47, 18, 81, 18, 16, 33, 110}, {11, 0, 48, 127, 24, 18, 48, 109}, {9, 1, 49, 126, 4, 22, 9, 37, 4, 91, 9, 104}, {11, 16, 29, 109, 11, 0, 48, 127}, {43, 6, 104, 120, 82, 6, 104, 120, 43, 105, 82, 120, 43, 6, 82, 22}, {29, 28, 99, 100, 29, 94, 35, 100, 29, 28, 35, 34, 93, 28, 99, 34, 93, 94, 99, 100}, {40, 21, 90, 37, 90, 37, 106, 85, 40, 85, 90, 100, 26, 37, 40, 85}, {28, 34, 102, 82, 11, 73, 28, 82, 11, 34, 28, 43, 48, 34, 82, 82, 102, 44, 118, 73}, {27, 0, 100, 127}, {0, 25, 37, 25, 52, 8, 118, 119, 118, 77, 126, 100, 62, 0, 105, 8, 62, 119, 105, 127, 37, 25, 37, 102, 0, 8, 52, 8, 0, 102, 37, 102, 0, 119, 52, 119, 118, 27, 126, 52}, {32, 32, 99, 87, 48, 50, 82, 60, 49, 73, 49, 87, 66, 73, 66, 87, 81, 73, 81, 87}, {12, 11, 113, 116, 35, 32, 91, 92}, {24, 24, 101, 101}};
    private static String allCharactersStr;
-   public static boolean var_19d;
+   public static boolean useSystemFont;
    private static final Hashtable gameTexts = new Hashtable();
    public static Image[] mainImages;
    private static short var_279;
@@ -30,16 +30,16 @@ public final class ReadingDrawingClass implements LevelObjectData {
    private static int var_2d5 = -1;
    private static boolean var_305 = true;
 
-   public static int sub_21(int var0, int var1) {
-      if (var0 >= var1) {
-         return var0;
+   public static int randomRange(int min, int max) {
+      if (min >= max) {
+         return min;
       } else {
          int var2;
          for(int var3 = Math.abs(var2 = var_e3.nextInt()) % 5 + 3; var3 > 0; --var3) {
             var2 = var_e3.nextInt();
          }
 
-         return Math.abs(var2) % (var1 - var0 + 1) + var0;
+         return Math.abs(var2) % (max - min + 1) + min;
       }
    }
 
@@ -468,12 +468,12 @@ public final class ReadingDrawingClass implements LevelObjectData {
       DataInputStream dataStream = null;
 
       try {
-         var_19d = (dataStream = getDataInputStreamFromDat("lng")).readByte() == 1;
+         useSystemFont = (dataStream = getDataInputStreamFromDat("lng")).readByte() == 1;
          allCharactersStr = dataStream.readUTF();
          var_279 = (short)allCharactersStr.indexOf(95);
          var_2a2 = (short)allCharactersStr.indexOf(45);
          // this accordingly to lng file, never runs
-         if (var_19d) {
+         if (useSystemFont) {
             var_12 = (byte)Font.getDefaultFont().charWidth('W');
             var_a9 = (byte)Font.getDefaultFont().getHeight();
             LevelObjectData.spriteTypesArr[43][2] = (short)var_12;
@@ -485,7 +485,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
 
          while(true) {
             if (var3 <= 1) {
-               if (var_19d) {
+               if (useSystemFont) {
                   var2 = (short)(var2 << 1);
                }
 
@@ -495,7 +495,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
 
                int var5;
                for(var5 = 0; var5 < var2; ++var5) {
-                  if (var_19d) {
+                  if (useSystemFont) {
                      var4[var5] = dataStream.readShort();
                   } else {
                      var4[var5] = (short)dataStream.readByte();
@@ -593,7 +593,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
                   short[] resultTextData = new short[someTextDataLength];
 
                   for(int i = 0; i < someTextDataLength; ++i) {
-                     if (var_19d) {
+                     if (useSystemFont) {
                         resultTextData[i] = dataStream.readShort();
                      } else {
                         resultTextData[i] = (short)dataStream.readByte();
@@ -606,7 +606,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
                   return resultTextData;
                }
 
-               if (var_19d) {
+               if (useSystemFont) {
                   someTextDataLength = (short)(someTextDataLength << 1);
                }
 
@@ -638,7 +638,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
    }
 
    public static void drawText(Graphics g, short[] textCodes, int var2, int var3, int var4, int var5) {
-      if (var_19d && g != null) {
+      if (useSystemFont && g != null) {
          g.setClip(0, 0, LevelManager.screenWidth, LevelManager.screenHeight);
       }
 
@@ -647,13 +647,13 @@ public final class ReadingDrawingClass implements LevelObjectData {
       for(int var7 = 0; var7 < textCodes.length; ++var7) {
          short var8;
          if ((var8 = textCodes[var7]) != -1) {
-            if (!var_19d) {
+            if (!useSystemFont) {
                var6 = var2 + var7 * var_12;
             }
 
             boolean var9;
             if (var3 + var_a9 > 0 && var3 < LevelManager.screenHeight && (!(var9 = var4 != var5) && var6 + var_12 > 0 && var6 < LevelManager.screenWidth || var9 && var6 >= var4 && var6 + var_12 <= var5)) {
-               if (var_19d) {
+               if (useSystemFont) {
                   try {
                      g.setColor(5, 5, 5);
                      g.drawSubstring(allCharactersStr, var8, 1, var6 + 1, var3 + 1, 20);
@@ -684,7 +684,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
    }
 
    public static short[] sub_569(short var0, Object[] var1) {
-      String var2 = sub_5a0(var0);
+      String var2 = getTextById(var0);
       boolean var3 = false;
       StringBuffer var4 = new StringBuffer();
       int var5 = var2.length();
@@ -698,7 +698,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
                   int var8;
                   if ((var8 = Integer.parseInt(var2.substring(var6, var7))) < var1.length) {
                      if (var1[var8] instanceof Short) {
-                        var4.append(sub_5a0(((Short)var1[var8]).shortValue()));
+                        var4.append(getTextById(((Short)var1[var8]).shortValue()));
                      } else if (var1[var8] instanceof byte[]) {
                         var4.append(sub_5df((short[])((short[])var1[var8])));
                      } else {
@@ -727,7 +727,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
       return sub_533(var4.toString());
    }
 
-   public static String sub_5a0(short var0) {
+   public static String getTextById(short var0) {
       StringBuffer var1 = new StringBuffer();
       short[] var2 = readTextFromLng(var0);
 
@@ -758,8 +758,13 @@ public final class ReadingDrawingClass implements LevelObjectData {
       return (byte)(var0 % var1 > (var1 >> 1) - (var1 + 1) % 2 ? 1 : 0);
    }
 
-   public static boolean sub_678(byte var0, byte var1) {
-      return (var0 >> var1 & 1) == 1;
+   /**
+    * Проверяет, установлен ли бит
+    * @param val значение
+    * @param bit позиция
+    */
+   public static boolean checkBit(byte val, byte bit) {
+      return (val >> bit & 1) == 1;
    }
 
    public static byte sub_6b7(byte var0, byte var1, boolean var2) {
@@ -1191,7 +1196,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
 
             outStream.writeByte(GlobalManager.levelId);
             outStream.writeInt(GlobalManager.currentMoney);
-            outStream.writeByte(LevelManager.var_c64);
+            outStream.writeByte(LevelManager.winState);
 
             for(var3 = 0; var3 < LevelManager.var_7a3.length; ++var3) {
                outStream.writeInt(LevelManager.var_7a3[var3]);
@@ -1371,7 +1376,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
                   }
 
                   GlobalManager.currentMoney = var2.readInt();
-                  LevelManager.var_c64 = var2.readByte();
+                  LevelManager.winState = var2.readByte();
 
                   for(int var4 = 0; var4 < LevelManager.var_7a3.length; ++var4) {
                      LevelManager.var_7a3[var4] = var2.readInt();
@@ -1411,7 +1416,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
                      var7 = GlobalManager.allThievesArray[var35];
                      byte var38 = LevelManager.exitX;
                      byte var9 = LevelManager.exitY;
-                     var7.sub_1e();
+                     var7.resetToSpawn();
                      byte var10 = 0;
                      byte var11 = 0;
                      short var12;
@@ -1476,7 +1481,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
                   sub_6da();
 
                   for(var5 = 0; var5 < GlobalManager.allThievesArray.length; ++var5) {
-                     GlobalManager.allThievesArray[var5].sub_1e();
+                     GlobalManager.allThievesArray[var5].resetToSpawn();
                      GlobalManager.allThievesArray[var5].clearThievesState(false);
                      GlobalManager.allThievesArray[var5].sub_41a();
                      GlobalManager.allThievesArray[var5].currentLoad = 0;

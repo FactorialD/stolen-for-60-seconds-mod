@@ -21,16 +21,16 @@ public final class Thief implements LevelObjectData {
    public final byte[] inventoryTools = new byte[3];
    public byte selectedToolSlot;
    public static short globalTimer;
-   public static int var_4ca;
-   public static int var_51f;
+   public static int targetX;
+   public static int targetY;
    public static int[] exitAnimationProgress = new int[]{0, 0, 0, 0, 0};
 
-   public Thief(byte var1) {
-      this.thiefId = var1;
+   public Thief(byte thiefId) {
+      this.thiefId = thiefId;
       this.clearThievesState(false);
    }
 
-   public final void sub_1e() {
+   public final void resetToSpawn() {
       exitAnimationProgress[0] = 0;
       this.positionX = LevelManager.exitX;
       this.positionY = LevelManager.exitY;
@@ -40,10 +40,10 @@ public final class Thief implements LevelObjectData {
    }
 
    public final void applyTimelineState(boolean setPos) {
-      if (LevelManager.var_e52 == 3) {
+      if (LevelManager.cameraState == 3) {
          this.actionState = 2;
       } else {
-         if (LevelManager.var_e52 == 2) {
+         if (LevelManager.cameraState == 2) {
             if (this.positionX != LevelManager.exitX || this.positionY != LevelManager.exitY) {
                if (exitAnimationProgress[this.thiefId] < 3) {
                   this.actionState = LevelManager.var_619[this.thiefId][exitAnimationProgress[this.thiefId]].getAction();
@@ -79,11 +79,11 @@ public final class Thief implements LevelObjectData {
       return this.recordedActions.size() > 0 && var1 < this.recordedActions.size() ? (TimelineNode)this.recordedActions.elementAt(var1) : null;
    }
 
-   public final void recordWaitTimes(byte var1) {
+   public final void addWaitAction(byte seconds) {
       byte x = this.positionX;
       byte y = this.positionY;
 
-      for(int var5 = 0; var5 < var1; ++var5) {
+      for(int var5 = 0; var5 < seconds; ++var5) {
          TimelineNode var2;
          (var2 = (TimelineNode)this.recordedActions.elementAt(globalTimer + var5)).x = x;
          var2.y = y;
@@ -109,7 +109,7 @@ public final class Thief implements LevelObjectData {
       short var5 = globalTimer;
       boolean var6 = false;
       boolean var7 = false;
-      if (this.sub_311()) {
+      if (this.isInteracting()) {
          this.targetObject = LevelManager.sub_912(this);
          if (this.targetObject != null) {
             switch(this.actionState) {
@@ -180,7 +180,7 @@ public final class Thief implements LevelObjectData {
          this.undoLastAction();
       }
 
-      this.sub_1e();
+      this.resetToSpawn();
    }
 
    public final void sub_1ba(byte var1, byte var2) {
@@ -200,7 +200,7 @@ public final class Thief implements LevelObjectData {
          var3 = LevelManager.offsetTypes[1][this.direction] * (this.moveInterpolation * 24 / 12);
       }
 
-      if (this.sub_311() && this.targetObject != null) {
+      if (this.isInteracting() && this.targetObject != null) {
          var2 = LevelManager.offsetTypes[0][this.direction] * LevelObjectData.spriteIndexes[this.targetObject.objectType][6];
          var3 = LevelManager.offsetTypes[1][this.direction] * LevelObjectData.spriteIndexes[this.targetObject.objectType][6];
       }
@@ -253,10 +253,10 @@ public final class Thief implements LevelObjectData {
          boolean var2 = false;
          int var3;
          if (GlobalManager.keyCodePressed == 999999) {
-            var3 = LevelManager.var_f0.sub_435(GlobalManager.var_9af);
+            var3 = LevelManager.instance.sub_435(GlobalManager.var_9af);
          } else {
             GlobalManager.var_9af = 999999;
-            var3 = LevelManager.var_f0.mapInputToGameAction(GlobalManager.keyCodePressed);
+            var3 = LevelManager.instance.mapInputToGameAction(GlobalManager.keyCodePressed);
          }
 
          switch(var3) {
@@ -278,14 +278,14 @@ public final class Thief implements LevelObjectData {
          }
 
          if (var2) {
-            if (LevelManager.sub_4f6(this, LevelManager.gameState == 0)) {
+            if (LevelManager.checkObjectInteraction(this, LevelManager.gameState == 0)) {
                if (this.actionState == 1) {
                   this.actionState = 2;
                   GlobalManager.keyCodePressed = 999999;
                } else {
                   LevelManager.sub_a53(this);
                }
-            } else if (LevelManager.sub_4d1(this, LevelManager.gameState == 0)) {
+            } else if (LevelManager.checkWallCollision(this, LevelManager.gameState == 0)) {
                this.actionState = 1;
                var1 = true;
             } else {
@@ -320,21 +320,21 @@ public final class Thief implements LevelObjectData {
       this.isBusy = true;
       if (LevelManager.gameState == 0) {
          if (this.actionState == 5 && LevelManager.levelObjects.containsKey(LevelManager.combineInts(this.positionX, this.positionY))) {
-            GlobalManager.sub_2c8((byte)0, (byte[])null, (short)172, (Object[])null, new short[]{126}, (short)137);
+            GlobalManager.showDialog((byte)0, (byte[])null, (short)172, (Object[])null, new short[]{126}, (short)137);
             return;
          }
 
-         this.recordWaitTimes(duration);
+         this.addWaitAction(duration);
          globalTimer = (short)(globalTimer + (duration - 1));
          LevelManager.sub_585(this, isInteract);
          ++globalTimer;
-         if (this.sub_311() && this.targetObject != null) {
+         if (this.isInteracting() && this.targetObject != null) {
             switch(this.actionState) {
             case 3:
                this.targetObject.var_1a5 = globalTimer;
                LevelManager.sub_702();
                if (this.targetObject.var_1f5 != 0 && this.targetObject.var_22c > 0 && LevelManager.var_7a3[this.targetObject.var_1f5] <= 0 && this.projectedLoad + LevelManager.var_71c[this.targetObject.var_1f5][1] > LevelManager.thiefStats[this.thiefId][0]) {
-                  if (LevelManager.thiefStats[this.thiefId][0] - this.sub_46a() < LevelManager.var_71c[this.targetObject.var_1f5][1]) {
+                  if (LevelManager.thiefStats[this.thiefId][0] - this.calculateCurrentWeight() < LevelManager.var_71c[this.targetObject.var_1f5][1]) {
                      LevelManager.var_247 = 186;
                   } else {
                      LevelManager.var_247 = 185;
@@ -345,7 +345,7 @@ public final class Thief implements LevelObjectData {
                this.targetObject.interactionTickTimestamp = globalTimer;
                LevelManager.sub_702();
                if (this.inventoryTools[this.selectedToolSlot] == 115 && this.targetObject.var_1f5 != 0 && this.targetObject.var_22c > 0 && LevelManager.var_7a3[this.targetObject.var_1f5] <= 0 && this.projectedLoad + LevelManager.var_71c[this.targetObject.var_1f5][1] > LevelManager.thiefStats[this.thiefId][0]) {
-                  if (LevelManager.thiefStats[this.thiefId][0] - this.sub_46a() < LevelManager.var_71c[this.targetObject.var_1f5][1]) {
+                  if (LevelManager.thiefStats[this.thiefId][0] - this.calculateCurrentWeight() < LevelManager.var_71c[this.targetObject.var_1f5][1]) {
                      LevelManager.var_247 = 186;
                   } else {
                      LevelManager.var_247 = 185;
@@ -374,7 +374,7 @@ public final class Thief implements LevelObjectData {
 
    }
 
-   public final boolean sub_311() {
+   public final boolean isInteracting() {
       return this.actionState == 4 || this.actionState == 5 || this.actionState == 3;
    }
 
@@ -389,16 +389,16 @@ public final class Thief implements LevelObjectData {
          }
 
          this.targetObject.progressData[1] = 8;
-         GlobalManager.sub_2c8((byte)0, new byte[]{5, this.thiefId}, (short)184, (Object[])null, new short[]{126}, (short)(41 + this.thiefId));
+         GlobalManager.showDialog((byte)0, new byte[]{5, this.thiefId}, (short)184, (Object[])null, new short[]{126}, (short)(41 + this.thiefId));
       }
 
       return false;
    }
 
-   public final boolean sub_3a5() {
-      var_4ca = this.positionX + LevelManager.offsetTypes[0][this.direction];
-      var_51f = this.positionY + LevelManager.offsetTypes[1][this.direction];
-      return var_4ca >= 0 && var_4ca < LevelManager.mapWidth && var_51f >= 0 && var_51f < LevelManager.mapHeight;
+   public final boolean calculateNextPosition() {
+      targetX = this.positionX + LevelManager.offsetTypes[0][this.direction];
+      targetY = this.positionY + LevelManager.offsetTypes[1][this.direction];
+      return targetX >= 0 && targetX < LevelManager.mapWidth && targetY >= 0 && targetY < LevelManager.mapHeight;
    }
 
    public final void clearThievesState(boolean var1) {
@@ -421,10 +421,10 @@ public final class Thief implements LevelObjectData {
    }
 
    public final void sub_44c() {
-      this.currentLoad = this.sub_46a();
+      this.currentLoad = this.calculateCurrentWeight();
    }
 
-   public final byte sub_46a() {
+   public final byte calculateCurrentWeight() {
       byte var1 = 0;
 
       for(int var2 = 0; var2 < 3; ++var2) {

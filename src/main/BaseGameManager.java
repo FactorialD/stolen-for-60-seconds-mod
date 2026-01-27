@@ -100,7 +100,7 @@ public abstract class BaseGameManager extends Canvas implements LevelObjectData 
    }
 
    public static final boolean openMoreGames() {
-      return openBrowser(ReadingDrawingClass.sub_5a0((short)266));
+      return openBrowser(ReadingDrawingClass.getTextById((short)266));
    }
 
    public void commandAction(Command command, Displayable var2) {

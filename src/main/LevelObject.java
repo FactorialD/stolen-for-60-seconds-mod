@@ -36,7 +36,7 @@ public final class LevelObject implements LevelObjectData {
             objectType = 4;
          }
 
-         boolean var4 = ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[objectType][5], (byte)6) || ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[objectType][5], (byte)7);
+         boolean var4 = ReadingDrawingClass.checkBit(LevelObjectData.spriteIndexes[objectType][5], (byte)6) || ReadingDrawingClass.checkBit(LevelObjectData.spriteIndexes[objectType][5], (byte)7);
          if (objectType == 6 && LevelManager.var_7f3 > 0) {
             return;
          }
@@ -67,12 +67,12 @@ public final class LevelObject implements LevelObjectData {
             int rightOffset = 0;
             int topOffset = 0;
             int bottomOffset = 0;
-            if (ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[objectType][5], (byte)6)) {
+            if (ReadingDrawingClass.checkBit(LevelObjectData.spriteIndexes[objectType][5], (byte)6)) {
                leftOffset = this.offsetType == 2 ? 12 : 0;
                rightOffset = this.offsetType == 0 ? 12 : 0;
                topOffset = this.offsetType == 3 ? 12 : 0;
                bottomOffset = this.offsetType == 1 ? 12 : 0;
-            } else if (ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[objectType][5], (byte)7)) {
+            } else if (ReadingDrawingClass.checkBit(LevelObjectData.spriteIndexes[objectType][5], (byte)7)) {
                additionalOffsetX = LevelManager.offsetTypes[0][this.offsetType] * 12;
                additionalOffsetY = LevelManager.offsetTypes[1][this.offsetType] * 12;
                
@@ -119,7 +119,7 @@ public final class LevelObject implements LevelObjectData {
                var2 = this.var_22c == 0 ? 16711680 : (this.var_22c == 1 ? 315140 : 255);
             } else {
                var2 = this.var_22c > 0 ? 12058726 : 0;
-               if (ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[this.objectType][5], (byte)5)) {
+               if (ReadingDrawingClass.checkBit(LevelObjectData.spriteIndexes[this.objectType][5], (byte)5)) {
                   var2 = 5855577;
                } else if (LevelManager.var_7a3[this.var_1f5] > 0 || LevelManager.levelAdditionalData_TimerEtc[GlobalManager.levelId - 1][25] == 20) {
                   var2 = 0;
