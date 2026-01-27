@@ -2,7 +2,7 @@ package main;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Graphics;
 
-public final class Class_19e implements LevelObjectData {
+public final class DialogManager implements LevelObjectData {
    private static byte var_51 = 2;
    public static final int var_ac;
    private static final int var_d0;
@@ -33,7 +33,7 @@ public final class Class_19e implements LevelObjectData {
    private static boolean var_673;
    private static boolean var_6ce;
    private static boolean var_780;
-   public static Class_178 var_790;
+   public static GlobalManager var_790;
    public static byte var_7c6;
    public static byte var_7ed;
    public static Object var_838;
@@ -88,7 +88,7 @@ public final class Class_19e implements LevelObjectData {
       var_6ce = false;
       int var0 = LevelManager.screenWidth - 2 - 2 - 2;
       var_257 = LevelManager.screenHeight - 3 - 3 - (var_7ed == 22 ? 0 : var_d0 - 5);
-      if (Class_178.var_2f7 == 0) {
+      if (GlobalManager.var_2f7 == 0) {
          var0 += 4;
       }
 
@@ -115,7 +115,7 @@ public final class Class_19e implements LevelObjectData {
 
       var_5b6 = true;
       var_6ce = true;
-      var_780 = Class_178.var_338;
+      var_780 = GlobalManager.needRepaint;
    }
 
    private static void sub_c6(int var0) {
@@ -166,7 +166,7 @@ public final class Class_19e implements LevelObjectData {
    }
 
    private static void sub_db(int var0) {
-      if (Class_26a.sub_1e0() && MM.var_5a.hasPointerEvents()) {
+      if (BaseGameManager.sub_1e0() && MM.globalManager.hasPointerEvents()) {
          var_51 = 9;
       }
 
@@ -302,11 +302,11 @@ public final class Class_19e implements LevelObjectData {
    public static void sub_2c9(Graphics var0, Graphics var1) {
       boolean var2 = false;
       if (var_5b6) {
-         Class_178.var_338 = true;
+         GlobalManager.needRepaint = true;
          if (var_6ce) {
-            if (Class_178.var_2f7 == 0) {
-               Class_178.var_114a = 25;
-               var_790.sub_451(var0);
+            if (GlobalManager.var_2f7 == 0) {
+               GlobalManager.var_114a = 25;
+               var_790.paintSplash(var0);
             }
 
             var0.setColor(0);
@@ -344,7 +344,7 @@ public final class Class_19e implements LevelObjectData {
             var_780 = false;
          }
 
-         Class_178.var_338 = false;
+         GlobalManager.needRepaint = false;
       }
    }
 
@@ -488,13 +488,13 @@ public final class Class_19e implements LevelObjectData {
          }
 
          if (var_7ed == 22) {
-            ReadingDrawingClass.drawSpriteNoOffset(var1, (byte)16, 0, var_285 - (LevelObjectData.spriteTypesArr[16][2] << 1) + Math.abs(12 - Class_178.var_115), var_297 + var_45d * var_9a0 - 2);
-            ReadingDrawingClass.drawSpriteNoOffset(var1, (byte)16, 0, var_285 + (LevelObjectData.spriteTypesArr[16][2] >> 1) + var2 - Math.abs(12 - Class_178.var_115), var_297 + var_45d * var_9a0 - 2);
+            ReadingDrawingClass.drawSpriteNoOffset(var1, (byte)16, 0, var_285 - (LevelObjectData.spriteTypesArr[16][2] << 1) + Math.abs(12 - GlobalManager.var_115), var_297 + var_45d * var_9a0 - 2);
+            ReadingDrawingClass.drawSpriteNoOffset(var1, (byte)16, 0, var_285 + (LevelObjectData.spriteTypesArr[16][2] >> 1) + var2 - Math.abs(12 - GlobalManager.var_115), var_297 + var_45d * var_9a0 - 2);
          } else {
             if (!var_c2e) {
                var3 = 0;
                if (var_7c6 == 0 && var_673 || var_7c6 != 0) {
-                  var3 = 65793 * ((Math.abs(12 - Class_178.var_115) << 1) * 255 / 24);
+                  var3 = 65793 * ((Math.abs(12 - GlobalManager.var_115) << 1) * 255 / 24);
                }
 
                try {
@@ -509,14 +509,14 @@ public final class Class_19e implements LevelObjectData {
    }
 
    public static void sub_36c(Graphics var0) {
-      if (Class_178.var_46) {
-         var_790.removeCommand(Class_178.var_3bb);
-         var_790.removeCommand(Class_178.var_392);
-         Class_178.var_3bb = new Command(ReadingDrawingClass.sub_5a0(var_89d[0]), 4, 1);
-         var_790.addCommand(Class_178.var_3bb);
+      if (GlobalManager.var_46) {
+         var_790.removeCommand(GlobalManager.var_3bb);
+         var_790.removeCommand(GlobalManager.var_392);
+         GlobalManager.var_3bb = new Command(ReadingDrawingClass.sub_5a0(var_89d[0]), 4, 1);
+         var_790.addCommand(GlobalManager.var_3bb);
          if (var_89d.length > 1) {
-            Class_178.var_392 = new Command(ReadingDrawingClass.sub_5a0(var_89d[1]), 1, 2);
-            var_790.addCommand(Class_178.var_392);
+            GlobalManager.var_392 = new Command(ReadingDrawingClass.sub_5a0(var_89d[1]), 1, 2);
+            var_790.addCommand(GlobalManager.var_392);
          }
 
       } else {
@@ -561,7 +561,7 @@ public final class Class_19e implements LevelObjectData {
    private static void sub_3c5(Graphics var0, int var1, int var2) {
       int var3 = 0;
       if (var_7c6 == 0 && var_673 || var_7c6 != 0) {
-         var3 = 65793 * ((Math.abs(12 - Class_178.var_115) << 1) * 255 / 24);
+         var3 = 65793 * ((Math.abs(12 - GlobalManager.var_115) << 1) * 255 / 24);
       }
 
       if (var2 > 0 || var_7c6 != 0 && var_673) {
@@ -575,37 +575,37 @@ public final class Class_19e implements LevelObjectData {
    }
 
    public static void sub_3ee() {
-      if (Class_178.var_93a != 999999) {
-         int var0 = var_790.sub_97(Class_178.var_93a);
-         Class_178.var_165 = 1;
+      if (GlobalManager.keyCodePressed != 999999) {
+         int var0 = var_790.mapInputToGameAction(GlobalManager.keyCodePressed);
+         GlobalManager.var_165 = 1;
          var_6ce = true;
-         var_780 = Class_178.var_338;
+         var_780 = GlobalManager.needRepaint;
          if (var_7c6 == 0) {
             sub_41e(var0);
          } else {
             sub_47d(var0);
          }
 
-         Class_178.var_93a = 999999;
+         GlobalManager.keyCodePressed = 999999;
       }
    }
 
    private static void sub_41e(int var0) {
       int var1;
       if (var_bf0 >= var_b61.length - 1) {
-         if (var_bf0 == var_b61.length - 1 && Class_178.var_93a >= 48 && Class_178.var_93a <= 50) {
-            var_b61[var_bf0] = (byte)(Class_178.var_93a - 48);
+         if (var_bf0 == var_b61.length - 1 && GlobalManager.keyCodePressed >= 48 && GlobalManager.keyCodePressed <= 50) {
+            var_b61[var_bf0] = (byte)(GlobalManager.keyCodePressed - 48);
             ++var_bf0;
          } else {
             if (var_bf0 == var_b61.length) {
                var_bf0 = 0;
-               if ((var1 = Class_178.var_93a) == 999999) {
+               if ((var1 = GlobalManager.keyCodePressed) == 999999) {
                   var1 = 53;
                }
 
                int var2;
                if ((var2 = var_b61[var_b61.length - 1] * 10 + (var1 - 48) + 6) > 6 && var2 <= 27) {
-                  Class_178.sub_d4e((byte)var2);
+                  GlobalManager.loadLevel((byte)var2);
                }
 
                return;
@@ -613,13 +613,13 @@ public final class Class_19e implements LevelObjectData {
 
             var_bf0 = 0;
             if (var0 == 3) {
-               Class_178.var_e38 = 1000000;
+               GlobalManager.currentMoney = 1000000;
             } else if (var0 == 9) {
                var_b16 = ReadingDrawingClass.sub_533(Runtime.getRuntime().totalMemory() + "_" + Runtime.getRuntime().freeMemory());
             } else if (var0 == 4) {
-               Class_178.var_5bb = 0;
+               GlobalManager.gameMode = 0;
             } else if (var0 == 5) {
-               Class_178.var_5bb = 1;
+               GlobalManager.gameMode = 1;
             }
          }
       } else if (var_b61[var_bf0] == var0) {
@@ -630,7 +630,7 @@ public final class Class_19e implements LevelObjectData {
 
       if ((var0 == 1 || var0 == 13) && var_89d.length == 2) {
          var_838 = String.valueOf(var_89d[1]);
-         Class_178.sub_30c();
+         GlobalManager.sub_30c();
       } else if (var0 != 0 && var0 != 10 && var0 != 12) {
          if (var_673) {
             var1 = 0;
@@ -658,7 +658,7 @@ public final class Class_19e implements LevelObjectData {
 
       } else {
          var_838 = String.valueOf(var_89d[0]);
-         Class_178.sub_30c();
+         GlobalManager.sub_30c();
       }
    }
 
@@ -672,7 +672,7 @@ public final class Class_19e implements LevelObjectData {
                return;
             } else {
                var_838 = String.valueOf(var_508);
-               Class_178.sub_30c();
+               GlobalManager.sub_30c();
                return;
             }
          }
@@ -690,20 +690,20 @@ public final class Class_19e implements LevelObjectData {
                var_838 = String.valueOf(var_508);
             }
 
-            Class_178.sub_30c();
+            GlobalManager.sub_30c();
             return;
          }
 
          if ((var0 == 1 || var0 == 13) && var_89d.length > 1) {
             var_838 = null;
-            Class_178.sub_30c();
+            GlobalManager.sub_30c();
             return;
          }
       }
 
       if ((var0 == 1 || var0 == 13) && var_89d.length > 1) {
          var_838 = null;
-         Class_178.sub_30c();
+         GlobalManager.sub_30c();
       } else if (var0 != 0 && var0 != 10 && var0 != 12) {
          if (var0 == 3) {
             if (var_508 < var_557 && var_c2e && var_673) {
@@ -747,7 +747,7 @@ public final class Class_19e implements LevelObjectData {
 
       } else {
          var_838 = new Short(var_8ca[var_508]);
-         Class_178.sub_30c();
+         GlobalManager.sub_30c();
       }
    }
 

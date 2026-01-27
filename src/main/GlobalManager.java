@@ -14,7 +14,7 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.rms.RecordStore;
 
-public final class Class_178 extends Class_26a implements Runnable, CommandListener {
+public final class GlobalManager extends BaseGameManager implements Runnable, CommandListener {
    public static boolean var_46;
    public static byte var_80;
    public static byte var_91;
@@ -24,18 +24,18 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    public static int var_17e;
    public static boolean var_1cd;
    public static boolean var_22b;
-   public static byte var_26f = -2;
+   public static byte gameState = -2;
    private static byte var_2b9 = -1;
    public static byte var_2f7;
-   public static boolean var_338;
+   public static boolean needRepaint;
    public static Command var_392;
    public static Command var_3bb;
-   public static MM var_3e2;
+   public static MM mainMidlet;
    private static Thread var_463;
    private static boolean var_4b9;
    public static boolean var_511;
    public static MusicManager musicManager;
-   public static byte var_5bb;
+   public static byte gameMode;
    public static boolean var_5e0 = true;
    public static boolean var_5ed = true;
    public static boolean var_62c;
@@ -52,8 +52,8 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    private static int var_810;
    private static int var_870;
    private static int var_8a4;
-   public static Class_205 var_900;
-   public static int var_93a = 999999;
+   public static Thief var_900;
+   public static int keyCodePressed = 999999;
    public static int var_9af = 999999;
    private static int var_9fe;
    private static Vector var_a60 = new Vector();
@@ -62,21 +62,21 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    public static boolean var_b17 = false;
    private static final byte[][] var_b4c = new byte[][]{{2, 7, 4, 0}, {8, 1, 1, 5}, {2, 0, 8, 2}, {2, 5, 8, 4}, {2, 6, 3, 0}, {3, 6, 1, 6}, {4, 6, 5, 7}, {0, 7, 6, 7}, {8, 1, 8, 2}};
    private static final byte[][] var_b5a = new byte[][]{{6, 3, 3, 3}, {7, 4, 4, 4}, {5, 4, 5, 5}, {6, 0, 6, 6}};
-   public static int var_b74;
+   public static int cursorXCurrent;
    public static int var_bca;
-   public static int var_bfe;
+   public static int cursorXTarget;
    public static int var_c60;
    public static byte var_ca0;
    public static int var_ce9;
    public static int var_d24;
-   public static final Class_205[] var_d34;
-   public static final Vector var_d50;
-   public static final Vector var_d82;
-   public static byte var_dc6;
-   public static final short[][] toolStats;
+   public static final Thief[] allThievesArray;
+   public static final Vector selectedThieves;
+   public static final Vector possibleThieves;
+   public static byte levelId;
+   public static final short[][] toolStats; // Цена, Вес, ID спрайта, ID действия/анимации
    private static final int var_dff;
    private static final byte[][] var_e17;
-   public static int var_e38;
+   public static int currentMoney;
    public static int var_e86;
    public static short var_ea3;
    public static Object[] var_eff;
@@ -97,11 +97,11 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    public static int var_11cf;
    public static byte var_1217;
    private static boolean var_123b;
-   public static final boolean[] var_129e;
+   public static final boolean[] saveData;
    public static boolean var_12fc;
    private static Image var_130f;
    private static boolean var_1369;
-   private static Class_178 var_13a7;
+   private static GlobalManager var_13a7;
    private static int var_13cf;
    public long var_13db;
    public Image var_1403;
@@ -112,14 +112,14 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    private static int var_1566;
    private static boolean var_157e;
 
-   public final void sub_29() {
+   public final void runGameThread() {
       if (!var_4b9) {
          var_511 = true;
          var_13a7 = this;
-         if (var_26f == -1) {
-            var_26f = var_2b9;
+         if (gameState == -1) {
+            gameState = var_2b9;
          } else {
-            var_26f = 0;
+            gameState = 0;
          }
 
          var_463 = null;
@@ -130,18 +130,18 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       }
    }
 
-   public static void sub_4d() {
-      if (var_26f != -1) {
-         if (var_26f == 1 && LevelManager.var_a5a == 1) {
-            LevelManager.var_96a = LevelManager.var_953;
-            LevelManager.var_953 = -1;
-            var_93a = 999999;
+   public static void pauseGameThread() {
+      if (gameState != -1) {
+         if (gameState == 1 && LevelManager.gameState == 1) {
+            LevelManager.var_96a = LevelManager.selectedThiefIndex;
+            LevelManager.selectedThiefIndex = -1;
+            keyCodePressed = 999999;
          }
 
-         var_2b9 = var_26f;
+         var_2b9 = gameState;
          var_4b9 = false;
-         var_26f = -1;
-         var_338 = false;
+         gameState = -1;
+         needRepaint = false;
          if (musicManager != null) {
             musicManager.clearCurrentMusicPlayer();
          }
@@ -151,9 +151,9 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    }
 
    public static void sub_9b() {
-      var_2b9 = var_26f;
+      var_2b9 = gameState;
       var_4b9 = false;
-      var_26f = -1;
+      gameState = -1;
       if (musicManager != null) {
          musicManager.closeAllMusicPlayers();
       }
@@ -166,8 +166,8 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    private void sub_bd() {
       var_ca0 = 0;
       sub_e28();
-      MusicManager.someMusicIndexVar2 = var_129e[0];
-      MusicManager.someMusicIndexVar = var_129e[1];
+      MusicManager.someMusicIndexVar2 = saveData[0];
+      MusicManager.someMusicIndexVar = saveData[1];
 
       byte var1;
       for(var1 = 1; var1 <= 2; ++var1) {
@@ -179,11 +179,11 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       }
 
       createMusicManager();
-      Class_19e.var_790 = this;
+      DialogManager.var_790 = this;
       LevelManager.var_f0 = this;
 
       for(var1 = 0; var1 < 5; ++var1) {
-         var_d34[var1] = new Class_205(var1);
+         allThievesArray[var1] = new Thief(var1);
       }
 
       sub_ba6();
@@ -191,49 +191,49 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    private static void createMusicManager() {
       musicManager = new MusicManager(new String[]{"/dat/menu", "/dat/plan", "/dat/rob", "/dat/tik", "/dat/fail", "/dat/succ", "/dat/alarm", "/dat/prison"});
-      musicManager.setPriorityLevel(Class_26a.musicManagerPriorityLevel);
+      musicManager.setPriorityLevel(BaseGameManager.musicManagerPriorityLevel);
    }
 
-   public final void sub_12a(Graphics var1) {
-      if (var1 != null) {
-         if (var_26f != -1) {
+   public final void paintGame(Graphics g) {
+      if (g != null) {
+         if (gameState != -1) {
             if (!var_22b) {
-               switch(var_26f) {
+               switch(gameState) {
                case 0:
-                  this.sub_451(var1);
+                  this.paintSplash(g);
                   break;
                case 1:
-                  LevelManager.sub_26f(var1);
-                  sub_167(var1);
+                  LevelManager.paint(g);
+                  sub_167(g);
                   break;
                case 2:
-                  Class_19e.sub_2c9(LevelManager.graphics, var1);
+                  DialogManager.sub_2c9(LevelManager.graphics, g);
                   break;
                case 3:
-                  sub_8d4(var1);
-                  sub_167(var1);
+                  paintMenu(g);
+                  sub_167(g);
                   break;
                case 4:
-                  sub_7f0(var1);
+                  sub_7f0(g);
                   break;
                case 5:
-                  var1.setColor(192, 192, 192);
-                  var1.fillRect(0, 0, this.getWidth(), this.getHeight());
+                  g.setColor(192, 192, 192);
+                  g.fillRect(0, 0, this.getWidth(), this.getHeight());
                   if (var_130f != null) {
-                     var1.drawImage(var_130f, this.getWidth() >> 1, this.getHeight() >> 1, 3);
+                     g.drawImage(var_130f, this.getWidth() >> 1, this.getHeight() >> 1, 3);
                   }
                }
 
-               sub_ddc(var1);
-               sub_b8e(var1);
+               sub_ddc(g);
+               sub_b8e(g);
             }
          }
       }
    }
 
    private static void sub_167(Graphics var0) {
-      if (var_6bc && !var_6ac && var_b74 == var_bfe && var_bca == var_c60 && var_115 > 12) {
-         Class_19e.sub_388(var0, LevelManager.screenWidth - LevelObjectData.spriteTypesArr[38][2] - 2, var_11cf - LevelObjectData.spriteTypesArr[9][3] + Class_19e.var_ac, 2, 5);
+      if (var_6bc && !var_6ac && cursorXCurrent == cursorXTarget && var_bca == var_c60 && var_115 > 12) {
+         DialogManager.sub_388(var0, LevelManager.screenWidth - LevelObjectData.spriteTypesArr[38][2] - 2, var_11cf - LevelObjectData.spriteTypesArr[9][3] + DialogManager.var_ac, 2, 5);
       }
 
    }
@@ -242,23 +242,23 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       long var1 = Class_3d.sub_161();
 
       while(var_4b9) {
-         if (!var_338) {
-            if (var_13cf != -1 && var_13cf != this.getWidth() && var_26f != 5) {
-               var_2b9 = var_26f;
-               if (var_26f == 1 && LevelManager.var_a5a == 1) {
-                  LevelManager.var_96a = LevelManager.var_953;
-                  LevelManager.var_953 = -1;
-                  var_93a = 999999;
+         if (!needRepaint) {
+            if (var_13cf != -1 && var_13cf != this.getWidth() && gameState != 5) {
+               var_2b9 = gameState;
+               if (gameState == 1 && LevelManager.gameState == 1) {
+                  LevelManager.var_96a = LevelManager.selectedThiefIndex;
+                  LevelManager.selectedThiefIndex = -1;
+                  keyCodePressed = 999999;
                }
 
-               var_26f = 5;
+               gameState = 5;
 
                var_130f = ReadingDrawingClass.loadImagePng("nor");
             }
 
             this.sub_1aa(var1);
             var1 = Class_3d.sub_161();
-            this.sub_5b();
+            this.forceRepaint();
             this.var_13db = 60L - (Class_3d.sub_161() - var1);
             if (this.var_13db < 0L) {
                this.var_13db = 1L;
@@ -302,13 +302,13 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             var_115 = 1;
          }
 
-         switch(var_26f) {
+         switch(gameState) {
          case 0:
             this.sub_47c();
             break;
          case 1:
             LevelManager.sub_85b();
-            LevelManager.sub_5fd();
+            LevelManager.updateGameLogic();
          case 2:
          default:
             break;
@@ -327,20 +327,20 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    public final void keyPressed(int var1) {
       if (!var_157e) {
-         var_93a = var1;
-         switch(var_26f) {
+         keyCodePressed = var1;
+         switch(gameState) {
          case 0:
             sub_4b4();
             return;
          case 1:
             LevelManager.sub_896();
-            if (LevelManager.var_a5a == 0) {
+            if (LevelManager.gameState == 0) {
                LevelManager.sub_3d2();
                return;
             }
             break;
          case 2:
-            Class_19e.sub_3ee();
+            DialogManager.sub_3ee();
             return;
          case 3:
             sub_a64();
@@ -353,15 +353,15 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    }
 
    public final void keyReleased(int var1) {
-      var_93a = 999999;
+      keyCodePressed = 999999;
    }
 
    public static boolean sub_1b8(byte var0, byte var1, byte var2, boolean var3) {
-      if ((var_129e[var0] || var_5bb > -1) && !var3) {
+      if ((saveData[var0] || gameMode > -1) && !var3) {
          return false;
       } else {
-         var_129e[var0] = true;
-         if (var_26f == 3) {
+         saveData[var0] = true;
+         if (gameState == 3) {
             musicManager.switchMusicPlayer(3, -1);
          }
 
@@ -382,81 +382,81 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    private static void sub_260(byte var0, byte[] var1, short[] var2, Object[][] var3, short[] var4, byte var5) {
       if (var0 == 22) {
-         Class_19e.var_c24 = true;
+         DialogManager.var_c24 = true;
       }
 
-      Class_19e.var_7c6 = 1;
-      Class_19e.sub_23();
-      Class_19e.var_7ed = var0;
-      Class_19e.var_850 = var1;
-      Class_19e.var_8ca = var2;
-      Class_19e.var_914 = var3;
-      Class_19e.var_882 = var4;
-      Class_19e.var_89d = new short[var5];
-      Class_19e.var_89d[0] = 126;
+      DialogManager.var_7c6 = 1;
+      DialogManager.sub_23();
+      DialogManager.var_7ed = var0;
+      DialogManager.var_850 = var1;
+      DialogManager.var_8ca = var2;
+      DialogManager.var_914 = var3;
+      DialogManager.var_882 = var4;
+      DialogManager.var_89d = new short[var5];
+      DialogManager.var_89d[0] = 126;
       if (var5 == 2) {
-         Class_19e.var_89d[1] = 127;
+         DialogManager.var_89d[1] = 127;
       }
 
       sub_360();
    }
 
    private static void sub_29b(byte var0, byte[] var1, short[] var2, Object[][] var3, byte[][] var4, boolean[] var5, short var6, byte var7) {
-      Class_19e.var_c2e = true;
+      DialogManager.var_c2e = true;
       sub_2a5(var0, false, var1, var2, var3, var4, var5, var6, var7);
    }
 
    public static void sub_2a5(byte var0, boolean var1, byte[] var2, short[] var3, Object[][] var4, byte[][] var5, boolean[] var6, short var7, byte var8) {
-      Class_19e.var_7c6 = 2;
-      Class_19e.sub_23();
-      Class_19e.var_7ed = var0;
-      Class_19e.var_850 = var2;
-      Class_19e.var_8ca = var3;
-      Class_19e.var_914 = var4;
-      Class_19e.sub_4bd(var7);
-      Class_19e.var_abc = var5;
-      Class_19e.var_a80 = var1;
-      Class_19e.var_89d = new short[var8];
-      Class_19e.var_89d[0] = 126;
+      DialogManager.var_7c6 = 2;
+      DialogManager.sub_23();
+      DialogManager.var_7ed = var0;
+      DialogManager.var_850 = var2;
+      DialogManager.var_8ca = var3;
+      DialogManager.var_914 = var4;
+      DialogManager.sub_4bd(var7);
+      DialogManager.var_abc = var5;
+      DialogManager.var_a80 = var1;
+      DialogManager.var_89d = new short[var8];
+      DialogManager.var_89d[0] = 126;
       if (var8 == 2) {
-         Class_19e.var_89d[1] = 127;
+         DialogManager.var_89d[1] = 127;
       }
 
-      Class_19e.var_a44 = new boolean[var3.length];
+      DialogManager.var_a44 = new boolean[var3.length];
       if (var6 != null) {
-         Class_3d.sub_1cf(var6, 0, Class_19e.var_a44, 0, var6.length);
+         Class_3d.sub_1cf(var6, 0, DialogManager.var_a44, 0, var6.length);
       }
 
       sub_360();
    }
 
    public static void sub_2c8(byte var0, byte[] var1, short var2, Object[] var3, short[] var4, short var5) {
-      Class_19e.var_7c6 = 0;
-      Class_19e.sub_23();
-      Class_19e.var_7ed = var0;
-      Class_19e.var_89d = var4;
-      Class_19e.sub_4bd(var5);
-      Class_19e.sub_4ac(var2, var3);
-      Class_19e.var_850 = var1;
+      DialogManager.var_7c6 = 0;
+      DialogManager.sub_23();
+      DialogManager.var_7ed = var0;
+      DialogManager.var_89d = var4;
+      DialogManager.sub_4bd(var5);
+      DialogManager.sub_4ac(var2, var3);
+      DialogManager.var_850 = var1;
       sub_360();
    }
 
    private static void sub_2db(byte var0, byte[] var1, short var2, Object[] var3, short[] var4, short var5, Object[] var6) {
-      Class_19e.var_7c6 = 0;
-      Class_19e.sub_23();
-      Class_19e.var_7ed = var0;
-      Class_19e.var_89d = var4;
-      Class_19e.sub_4ea(var5, var6);
-      Class_19e.sub_4ac(var2, var3);
-      Class_19e.var_850 = var1;
+      DialogManager.var_7c6 = 0;
+      DialogManager.sub_23();
+      DialogManager.var_7ed = var0;
+      DialogManager.var_89d = var4;
+      DialogManager.sub_4ea(var5, var6);
+      DialogManager.sub_4ac(var2, var3);
+      DialogManager.var_850 = var1;
       sub_360();
    }
 
    public static void sub_30c() {
       boolean var0 = false;
-      byte var1 = var_26f;
-      Class_19e.var_c2e = false;
-      Class_19e.var_c24 = false;
+      byte var1 = gameState;
+      DialogManager.var_c2e = false;
+      DialogManager.var_c24 = false;
       if (var_2f7 == 1) {
          var0 = LevelManager.sub_9a0();
       } else if (var_2f7 == 0) {
@@ -465,29 +465,29 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          var0 = sub_bbb();
       }
 
-      if (!var0 && var_26f == var1) {
-         var_26f = var_2f7;
+      if (!var0 && gameState == var1) {
+         gameState = var_2f7;
       }
 
       var_13a7.sub_3d3();
-      var_93a = 999999;
+      keyCodePressed = 999999;
       Class_3d.callGc();
    }
 
    private static void sub_360() {
-      if (var_26f != 2) {
-         var_2f7 = var_26f;
+      if (gameState != 2) {
+         var_2f7 = gameState;
       }
 
-      Class_19e.sub_6f();
-      var_26f = 2;
+      DialogManager.sub_6f();
+      gameState = 2;
       var_ff4 = null;
    }
 
    private void sub_36d() {
       sub_3b5(2);
       this.sub_3d3();
-      var_26f = 3;
+      gameState = 3;
       var_5e0 = true;
       if (musicManager.currentPlayerIndex != 0 && var_ea3 != 9 && var_ea3 != 2) {
          musicManager.switchMusicPlayer(0, -1);
@@ -545,7 +545,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       if (var_46) {
          this.removeCommand(var_3bb);
          this.removeCommand(var_392);
-         if (var_26f == 3) {
+         if (gameState == 3) {
             var_3bb = new Command(ReadingDrawingClass.sub_5a0((short)258), 4, 1);
             var_392 = new Command(ReadingDrawingClass.sub_5a0((short)261), 1, 2);
             this.addCommand(var_3bb);
@@ -553,7 +553,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             return;
          }
 
-         if (var_26f == 1) {
+         if (gameState == 1) {
             var_392 = new Command(ReadingDrawingClass.sub_5a0((short)261), 1, 2);
             this.addCommand(var_392);
          }
@@ -563,16 +563,16 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    private static void sub_3f1() {
       var_511 = false;
-      var_26f = 0;
+      gameState = 0;
       var_114a = 25;
    }
 
    public final int sub_435(int var1) {
       var_9af = 999999;
-      return this.sub_97(var1);
+      return this.mapInputToGameAction(var1);
    }
 
-   public final void sub_451(Graphics var1) {
+   public final void paintSplash(Graphics var1) {
       switch(var_114a) {
       case 0:
          var1.setColor(16777215);
@@ -602,7 +602,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          var1.setClip(0, 0, var_1180, var_11cf);
          var1.fillRect(0, 0, var_1180, var_11cf);
          ReadingDrawingClass.drawSpriteNoOffset(var1, (byte)7, 0, var_ce9, var_d24);
-         Class_19e.sub_29c(var1);
+         DialogManager.sub_29c(var1);
          ++var_114a;
       case 1:
       case 3:
@@ -667,7 +667,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          }
 
          var_ca0 = 0;
-         var_bfe = LevelObjectData.var_65[var_ca0][0];
+         cursorXTarget = LevelObjectData.var_65[var_ca0][0];
          var_c60 = LevelObjectData.var_65[var_ca0][1];
          ++var_114a;
          return;
@@ -720,8 +720,8 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    }
 
    private static void sub_4b4() {
-      if (var_93a != 999999) {
-         var_93a = 999999;
+      if (keyCodePressed != 999999) {
+         keyCodePressed = 999999;
          switch(var_114a) {
          case 2:
          case 5:
@@ -732,24 +732,24 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    }
 
    private static boolean sub_4cc() {
-      switch(Class_19e.var_7ed) {
+      switch(DialogManager.var_7ed) {
       case 4:
          sub_670();
-         if (MusicManager.someMusicIndexVar2 != var_129e[0]) {
-            MusicManager.someMusicIndexVar2 = var_129e[0];
+         if (MusicManager.someMusicIndexVar2 != saveData[0]) {
+            MusicManager.someMusicIndexVar2 = saveData[0];
             if (!MusicManager.someMusicIndexVar2) {
                musicManager.clearCurrentMusicPlayer();
             }
          }
 
-         MusicManager.someMusicIndexVar = var_129e[1];
+         MusicManager.someMusicIndexVar = saveData[1];
          sub_6dd();
          return true;
       case 21:
          sub_6dd();
          return true;
       case 22:
-         switch(((Short)Class_19e.var_838).shortValue()) {
+         switch(((Short)DialogManager.var_838).shortValue()) {
          case 200:
             if (var_1cd) {
                sub_22b((byte)27, (byte[])null, new short[]{193, 194}, ReadingDrawingClass.readTextFromLng((short)130), (byte)2);
@@ -764,16 +764,16 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          default:
             break;
          case 202:
-            sub_2c8((byte)21, (byte[])null, (short)144, new Object[]{MM.var_a1}, new short[]{126}, (short)202);
+            sub_2c8((byte)21, (byte[])null, (short)144, new Object[]{MM.gameVersion}, new short[]{126}, (short)202);
             return true;
          case 203:
             sub_707();
             return true;
          case 204:
-            sub_2c8((byte)44, (byte[])null, (short)145, new Object[]{MM.var_a1}, new short[]{126, 127}, (short)204);
+            sub_2c8((byte)44, (byte[])null, (short)145, new Object[]{MM.gameVersion}, new short[]{126, 127}, (short)204);
             return true;
          case 205:
-            sub_2c8((byte)43, (byte[])null, (short)145, new Object[]{MM.var_a1}, new short[]{126, 127}, (short)205);
+            sub_2c8((byte)43, (byte[])null, (short)145, new Object[]{MM.gameVersion}, new short[]{126, 127}, (short)205);
             return true;
          case 208:
             sub_682();
@@ -786,17 +786,17 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             return true;
          case 211:
             var_511 = false;
-            var_3e2.destroyApp(false);
+            mainMidlet.destroyApp(false);
             return true;
          }
       default:
          return false;
       case 27:
-         if (Class_19e.var_838 == null) {
+         if (DialogManager.var_838 == null) {
             sub_6dd();
             return true;
          } else {
-            switch(((Short)Class_19e.var_838).shortValue()) {
+            switch(((Short)DialogManager.var_838).shortValue()) {
             case 193:
                ReadingDrawingClass.sub_6da();
                ReadingDrawingClass.sub_8ce();
@@ -809,36 +809,36 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             }
          }
       case 37:
-         if (Class_19e.var_838 == null) {
+         if (DialogManager.var_838 == null) {
             sub_6dd();
             return true;
          }
 
-         switch(((Short)Class_19e.var_838).shortValue()) {
+         switch(((Short)DialogManager.var_838).shortValue()) {
          case 195:
-            var_5bb = 0;
+            gameMode = 0;
             break;
          case 196:
-            var_5bb = 1;
+            gameMode = 1;
             break;
          case 197:
-            var_5bb = 2;
+            gameMode = 2;
          case 198:
          case 199:
          case 200:
          default:
             break;
          case 201:
-            var_5bb = -1;
+            gameMode = -1;
          }
 
          sub_4f8();
          return true;
       case 43:
-         if (Class_19e.var_838.equals(String.valueOf(126))) {
-            if (Class_26a.sub_180()) {
+         if (DialogManager.var_838.equals(String.valueOf(126))) {
+            if (BaseGameManager.openMoreGames()) {
                var_511 = false;
-               var_3e2.destroyApp(false);
+               mainMidlet.destroyApp(false);
                return true;
             }
 
@@ -849,10 +849,10 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
          return true;
       case 44:
-         if (Class_19e.var_838.equals(String.valueOf(126))) {
-            if (Class_26a.sub_11d()) {
+         if (DialogManager.var_838.equals(String.valueOf(126))) {
+            if (BaseGameManager.openHerocraftLink()) {
                var_511 = false;
-               var_3e2.destroyApp(false);
+               mainMidlet.destroyApp(false);
                return true;
             }
 
@@ -863,11 +863,11 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
          return true;
       case 45:
-         if (Class_19e.var_838 == null) {
+         if (DialogManager.var_838 == null) {
             sub_6dd();
             return true;
          } else {
-            switch(((Short)Class_19e.var_838).shortValue()) {
+            switch(((Short)DialogManager.var_838).shortValue()) {
             case 214:
                var_ab2 = -1;
                sub_7c1();
@@ -889,10 +889,10 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    private static void sub_4f8() {
       ReadingDrawingClass.sub_759();
-      var_dc6 = -1;
+      levelId = -1;
       var_10ff = 3;
-      var_e38 = var_5bb == -1 ? 50 : 4000;
-      sub_d4e((byte)(var_5bb == -1 ? 1 : 7));
+      currentMoney = gameMode == -1 ? 50 : 4000;
+      loadLevel((byte)(gameMode == -1 ? 1 : 7));
       ReadingDrawingClass.sub_6f5();
       ReadingDrawingClass.sub_837();
    }
@@ -937,7 +937,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          }
 
          this.var_1493 = var3;
-         this.sub_5b();
+         this.forceRepaint();
          threadSleep((long)var4);
          this.var_1403 = null;
          this.var_1453 = null;
@@ -968,11 +968,11 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    }
 
    private static void sub_670() {
-      if (Class_19e.var_838 != null) {
-         String var0 = (String)Class_19e.var_838;
+      if (DialogManager.var_838 != null) {
+         String var0 = (String)DialogManager.var_838;
 
          for(byte var1 = 1; var1 <= 2; ++var1) {
-            var_129e[var1 - 1] = "true".equals(ReadingDrawingClass.sub_1f4(var0, var1));
+            saveData[var1 - 1] = "true".equals(ReadingDrawingClass.sub_1f4(var0, var1));
          }
 
          ReadingDrawingClass.sub_7c6();
@@ -982,12 +982,12 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    private static void sub_682() {
       short[] var0 = new short[]{213, 212};
-      sub_2a5((byte)4, true, (byte[])null, var0, (Object[][])null, (byte[][])null, new boolean[]{var_129e[0], var_129e[1]}, (short)208, (byte)2);
+      sub_2a5((byte)4, true, (byte[])null, var0, (Object[][])null, (byte[][])null, new boolean[]{saveData[0], saveData[1]}, (short)208, (byte)2);
    }
 
    private static void sub_6dd() {
       int var1 = 9;
-      if (!Class_26a.var_2bb) {
+      if (!BaseGameManager.allowOpenLinks) {
          var1 -= 2;
       }
 
@@ -1007,7 +1007,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
       var0[var1++] = 203;
       var0[var1++] = 202;
-      if (Class_26a.var_2bb) {
+      if (BaseGameManager.allowOpenLinks) {
          var0[var1++] = 204;
          var0[var1++] = 205;
       }
@@ -1043,7 +1043,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          var_ab2 = -1;
 
          for(int var0 = 0; var0 < 5; ++var0) {
-            if (((int[])((int[])var_a60.elementAt(1)))[var0] < var_e38) {
+            if (((int[])((int[])var_a60.elementAt(1)))[var0] < currentMoney) {
                var_ab2 = var0;
 
                for(int var1 = 3; var1 >= var_ab2; --var1) {
@@ -1052,19 +1052,19 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                }
 
                ((short[][])((short[][])var_a60.elementAt(0)))[var_ab2] = ReadingDrawingClass.readTextFromLng((short)207);
-               ((int[])((int[])var_a60.elementAt(1)))[var0] = var_e38;
+               ((int[])((int[])var_a60.elementAt(1)))[var0] = currentMoney;
                var_afa = 0;
                break;
             }
          }
       }
 
-      var_26f = 4;
+      gameState = 4;
       var_5ed = true;
    }
 
    private static void sub_7f0(Graphics var0) {
-      var_338 = true;
+      needRepaint = true;
       int var2 = 16 * ReadingDrawingClass.var_12;
       int var3 = (var_1180 >> 1) - (var2 >> 1);
       int var1;
@@ -1079,7 +1079,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          }
 
          ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)7, 0, var_ce9, var_d24);
-         Class_19e.sub_29c(LevelManager.graphics);
+         DialogManager.sub_29c(LevelManager.graphics);
          ReadingDrawingClass.sub_47c(LevelManager.graphics, ReadingDrawingClass.readTextFromLng((short)203), (var_1180 >> 1) - (ReadingDrawingClass.readTextFromLng((short)203).length * ReadingDrawingClass.var_12 >> 1), var_150d);
          var1 = var_1566;
 
@@ -1094,8 +1094,8 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             var1 += ReadingDrawingClass.var_a9 + 3;
          }
 
-         Class_19e.var_89d = new short[]{126};
-         Class_19e.sub_36c(LevelManager.graphics);
+         DialogManager.var_89d = new short[]{126};
+         DialogManager.sub_36c(LevelManager.graphics);
          var_5ed = false;
       }
 
@@ -1125,7 +1125,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          }
       }
 
-      var_338 = false;
+      needRepaint = false;
    }
 
    private static void sub_836() {
@@ -1139,7 +1139,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    private static void sub_892() {
       var_165 = 1;
       int var0;
-      if ((var0 = var_13a7.sub_97(var_93a)) == 12 || var0 == 0) {
+      if ((var0 = var_13a7.mapInputToGameAction(keyCodePressed)) == 12 || var0 == 0) {
          if (var_ab2 >= 0) {
             ReadingDrawingClass.sub_7ec((short[][])((short[][])var_a60.elementAt(0)), (int[])((int[])var_a60.elementAt(1)));
          }
@@ -1174,22 +1174,22 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       }
    }
 
-   private static void sub_8d4(Graphics var0) {
-      var_338 = true;
+   private static void paintMenu(Graphics g) {
+      needRepaint = true;
       if (var_5e0 && (var_ce9 > 0 || var_d24 > LevelObjectData.spriteTypesArr[28][3])) {
          LevelManager.graphics.setColor(0);
          LevelManager.graphics.setClip(0, 0, var_1180, var_11cf);
          LevelManager.graphics.fillRect(0, 0, var_1180, var_11cf);
       }
 
-      sub_8f3(var0);
-      ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)40, 0, var_b74, var_bca);
+      sub_8f3(g);
+      ReadingDrawingClass.drawSpriteNoOffset(g, (byte)40, 0, cursorXCurrent, var_bca);
       if (var_6bc && var_115 > 12) {
-         ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)39, 2, var_b74 + LevelObjectData.spriteTypesArr[40][2], var_bca);
+         ReadingDrawingClass.drawSpriteNoOffset(g, (byte)39, 2, cursorXCurrent + LevelObjectData.spriteTypesArr[40][2], var_bca);
       }
 
-      sub_94f(var0, var_b74, var_bca, true);
-      var_338 = false;
+      sub_94f(g, cursorXCurrent, var_bca, true);
+      needRepaint = false;
    }
 
    private static void sub_8f3(Graphics var0) {
@@ -1198,11 +1198,11 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)7, 0, var_ce9, var_d24);
 
          for(int var2 = 1; var2 < 5; ++var2) {
-            if (!var_d50.contains(var_d34[var2]) && LevelManager.levelAdditionalData_TimerEtc[var_dc6 - 1][6 + var2] == 1) {
+            if (!selectedThieves.contains(allThievesArray[var2]) && LevelManager.levelAdditionalData_TimerEtc[levelId - 1][6 + var2] == 1) {
                ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)(34 + var2 - 1), 0, LevelObjectData.var_9d[var2][0], LevelObjectData.var_9d[var2][1]);
             }
 
-            if (LevelManager.var_99f.contains(var_d34[var2])) {
+            if (LevelManager.thievesList.contains(allThievesArray[var2])) {
                ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)39, 0, LevelObjectData.var_65[(short)(2 + var2)][0] - (LevelObjectData.spriteTypesArr[39][2] >> 1), LevelObjectData.var_65[(short)(2 + var2)][1]);
             }
          }
@@ -1225,12 +1225,12 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
       var_5e0 = false;
       if (var_649) {
-         sub_9f8(LevelManager.graphics);
+         drawShopScreen(LevelManager.graphics);
       }
 
       var_649 = false;
       if (var_62c && (var_ca0 == 3 || var_ca0 == 4 || var_ca0 == 5 || var_ca0 == 6 || var_ca0 == 2)) {
-         LevelManager.var_983 = var_900;
+         LevelManager.selectedThief = var_900;
          LevelManager.sub_2df(LevelManager.graphics, true);
          var_62c = false;
       }
@@ -1240,7 +1240,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    public static void sub_94f(Graphics var0, int var1, int var2, boolean var3) {
       if (var_12fc) {
-         if (!var3 || var1 == var_bfe && var2 == var_c60) {
+         if (!var3 || var1 == cursorXTarget && var2 == var_c60) {
             if (var_ff4 != null) {
                int var4 = var2 > 60 ? -14 : 14;
                int var5 = var2;
@@ -1277,7 +1277,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    private static void sub_96d(Graphics var0) {
       short[] var1;
-      int var2 = (var1 = ReadingDrawingClass.sub_533(String.valueOf(var_e38))).length * ReadingDrawingClass.var_12;
+      int var2 = (var1 = ReadingDrawingClass.sub_533(String.valueOf(currentMoney))).length * ReadingDrawingClass.var_12;
       int var3 = LevelObjectData.spriteTypesArr[29][2] + 2;
       int var4 = var_1180 - LevelObjectData.spriteTypesArr[30][2] - 2 - LevelObjectData.spriteTypesArr[31][2];
       int var5 = LevelObjectData.spriteTypesArr[28][3] - LevelObjectData.spriteTypesArr[32][3] - 1 >> 1;
@@ -1303,7 +1303,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    }
 
    private static void sub_9cc(Graphics var0) {
-      if (var_5bb > 0) {
+      if (gameMode > 0) {
          int var1 = var_11cf - ReadingDrawingClass.var_a9 - 3;
          boolean var2 = false;
          ReadingDrawingClass.sub_47c(var0, ReadingDrawingClass.readTextFromLng((short)260), 3, var1);
@@ -1312,7 +1312,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       }
    }
 
-   private static void sub_9f8(Graphics var0) {
+   private static void drawShopScreen(Graphics g) {
       int var2 = ReadingDrawingClass.var_a9 + 2;
       var_7d3 = var_11cf < 111 ? 0 : (var_11cf < 161 ? 1 : (var_11cf < 221 ? 2 : 3));
       var_798 = var_1180 < 121 ? -1 : (var_1180 < 133 ? 0 : (var_1180 < 180 ? 2 : 3));
@@ -1329,7 +1329,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       var_870 = var3 - 8;
       int var8 = 0;
       int var9 = 0;
-      Class_19e.sub_25f(var0, var6, var7, var3, var4, 3, var2, true);
+      DialogManager.sub_25f(g, var6, var7, var3, var4, 3, var2, true);
 
       int var12;
       int var13;
@@ -1344,14 +1344,14 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          var_e17[var8][var9] = var16;
          int var10 = var_729 + var8 * (LevelObjectData.spriteTypesArr[26][2] + var_798);
          int var11 = var_762 + var9 * (LevelObjectData.spriteTypesArr[26][3] + var_7d3);
-         ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)26, 0, var10, var11);
-         ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)8, (byte)toolStats[var15][2], var10 + 2, var11 + 2);
-         if (var_900.var_451[0] != var16 && var_900.var_451[1] != var16 && var_900.var_451[2] != var16) {
-            if (toolStats[var15][0] > var_e38 || LevelManager.levelAdditionalData_TimerEtc[var_dc6 - 1][13 + sub_e5c(var16)] == 0) {
-               ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)41, 0, var10 + 2, var11 + 2);
+         ReadingDrawingClass.drawSpriteNoOffset(g, (byte)26, 0, var10, var11);
+         ReadingDrawingClass.drawSpriteNoOffset(g, (byte)8, (byte)toolStats[var15][2], var10 + 2, var11 + 2);
+         if (var_900.inventoryTools[0] != var16 && var_900.inventoryTools[1] != var16 && var_900.inventoryTools[2] != var16) {
+            if (toolStats[var15][0] > currentMoney || LevelManager.levelAdditionalData_TimerEtc[levelId - 1][13 + sub_e5c(var16)] == 0) {
+               ReadingDrawingClass.drawSpriteNoOffset(g, (byte)41, 0, var10 + 2, var11 + 2);
             }
          } else {
-            ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)39, 0, var10, var11);
+            ReadingDrawingClass.drawSpriteNoOffset(g, (byte)39, 0, var10, var11);
          }
 
          if (var8 >= 5) {
@@ -1366,18 +1366,18 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          var12 = var_762 + var9 * (LevelObjectData.spriteTypesArr[26][3] + var_7d3);
          var13 = var6 + var3 - 3 - 1 - LevelObjectData.spriteTypesArr[38][2] - var_798;
          int var14 = var_729 + (var13 - var_729 >> 1);
-         Class_19e.sub_388(var0, var_729, var12, 1, 4);
-         Class_19e.sub_388(var0, var13, var12, 2, 5);
-         ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)38, 0, var14, var12);
+         DialogManager.sub_388(g, var_729, var12, 1, 4);
+         DialogManager.sub_388(g, var13, var12, 2, 5);
+         ReadingDrawingClass.drawSpriteNoOffset(g, (byte)38, 0, var14, var12);
          LevelObjectData.spriteTypesArr[43][2] = 7;
          LevelObjectData.spriteTypesArr[43][3] = 9;
-         ReadingDrawingClass.drawSpriteNoOffset(var0, (byte)43, ReadingDrawingClass.readTextFromLng((short)241)[0], var14 + (LevelObjectData.spriteTypesArr[38][2] >> 1) - (LevelObjectData.spriteTypesArr[43][2] >> 1), var12 + (LevelObjectData.spriteTypesArr[38][3] >> 1) - (LevelObjectData.spriteTypesArr[43][3] >> 1));
+         ReadingDrawingClass.drawSpriteNoOffset(g, (byte)43, ReadingDrawingClass.readTextFromLng((short)241)[0], var14 + (LevelObjectData.spriteTypesArr[38][2] >> 1) - (LevelObjectData.spriteTypesArr[43][2] >> 1), var12 + (LevelObjectData.spriteTypesArr[38][3] >> 1) - (LevelObjectData.spriteTypesArr[43][3] >> 1));
          LevelObjectData.spriteTypesArr[43][2] = (short)ReadingDrawingClass.var_12;
          LevelObjectData.spriteTypesArr[43][3] = (short)ReadingDrawingClass.var_a9;
       }
 
       sub_96d(LevelManager.graphics);
-      var_bfe = var_729 + var_6c8 * (LevelObjectData.spriteTypesArr[26][2] + var_798) + (LevelObjectData.spriteTypesArr[26][2] >> 1);
+      cursorXTarget = var_729 + var_6c8 * (LevelObjectData.spriteTypesArr[26][2] + var_798) + (LevelObjectData.spriteTypesArr[26][2] >> 1);
       var_c60 = var_762 + var_6d8 * (LevelObjectData.spriteTypesArr[26][3] + var_7d3) + (LevelObjectData.spriteTypesArr[26][3] >> 1);
       sub_b52();
    }
@@ -1426,10 +1426,10 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             ++var_8a4;
          }
 
-         if (var_bfe != var_b74 || var_c60 != var_bca) {
-            var_b74 += Math.abs(var_bfe - var_b74) == 1 ? var_bfe - var_b74 : var_bfe - var_b74 >> 1;
+         if (cursorXTarget != cursorXCurrent || var_c60 != var_bca) {
+            cursorXCurrent += Math.abs(cursorXTarget - cursorXCurrent) == 1 ? cursorXTarget - cursorXCurrent : cursorXTarget - cursorXCurrent >> 1;
             var_bca += Math.abs(var_c60 - var_bca) == 1 ? var_c60 - var_bca : var_c60 - var_bca >> 1;
-            if (var_bfe == var_b74 && var_c60 == var_bca) {
+            if (cursorXTarget == cursorXCurrent && var_c60 == var_bca) {
                if (!var_6ac) {
                   var_5e0 = true;
                }
@@ -1443,7 +1443,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
    private static void sub_a64() {
       int var0;
-      switch(var0 = var_13a7.sub_97(var_93a)) {
+      switch(var0 = var_13a7.mapInputToGameAction(keyCodePressed)) {
       case 2:
          sub_b3f((byte)2);
          break;
@@ -1470,7 +1470,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          } else if (var0 == 13) {
             if (var_6ac) {
                sub_c89(sub_e5c(var_e17[var_6c8][var_6d8]));
-               var_93a = 999999;
+               keyCodePressed = 999999;
                return;
             }
 
@@ -1490,49 +1490,49 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          int var2;
          if (var_6ac) {
             byte var1 = var_e17[var_6c8][var_6d8];
-            Class_205 var10000;
-            if (var_900.var_451[0] != var1 && var_900.var_451[1] != var1 && var_900.var_451[2] != var1) {
-               if (toolStats[sub_e5c(var1)][0] > var_e38) {
-                  sub_2c8((byte)0, (byte[])null, (short)181, new Object[]{new Integer(toolStats[sub_e5c(var1)][0]), new Integer(var_e38)}, new short[]{126}, (short)136);
-                  var_93a = 999999;
+            Thief var10000;
+            if (var_900.inventoryTools[0] != var1 && var_900.inventoryTools[1] != var1 && var_900.inventoryTools[2] != var1) {
+               if (toolStats[sub_e5c(var1)][0] > currentMoney) {
+                  sub_2c8((byte)0, (byte[])null, (short)181, new Object[]{new Integer(toolStats[sub_e5c(var1)][0]), new Integer(currentMoney)}, new short[]{126}, (short)136);
+                  keyCodePressed = 999999;
                   var_649 = true;
                   var_62c = true;
                   return;
                }
 
-               if (LevelManager.levelAdditionalData_TimerEtc[var_dc6 - 1][13 + sub_e5c(var1)] == 0) {
+               if (LevelManager.levelAdditionalData_TimerEtc[levelId - 1][13 + sub_e5c(var1)] == 0) {
                   sub_2c8((byte)0, (byte[])null, (short)182, (Object[])null, new short[]{126}, (short)136);
-                  var_93a = 999999;
+                  keyCodePressed = 999999;
                   var_649 = true;
                   var_62c = true;
                   return;
                }
 
-               var2 = LevelManager.thiefStats[var_f0d][0] - var_900.var_29a;
+               var2 = LevelManager.thiefStats[var_f0d][0] - var_900.currentLoad;
                if (toolStats[sub_e5c(var1)][1] > var2) {
                   sub_2c8((byte)0, (byte[])null, (short)(var2 == 0 ? 188 : 187), new Object[]{new Integer(toolStats[sub_e5c(var1)][1]), new Short((short)(41 + var_f0d)), new Integer(var2)}, new short[]{126}, (short)136);
-                  var_93a = 999999;
+                  keyCodePressed = 999999;
                   var_649 = true;
                   var_62c = true;
                   return;
                }
 
                for(int var3 = 0; var3 < 3; ++var3) {
-                  if (var_900.var_451[var3] == 116) {
-                     var_900.var_451[var3] = var1;
-                     var_e38 -= toolStats[sub_e5c(var1)][0];
+                  if (var_900.inventoryTools[var3] == 116) {
+                     var_900.inventoryTools[var3] = var1;
+                     currentMoney -= toolStats[sub_e5c(var1)][0];
                      var10000 = var_900;
-                     var10000.var_29a = (byte)(var10000.var_29a + toolStats[sub_e5c(var1)][1]);
+                     var10000.currentLoad = (byte)(var10000.currentLoad + toolStats[sub_e5c(var1)][1]);
                      break;
                   }
                }
             } else {
                for(var2 = 0; var2 < 3; ++var2) {
-                  if (var_900.var_451[var2] == var1) {
-                     var_900.var_451[var2] = 116;
-                     var_e38 += toolStats[sub_e5c(var1)][0];
+                  if (var_900.inventoryTools[var2] == var1) {
+                     var_900.inventoryTools[var2] = 116;
+                     currentMoney += toolStats[sub_e5c(var1)][0];
                      var10000 = var_900;
-                     var10000.var_29a = (byte)(var10000.var_29a - toolStats[sub_e5c(var1)][1]);
+                     var10000.currentLoad = (byte)(var10000.currentLoad - toolStats[sub_e5c(var1)][1]);
                      break;
                   }
                }
@@ -1545,7 +1545,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             case 0:
                short[] var5 = new short[4];
                var2 = 0;
-               if (!var_d50.isEmpty()) {
+               if (!selectedThieves.isEmpty()) {
                   ++var2;
                   var5[0] = 220;
                }
@@ -1555,7 +1555,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                   var5[var2++] = 218;
                }
 
-               if (var_dc6 > 6 || var_dc6 == 5) {
+               if (levelId > 6 || levelId == 5) {
                   var5[var2++] = 219;
                }
 
@@ -1569,7 +1569,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                break;
             case 2:
                var_f0d = 0;
-               if (var_dc6 < 6) {
+               if (levelId < 6) {
                   sub_2c8((byte)0, (byte[])null, (short)183, (Object[])null, new short[]{126}, (short)137);
                } else {
                   sub_22b((byte)2, new byte[]{5, var_f0d}, new short[]{125, 122}, ReadingDrawingClass.readTextFromLng((short)41), (byte)2);
@@ -1579,9 +1579,9 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             case 4:
             case 5:
             case 6:
-               var_f0d = var_900.var_3a;
+               var_f0d = var_900.thiefId;
                short[] var4;
-               if (LevelManager.var_99f.contains(var_900)) {
+               if (LevelManager.thievesList.contains(var_900)) {
                   var4 = new short[]{125, 122, 123};
                } else {
                   var4 = new short[]{124, 122};
@@ -1590,7 +1590,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                sub_22b((byte)2, new byte[]{5, var_f0d}, var4, ReadingDrawingClass.readTextFromLng((short)(41 + var_f0d)), (byte)2);
                break;
             case 7:
-               if (LevelManager.var_99f.size() == 0 && var_dc6 == 1) {
+               if (LevelManager.thievesList.size() == 0 && levelId == 1) {
                   sub_2c8((byte)33, (byte[])null, (short)149, (Object[])null, new short[]{126}, (short)136);
                   return;
                }
@@ -1599,26 +1599,26 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                var_13a7.sub_3d3();
                break;
             case 8:
-               var_93a = 999999;
+               keyCodePressed = 999999;
                sub_21a();
                return;
             }
          }
       }
 
-      var_93a = 999999;
+      keyCodePressed = 999999;
    }
 
    private static void sub_ab6() {
       var_ff4 = null;
       var_6ac = false;
       var_5e0 = true;
-      var_bfe = LevelObjectData.var_65[var_ca0][0];
+      cursorXTarget = LevelObjectData.var_65[var_ca0][0];
       var_c60 = LevelObjectData.var_65[var_ca0][1];
       boolean var0 = false;
 
       for(int var1 = 0; var1 < var_1123.length; ++var1) {
-         if (var_1123[var1] != 116 && var_1123[var1] != var_900.var_451[var1]) {
+         if (var_1123[var1] != 116 && var_1123[var1] != var_900.inventoryTools[var1]) {
             var0 = true;
             break;
          }
@@ -1633,13 +1633,13 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    private static void sub_ae7() {
       musicManager.switchMusicPlayer(3, -1);
       int var0;
-      int var1 = (var0 = LevelManager.levelAdditionalData_TimerEtc[var_dc6 - 1][0] + 0) / 60;
+      int var1 = (var0 = LevelManager.levelAdditionalData_TimerEtc[levelId - 1][0] + 0) / 60;
       int var2 = (var0 - var1 * 60) / 10;
       int var3 = var0 - var1 * 60 - var2 * 10;
-      if (var_dc6 < 7) {
-         sub_2c8((byte)41, new byte[]{5, 5}, LevelManager.levelAdditionalData_TimerEtc[var_dc6 - 1][25], new Object[]{new Integer(var1), new Integer(var2), new Integer(var3)}, new short[]{126}, (short)133);
+      if (levelId < 7) {
+         sub_2c8((byte)41, new byte[]{5, 5}, LevelManager.levelAdditionalData_TimerEtc[levelId - 1][25], new Object[]{new Integer(var1), new Integer(var2), new Integer(var3)}, new short[]{126}, (short)133);
       } else {
-         sub_2db((byte)41, new byte[]{5, 5}, LevelManager.levelAdditionalData_TimerEtc[var_dc6 - 1][25], new Object[]{new Integer(var1), new Integer(var2), new Integer(var3)}, new short[]{126}, (short)134, new Object[]{new Integer(var_dc6 - 6)});
+         sub_2db((byte)41, new byte[]{5, 5}, LevelManager.levelAdditionalData_TimerEtc[levelId - 1][25], new Object[]{new Integer(var1), new Integer(var2), new Integer(var3)}, new short[]{126}, (short)134, new Object[]{new Integer(levelId - 6)});
       }
    }
 
@@ -1671,38 +1671,38 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             }
          }
 
-         var_bfe = var_729 + var_6c8 * (LevelObjectData.spriteTypesArr[26][2] + var_798) + (LevelObjectData.spriteTypesArr[26][2] >> 1);
+         cursorXTarget = var_729 + var_6c8 * (LevelObjectData.spriteTypesArr[26][2] + var_798) + (LevelObjectData.spriteTypesArr[26][2] >> 1);
          var_c60 = var_762 + var_6d8 * (LevelObjectData.spriteTypesArr[26][3] + var_7d3) + (LevelObjectData.spriteTypesArr[26][3] >> 1);
          sub_b52();
       } else {
          var_ca0 = var_b4c[var_ca0][var0];
-         var_bfe = LevelObjectData.var_65[var_ca0][0];
+         cursorXTarget = LevelObjectData.var_65[var_ca0][0];
          var_c60 = LevelObjectData.var_65[var_ca0][1];
          switch(var_ca0) {
          case 2:
-            var_900 = var_d34[0];
+            var_900 = allThievesArray[0];
             break;
          case 3:
-            if (var_d50.contains(var_d34[1]) || LevelManager.levelAdditionalData_TimerEtc[var_dc6 - 1][7] == 0) {
+            if (selectedThieves.contains(allThievesArray[1]) || LevelManager.levelAdditionalData_TimerEtc[levelId - 1][7] == 0) {
                var_ca0 = var_b5a[0][var0];
                sub_b3f(var0);
                return;
             }
 
-            var_900 = var_d34[1];
+            var_900 = allThievesArray[1];
             break;
          case 4:
-            if (var_d50.contains(var_d34[2]) || LevelManager.levelAdditionalData_TimerEtc[var_dc6 - 1][8] == 0) {
+            if (selectedThieves.contains(allThievesArray[2]) || LevelManager.levelAdditionalData_TimerEtc[levelId - 1][8] == 0) {
                var_ca0 = var_b5a[1][var0];
                sub_b3f(var0);
                return;
             }
 
-            var_900 = var_d34[2];
+            var_900 = allThievesArray[2];
             break;
          case 5:
-            if (!var_d50.contains(var_d34[3]) && LevelManager.levelAdditionalData_TimerEtc[var_dc6 - 1][9] != 0) {
-               var_900 = var_d34[3];
+            if (!selectedThieves.contains(allThievesArray[3]) && LevelManager.levelAdditionalData_TimerEtc[levelId - 1][9] != 0) {
+               var_900 = allThievesArray[3];
                break;
             }
 
@@ -1710,13 +1710,13 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             sub_b3f(var0);
             return;
          case 6:
-            if (var_d50.contains(var_d34[4]) || LevelManager.levelAdditionalData_TimerEtc[var_dc6 - 1][10] == 0) {
+            if (selectedThieves.contains(allThievesArray[4]) || LevelManager.levelAdditionalData_TimerEtc[levelId - 1][10] == 0) {
                var_ca0 = var_b5a[3][var0];
                sub_b3f(var0);
                return;
             }
 
-            var_900 = var_d34[4];
+            var_900 = allThievesArray[4];
          }
       }
 
@@ -1750,12 +1750,12 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             Class_3d.callGc();
             threadSleep(10L);
             threadSleep(10L);
-            LevelManager.sub_74();
+            LevelManager.initLevelInPlanningMode();
             break;
          case 2:
             var_1217 = 0;
             //var10000 = new int[]{1, 4, 5, 3};
-            LevelManager.sub_48();
+            LevelManager.switchLevelToActionMode();
             break;
          case 3:
             var_1217 = 0;
@@ -1796,9 +1796,9 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          var_f83 = var_11cf - ReadingDrawingClass.var_a9 - 2;
          var_fa9 = var_1180;
          var0 = ReadingDrawingClass.readTextFromLng((short)LevelObjectData.var_65[var_ca0][2]);
-         var_6bc = !var_129e[7 + var_ca0] && var_5bb == -1;
+         var_6bc = !saveData[7 + var_ca0] && gameMode == -1;
          if (var_12fc && var_6bc) {
-            var_129e[7 + var_ca0] = true;
+            saveData[7 + var_ca0] = true;
             ReadingDrawingClass.sub_7c6();
             var_6bc = false;
          }
@@ -1811,53 +1811,53 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    }
 
    private static boolean sub_bbb() {
-      var_93a = 999999;
+      keyCodePressed = 999999;
       var_5e0 = true;
       if (var_6ac) {
          var_649 = true;
       }
 
-      if (Class_19e.var_838 == null) {
+      if (DialogManager.var_838 == null) {
          return false;
       } else {
-         Object var0 = Class_19e.var_838;
+         Object var0 = DialogManager.var_838;
          short var1 = 0;
          if (var0 instanceof Short) {
             var1 = ((Short)var0).shortValue();
          }
 
          int var3;
-         switch(Class_19e.var_7ed) {
+         switch(DialogManager.var_7ed) {
          case 2:
-            Class_205 var12 = var_d34[var_f0d];
+            Thief var12 = allThievesArray[var_f0d];
             switch(var1) {
             case 122:
-               sub_2c8((byte)0, new byte[]{5, var12.var_3a}, (short)(var12.var_3a == 0 ? 147 : 148), new Object[]{new Integer(LevelManager.thiefStats[var12.var_3a][0]), new Integer(LevelManager.thiefStats[var12.var_3a][1]), new Short((short)(var12.var_3a + 99))}, new short[]{126}, (short)(41 + var12.var_3a));
+               sub_2c8((byte)0, new byte[]{5, var12.thiefId}, (short)(var12.thiefId == 0 ? 147 : 148), new Object[]{new Integer(LevelManager.thiefStats[var12.thiefId][0]), new Integer(LevelManager.thiefStats[var12.thiefId][1]), new Short((short)(var12.thiefId + 99))}, new short[]{126}, (short)(41 + var12.thiefId));
                return true;
             case 123:
                var12.sub_19d();
-               var12.sub_3e7(true);
-               LevelManager.var_99f.removeElement(var12);
+               var12.clearThievesState(true);
+               LevelManager.thievesList.removeElement(var12);
                return false;
             case 124:
-               LevelManager.var_99f.addElement(var_d34[var_f0d]);
-               var_d34[var_f0d].sub_1e();
+               LevelManager.thievesList.addElement(allThievesArray[var_f0d]);
+               allThievesArray[var_f0d].sub_1e();
                var_6ac = true;
                var_12fc = false;
                var_649 = true;
                var_6c8 = 0;
                var_6d8 = 0;
-               var_bfe = 24;
+               cursorXTarget = 24;
                var_c60 = 44;
-               Class_3d.sub_1cf(var12.var_451, 0, var_1123, 0, var_1123.length);
-               return sub_1b8((byte)5, (byte)5, var12.var_3a, false);
+               Class_3d.sub_1cf(var12.inventoryTools, 0, var_1123, 0, var_1123.length);
+               return sub_1b8((byte)5, (byte)5, var12.thiefId, false);
             case 125:
                var_6ac = true;
                var_649 = true;
                var_12fc = false;
                var_6c8 = 0;
                var_6d8 = 0;
-               Class_3d.sub_1cf(var12.var_451, 0, var_1123, 0, var_1123.length);
+               Class_3d.sub_1cf(var12.inventoryTools, 0, var_1123, 0, var_1123.length);
                return false;
             default:
                return false;
@@ -1879,8 +1879,8 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             return true;
          case 4:
             sub_670();
-            if (MusicManager.someMusicIndexVar2 != var_129e[0]) {
-               MusicManager.someMusicIndexVar2 = var_129e[0];
+            if (MusicManager.someMusicIndexVar2 != saveData[0]) {
+               MusicManager.someMusicIndexVar2 = saveData[0];
                if (MusicManager.someMusicIndexVar2) {
                   musicManager.switchMusicPlayer(0, -1);
                } else {
@@ -1888,7 +1888,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                }
             }
 
-            MusicManager.someMusicIndexVar = var_129e[1];
+            MusicManager.someMusicIndexVar = saveData[1];
          case 5:
          case 7:
          case 8:
@@ -1925,7 +1925,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                boolean var11 = false;
 
                for(int var13 = 1; var13 < 6; ++var13) {
-                  if (LevelManager.var_779[var13] > 0) {
+                  if (LevelManager.lootValues[var13] > 0) {
                      ++var3;
                   }
 
@@ -1939,12 +1939,12 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
                }
 
                Object[] var14;
-               (var14 = new Object[2 + var3])[0] = new Integer(LevelManager.var_779[0]);
+               (var14 = new Object[2 + var3])[0] = new Integer(LevelManager.lootValues[0]);
                var14[1] = new Short((short)(var11 ? 175 : 176));
                var3 = 2;
 
                for(int var15 = 1; var15 < 6; ++var15) {
-                  if (LevelManager.var_779[var15] > 0) {
+                  if (LevelManager.lootValues[var15] > 0) {
                      var14[var3] = new Short((short)(235 + var15));
                      ++var3;
                   }
@@ -1959,16 +1959,16 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             }
          case 11:
          case 31:
-            if (var_d50.size() <= var_d82.size()) {
+            if (selectedThieves.size() <= possibleThieves.size()) {
                sub_cec();
             } else {
                Short var10 = new Short((short)160);
                Short var5 = new Short((short)161);
-               Object[] var6 = new Object[(var_d50.size() << 1) - 1];
+               Object[] var6 = new Object[(selectedThieves.size() << 1) - 1];
                int var7 = 0;
 
                for(int var8 = 0; var8 < var6.length; var8 += 2) {
-                  var6[var8] = new Short((short)(((Class_205)var_d50.elementAt(var7++)).var_3a + 41));
+                  var6[var8] = new Short((short)(((Thief)selectedThieves.elementAt(var7++)).thiefId + 41));
                   if (var8 != var6.length - 1) {
                      var6[var8 + 1] = var10;
                   }
@@ -1993,7 +1993,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             }
 
             if (var1 == 191) {
-               if (var_5bb > 0) {
+               if (gameMode > 0) {
                   sub_2c8((byte)35, (byte[])null, (short)158, new Object[]{new Integer(var_10ff)}, new short[]{126}, (short)191);
                   --var_10ff;
                } else {
@@ -2025,40 +2025,40 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             break;
          case 26:
             if (var0.equals(String.valueOf(126))) {
-               if (var_e38 >= LevelManager.var_7a3[var_9fe]) {
-                  var_e38 -= LevelManager.var_7a3[var_9fe];
+               if (currentMoney >= LevelManager.var_7a3[var_9fe]) {
+                  currentMoney -= LevelManager.var_7a3[var_9fe];
                   LevelManager.var_7a3[var_9fe] = 0;
                   if (221 + var_9fe == 227) {
-                     sub_2c8((byte)34, new byte[]{5, 5}, LevelManager.levelAdditionalData_TimerEtc[var_dc6 - 1][26], (Object[])null, new short[]{126}, (short)189);
+                     sub_2c8((byte)34, new byte[]{5, 5}, LevelManager.levelAdditionalData_TimerEtc[levelId - 1][26], (Object[])null, new short[]{126}, (short)189);
                      return true;
                   }
 
                   return sub_c29();
                }
 
-               sub_2c8((byte)0, (byte[])null, (short)181, new Object[]{new Integer(LevelManager.var_7a3[var_9fe]), new Integer(var_e38)}, new short[]{126}, (short)136);
+               sub_2c8((byte)0, (byte[])null, (short)181, new Object[]{new Integer(LevelManager.var_7a3[var_9fe]), new Integer(currentMoney)}, new short[]{126}, (short)136);
                return true;
             }
             break;
          case 28:
             if (var0.equals(String.valueOf(126))) {
-               if (var_e38 < LevelManager.var_7f3) {
-                  sub_2c8((byte)0, (byte[])null, (short)181, new Object[]{new Integer(LevelManager.var_7f3), new Integer(var_e38)}, new short[]{126}, (short)136);
+               if (currentMoney < LevelManager.var_7f3) {
+                  sub_2c8((byte)0, (byte[])null, (short)181, new Object[]{new Integer(LevelManager.var_7f3), new Integer(currentMoney)}, new short[]{126}, (short)136);
                   return true;
                }
 
-               var_e38 -= LevelManager.var_7f3;
+               currentMoney -= LevelManager.var_7f3;
                LevelManager.var_7f3 = 0;
             }
             break;
          case 29:
             byte var9 = Byte.parseByte((String)var0);
 
-            for(var3 = 0; var3 < var_d50.size(); ++var3) {
-               Class_205 var4 = (Class_205)var_d50.elementAt(var3);
+            for(var3 = 0; var3 < selectedThieves.size(); ++var3) {
+               Thief var4 = (Thief)selectedThieves.elementAt(var3);
                if (var9 == var3) {
                   var_900 = var4;
-                  sub_2c8((byte)30, new byte[]{5, var4.var_3a}, (short)178, new Object[]{new Integer(var4.var_3fa[0] * 1000)}, new short[]{126, 127}, (short)(41 + var4.var_3a));
+                  sub_2c8((byte)30, new byte[]{5, var4.thiefId}, (short)178, new Object[]{new Integer(var4.collectedLoot[0] * 1000)}, new short[]{126, 127}, (short)(41 + var4.thiefId));
                   return true;
                }
             }
@@ -2066,17 +2066,17 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
             return false;
          case 30:
             if (var0.equals(String.valueOf(126))) {
-               int var2 = var_900.var_3fa[0] * 1000;
-               if (var_e38 < var2) {
-                  sub_2c8((byte)0, (byte[])null, (short)181, new Object[]{new Integer(var2), new Integer(var_e38)}, new short[]{126}, (short)136);
+               int var2 = var_900.collectedLoot[0] * 1000;
+               if (currentMoney < var2) {
+                  sub_2c8((byte)0, (byte[])null, (short)181, new Object[]{new Integer(var2), new Integer(currentMoney)}, new short[]{126}, (short)136);
                   return true;
                }
 
-               var_d50.removeElement(var_900);
+               selectedThieves.removeElement(var_900);
                var_900.sub_41a();
-               var_900.sub_3e7(false);
-               var_900.var_29a = 0;
-               var_e38 -= var2;
+               var_900.clearThievesState(false);
+               var_900.currentLoad = 0;
+               currentMoney -= var2;
             }
             break;
          case 32:
@@ -2118,34 +2118,34 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    }
 
    public static void sub_c15() {
-      var_e38 = var_e86;
-      LevelManager.someLevelDataVarLast = LevelManager.var_c9e;
+      currentMoney = var_e86;
+      LevelManager.timeLimitSeconds = LevelManager.var_c9e;
       LevelManager.sub_140(LevelManager.var_8ff, LevelManager.alarmWithZonesMap);
       LevelManager.sub_f0(LevelManager.var_896, LevelManager.levelObjects);
-      LevelManager.var_99f.removeAllElements();
+      LevelManager.thievesList.removeAllElements();
       Enumeration var0 = LevelManager.var_9d3.elements();
 
       while(var0.hasMoreElements()) {
-         Class_205 var1;
-         (var1 = (Class_205)var0.nextElement()).sub_41a();
+         Thief var1;
+         (var1 = (Thief)var0.nextElement()).sub_41a();
          var1.sub_44c();
-         LevelManager.var_99f.addElement(var1);
+         LevelManager.thievesList.addElement(var1);
       }
 
-      var_d50.removeAllElements();
-      var0 = var_d82.elements();
+      selectedThieves.removeAllElements();
+      var0 = possibleThieves.elements();
 
       while(var0.hasMoreElements()) {
-         var_d50.addElement(var0.nextElement());
+         selectedThieves.addElement(var0.nextElement());
       }
 
       for(int var2 = 0; var2 < 3; ++var2) {
-         var_d34[0].var_451[var2] = LevelManager.var_a1e[var2];
+         allThievesArray[0].inventoryTools[var2] = LevelManager.var_a1e[var2];
       }
 
-      var_d34[0].sub_41a();
-      var_d34[0].sub_2a1();
-      sub_d4e(var_dc6);
+      allThievesArray[0].sub_41a();
+      allThievesArray[0].sub_2a1();
+      loadLevel(levelId);
       ReadingDrawingClass.sub_71d();
    }
 
@@ -2178,19 +2178,19 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    }
 
    private static boolean sub_c62() {
-      if (var_d50.isEmpty()) {
+      if (selectedThieves.isEmpty()) {
          return false;
       } else {
-         short[] var0 = new short[var_d50.size()];
-         Object[][] var1 = new Object[var_d50.size()][1];
-         byte[][] var2 = new byte[var_d50.size()][2];
+         short[] var0 = new short[selectedThieves.size()];
+         Object[][] var1 = new Object[selectedThieves.size()][1];
+         byte[][] var2 = new byte[selectedThieves.size()][2];
 
-         for(int var3 = 0; var3 < var_d50.size(); ++var3) {
-            Class_205 var4 = (Class_205)var_d50.elementAt(var3);
-            var0[var3] = (short)(47 + var4.var_3a - 1);
-            var1[var3][0] = new Integer(var4.var_3fa[0] * 1000);
+         for(int var3 = 0; var3 < selectedThieves.size(); ++var3) {
+            Thief var4 = (Thief)selectedThieves.elementAt(var3);
+            var0[var3] = (short)(47 + var4.thiefId - 1);
+            var1[var3][0] = new Integer(var4.collectedLoot[0] * 1000);
             var2[var3][0] = 42;
-            var2[var3][1] = var4.var_3a;
+            var2[var3][1] = var4.thiefId;
          }
 
          sub_2a5((byte)29, false, (byte[])null, var0, var1, var2, (boolean[])null, (short)46, (byte)2);
@@ -2202,8 +2202,8 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       int var2 = 0;
       int var1;
       if (LevelManager.sub_bc9(var0) != 113 && LevelManager.sub_bc9(var0) != 114) {
-         for(var1 = 0; var1 < Class_205.toolUsingTimeStats.length; ++var1) {
-            if (Class_205.toolUsingTimeStats[var1][var0] > 0 && var1 != 11) {
+         for(var1 = 0; var1 < Thief.toolUsingTimeStats.length; ++var1) {
+            if (Thief.toolUsingTimeStats[var1][var0] > 0 && var1 != 11) {
                ++var2;
             }
          }
@@ -2221,11 +2221,11 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          var5[0] = null;
          var2 = 1;
 
-         for(var1 = 0; var1 < Class_205.toolUsingTimeStats.length; ++var1) {
-            if (Class_205.toolUsingTimeStats[var1][var0] > 0 && var1 != 11) {
+         for(var1 = 0; var1 < Thief.toolUsingTimeStats.length; ++var1) {
+            if (Thief.toolUsingTimeStats[var1][var0] > 0 && var1 != 11) {
                var3[var2] = 82;
                var4[var2][0] = new Short((short)(51 + var1));
-               var4[var2][1] = new Integer(Class_205.toolUsingTimeStats[var1][var0]);
+               var4[var2][1] = new Integer(Thief.toolUsingTimeStats[var1][var0]);
                var5[var2][0] = 4;
                var5[var2][1] = LevelObjectData.spriteIndexes[var1][4];
                ++var2;
@@ -2234,13 +2234,13 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
 
          sub_29b((byte)0, new byte[]{8, var0}, var3, var4, var5, (boolean[])null, LevelManager.sub_bc9(var0), (byte)1);
       } else {
-         sub_2c8((byte)0, new byte[]{8, var0}, (short)(LevelManager.sub_bc9(var0) == 113 ? 83 : 84), new Object[]{new Integer(Class_205.toolUsingTimeStats[0][var0])}, new short[]{126}, LevelManager.sub_bc9(var0));
+         sub_2c8((byte)0, new byte[]{8, var0}, (short)(LevelManager.sub_bc9(var0) == 113 ? 83 : 84), new Object[]{new Integer(Thief.toolUsingTimeStats[0][var0])}, new short[]{126}, LevelManager.sub_bc9(var0));
       }
    }
 
    private static void sub_cec() {
       short[] var0;
-      if (var_10ff > 0 && var_5bb != -1) {
+      if (var_10ff > 0 && gameMode != -1) {
          var0 = new short[]{192, 191};
       } else {
          var0 = new short[]{192};
@@ -2250,56 +2250,56 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    }
 
    private static void sub_d10() {
-      if (var_5bb < 2) {
+      if (gameMode < 2) {
          var_10ff = 3;
       }
 
-      if (LevelManager.var_99f.size() > 0) {
-         Class_205 var1;
-         for(Enumeration var0 = LevelManager.var_99f.elements(); var0.hasMoreElements(); var1.var_29a = 0) {
-            (var1 = (Class_205)var0.nextElement()).sub_3e7(false);
+      if (LevelManager.thievesList.size() > 0) {
+         Thief var1;
+         for(Enumeration var0 = LevelManager.thievesList.elements(); var0.hasMoreElements(); var1.currentLoad = 0) {
+            (var1 = (Thief)var0.nextElement()).clearThievesState(false);
             var1.sub_41a();
          }
 
-         LevelManager.var_99f.removeAllElements();
+         LevelManager.thievesList.removeAllElements();
       }
 
-      var_d34[0].sub_3e7(false);
-      var_d34[0].sub_41a();
-      var_d34[0].var_29a = 0;
-      var_e86 = var_e38;
-      sub_d4e((byte)(var_dc6 + 1));
+      allThievesArray[0].clearThievesState(false);
+      allThievesArray[0].sub_41a();
+      allThievesArray[0].currentLoad = 0;
+      var_e86 = currentMoney;
+      loadLevel((byte)(levelId + 1));
       ReadingDrawingClass.sub_6f5();
       ReadingDrawingClass.sub_837();
    }
 
-   public static void sub_d4e(byte var0) {
+   public static void loadLevel(byte levelid) {
       var_1217 = 3;
-      if (var_5bb == -1 && var0 > 6) {
+      if (gameMode == -1 && levelid > 6) {
          var_ea3 = 165;
-      } else if (var0 > 26) {
+      } else if (levelid > 26) {
          var_ea3 = 164;
       } else {
-         if (var_dc6 != var0) {
-            var_dc6 = var0;
-            LevelManager.loadLevel(var_dc6);
-            if (var_dc6 == 1 || var_dc6 == 7) {
-               LevelManager.var_99f.removeAllElements();
-               var_d50.removeAllElements();
+         if (levelId != levelid) {
+            levelId = levelid;
+            LevelManager.loadLevel(levelId);
+            if (levelId == 1 || levelId == 7) {
+               LevelManager.thievesList.removeAllElements();
+               selectedThieves.removeAllElements();
             }
 
-            for(int var1 = 0; var1 < var_d34.length; ++var1) {
-               var_d34[var1].sub_1e();
-               var_d34[var1].sub_3e7(false);
-               var_d34[var1].sub_41a();
-               var_d34[var1].var_29a = 0;
+            for(int var1 = 0; var1 < allThievesArray.length; ++var1) {
+               allThievesArray[var1].sub_1e();
+               allThievesArray[var1].clearThievesState(false);
+               allThievesArray[var1].sub_41a();
+               allThievesArray[var1].currentLoad = 0;
             }
 
-            if (var_dc6 == 1) {
+            if (levelId == 1) {
                var_ea3 = 2;
 
-               for(byte var2 = 2; var2 < var_129e.length; ++var2) {
-                  var_129e[var2] = false;
+               for(byte var2 = 2; var2 < saveData.length; ++var2) {
+                  saveData[var2] = false;
                }
 
                ReadingDrawingClass.sub_7c6();
@@ -2322,7 +2322,7 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    }
 
    private static void sub_ddc(Graphics var0) {
-      if (var_ff4 != null && (var_b74 == var_bfe && var_bca == var_c60 || var_26f == 1) && (var_12fc || var_6ac)) {
+      if (var_ff4 != null && (cursorXCurrent == cursorXTarget && var_bca == var_c60 || gameState == 1) && (var_12fc || var_6ac)) {
          ReadingDrawingClass.drawText(var0, var_ff4, var_10ea, var_105e, var_102d, var_102d + var_109d);
       }
 
@@ -2363,8 +2363,8 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
          if ((var0 = RecordStore.openRecordStore("option", true)).getNumRecords() > 0) {
             byte[] var12 = var0.getRecord(1);
 
-            for(byte var2 = 0; var2 < var_129e.length; ++var2) {
-               var_129e[var2] = var12[var2] == 1;
+            for(byte var2 = 0; var2 < saveData.length; ++var2) {
+               saveData[var2] = var12[var2] == 1;
             }
 
             return;
@@ -2435,9 +2435,9 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
       boolean var7 = false;
 
       try {
-         Display.getDisplay(var_3e2).setCurrent((Displayable)null);
+         Display.getDisplay(mainMidlet).setCurrent((Displayable)null);
          var4 = (HttpConnection)Connector.open(var1, 3, true);
-         Display.getDisplay(var_3e2).setCurrent(var_13a7);
+         Display.getDisplay(mainMidlet).setCurrent(var_13a7);
          var4.setRequestMethod("POST");
          var4.setRequestProperty("Content-Type", "text/xml");
          var4.setRequestProperty("User-Agent", "Profile/MIDP-1.0 Configuration/CLDC-1.0");
@@ -2505,16 +2505,16 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    }
 
    public final void hideNotify() {
-      sub_4d();
+      pauseGameThread();
    }
 
    public final void showNotify() {
-      this.sub_29();
+      this.runGameThread();
    }
 
    public final void sizeChanged(int var1, int var2) {
-      if (var_13cf != -1 && var_26f == 5) {
-         var_26f = var_2b9;
+      if (var_13cf != -1 && gameState == 5) {
+         gameState = var_2b9;
          var_1180 = LevelManager.screenWidth = this.getWidth();
          var_11cf = LevelManager.screenHeight = this.getHeight();
          var_130f = null;
@@ -2523,22 +2523,22 @@ public final class Class_178 extends Class_26a implements Runnable, CommandListe
    }
 
    static {
-      var_bfe = var_b74;
+      cursorXTarget = cursorXCurrent;
       var_c60 = var_bca;
-      var_d34 = new Class_205[5];
-      var_d50 = new Vector();
-      var_d82 = new Vector();
-      var_dc6 = -1;
+      allThievesArray = new Thief[5];
+      selectedThieves = new Vector();
+      possibleThieves = new Vector();
+      levelId = -1;
       toolStats = new short[][]{{50, 10, 0, 4}, {120, 15, 1, 6}, {7000, 11, 2, 11}, {3000, 1, 3, 9}, {1500, 8, 4, 7}, {12000, 22, 5, 12}, {200, 2, 6, 8}, {4000, 5, 7, 10}, {30000, 9, 8, 10}, {2000, 10, 9, 5}, {9000, 20, 10, 5}, {500, 1, 11, 13}};
       var_dff = toolStats.length / 6;
       var_e17 = new byte[6][var_dff];
-      var_e38 = 4000;
+      currentMoney = 4000;
       var_e86 = 4000;
       var_10ff = 3;
       var_1123 = new byte[3];
       var_114a = 0;
       var_1217 = 0;
-      var_129e = new boolean[]{false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false};
+      saveData = new boolean[]{false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false};
       var_13cf = -1;
       var_157e = false;
    }

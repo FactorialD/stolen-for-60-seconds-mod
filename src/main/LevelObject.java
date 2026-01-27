@@ -12,9 +12,9 @@ public final class LevelObject implements LevelObjectData {
    public final byte x;
    public final byte y;
    public final byte offsetType;
-   public short var_18d;
+   public short interactionTickTimestamp;
    public short var_1a5;
-   public final byte[] var_1bc = new byte[]{120, 8};
+   public final byte[] progressData = new byte[]{120, 8};
    public byte var_1f5;
    public byte var_22c;
 
@@ -25,14 +25,14 @@ public final class LevelObject implements LevelObjectData {
       this.offsetType = offsetType;
       this.var_1f5 = var6;
       this.var_22c = var7;
-      this.var_1bc[0] = (byte)(var5 == 0 ? 120 : 0);
+      this.progressData[0] = (byte)(var5 == 0 ? 120 : 0);
    }
 
    public final void drawObject(Graphics g) {
       int var2;
-      if (LevelManager.var_a5a != 0) {
+      if (LevelManager.gameState != 0) {
          byte objectType = this.objectType;
-         if (objectType == 6 && LevelManager.levelAdditionalData_TimerEtc[Class_178.var_dc6 - 1][25] == 32) {
+         if (objectType == 6 && LevelManager.levelAdditionalData_TimerEtc[GlobalManager.levelId - 1][25] == 32) {
             objectType = 4;
          }
 
@@ -41,18 +41,18 @@ public final class LevelObject implements LevelObjectData {
             return;
          }
 
-         if (this.var_1bc[0] <= 0 && objectType == 4) {
+         if (this.progressData[0] <= 0 && objectType == 4) {
             return;
          }
 
          if (objectType == 9) {
-            if (this.var_1bc[0] > 0) {
+            if (this.progressData[0] > 0) {
                return;
             }
 
-            var2 = this.var_1bc[1] <= 0 ? 1 : 0;
+            var2 = this.progressData[1] <= 0 ? 1 : 0;
          } else {
-            var2 = this.var_1bc[0] <= 0 ? 1 : 0;
+            var2 = this.progressData[0] <= 0 ? 1 : 0;
          }
 
          int additionalOffsetX = 0;
@@ -96,21 +96,21 @@ public final class LevelObject implements LevelObjectData {
          }
 
          if (objectType == 9) {
-            if (this.var_1bc[0] <= 0 && this.var_1bc[1] > 0) {
-               ReadingDrawingClass.sub_46a(g, String.valueOf(this.var_1bc[1]), LevelManager.mapOffsetX + this.x * 24, LevelManager.mapOffsetY + this.y * 24);
+            if (this.progressData[0] <= 0 && this.progressData[1] > 0) {
+               ReadingDrawingClass.sub_46a(g, String.valueOf(this.progressData[1]), LevelManager.mapOffsetX + this.x * 24, LevelManager.mapOffsetY + this.y * 24);
             }
 
-            if (this.var_1bc[1] == 0) {
+            if (this.progressData[1] == 0) {
                ReadingDrawingClass.drawSpriteNoOffset(g, (byte)11, LevelManager.var_4e5[this.var_22c], LevelManager.mapOffsetX + this.x * 24, LevelManager.mapOffsetY + this.y * 24);
                LevelManager.var_4a5 = LevelManager.var_475[this.var_22c];
             }
          }
       } else {
-         if (this.objectType == 6 && (LevelManager.var_7f3 > 0 || LevelManager.levelAdditionalData_TimerEtc[Class_178.var_dc6 - 1][25] == 32)) {
+         if (this.objectType == 6 && (LevelManager.var_7f3 > 0 || LevelManager.levelAdditionalData_TimerEtc[GlobalManager.levelId - 1][25] == 32)) {
             return;
          }
 
-         if (this.objectType == 4 && LevelManager.levelAdditionalData_TimerEtc[Class_178.var_dc6 - 1][25] == 32) {
+         if (this.objectType == 4 && LevelManager.levelAdditionalData_TimerEtc[GlobalManager.levelId - 1][25] == 32) {
             return;
          }
 
@@ -121,7 +121,7 @@ public final class LevelObject implements LevelObjectData {
                var2 = this.var_22c > 0 ? 12058726 : 0;
                if (ReadingDrawingClass.sub_678(LevelObjectData.spriteIndexes[this.objectType][5], (byte)5)) {
                   var2 = 5855577;
-               } else if (LevelManager.var_7a3[this.var_1f5] > 0 || LevelManager.levelAdditionalData_TimerEtc[Class_178.var_dc6 - 1][25] == 20) {
+               } else if (LevelManager.var_7a3[this.var_1f5] > 0 || LevelManager.levelAdditionalData_TimerEtc[GlobalManager.levelId - 1][25] == 20) {
                   var2 = 0;
                }
 
@@ -135,11 +135,11 @@ public final class LevelObject implements LevelObjectData {
             ReadingDrawingClass.drawSpriteNoOffset(g, (byte)47, 0, LevelManager.mapOffsetX + this.x * 24, LevelManager.mapOffsetY + this.y * 24);
          }
 
-         if (this.var_18d > 0 && this.var_18d <= Class_205.var_4aa) {
+         if (this.interactionTickTimestamp > 0 && this.interactionTickTimestamp <= Thief.globalTimer) {
             ReadingDrawingClass.drawSpriteNoOffset(g, (byte)2, 18, LevelManager.mapOffsetX + this.x * 24, LevelManager.mapOffsetY + this.y * 24);
          }
 
-         if (this.var_1a5 > 0 && this.var_1a5 <= Class_205.var_4aa) {
+         if (this.var_1a5 > 0 && this.var_1a5 <= Thief.globalTimer) {
             ReadingDrawingClass.drawSpriteNoOffset(g, (byte)2, 19, LevelManager.mapOffsetX + this.x * 24, LevelManager.mapOffsetY + this.y * 24);
             return;
          }
@@ -149,7 +149,7 @@ public final class LevelObject implements LevelObjectData {
 
    public final void drawTimerCircle(Graphics g, byte var2, boolean var3) {
       if (var2 > 0) {
-         int var4 = 360 * (var3 ? this.var_1bc[0] : this.var_1bc[1]) / var2;
+         int var4 = 360 * (var3 ? this.progressData[0] : this.progressData[1]) / var2;
          g.setClip(0, 0, 16, 16);
          g.setColor(var3 ? 10027008 : 26112);
          g.fillArc(0, 0, 15, 15, 0, 360);
@@ -161,11 +161,11 @@ public final class LevelObject implements LevelObjectData {
 
    public final void sub_c6(boolean var1) {
       if (var1) {
-         this.var_18d = 0;
+         this.interactionTickTimestamp = 0;
          this.var_1a5 = 0;
       } else {
-         this.var_1bc[0] = 120;
-         this.var_1bc[1] = 8;
+         this.progressData[0] = 120;
+         this.progressData[1] = 8;
       }
    }
 }

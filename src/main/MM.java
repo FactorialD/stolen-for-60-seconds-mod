@@ -4,43 +4,43 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.midlet.MIDlet;
 
 public final class MM extends MIDlet {
-	public static Class_178 var_5a;
-	public static String var_a1;
-	private static boolean var_d4 = true;
+	public static GlobalManager globalManager;
+	public static String gameVersion;
+	private static boolean isFirstStart = true;
 
 	public final void startApp() {
 		//Class_293.sub_4d(this);
 		Class_3d.callGc();
-		if (var_d4) {
-			var_a1 = this.getAppProperty("MIDlet-Version");
-			if (var_a1 == null) {
-				var_a1 = "1.0";
+		if (isFirstStart) {
+			gameVersion = this.getAppProperty("MIDlet-Version");
+			if (gameVersion == null) {
+				gameVersion = "1.0";
 			}
 
-			Class_178.var_3e2 = this;
-			var_5a = new Class_178();
-			Display.getDisplay(this).setCurrent(var_5a);
-			var_d4 = false;
+			GlobalManager.mainMidlet = this;
+			globalManager = new GlobalManager();
+			Display.getDisplay(this).setCurrent(globalManager);
+			isFirstStart = false;
 		}
 
-		var_5a.sub_29();
+		globalManager.runGameThread();
 	}
 
 	public final void pauseApp() {
-		Class_178.sub_4d();
+		GlobalManager.pauseGameThread();
 		this.notifyPaused();
 	}
 
 	public final void destroyApp(boolean var1) {
-		if (Class_178.var_511 && LevelManager.var_a5a != 1) {
+		if (GlobalManager.var_511 && LevelManager.gameState != 1) {
 			ReadingDrawingClass.sub_870();
 		}
 
-		Class_178.sub_9b();
+		GlobalManager.sub_9b();
 		this.notifyDestroyed();
 	}
 
-	public static final InputStream sub_d(String var0) {
-		return Class_178.var_3e2.getClass().getResourceAsStream(var0);
+	public static final InputStream getResourceStream(String var0) {
+		return GlobalManager.mainMidlet.getClass().getResourceAsStream(var0);
 	}
 }

@@ -517,28 +517,28 @@ public final class ReadingDrawingClass implements LevelObjectData {
                         var_305 = var5 == 1;
                         break;
                      case 268:
-                        Class_178.var_46 = var5 == 1;
+                        GlobalManager.var_46 = var5 == 1;
                         break;
                      case 269:
-                        Class_26a.var_140 = var5;
+                        BaseGameManager.KEY_OK = var5;
                         break;
                      case 270:
-                        Class_26a.var_1d5 = var5;
+                        BaseGameManager.KEY_BACK = var5;
                         break;
                      case 271:
-                        Class_26a.var_223 = var5;
+                        BaseGameManager.KEY_MENU = var5;
                         break;
                      case 272:
-                        Class_26a.var_27f = var5;
+                        BaseGameManager.KEY_CANCEL = var5;
                         break;
                      case 273:
-                        Class_26a.musicManagerPriorityLevel = var5;
+                        BaseGameManager.musicManagerPriorityLevel = var5;
                         break;
                      case 274:
-                        Class_26a.var_2bb = var5 == 1;
+                        BaseGameManager.allowOpenLinks = var5 == 1;
                         break;
                      case 275:
-                        Class_178.var_b17 = var2 > 0;
+                        GlobalManager.var_b17 = var2 > 0;
                         gameTexts.put(new Short(var3), var4);
                         break;
                      default:
@@ -568,7 +568,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
    }
 
    private static DataInputStream getDataInputStreamFromDat(String filename) {
-      return new DataInputStream(MM.sub_d("/dat/" + filename));
+      return new DataInputStream(MM.getResourceStream("/dat/" + filename));
    }
 
    public static short[] readTextFromLng(short var0) {
@@ -778,26 +778,26 @@ public final class ReadingDrawingClass implements LevelObjectData {
             var0 = RecordStore.openRecordStore("save1", false);
             var1 = new ByteArrayInputStream(var0.getRecord(1));
             var2 = new DataInputStream(var1);
-            byte var3 = Class_178.var_dc6;
-            Class_178.var_5bb = var2.readByte();
-            Class_178.var_dc6 = var2.readByte();
-            Class_178.var_e38 = var2.readInt();
-            if (Class_178.var_dc6 != var3) {
-               LevelManager.loadLevel(Class_178.var_dc6);
+            byte var3 = GlobalManager.levelId;
+            GlobalManager.gameMode = var2.readByte();
+            GlobalManager.levelId = var2.readByte();
+            GlobalManager.currentMoney = var2.readInt();
+            if (GlobalManager.levelId != var3) {
+               LevelManager.loadLevel(GlobalManager.levelId);
             } else {
                LevelManager.levelObjects.clear();
                LevelManager.sub_192(true);
             }
 
-            Class_178.var_d50.removeAllElements();
+            GlobalManager.selectedThieves.removeAllElements();
             byte var4 = var2.readByte();
 
             for(int var5 = 0; var5 < var4; ++var5) {
                byte var6 = var2.readByte();
-               Class_178.var_d50.addElement(Class_178.var_d34[var6]);
+               GlobalManager.selectedThieves.addElement(GlobalManager.allThievesArray[var6]);
             }
 
-            Class_178.var_10ff = var0.getRecord(2)[0];
+            GlobalManager.var_10ff = var0.getRecord(2)[0];
             var13 = false;
             break label138;
          } catch (Exception var17) {
@@ -864,25 +864,25 @@ public final class ReadingDrawingClass implements LevelObjectData {
             var2 = new DataOutputStream(var1);
             int var3;
             if ((var0 = RecordStore.openRecordStore("save1", true)).getNumRecords() == 0) {
-               var3 = 6 + Class_178.var_d34.length * 2 + 4 + 5;
+               var3 = 6 + GlobalManager.allThievesArray.length * 2 + 4 + 5;
                var0.addRecord(new byte[var3], 0, var3);
                var0.addRecord(new byte[1], 0, 1);
             }
 
-            var2.writeByte(Class_178.var_5bb);
-            var2.writeByte(Class_178.var_dc6);
-            var2.writeInt(Class_178.var_e38);
-            var3 = Class_178.var_d50.size();
+            var2.writeByte(GlobalManager.gameMode);
+            var2.writeByte(GlobalManager.levelId);
+            var2.writeInt(GlobalManager.currentMoney);
+            var3 = GlobalManager.selectedThieves.size();
             var2.writeByte(var3);
 
             for(int var4 = 0; var4 < var3; ++var4) {
-               var2.writeByte(((Class_205)Class_178.var_d50.elementAt(var4)).var_3a);
+               var2.writeByte(((Thief)GlobalManager.selectedThieves.elementAt(var4)).thiefId);
             }
 
             byte[] var17 = var1.toByteArray();
             var0.setRecord(1, var17, 0, var17.length);
-            var0.setRecord(2, new byte[]{Class_178.var_10ff}, 0, 1);
-            Class_178.var_1cd = true;
+            var0.setRecord(2, new byte[]{GlobalManager.var_10ff}, 0, 1);
+            GlobalManager.var_1cd = true;
             var11 = false;
             break label116;
          } catch (Exception var15) {
@@ -931,7 +931,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
       RecordStore var0 = null;
 
       try {
-         (var0 = RecordStore.openRecordStore("save1", true)).setRecord(2, new byte[]{Class_178.var_10ff}, 0, 1);
+         (var0 = RecordStore.openRecordStore("save1", true)).setRecord(2, new byte[]{GlobalManager.var_10ff}, 0, 1);
          return;
       } catch (Exception var9) {
       } finally {
@@ -950,7 +950,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
    public static void sub_759() {
       try {
          RecordStore.deleteRecordStore("save1");
-         Class_178.var_1cd = false;
+         GlobalManager.var_1cd = false;
       } catch (Exception var0) {
       }
    }
@@ -982,10 +982,10 @@ public final class ReadingDrawingClass implements LevelObjectData {
 
       try {
          var0 = RecordStore.openRecordStore("option", false);
-         byte[] var1 = new byte[Class_178.var_129e.length];
+         byte[] var1 = new byte[GlobalManager.saveData.length];
 
          for(byte var2 = 0; var2 < var1.length; ++var2) {
-            var1[var2] = (byte)(Class_178.var_129e[var2] ? 1 : 0);
+            var1[var2] = (byte)(GlobalManager.saveData[var2] ? 1 : 0);
          }
 
          var0.setRecord(1, var1, 0, var1.length);
@@ -1189,8 +1189,8 @@ public final class ReadingDrawingClass implements LevelObjectData {
                var2.deleteRecord(var3);
             }
 
-            outStream.writeByte(Class_178.var_dc6);
-            outStream.writeInt(Class_178.var_e38);
+            outStream.writeByte(GlobalManager.levelId);
+            outStream.writeInt(GlobalManager.currentMoney);
             outStream.writeByte(LevelManager.var_c64);
 
             for(var3 = 0; var3 < LevelManager.var_7a3.length; ++var3) {
@@ -1198,45 +1198,45 @@ public final class ReadingDrawingClass implements LevelObjectData {
             }
 
             outStream.writeInt(LevelManager.var_7f3);
-            var3 = LevelManager.var_99f.size();
+            var3 = LevelManager.thievesList.size();
             outStream.writeByte(var3);
 
             int var4;
             int var6;
             for(var4 = 0; var4 < var3; ++var4) {
-               Class_205 var5 = (Class_205)LevelManager.var_99f.elementAt(var4);
-               outStream.writeByte(var5.var_3a);
-               outStream.write(var5.var_451);
+               Thief var5 = (Thief)LevelManager.thievesList.elementAt(var4);
+               outStream.writeByte(var5.thiefId);
+               outStream.write(var5.inventoryTools);
 
-               for(var6 = 0; var6 < var5.var_3fa.length; ++var6) {
-                  outStream.writeShort(var5.var_3fa[var6]);
+               for(var6 = 0; var6 < var5.collectedLoot.length; ++var6) {
+                  outStream.writeShort(var5.collectedLoot[var6]);
                }
             }
 
-            outStream.write(Class_178.var_d34[0].var_451);
-            var4 = Class_178.var_d50.size();
+            outStream.write(GlobalManager.allThievesArray[0].inventoryTools);
+            var4 = GlobalManager.selectedThieves.size();
             outStream.writeByte(var4);
 
             int var26;
             for(var26 = 0; var26 < var4; ++var26) {
-               outStream.writeByte(((Class_205)Class_178.var_d50.elementAt(var26)).var_3a);
+               outStream.writeByte(((Thief)GlobalManager.selectedThieves.elementAt(var26)).thiefId);
             }
 
-            for(var26 = 1; var26 < Class_178.var_d34.length; ++var26) {
+            for(var26 = 1; var26 < GlobalManager.allThievesArray.length; ++var26) {
                int var7;
-               Class_205 var27;
-               if ((var7 = (var27 = Class_178.var_d34[var26]).var_39c.size()) <= 1) {
+               Thief var27;
+               if ((var7 = (var27 = GlobalManager.allThievesArray[var26]).recordedActions.size()) <= 1) {
                   outStream.writeShort(0);
                } else {
-                  Class_240 var8 = (Class_240)var27.var_39c.elementAt(0);
+                  TimelineNode var8 = (TimelineNode)var27.recordedActions.elementAt(0);
                   short var9 = 0;
                   byte var10 = -1;
 
                   int var11;
                   for(var11 = 0; var11 < var7; ++var11) {
-                     Class_240 var12 = (Class_240)var27.var_39c.elementAt(var11);
+                     TimelineNode var12 = (TimelineNode)var27.recordedActions.elementAt(var11);
                      ++var10;
-                     if (var8.var_df != var12.var_df || var10 > 125) {
+                     if (var8.packedData != var12.packedData || var10 > 125) {
                         var10 = 0;
                         ++var9;
                         var8 = var12;
@@ -1248,11 +1248,11 @@ public final class ReadingDrawingClass implements LevelObjectData {
                   var11 = 0;
                   int var32 = 0;
 
-                  for(var8 = (Class_240)var27.var_39c.elementAt(0); var11 < var9; ++var32) {
+                  for(var8 = (TimelineNode)var27.recordedActions.elementAt(0); var11 < var9; ++var32) {
                      ++var10;
-                     Class_240 var13 = (Class_240)var27.var_39c.elementAt(var32);
-                     if (var8.var_df != var13.var_df || var10 > 125) {
-                        outStream.writeByte(var8.var_df);
+                     TimelineNode var13 = (TimelineNode)var27.recordedActions.elementAt(var32);
+                     if (var8.packedData != var13.packedData || var10 > 125) {
+                        outStream.writeByte(var8.packedData);
                         outStream.writeByte(var10);
                         var10 = 0;
                         var8 = var13;
@@ -1266,7 +1266,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
                for(var6 = 0; var6 < LevelManager.mapHeight; ++var6) {
                   LevelObject var29;
                   if ((var29 = (LevelObject)LevelManager.levelObjectsMap.get(LevelManager.combineInts(var26, var6))) != null) {
-                     outStream.writeShort(var29.var_18d);
+                     outStream.writeShort(var29.interactionTickTimestamp);
                      outStream.writeShort(var29.var_1a5);
                      outStream.writeByte(var29.var_22c);
                   }
@@ -1280,7 +1280,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
                LevelObject var31 = (LevelObject)var28.nextElement();
                outStream.writeByte(var31.x);
                outStream.writeByte(var31.y);
-               outStream.writeShort(var31.var_18d);
+               outStream.writeShort(var31.interactionTickTimestamp);
                outStream.writeShort(var31.var_1a5);
                outStream.writeByte(var31.var_1f5);
             }
@@ -1352,7 +1352,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
                   var0 = RecordStore.openRecordStore("path", false);
                   var1 = new ByteArrayInputStream(var0.getRecord(1));
                   byte var3 = (var2 = new DataInputStream(var1)).readByte();
-                  if (Class_178.var_dc6 != var3) {
+                  if (GlobalManager.levelId != var3) {
                      if (var0 != null) {
                         try {
                            var0.closeRecordStore();
@@ -1370,7 +1370,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
                      break label371;
                   }
 
-                  Class_178.var_e38 = var2.readInt();
+                  GlobalManager.currentMoney = var2.readInt();
                   LevelManager.var_c64 = var2.readByte();
 
                   for(int var4 = 0; var4 < LevelManager.var_7a3.length; ++var4) {
@@ -1378,39 +1378,39 @@ public final class ReadingDrawingClass implements LevelObjectData {
                   }
 
                   LevelManager.var_7f3 = var2.readInt();
-                  LevelManager.var_99f.removeAllElements();
+                  LevelManager.thievesList.removeAllElements();
                   byte var33 = var2.readByte();
 
                   byte var6;
-                  Class_205 var7;
+                  Thief var7;
                   for(var5 = 0; var5 < var33; ++var5) {
                      var6 = var2.readByte();
-                     var7 = Class_178.var_d34[var6];
-                     LevelManager.var_99f.addElement(var7);
-                     var2.read(var7.var_451);
+                     var7 = GlobalManager.allThievesArray[var6];
+                     LevelManager.thievesList.addElement(var7);
+                     var2.read(var7.inventoryTools);
 
-                     for(int var8 = 0; var8 < var7.var_3fa.length; ++var8) {
-                        var7.var_3fa[var8] = var2.readShort();
+                     for(int var8 = 0; var8 < var7.collectedLoot.length; ++var8) {
+                        var7.collectedLoot[var8] = var2.readShort();
                      }
 
                      var7.sub_44c();
                   }
 
-                  var2.read(Class_178.var_d34[0].var_451);
-                  Class_178.var_d34[0].sub_44c();
-                  Class_178.var_d50.removeAllElements();
+                  var2.read(GlobalManager.allThievesArray[0].inventoryTools);
+                  GlobalManager.allThievesArray[0].sub_44c();
+                  GlobalManager.selectedThieves.removeAllElements();
                   byte var34 = var2.readByte();
 
                   int var35;
                   for(var35 = 0; var35 < var34; ++var35) {
                      byte var36 = var2.readByte();
-                     Class_178.var_d50.addElement(Class_178.var_d34[var36]);
+                     GlobalManager.selectedThieves.addElement(GlobalManager.allThievesArray[var36]);
                   }
 
-                  for(var35 = 1; var35 < Class_178.var_d34.length; ++var35) {
-                     var7 = Class_178.var_d34[var35];
-                     byte var38 = LevelManager.someLevelDataVar1;
-                     byte var9 = LevelManager.someLevelDataVar2;
+                  for(var35 = 1; var35 < GlobalManager.allThievesArray.length; ++var35) {
+                     var7 = GlobalManager.allThievesArray[var35];
+                     byte var38 = LevelManager.exitX;
+                     byte var9 = LevelManager.exitY;
                      var7.sub_1e();
                      byte var10 = 0;
                      byte var11 = 0;
@@ -1419,16 +1419,16 @@ public final class ReadingDrawingClass implements LevelObjectData {
                         for(int var13 = 0; var13 < var12; ++var13) {
                            byte var14 = var2.readByte();
                            byte var15 = var2.readByte();
-                           int var16 = var7.var_39c.size() - 1;
+                           int var16 = var7.recordedActions.size() - 1;
 
                            for(int var17 = 0; var17 < var15; ++var17) {
-                              Class_240 var18;
-                              (var18 = (Class_240)var7.var_39c.elementAt(var16 + var17)).var_29 = var38;
-                              var18.var_86 = var9;
-                              var18.var_df = var14;
+                              TimelineNode var18;
+                              (var18 = (TimelineNode)var7.recordedActions.elementAt(var16 + var17)).x = var38;
+                              var18.y = var9;
+                              var18.packedData = var14;
                               if (var17 == 0) {
-                                 var10 = var18.sub_a2();
-                                 var11 = var18.sub_106();
+                                 var10 = var18.getAction();
+                                 var11 = var18.getDirection();
                               }
 
                               if (var10 == 1) {
@@ -1436,14 +1436,14 @@ public final class ReadingDrawingClass implements LevelObjectData {
                                  var9 = (byte)(var9 + LevelManager.offsetTypes[1][var11]);
                               }
 
-                              var7.var_39c.addElement(new Class_240(var38, var9, (byte)0, var11, (byte)0));
+                              var7.recordedActions.addElement(new TimelineNode(var38, var9, (byte)0, var11, (byte)0));
                            }
                         }
 
-                        var7.var_bb = var38;
-                        var7.var_123 = var9;
-                        var7.var_17b = var11;
-                        var7.var_1a6 = var10;
+                        var7.positionX = var38;
+                        var7.positionY = var9;
+                        var7.direction = var11;
+                        var7.actionState = var10;
                      }
                   }
 
@@ -1452,7 +1452,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
                   for(var35 = 0; var35 < LevelManager.mapWidth; ++var35) {
                      for(var37 = 0; var37 < LevelManager.mapHeight; ++var37) {
                         if ((var39 = (LevelObject)LevelManager.levelObjectsMap.get(LevelManager.combineInts(var35, var37))) != null) {
-                           var39.var_18d = var2.readShort();
+                           var39.interactionTickTimestamp = var2.readShort();
                            var39.var_1a5 = var2.readShort();
                            var39.var_22c = var2.readByte();
                         }
@@ -1463,7 +1463,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
                   var6 = var2.readByte();
 
                   for(var37 = 0; var37 < var6; ++var37) {
-                     (var39 = new LevelObject((byte)9, var2.readByte(), var2.readByte(), (byte)3, (byte)0, (byte)0, (byte)0)).var_18d = var2.readShort();
+                     (var39 = new LevelObject((byte)9, var2.readByte(), var2.readByte(), (byte)3, (byte)0, (byte)0, (byte)0)).interactionTickTimestamp = var2.readShort();
                      var39.var_1a5 = var2.readShort();
                      var39.var_1f5 = var2.readByte();
                      LevelManager.levelObjects.put(LevelManager.combineInts(var39.x, var39.y), var39);
@@ -1472,14 +1472,14 @@ public final class ReadingDrawingClass implements LevelObjectData {
                   var26 = false;
                   break label372;
                } catch (Exception var31) {
-                  Class_178.var_dc6 = -1;
+                  GlobalManager.levelId = -1;
                   sub_6da();
 
-                  for(var5 = 0; var5 < Class_178.var_d34.length; ++var5) {
-                     Class_178.var_d34[var5].sub_1e();
-                     Class_178.var_d34[var5].sub_3e7(false);
-                     Class_178.var_d34[var5].sub_41a();
-                     Class_178.var_d34[var5].var_29a = 0;
+                  for(var5 = 0; var5 < GlobalManager.allThievesArray.length; ++var5) {
+                     GlobalManager.allThievesArray[var5].sub_1e();
+                     GlobalManager.allThievesArray[var5].clearThievesState(false);
+                     GlobalManager.allThievesArray[var5].sub_41a();
+                     GlobalManager.allThievesArray[var5].currentLoad = 0;
                   }
                }
 
