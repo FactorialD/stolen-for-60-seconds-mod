@@ -24,6 +24,9 @@ public final class ReadingDrawingClass implements LevelObjectData {
    public static boolean useSystemFont;
    private static final Hashtable gameTexts = new Hashtable();
    public static Image[] mainImages;
+   // New array to store split sprites that were previously on pic2
+   public static Image[] splitImages = new Image[60];
+   
    private static short var_279;
    private static short var_2a2;
    private static short[] var_2c7;
@@ -398,13 +401,20 @@ public final class ReadingDrawingClass implements LevelObjectData {
 	   int imageNameIndex =          LevelObjectData.spriteTypesArr[spriteId][5];
 	   
 	   
-	   //var2 - row on image
-	   if(LevelObjectData.spriteTypesArr[spriteId][5] == 5) {
-		   int i = 1;
-	   }
+	   Image image = null;
+       
+       // MODDED: If index is 2 (originally pic2), use the split images array
+       if (imageNameIndex == 2) {
+           image = splitImages[spriteId];
+           // Reset offset because these images are cropped exactly
+           spriteAdditionalOffsetX = 0;
+           spriteAdditionalOffsetY = 0;
+       } else {
+           image = mainImages[imageNameIndex];
+       }
       
       //if sprite is visible on the screen
-      if (spriteXPos + spriteWidth > 0 && spriteXPos < LevelManager.screenWidth && spriteYPos + spriteHeight > 0 && spriteYPos < LevelManager.screenHeight) {
+      if (image != null && spriteXPos + spriteWidth > 0 && spriteXPos < LevelManager.screenWidth && spriteYPos + spriteHeight > 0 && spriteYPos < LevelManager.screenHeight) {
          int clippedPixelsRight = spriteXPos + spriteWidth - LevelManager.screenWidth;
          int clippedPixelsBottom = spriteYPos + spriteHeight - LevelManager.screenHeight;
          int leftOffset = Math.max(minLeftOffset, spriteXPos < 0 ? -spriteXPos : 0);
@@ -423,9 +433,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
          int spriteClipHeight = spriteHeight - bottomOffset - topOffset;
          
          g.setClip(spriteClipXPos, spriteClipYPos, spriteClipWidth, spriteClipHeight);
-         
-         Image image = mainImages[imageNameIndex];
-         
+                
          //coordinates where to pick clipped sprite on image
          int clippedSpriteXPos = spriteIndex * spriteWidth + spriteAdditionalOffsetX;
          int clippedSpriteYPos = needSpriteRow * spriteHeight + spriteAdditionalOffsetY;
@@ -447,7 +455,17 @@ public final class ReadingDrawingClass implements LevelObjectData {
             mainImages = new Image[7];
          }
 
-         mainImages[imageIndex] = loadImagePng(mainImageNames[imageIndex]);
+         // MODDED: If image index is 2 (pic2), load separate sprites instead
+         if (imageIndex == 2) {
+             int[] ids = {7, 13, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 40, 42};
+             for(int i=0; i<ids.length; i++) {
+                 int id = ids[i];
+                 String numStr = (id < 10 ? "0" : "") + id;
+                 splitImages[id] = loadImagePng("spr" + numStr);
+             }
+         } else {
+             mainImages[imageIndex] = loadImagePng(mainImageNames[imageIndex]);
+         }
       } catch (Exception var1) {
       }
 
