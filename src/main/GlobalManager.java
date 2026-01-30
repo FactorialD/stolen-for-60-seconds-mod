@@ -1197,6 +1197,16 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          boolean var1 = false;
          ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)7, 0, var_ce9, var_d24);
 
+         // Draw Chief (Thief 0) separately
+         boolean chiefAllowed = gameMode > -1 || levelId == 6 || LevelManager.allowChief;
+         if (!selectedThieves.contains(allThievesArray[0]) && chiefAllowed) {
+             ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)52, 0, LevelObjectData.var_9d[0][0], LevelObjectData.var_9d[0][1]);
+         }
+         if (LevelManager.thievesList.contains(allThievesArray[0])) {
+             ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)39, 0, LevelObjectData.var_65[2][0] - (LevelObjectData.spriteTypesArr[39][2] >> 1), LevelObjectData.var_65[2][1]);
+         }
+
+         
          for(int var2 = 1; var2 < 5; ++var2) {
             if (!selectedThieves.contains(allThievesArray[var2]) && LevelManager.levelAdditionalData_TimerEtc[levelId - 1][6 + var2] == 1) {
                ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)(34 + var2 - 1), 0, LevelObjectData.var_9d[var2][0], LevelObjectData.var_9d[var2][1]);
