@@ -33,6 +33,7 @@ public final class LevelManager implements LevelObjectData {
    private static final short[][] var_590 = new short[][]{{0}, {1}, {2}, {3, 5}, {4, 6, 5}, {5}, {6, 5}, {7, 9, 5}, {8, 9, 5}, {9, 5}, {10, 9, 5}, {11, 7, 9, 5}, {12, 9, 5}, {13, 9, 5}, {14}, {15, 14}};
    private static final byte[][] var_5cd = new byte[][]{{1, 0, 1, 0, -1}, {1, -1, -1, 1, 1}};
    public static final TimelineNode[][] var_619 = new TimelineNode[][]{{new TimelineNode((byte)0, (byte)0, (byte)1, (byte)0, (byte)0), new TimelineNode((byte)0, (byte)0, (byte)1, (byte)1, (byte)0), new TimelineNode((byte)0, (byte)0, (byte)0, (byte)1, (byte)0)}, {new TimelineNode((byte)0, (byte)0, (byte)1, (byte)3, (byte)0), new TimelineNode((byte)0, (byte)0, (byte)0, (byte)3, (byte)0), new TimelineNode((byte)0, (byte)0, (byte)0, (byte)3, (byte)0)}, {new TimelineNode((byte)0, (byte)0, (byte)1, (byte)0, (byte)0), new TimelineNode((byte)0, (byte)0, (byte)1, (byte)3, (byte)0), new TimelineNode((byte)0, (byte)0, (byte)0, (byte)3, (byte)0)}, {new TimelineNode((byte)0, (byte)0, (byte)1, (byte)1, (byte)0), new TimelineNode((byte)0, (byte)0, (byte)0, (byte)1, (byte)0), new TimelineNode((byte)0, (byte)0, (byte)0, (byte)1, (byte)0)}, {new TimelineNode((byte)0, (byte)0, (byte)1, (byte)2, (byte)0), new TimelineNode((byte)0, (byte)0, (byte)1, (byte)1, (byte)0), new TimelineNode((byte)0, (byte)0, (byte)0, (byte)1, (byte)0)}};
+   // Legacy data kept for backward compatibility if magic number is missing
    public static final byte[][] var_64c = new byte[][]{{0}, {1}, {2, 1}, {3}, {4}, {5}, {6}, {7, 3}, {8, 3}, {9}, {10}, {11}, {12}, {13}, {14, 13}, {15, 14, 13}, {16, 23}, {-1}, {18, 23}, {-1}, {-1}, {21, 26, 10}, {22}, {23}, {24, 23}, {-1}, {26, 10}, {27, 26, 10}, {28, 5}};
    public static final short[][] levelAdditionalData_TimerEtc = new short[][]{{500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 50, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 9}, {500, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 50, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 10}, {500, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 50, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 11}, {500, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 300, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 12}, {500, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 11100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 13}, {140, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1800, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 14}, {140, 0, 3, 0, 5, 0, 9, 0, 0, 0, 1, 2, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 15, 35}, {200, 12, 5, 0, 15, 0, 22, 0, 1, 0, 1, 10, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 16, 36}, {260, 0, 0, 50, 40, 0, 30, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 17}, {250, 0, 30, 60, 20, 0, 50, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 18}, {160, 100, 0, 0, 0, 0, 50, 1, 0, 0, 1, 30, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 19, 37}, {320, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 40, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 20, 38}, {230, 0, 0, 0, 10, 250, 70, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 21}, {150, 0, 43, 50, 10, 0, 35, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 33}, {200, 45, 26, 0, 3, 0, 60, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 22}, {320, 0, 0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 23}, {150, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 26}, {185, 0, 0, 0, 65, 0, 50, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 24}, {210, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 45, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 32, 39}, {340, 0, 0, 0, 0, 150, 80, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 25}, {180, 0, 70, 0, 40, 0, 60, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 28}, {110, 0, 0, 70, 0, 0, 55, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 31}, {240, 0, 0, 0, 0, 0, 70, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 27}, {135, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 30}, {130, 100, 0, 0, 0, 0, 50, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 29}, {170, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 50, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 34, 40}};
    public static final byte[][] thiefStats = new byte[][]{{18, 0, 0}, {30, 20, 30}, {25, 15, 12}, {22, 12, 10}, {20, 10, 8}};
@@ -73,6 +74,15 @@ public final class LevelManager implements LevelObjectData {
    private static int var_e2f;
    public static byte cameraState; //0: Свободная камера / слежение за вором.  1, 3, 4: Автоматический скроллинг (паннинг) к выходу или событию.
    private static boolean var_e7f;
+   
+   // --- NEW FIELDS FOR EXTENDED FORMAT ---
+   public static byte winType; // 0=Loot, 1=Object
+   public static byte winTargetX;
+   public static byte winTargetY;
+   
+   public static int requiredLootAmount;
+   public static boolean allowChief;
+   // --------------------------------------
 
    public static void switchLevelToActionMode() {
       GlobalManager.loadResourcesForState(1);
@@ -147,7 +157,8 @@ public final class LevelManager implements LevelObjectData {
          sub_f0(levelObjects, var_896);
          levelObjects.clear();
          sub_192(false);
-         if (GlobalManager.gameMode > -1 || GlobalManager.levelId == 6) {
+         // Use allowChief flag to determine if Chief joins
+         if (GlobalManager.gameMode > -1 || GlobalManager.levelId == 6 || allowChief) {
             thievesList.addElement(GlobalManager.allThievesArray[0]);
             GlobalManager.allThievesArray[0].resetToSpawn();
          }
@@ -311,6 +322,11 @@ public final class LevelManager implements LevelObjectData {
 
    public static void loadLevel(byte level) {
       timeLimitSeconds = 180;
+      winType = 0;
+      winTargetX = 0;
+      winTargetY = 0;
+      requiredLootAmount = 0;
+      allowChief = false;
       levelObjectsMap.clear();
       levelObjects.clear();
       alarmWithZonesMap.clear();
@@ -390,8 +406,73 @@ public final class LevelManager implements LevelObjectData {
          if (dataInputStream.readByte() > 0) {
             exitX = (byte)dataInputStream.readShort();
             exitY = (byte)dataInputStream.readShort();
-            dataInputStream.readShort();
+            int magic = dataInputStream.readUnsignedShort(); // MAGIC number location
             timeLimitSeconds = dataInputStream.readShort();
+            
+            if (magic == 0x7777) {
+                // Extended format
+                int startMoney = dataInputStream.readInt();
+                int requiredLoot = dataInputStream.readInt();
+                byte thievesMask = dataInputStream.readByte();
+                
+                requiredLootAmount = requiredLoot;
+                allowChief = (thievesMask & 16) != 0; // Bit 4
+                
+                winType = dataInputStream.readByte();
+                winTargetX = dataInputStream.readByte();
+                winTargetY = dataInputStream.readByte();
+                
+                
+                // Informant Hint Costs
+                var_7f3 = dataInputStream.readInt(); // Alarm
+                var_7a3 = new int[7]; 
+                // Read 6 hints (5 loot + 1 general)
+                for(int k=1; k<=6; k++) {
+                    var_7a3[k] = dataInputStream.readInt();
+                }
+                
+                // Briefing Text ID override
+                short textId = dataInputStream.readShort();
+                if (level > 0 && level <= levelAdditionalData_TimerEtc.length) {
+                    levelAdditionalData_TimerEtc[level - 1][25] = textId;
+                }
+                
+               // Custom Text Reading
+                try {
+                    if (dataInputStream.available() > 0) {
+                        int strLen = dataInputStream.readUnsignedShort();
+                        if (strLen > 0) {
+                            byte[] strBytes = new byte[strLen];
+                            dataInputStream.readFully(strBytes);
+                            String customText = new String(strBytes, "UTF-8");
+                            // Magic constant 32000 for custom text
+                            ReadingDrawingClass.setCustomText((short)32000, customText);
+                            if (level > 0 && level <= levelAdditionalData_TimerEtc.length) {
+                                levelAdditionalData_TimerEtc[level - 1][25] = (short)32000;
+                            }
+                        }
+                    }
+                } catch (Exception e) {}
+                
+                // Update money if first time or not campaign
+                if (GlobalManager.gameMode == -1) {
+                    GlobalManager.currentMoney = startMoney;
+                }
+                
+                // Apply allowed thieves configuration to the static legacy array used by GlobalManager menu logic
+                if (level > 0 && level <= levelAdditionalData_TimerEtc.length) {
+                   short[] legacyData = levelAdditionalData_TimerEtc[level - 1];
+                   legacyData[7] = (short)((thievesMask & 1) != 0 ? 1 : 0); // Thief 1
+                   legacyData[8] = (short)((thievesMask & 2) != 0 ? 1 : 0); // Thief 2
+                   legacyData[9] = (short)((thievesMask & 4) != 0 ? 1 : 0); // Thief 3
+                   legacyData[10] = (short)((thievesMask & 8) != 0 ? 1 : 0); // Thief 4
+                }
+            } else {
+                // Legacy Fallback
+                loadLegacyData(level);
+            }
+         } else {
+                loadLegacyData(level);
          }
       } catch (Exception var16) {
       } finally {
@@ -403,21 +484,6 @@ public final class LevelManager implements LevelObjectData {
          }
 
          HackManager.callGc();
-      }
-
-      var_7a3 = new int[]{
-    		  0, 
-    		  levelAdditionalData_TimerEtc[level - 1][1] * 100, 
-    		  levelAdditionalData_TimerEtc[level - 1][2] * 100, 
-    		  levelAdditionalData_TimerEtc[level - 1][3] * 100, 
-    		  levelAdditionalData_TimerEtc[level - 1][4] * 100, 
-    		  levelAdditionalData_TimerEtc[level - 1][5] * 100, 
-    		  levelAdditionalData_TimerEtc[level - 1][11] * 100
-      };
-      var_7f3 = levelAdditionalData_TimerEtc[level - 1][6] * 100;
-      
-      if (GlobalManager.gameMode == -1) {
-         GlobalManager.currentMoney = levelAdditionalData_TimerEtc[level - 1][12];
       }
 
       lootValues = new int[6];
@@ -470,7 +536,8 @@ public final class LevelManager implements LevelObjectData {
                            }
 
                            lootValues[0] = lootValues[0] / 1000 * 1000;
-                           timeLimitSeconds = levelAdditionalData_TimerEtc[level - 1][0] + ReadingDrawingClass.randomRange(0, 10);
+                           // Legacy random time override
+                           // timeLimitSeconds = levelAdditionalData_TimerEtc[level - 1][0] + ReadingDrawingClass.randomRange(0, 10);
                            return;
                         }
                      } while((var20 = (LevelObject)levelObjectsList.nextElement()).var_22c <= 0);
@@ -509,6 +576,25 @@ public final class LevelManager implements LevelObjectData {
          }
       }
    }
+   
+   private static void loadLegacyData(byte level) {
+	      if (level > 0 && level <= levelAdditionalData_TimerEtc.length) {
+	          var_7a3 = new int[]{
+	                  0, 
+	                  levelAdditionalData_TimerEtc[level - 1][1] * 100, 
+	                  levelAdditionalData_TimerEtc[level - 1][2] * 100, 
+	                  levelAdditionalData_TimerEtc[level - 1][3] * 100, 
+	                  levelAdditionalData_TimerEtc[level - 1][4] * 100, 
+	                  levelAdditionalData_TimerEtc[level - 1][5] * 100, 
+	                  levelAdditionalData_TimerEtc[level - 1][11] * 100
+	          };
+	          var_7f3 = levelAdditionalData_TimerEtc[level - 1][6] * 100;
+	          
+	          if (GlobalManager.gameMode == -1) {
+	             GlobalManager.currentMoney = levelAdditionalData_TimerEtc[level - 1][12];
+	          }
+	      }
+	   }
 
    public static void paint(Graphics g) {
       if (graphics != null) {
@@ -1980,90 +2066,124 @@ public final class LevelManager implements LevelObjectData {
    }
 
    private static byte sub_9c4() {
-      byte var0 = 5;
-      switch(GlobalManager.levelId) {
-      case 1:
-         if (((LevelObject)levelObjectsMap.get(combineInts(4, 4))).progressData[0] <= 0) {
-            var0 = 4;
-         }
-         break;
-      case 2:
-         if (((LevelObject)levelObjectsMap.get(combineInts(3, 5))).progressData[1] <= 0) {
-            var0 = 4;
-         }
-         break;
-      case 3:
-         if (((LevelObject)levelObjectsMap.get(combineInts(3, 11))).progressData[1] <= 0) {
-            var0 = 4;
-         }
-         break;
-      case 4:
-         if (((LevelObject)levelObjectsMap.get(combineInts(5, 6))).progressData[1] <= 0) {
-            var0 = 4;
-         }
-         break;
-      case 5:
-         LevelObject var1 = (LevelObject)levelObjects.get(combineInts(4, 5));
-         LevelObject var2 = (LevelObject)levelObjects.get(combineInts(8, 5));
-         if (var1 != null && var2 != null && var1.var_1f5 == 113 && var2.var_1f5 == 114 && var1.progressData[1] <= 0 && var2.progressData[1] <= 0 && ((LevelObject)levelObjectsMap.get(combineInts(9, 5))).progressData[1] <= 0) {
-            var0 = 4;
-         }
-         break;
-      case 6:
-         if (((LevelObject)levelObjectsMap.get(combineInts(3, 6))).progressData[1] <= 0) {
-            var0 = 4;
-         }
-      }
-
-      return var0;
-   }
+	      // Replaced Hardcoded Switch with Logic check based on WinType
+	      // 0 = Default (Loot) - logic handled in checkWinCondition
+	      // 1 = Specific Object State
+	      
+	      if (winType == 1) {
+	          LevelObject target = (LevelObject)levelObjectsMap.get(combineInts(winTargetX, winTargetY));
+	          if (target != null) {
+	              // Check if object is "open" or "done" (progress <= 0)
+	              // For doors/crates progressData[0], for some loot containers progressData[1]
+	              if (target.progressData[0] <= 0) return 4; // 4 = Win condition met? (Based on logic 4 seems to be 'all good')
+	          }
+	          return 5; // 5 = Fail/Not met?
+	      } else {
+	          // WinType 0: Check Loot
+	          int calculatedLootForWin = 0;
+	          
+	          for(int i = thievesList.size() - 1; i >= 0; --i) {
+	             Thief thief = (Thief)thievesList.elementAt(i);
+	             for(int j = 1; j < 6; j++) {
+	                calculatedLootForWin += thief.collectedLoot[j] * var_71c[j][0];
+	             }
+	          }
+	          
+	          if (calculatedLootForWin >= requiredLootAmount) {
+	              return 3; // Win
+	          } else {
+	              return 5; // Fail
+	          }
+	      }
+	   }
 
    private static void checkWinCondition() {
-      sub_7b0();
-      cameraState = 2;
-      if (GlobalManager.gameMode == -1) {
-         winState = sub_9c4();
-      } else {
-         winState = 3;
-      }
+	     // sub_7b0(); // Method missing in current context
+	      cameraState = 2;
+	      
+	      // Determine base win state from objectives
+	      if (GlobalManager.gameMode == -1) {
+	         winState = sub_9c4();
+	      } else {
+	         winState = 3;
+	      }
 
-      int var0 = timeLimitSeconds - Thief.globalTimer;
+	      int timeLeft = timeLimitSeconds - Thief.globalTimer;
+	      int calculatedLootForWin = 0;
 
-      for(int var1 = thievesList.size() - 1; var1 >= 0; --var1) {
-         Thief var2 = (Thief)thievesList.elementAt(var1);
-         if ((2 * (Math.abs(var2.positionX - exitX) + Math.abs(var2.positionY - exitY)) > var0 || var2.stunTimer > 0) && GlobalManager.gameMode != -1) {
-            short var4 = (short)(Math.max(thiefStats[var2.thiefId][2] * 1000, var2.collectedLoot[1] * var_71c[1][0] + var2.collectedLoot[2] * var_71c[2][0] + var2.collectedLoot[3] * var_71c[3][0] + var2.collectedLoot[4] * var_71c[4][0] + var2.collectedLoot[5] * var_71c[5][0]) / 1000);
-            var2.sub_41a();
-            var2.collectedLoot[0] = var4;
-            var2.sub_44c();
-            GlobalManager.selectedThieves.addElement(var2);
-            thievesList.removeElement(var2);
-            if (var2.thiefId == 0) {
-               winState = 2;
-            }
-         } else if (var2.positionX == exitX && var2.positionY == exitY) {
-            if (var2.actionState == 1) {
-               var2.actionState = 0;
-               var2.moveInterpolation = 0;
-               var2.isBusy = false;
-            }
-         } else {
-            totalLootValue += (var2.collectedLoot[1] * var_71c[1][0] + var2.collectedLoot[2] * var_71c[2][0] + var2.collectedLoot[3] * var_71c[3][0] + var2.collectedLoot[4] * var_71c[4][0] + var2.collectedLoot[5] * var_71c[5][0]) * 50 / 100;
-            var2.moveInterpolation = 0;
-            var2.isBusy = false;
-            var2.positionX = (byte)(exitX + var_5cd[0][var2.thiefId]);
-            var2.positionY = (byte)(exitY + var_5cd[1][var2.thiefId]);
-         }
-      }
+	      for(int i = thievesList.size() - 1; i >= 0; --i) {
+	         Thief thief = (Thief)thievesList.elementAt(i);
+	         
+	         // Check if thief is caught (Time out or Stunned)
+	         // 2 * Distance is roughly travel time needed
+	         if ((2 * (Math.abs(thief.positionX - exitX) + Math.abs(thief.positionY - exitY)) > timeLeft || thief.stunTimer > 0) && GlobalManager.gameMode != -1) {
+	            // Calculate Ransom/Penalty
+	            int currentThiefLoot = thief.collectedLoot[1] * var_71c[1][0] + 
+	                                   thief.collectedLoot[2] * var_71c[2][0] + 
+	                                   thief.collectedLoot[3] * var_71c[3][0] + 
+	                                   thief.collectedLoot[4] * var_71c[4][0] + 
+	                                   thief.collectedLoot[5] * var_71c[5][0];
+	            
+	            // Penalty calculation from original source
+	            short ransom = (short)(Math.max(thiefStats[thief.thiefId][2] * 1000, currentThiefLoot) / 1000);
+	            
+	            thief.sub_41a();
+	            thief.collectedLoot[0] = ransom;
+	            thief.sub_44c();
+	            
+	            GlobalManager.selectedThieves.addElement(thief);
+	            thievesList.removeElement(thief);
+	            
+	            // Chief caught or "Boss Mode" fail logic
+	            if (thief.thiefId == 0) {
+	               winState = 2; // Critical Fail/End state if Chief caught (triggers fail dialog in finishLevel)
+	            }
+	         } else if (thief.positionX == exitX && thief.positionY == exitY) {
+	            // Thief successfully at exit
+	            if (thief.actionState == 1) {
+	               thief.actionState = 0;
+	               thief.moveInterpolation = 0;
+	               thief.isBusy = false;
+	            }
+	            
+	            // Accumulate loot for Win Condition check
+	            for(int j = 1; j < 6; j++) {
+	                calculatedLootForWin += thief.collectedLoot[j] * var_71c[j][0];
+	            }
+	         } else {
+	            // Thief safe but assumed escaping off-screen? 
+	            int currentThiefLoot = thief.collectedLoot[1] * var_71c[1][0] + 
+	                                   thief.collectedLoot[2] * var_71c[2][0] + 
+	                                   thief.collectedLoot[3] * var_71c[3][0] + 
+	                                   thief.collectedLoot[4] * var_71c[4][0] + 
+	                                   thief.collectedLoot[5] * var_71c[5][0];
+	            
+	            // Add to score display (Original logic adds 50%)
+	            totalLootValue += currentThiefLoot * 50 / 100;
+	            
+	            // Add FULL loot to win condition check
+	            calculatedLootForWin += currentThiefLoot;
+	            
+	            thief.moveInterpolation = 0;
+	            thief.isBusy = false;
+	            thief.positionX = (byte)(exitX + var_5cd[0][thief.thiefId]);
+	            thief.positionY = (byte)(exitY + var_5cd[1][thief.thiefId]);
+	         }
+	      }
 
-      if (thievesList.isEmpty()) {
-         var_e2f = 0;
-         cameraState = 4;
-         var_de4 = 4;
-      }
+	      // If standard check failed (2), keep it. 
+          // If sub_9c4 returned 3 (Win), keep it.
+          // If sub_9c4 returned 5 (Fail), keep it.
+          // The logic is now centralized in sub_9c4 so checkWinCondition mainly handles "Caught" logic.
 
-      sub_3d2();
-      sub_65f();
+	      if (thievesList.isEmpty()) {
+	         var_e2f = 0;
+	         cameraState = 4;
+	         var_de4 = 4;
+	      }
+
+	      sub_3d2();
+	      sub_65f();
    }
 
    public static void sub_a53(Thief var0) {

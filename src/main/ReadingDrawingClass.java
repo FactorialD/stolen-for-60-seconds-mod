@@ -30,6 +30,10 @@ public final class ReadingDrawingClass implements LevelObjectData {
    private static int var_2d5 = -1;
    private static boolean var_305 = true;
 
+   public static void setCustomText(short id, String text) {
+       gameTexts.put(new Short(id), sub_533(text));
+   }
+   
    public static int randomRange(int min, int max) {
       if (min >= max) {
          return min;

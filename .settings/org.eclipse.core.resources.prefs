@@ -1,5 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/META-INF/MANIFEST.MF=ISO-8859-1
+encoding//src/dat/_m=UTF-16BE
+encoding//src/dat/lng=Cp1250
 encoding//src/main/BaseGameManager.java=UTF-8
 encoding//src/main/DialogManager.java=ISO-8859-1
 encoding//src/main/GlobalManager.java=UTF-8
