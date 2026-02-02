@@ -1,8 +1,8 @@
 package main;
 public interface LevelObjectData {
-   int[][] var_65 = new int[][]{{95, 106, 242}, {200, 10, 243}, {22, 84, 250}, {107, 49, 244}, {90, 75, 245}, {174, 45, 246}, {203, 78, 247}, {181, 111, 248}, {12, 12, 249}};
-   short[][] var_9d = new short[][]{{10, 8}, {87, 11}, {48, 36}, {142, 8}, {183, 34}};
-   
+   // Loaded from planning_menu.dat
+   int[][] var_65 = new int[9][3];
+   short[][] var_9d = new short[5][2];
    //
    //
    //

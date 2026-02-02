@@ -639,14 +639,21 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          ++var_114a;
          return;
       case 10:
+         // MODDED: Load menu data before offsets are calculated
+         ReadingDrawingClass.loadPlanningMenuData();
+    	  
          ReadingDrawingClass.loadMainImage(var_114a - 6 >> 1);
-         if (ReadingDrawingClass.mainImages[2] != null && var_1180 > 176) {
-            LevelObjectData.spriteTypesArr[7][2] = (short)ReadingDrawingClass.mainImages[2].getWidth();
-         }
+         // MODDED: Center the FULL image instead of the sprite using dynamic dimensions
+         // Since ReadingDrawingClass updated spriteTypesArr[7] during loadMainImage,
+         // we can now trust these dimensions.
+         int bgWidth = LevelObjectData.spriteTypesArr[7][2];
+         int bgHeight = LevelObjectData.spriteTypesArr[7][3];
+         
+         var_ce9 = (var_1180 - bgWidth) >> 1;
+         var_d24 = (var_11cf - bgHeight) >> 1;
 
          LevelManager.var_cf = var_11cf - LevelObjectData.spriteTypesArr[9][3];
-         var_ce9 = var_1180 - LevelObjectData.spriteTypesArr[7][2] >> 1;
-         var_d24 = LevelObjectData.spriteTypesArr[28][3] + (var_11cf - LevelObjectData.spriteTypesArr[28][3] - LevelObjectData.spriteTypesArr[7][3] >> 1);
+         
          if (var_11cf < 120) {
             var_d24 += 10;
          }
@@ -1195,18 +1202,11 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
    private static void sub_8f3(Graphics var0) {
       if (var_5e0) {
          boolean var1 = false;
+         // MODDED: Draw sprite 7 directly. ReadingDrawingClass handles dynamic size and split image lookup.
+         // No more hardcoded clipping or mainImages[2] usage.
          ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)7, 0, var_ce9, var_d24);
 
-         // Draw Chief (Thief 0) separately
-         boolean chiefAllowed = gameMode > -1 || levelId == 6 || LevelManager.allowChief;
-         if (!selectedThieves.contains(allThievesArray[0]) && chiefAllowed) {
-             ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)52, 0, LevelObjectData.var_9d[0][0], LevelObjectData.var_9d[0][1]);
-         }
-         if (LevelManager.thievesList.contains(allThievesArray[0])) {
-             ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)39, 0, LevelObjectData.var_65[2][0] - (LevelObjectData.spriteTypesArr[39][2] >> 1), LevelObjectData.var_65[2][1]);
-         }
-
-         
+         // Loop 1 to 4 first
          for(int var2 = 1; var2 < 5; ++var2) {
             if (!selectedThieves.contains(allThievesArray[var2]) && LevelManager.levelAdditionalData_TimerEtc[levelId - 1][6 + var2] == 1) {
                ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)(34 + var2 - 1), 0, LevelObjectData.var_9d[var2][0], LevelObjectData.var_9d[var2][1]);
@@ -1215,6 +1215,15 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             if (LevelManager.thievesList.contains(allThievesArray[var2])) {
                ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)39, 0, LevelObjectData.var_65[(short)(2 + var2)][0] - (LevelObjectData.spriteTypesArr[39][2] >> 1), LevelObjectData.var_65[(short)(2 + var2)][1]);
             }
+         }
+         
+         // Draw Chief (Thief 0) separately
+         boolean chiefAllowed = gameMode > -1 || levelId == 6 || LevelManager.allowChief;
+         if (!selectedThieves.contains(allThievesArray[0]) && chiefAllowed) {
+             ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)52, 0, LevelObjectData.var_9d[0][0], LevelObjectData.var_9d[0][1]);
+         }
+         if (LevelManager.thievesList.contains(allThievesArray[0])) {
+             ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)39, 0, LevelObjectData.var_65[2][0] - (LevelObjectData.spriteTypesArr[39][2] >> 1), LevelObjectData.var_65[2][1]);
          }
 
          ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)29, 0, 0, 0);
@@ -1228,6 +1237,14 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)30, 0, var_1180 - LevelObjectData.spriteTypesArr[30][2], 0);
          LevelObjectData.var_65[1][0] = var_1180 - (LevelObjectData.spriteTypesArr[30][2] >> 1);
          LevelObjectData.var_65[1][1] = LevelObjectData.spriteTypesArr[30][3] >> 1;
+         
+         // MODDED: FIX for large backgrounds covering bottom GUI
+         // Force draw the bottom panel background strip (Sprite 9) unconditionally on top of everything
+         int bottomY = var_11cf - LevelObjectData.spriteTypesArr[9][3];
+         for(int x = 0; x < var_1180; x += LevelObjectData.spriteTypesArr[9][2]) {
+             ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)9, 0, x, bottomY);
+         }
+         
          sub_96d(LevelManager.graphics);
          sub_9cc(LevelManager.graphics);
          var_62c = true;

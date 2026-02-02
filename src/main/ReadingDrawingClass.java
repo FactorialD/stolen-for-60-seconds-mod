@@ -1,3 +1,4 @@
+
 package main;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -32,6 +33,47 @@ public final class ReadingDrawingClass implements LevelObjectData {
    private static short[] var_2c7;
    private static int var_2d5 = -1;
    private static boolean var_305 = true;
+
+   public static void loadPlanningMenuData() {
+      DataInputStream dis = null;
+      try {
+         dis = getDataInputStreamFromDat("planning_menu.dat");
+         
+         // 1. Read var_9d (Thief Offsets: 5 entries x 2 shorts)
+         for(int i = 0; i < 5; i++) {
+            LevelObjectData.var_9d[i][0] = dis.readShort();
+            LevelObjectData.var_9d[i][1] = dis.readShort();
+         }
+         
+         // 2. Read var_65 (Menu Positions: 9 entries x 3 shorts)
+         for(int i = 0; i < 9; i++) {
+            LevelObjectData.var_65[i][0] = dis.readShort();
+            LevelObjectData.var_65[i][1] = dis.readShort();
+            LevelObjectData.var_65[i][2] = dis.readShort();
+         }
+         
+      } catch (Exception e) {
+         System.out.println("Failed to load planning_menu.dat, using defaults");
+         // Fallback defaults if file missing (Original values)
+         short[][] def_9d = new short[][]{{10, 8}, {87, 11}, {48, 36}, {142, 8}, {183, 34}};
+         int[][] def_65 = new int[][]{{95, 106, 242}, {200, 10, 243}, {22, 84, 250}, {107, 49, 244}, {90, 75, 245}, {174, 45, 246}, {203, 78, 247}, {181, 111, 248}, {12, 12, 249}};
+         
+         for(int i=0; i<5; i++) {
+             LevelObjectData.var_9d[i][0] = def_9d[i][0];
+             LevelObjectData.var_9d[i][1] = def_9d[i][1];
+         }
+         for(int i=0; i<9; i++) {
+             LevelObjectData.var_65[i][0] = def_65[i][0];
+             LevelObjectData.var_65[i][1] = def_65[i][1];
+             LevelObjectData.var_65[i][2] = def_65[i][2];
+         }
+         
+      } finally {
+         try {
+            if(dis != null) dis.close();
+         } catch(Exception e) {}
+      }
+   }
 
    public static void setCustomText(short id, String text) {
        gameTexts.put(new Short(id), sub_533(text));
@@ -334,22 +376,6 @@ public final class ReadingDrawingClass implements LevelObjectData {
 
    /** Return stream with bias at level data position
     * */
-//   public static DataInputStream getLevelDataStream(byte level) throws IOException {
-//      DataInputStream levelStream = getDataInputStreamFromDat("m");
-//      byte var2 = 1;
-//
-//      // Get level data size from first 2 bytes
-//      // Then skip current level data, until get to needed level data
-//      for(short var3 = levelStream.readShort(); var2 != level; ++var2) {
-//         levelStream.skipBytes(var3);
-//         var3 = levelStream.readShort();
-//      }
-//
-//      return levelStream;
-//   }
-   
-   /** Return stream with bias at level data position
-    * */
    public static DataInputStream getLevelDataStream(byte level) throws IOException {
       DataInputStream levelStream = getDataInputStreamFromDat("map" + (level < 10 ? "0" : "") + level + ".dat");
 
@@ -400,8 +426,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
 	   int spriteCountInRow = 	     LevelObjectData.spriteTypesArr[spriteId][4];
 	   int imageNameIndex =          LevelObjectData.spriteTypesArr[spriteId][5];
 	   
-	   
-	   Image image = null;
+       Image image = null;
        
        // MODDED: If index is 2 (originally pic2), use the split images array
        if (imageNameIndex == 2) {
@@ -412,6 +437,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
        } else {
            image = mainImages[imageNameIndex];
        }
+	   
       
       //if sprite is visible on the screen
       if (image != null && spriteXPos + spriteWidth > 0 && spriteXPos < LevelManager.screenWidth && spriteYPos + spriteHeight > 0 && spriteYPos < LevelManager.screenHeight) {
@@ -433,7 +459,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
          int spriteClipHeight = spriteHeight - bottomOffset - topOffset;
          
          g.setClip(spriteClipXPos, spriteClipYPos, spriteClipWidth, spriteClipHeight);
-                
+         
          //coordinates where to pick clipped sprite on image
          int clippedSpriteXPos = spriteIndex * spriteWidth + spriteAdditionalOffsetX;
          int clippedSpriteYPos = needSpriteRow * spriteHeight + spriteAdditionalOffsetY;
@@ -457,11 +483,20 @@ public final class ReadingDrawingClass implements LevelObjectData {
 
          // MODDED: If image index is 2 (pic2), load separate sprites instead
          if (imageIndex == 2) {
-             int[] ids = {7, 13, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 40, 42};
+             int[] ids = {7, 13, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 40, 42, 52};
              for(int i=0; i<ids.length; i++) {
                  int id = ids[i];
                  String numStr = (id < 10 ? "0" : "") + id;
                  splitImages[id] = loadImagePng("spr" + numStr);
+                 
+                 // MODDED: Update dimensions AND reset offsets for ANY loaded split sprite
+                 // This ensures full custom images are used without cropping or shifting
+                 if (splitImages[id] != null) {
+                     LevelObjectData.spriteTypesArr[id][2] = (short) splitImages[id].getWidth();
+                     LevelObjectData.spriteTypesArr[id][3] = (short) splitImages[id].getHeight();
+                     LevelObjectData.spriteTypesArr[id][0] = 0; // Reset offset X
+                     LevelObjectData.spriteTypesArr[id][1] = 0; // Reset offset Y
+                 }
              }
          } else {
              mainImages[imageIndex] = loadImagePng(mainImageNames[imageIndex]);
@@ -1052,16 +1087,16 @@ public final class ReadingDrawingClass implements LevelObjectData {
                var3.writeInt(var1[var6]);
             }
 
-            byte[] var5 = var2.toByteArray();
-            if (var4.getNumRecords() > 0) {
-               var4.setRecord(1, var5, 0, var5.length);
-               var14 = false;
+            byte[] var18 = var2.toByteArray();
+            if (var4.getNumRecords() == 0) {
+               var4.addRecord(var18, 0, var18.length);
             } else {
-               var4.addRecord(var5, 0, var5.length);
-               var14 = false;
+               var4.setRecord(1, var18, 0, var18.length);
             }
+
+            var14 = false;
             break label161;
-         } catch (Exception var18) {
+         } catch (Exception var16) {
             var14 = false;
          } finally {
             if (var14) {
@@ -1073,9 +1108,12 @@ public final class ReadingDrawingClass implements LevelObjectData {
                   if (var3 != null) {
                      var3.close();
                   }
-               } catch (Exception var15) {
+
+                  var2.close();
+               } catch (Exception var13) {
                }
 
+               HackManager.callGc();
             }
          }
 
@@ -1088,10 +1126,12 @@ public final class ReadingDrawingClass implements LevelObjectData {
                var3.close();
             }
 
-            return;
-         } catch (Exception var16) {
-            return;
+            var2.close();
+         } catch (Exception var15) {
          }
+
+         HackManager.callGc();
+         return;
       }
 
       try {
@@ -1100,242 +1140,68 @@ public final class ReadingDrawingClass implements LevelObjectData {
          }
 
          var3.close();
+         var2.close();
       } catch (Exception var17) {
-         return;
-      }
-
-   }
-
-   public static Vector sub_80d() {
-      Vector var0 = new Vector(2);
-      RecordStore var1 = null;
-      ByteArrayInputStream var2 = null;
-      DataInputStream var3 = null;
-      boolean var13 = false;
-
-      label182: {
-         try {
-            var13 = true;
-            var1 = RecordStore.openRecordStore("winner", false);
-            var2 = new ByteArrayInputStream(var1.getRecord(1));
-            var3 = new DataInputStream(var2);
-            short[][] var4 = new short[5][5];
-
-            int var6;
-            for(int var5 = 0; var5 < 5; ++var5) {
-               for(var6 = 0; var6 < 5; ++var6) {
-                  var4[var5][var6] = var3.readShort();
-               }
-            }
-
-            int[] var19 = new int[5];
-
-            for(var6 = 0; var6 < 5; ++var6) {
-               var19[var6] = var3.readInt();
-            }
-
-            var0.addElement(var4);
-            var0.addElement(var19);
-            var13 = false;
-            break label182;
-         } catch (Exception var17) {
-            var13 = false;
-         } finally {
-            if (var13) {
-               if (var1 != null) {
-                  try {
-                     var1.closeRecordStore();
-                     if (var3 != null) {
-                        var3.close();
-                     }
-
-                     if (var2 != null) {
-                        var2.close();
-                     }
-                  } catch (Exception var14) {
-                  }
-               }
-
-               HackManager.callGc();
-            }
-         }
-
-         if (var1 != null) {
-            try {
-               var1.closeRecordStore();
-               if (var3 != null) {
-                  var3.close();
-               }
-
-               if (var2 != null) {
-                  var2.close();
-               }
-            } catch (Exception var15) {
-            }
-         }
-
-         HackManager.callGc();
-         return var0;
-      }
-
-      if (var1 != null) {
-         try {
-            var1.closeRecordStore();
-            var3.close();
-            var2.close();
-         } catch (Exception var16) {
-         }
       }
 
       HackManager.callGc();
-      return var0;
    }
 
-   public static void sub_837() {
-      try {
-         RecordStore.deleteRecordStore("path");
-      } catch (Exception var0) {
-      }
-   }
-
-   public static void sub_870() {
-      ByteArrayOutputStream byteArrOutStream = new ByteArrayOutputStream();
-      DataOutputStream outStream = null;
+   public static Vector sub_80d() {
+      short[][] var0 = new short[5][5];
+      int[] var1 = new int[5];
       RecordStore var2 = null;
-      boolean var20 = false;
+      ByteArrayInputStream var3 = null;
+      DataInputStream var4 = null;
+      boolean var15 = false;
 
-      label352: {
+      label129: {
          try {
-            var20 = true;
-            outStream = new DataOutputStream(byteArrOutStream);
-            sub_8fa();
-            var2 = RecordStore.openRecordStore("path", true);
+            var15 = true;
+            if ((var2 = RecordStore.openRecordStore("winner", true)).getNumRecords() > 0) {
+               var3 = new ByteArrayInputStream(var2.getRecord(1));
+               var4 = new DataInputStream(var3);
 
-            int var3;
-            for(var3 = 0; var3 < var2.getNumRecords(); ++var3) {
-               var2.deleteRecord(var3);
-            }
-
-            outStream.writeByte(GlobalManager.levelId);
-            outStream.writeInt(GlobalManager.currentMoney);
-            outStream.writeByte(LevelManager.winState);
-
-            for(var3 = 0; var3 < LevelManager.var_7a3.length; ++var3) {
-               outStream.writeInt(LevelManager.var_7a3[var3]);
-            }
-
-            outStream.writeInt(LevelManager.var_7f3);
-            var3 = LevelManager.thievesList.size();
-            outStream.writeByte(var3);
-
-            int var4;
-            int var6;
-            for(var4 = 0; var4 < var3; ++var4) {
-               Thief var5 = (Thief)LevelManager.thievesList.elementAt(var4);
-               outStream.writeByte(var5.thiefId);
-               outStream.write(var5.inventoryTools);
-
-               for(var6 = 0; var6 < var5.collectedLoot.length; ++var6) {
-                  outStream.writeShort(var5.collectedLoot[var6]);
-               }
-            }
-
-            outStream.write(GlobalManager.allThievesArray[0].inventoryTools);
-            var4 = GlobalManager.selectedThieves.size();
-            outStream.writeByte(var4);
-
-            int var26;
-            for(var26 = 0; var26 < var4; ++var26) {
-               outStream.writeByte(((Thief)GlobalManager.selectedThieves.elementAt(var26)).thiefId);
-            }
-
-            for(var26 = 1; var26 < GlobalManager.allThievesArray.length; ++var26) {
-               int var7;
-               Thief var27;
-               if ((var7 = (var27 = GlobalManager.allThievesArray[var26]).recordedActions.size()) <= 1) {
-                  outStream.writeShort(0);
-               } else {
-                  TimelineNode var8 = (TimelineNode)var27.recordedActions.elementAt(0);
-                  short var9 = 0;
-                  byte var10 = -1;
-
-                  int var11;
-                  for(var11 = 0; var11 < var7; ++var11) {
-                     TimelineNode var12 = (TimelineNode)var27.recordedActions.elementAt(var11);
-                     ++var10;
-                     if (var8.packedData != var12.packedData || var10 > 125) {
-                        var10 = 0;
-                        ++var9;
-                        var8 = var12;
-                     }
-                  }
-
-                  var10 = -1;
-                  outStream.writeShort(var9);
-                  var11 = 0;
-                  int var32 = 0;
-
-                  for(var8 = (TimelineNode)var27.recordedActions.elementAt(0); var11 < var9; ++var32) {
-                     ++var10;
-                     TimelineNode var13 = (TimelineNode)var27.recordedActions.elementAt(var32);
-                     if (var8.packedData != var13.packedData || var10 > 125) {
-                        outStream.writeByte(var8.packedData);
-                        outStream.writeByte(var10);
-                        var10 = 0;
-                        var8 = var13;
-                        ++var11;
-                     }
+               int var5;
+               for(var5 = 0; var5 < 5; ++var5) {
+                  for(int var6 = 0; var6 < 5; ++var6) {
+                     var0[var5][var6] = var4.readShort();
                   }
                }
-            }
 
-            for(var26 = 0; var26 < LevelManager.mapWidth; ++var26) {
-               for(var6 = 0; var6 < LevelManager.mapHeight; ++var6) {
-                  LevelObject var29;
-                  if ((var29 = (LevelObject)LevelManager.levelObjectsMap.get(LevelManager.combineInts(var26, var6))) != null) {
-                     outStream.writeShort(var29.interactionTickTimestamp);
-                     outStream.writeShort(var29.var_1a5);
-                     outStream.writeByte(var29.var_22c);
-                  }
+               for(var5 = 0; var5 < 5; ++var5) {
+                  var1[var5] = var4.readInt();
                }
-            }
-
-            outStream.writeByte(LevelManager.levelObjects.size());
-            Enumeration var28 = LevelManager.levelObjects.elements();
-
-            while(var28.hasMoreElements()) {
-               LevelObject var31 = (LevelObject)var28.nextElement();
-               outStream.writeByte(var31.x);
-               outStream.writeByte(var31.y);
-               outStream.writeShort(var31.interactionTickTimestamp);
-               outStream.writeShort(var31.var_1a5);
-               outStream.writeByte(var31.var_1f5);
-            }
-
-            byte[] var30 = byteArrOutStream.toByteArray();
-            if (var2.getNumRecords() == 0) {
-               var2.addRecord(var30, 0, var30.length);
-               var20 = false;
             } else {
-               var2.setRecord(1, var30, 0, var30.length);
-               var20 = false;
+               for(int var19 = 0; var19 < 5; ++var19) {
+                  for(int var20 = 0; var20 < 5; ++var20) {
+                     var0[var19][var20] = 52;
+                  }
+               }
             }
-            break label352;
-         } catch (Exception var24) {
-            var20 = false;
+
+            var15 = false;
+            break label129;
+         } catch (Exception var17) {
+            var15 = false;
          } finally {
-            if (var20) {
+            if (var15) {
                try {
                   if (var2 != null) {
                      var2.closeRecordStore();
                   }
 
-                  if (outStream != null) {
-                     outStream.close();
+                  if (var4 != null) {
+                     var4.close();
                   }
-               } catch (Exception var22) {
+
+                  if (var3 != null) {
+                     var3.close();
+                  }
+               } catch (Exception var14) {
                }
 
+               HackManager.callGc();
             }
          }
 
@@ -1344,14 +1210,22 @@ public final class ReadingDrawingClass implements LevelObjectData {
                var2.closeRecordStore();
             }
 
-            if (outStream != null) {
-               outStream.close();
+            if (var4 != null) {
+               var4.close();
             }
 
-            return;
-         } catch (Exception var21) {
-            return;
+            if (var3 != null) {
+               var3.close();
+            }
+         } catch (Exception var16) {
          }
+
+         HackManager.callGc();
+         Vector var10000 = new Vector();
+         Vector var18 = var10000;
+         var10000.addElement(var0);
+         var18.addElement(var1);
+         return var18;
       }
 
       try {
@@ -1359,217 +1233,47 @@ public final class ReadingDrawingClass implements LevelObjectData {
             var2.closeRecordStore();
          }
 
-         outStream.close();
-      } catch (Exception var23) {
-      }
-   }
-
-   public static void sub_8ce() {
-      RecordStore var0 = null;
-      ByteArrayInputStream var1 = null;
-      DataInputStream var2 = null;
-      boolean var26 = false;
-
-      label371: {
-         label372: {
-            try {
-               int var5;
-               try {
-                  var26 = true;
-                  var0 = RecordStore.openRecordStore("path", false);
-                  var1 = new ByteArrayInputStream(var0.getRecord(1));
-                  byte var3 = (var2 = new DataInputStream(var1)).readByte();
-                  if (GlobalManager.levelId != var3) {
-                     if (var0 != null) {
-                        try {
-                           var0.closeRecordStore();
-                           var2.close();
-                           var1.close();
-                        } catch (Exception var29) {
-                        }
-                     }
-
-                     var0 = null;
-                     var2 = null;
-                     var1 = null;
-                     HackManager.callGc();
-                     var26 = false;
-                     break label371;
-                  }
-
-                  GlobalManager.currentMoney = var2.readInt();
-                  LevelManager.winState = var2.readByte();
-
-                  for(int var4 = 0; var4 < LevelManager.var_7a3.length; ++var4) {
-                     LevelManager.var_7a3[var4] = var2.readInt();
-                  }
-
-                  LevelManager.var_7f3 = var2.readInt();
-                  LevelManager.thievesList.removeAllElements();
-                  byte var33 = var2.readByte();
-
-                  byte var6;
-                  Thief var7;
-                  for(var5 = 0; var5 < var33; ++var5) {
-                     var6 = var2.readByte();
-                     var7 = GlobalManager.allThievesArray[var6];
-                     LevelManager.thievesList.addElement(var7);
-                     var2.read(var7.inventoryTools);
-
-                     for(int var8 = 0; var8 < var7.collectedLoot.length; ++var8) {
-                        var7.collectedLoot[var8] = var2.readShort();
-                     }
-
-                     var7.sub_44c();
-                  }
-
-                  var2.read(GlobalManager.allThievesArray[0].inventoryTools);
-                  GlobalManager.allThievesArray[0].sub_44c();
-                  GlobalManager.selectedThieves.removeAllElements();
-                  byte var34 = var2.readByte();
-
-                  int var35;
-                  for(var35 = 0; var35 < var34; ++var35) {
-                     byte var36 = var2.readByte();
-                     GlobalManager.selectedThieves.addElement(GlobalManager.allThievesArray[var36]);
-                  }
-
-                  for(var35 = 1; var35 < GlobalManager.allThievesArray.length; ++var35) {
-                     var7 = GlobalManager.allThievesArray[var35];
-                     byte var38 = LevelManager.exitX;
-                     byte var9 = LevelManager.exitY;
-                     var7.resetToSpawn();
-                     byte var10 = 0;
-                     byte var11 = 0;
-                     short var12;
-                     if ((var12 = var2.readShort()) > 0) {
-                        for(int var13 = 0; var13 < var12; ++var13) {
-                           byte var14 = var2.readByte();
-                           byte var15 = var2.readByte();
-                           int var16 = var7.recordedActions.size() - 1;
-
-                           for(int var17 = 0; var17 < var15; ++var17) {
-                              TimelineNode var18;
-                              (var18 = (TimelineNode)var7.recordedActions.elementAt(var16 + var17)).x = var38;
-                              var18.y = var9;
-                              var18.packedData = var14;
-                              if (var17 == 0) {
-                                 var10 = var18.getAction();
-                                 var11 = var18.getDirection();
-                              }
-
-                              if (var10 == 1) {
-                                 var38 = (byte)(var38 + LevelManager.offsetTypes[0][var11]);
-                                 var9 = (byte)(var9 + LevelManager.offsetTypes[1][var11]);
-                              }
-
-                              var7.recordedActions.addElement(new TimelineNode(var38, var9, (byte)0, var11, (byte)0));
-                           }
-                        }
-
-                        var7.positionX = var38;
-                        var7.positionY = var9;
-                        var7.direction = var11;
-                        var7.actionState = var10;
-                     }
-                  }
-
-                  int var37;
-                  LevelObject var39;
-                  for(var35 = 0; var35 < LevelManager.mapWidth; ++var35) {
-                     for(var37 = 0; var37 < LevelManager.mapHeight; ++var37) {
-                        if ((var39 = (LevelObject)LevelManager.levelObjectsMap.get(LevelManager.combineInts(var35, var37))) != null) {
-                           var39.interactionTickTimestamp = var2.readShort();
-                           var39.var_1a5 = var2.readShort();
-                           var39.var_22c = var2.readByte();
-                        }
-                     }
-                  }
-
-                  LevelManager.levelObjects.clear();
-                  var6 = var2.readByte();
-
-                  for(var37 = 0; var37 < var6; ++var37) {
-                     (var39 = new LevelObject((byte)9, var2.readByte(), var2.readByte(), (byte)3, (byte)0, (byte)0, (byte)0)).interactionTickTimestamp = var2.readShort();
-                     var39.var_1a5 = var2.readShort();
-                     var39.var_1f5 = var2.readByte();
-                     LevelManager.levelObjects.put(LevelManager.combineInts(var39.x, var39.y), var39);
-                  }
-
-                  var26 = false;
-                  break label372;
-               } catch (Exception var31) {
-                  GlobalManager.levelId = -1;
-                  sub_6da();
-
-                  for(var5 = 0; var5 < GlobalManager.allThievesArray.length; ++var5) {
-                     GlobalManager.allThievesArray[var5].resetToSpawn();
-                     GlobalManager.allThievesArray[var5].clearThievesState(false);
-                     GlobalManager.allThievesArray[var5].sub_41a();
-                     GlobalManager.allThievesArray[var5].currentLoad = 0;
-                  }
-               }
-
-               var26 = false;
-            } finally {
-               if (var26) {
-                  if (var0 != null) {
-                     try {
-                        var0.closeRecordStore();
-                        if (var2 != null) {
-                           var2.close();
-                        }
-
-                        if (var1 != null) {
-                           var1.close();
-                        }
-                     } catch (Exception var27) {
-                     }
-                  }
-
-                  HackManager.callGc();
-               }
-            }
-
-            if (var0 != null) {
-               try {
-                  var0.closeRecordStore();
-                  if (var2 != null) {
-                     var2.close();
-                  }
-
-                  if (var1 != null) {
-                     var1.close();
-                  }
-               } catch (Exception var28) {
-               }
-            }
-
-            HackManager.callGc();
-            return;
+         if (var4 != null) {
+            var4.close();
          }
 
-         if (var0 != null) {
-            try {
-               var0.closeRecordStore();
-               var2.close();
-               var1.close();
-            } catch (Exception var30) {
-            }
+         if (var3 != null) {
+            var3.close();
          }
-
-         HackManager.callGc();
-         return;
+      } catch (Exception var13) {
       }
 
       HackManager.callGc();
+      Vector var8 = new Vector();
+      Vector var9 = var8;
+      var8.addElement(var0);
+      var9.addElement(var1);
+      return var9;
    }
 
-   private static void sub_8fa() {
+   public static void sub_837() {
       try {
-         RecordStore.deleteRecordStore("path");
-         Thread.sleep(1000L);
+         RecordStore.deleteRecordStore("winner");
       } catch (Exception var0) {
       }
+   }
+
+   public static void sub_870() {
+      sub_7c6();
+      sub_6f5();
+   }
+
+   public static void sub_8ce() {
+      sub_759();
+      sub_837();
+      GlobalManager.saveData[0] = false;
+      GlobalManager.saveData[1] = false;
+      GlobalManager.saveData[2] = true;
+
+      for(byte var0 = 3; var0 < GlobalManager.saveData.length; ++var0) {
+         GlobalManager.saveData[var0] = false;
+      }
+
+      sub_7c6();
    }
 }
