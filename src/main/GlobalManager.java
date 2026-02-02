@@ -641,6 +641,10 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
       case 10:
          // MODDED: Load menu data before offsets are calculated
          ReadingDrawingClass.loadPlanningMenuData();
+         // MODDED: Load Loot Configuration
+         LevelManager.loadLootConfiguration();
+         // MODDED: Load Thief Configuration
+         LevelManager.loadThiefConfiguration();
     	  
          ReadingDrawingClass.loadMainImage(var_114a - 6 >> 1);
          // MODDED: Center the FULL image instead of the sprite using dynamic dimensions
@@ -1218,7 +1222,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          }
          
          // Draw Chief (Thief 0) separately
-         boolean chiefAllowed = gameMode > -1 || levelId == 6 || LevelManager.allowChief;
+         boolean chiefAllowed = gameMode > -1 || LevelManager.allowChief;
          if (!selectedThieves.contains(allThievesArray[0]) && chiefAllowed) {
              ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)52, 0, LevelObjectData.var_9d[0][0], LevelObjectData.var_9d[0][1]);
          }
@@ -1596,7 +1600,8 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
                break;
             case 2:
                var_f0d = 0;
-               if (levelId < 6) {
+               // FIX: Allow boss if allowChief flag is set (from map config)
+               if (!LevelManager.allowChief) {
                   showDialog((byte)0, (byte[])null, (short)183, (Object[])null, new short[]{126}, (short)137);
                } else {
                   sub_22b((byte)2, new byte[]{5, var_f0d}, new short[]{125, 122}, ReadingDrawingClass.readTextFromLng((short)41), (byte)2);
@@ -1986,7 +1991,13 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             }
          case 11:
          case 31:
-            if (selectedThieves.size() <= possibleThieves.size()) {
+        	 // FIX: Exclude Boss (index 0) from the "needs plan" check
+             int requiredPlans = selectedThieves.size();
+             if (selectedThieves.contains(allThievesArray[0])) {
+                 requiredPlans--;
+             }
+             
+             if (requiredPlans <= possibleThieves.size()) {
                sub_cec();
             } else {
                Short var10 = new Short((short)160);
