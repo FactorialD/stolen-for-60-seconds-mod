@@ -73,7 +73,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
    public static final Vector selectedThieves;
    public static final Vector possibleThieves;
    public static byte levelId;
-   public static final short[][] toolStats; // Цена, Вес, ID спрайта, ID действия/анимации
+   public static short[][] toolStats; // Цена, Вес, ID спрайта, ID действия/анимации
    private static final int var_dff;
    private static final byte[][] var_e17;
    public static int currentMoney;
@@ -622,6 +622,28 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
       }
    }
 
+   public static void loadToolConfiguration() {
+      try {
+         InputStream is = MM.getResourceStream("/dat/tools.dat");
+         if (is != null) {
+            DataInputStream dis = new DataInputStream(is);
+            // 12 Tools * 4 Stats
+            for (int i = 0; i < 12; i++) {
+               for (int j = 0; j < 4; j++) {
+                  toolStats[i][j] = dis.readShort();
+               }
+            }
+            // 29 Objects * 12 Tools
+            for (int i = 0; i < 29; i++) {
+               for (int j = 0; j < 12; j++) {
+                  Thief.toolUsingTimeStats[i][j] = dis.readByte();
+               }
+            }
+            dis.close();
+         }
+      } catch (Exception e) {}
+   }
+   
    private void sub_47c() {
       switch(var_114a) {
       case 1:
@@ -645,6 +667,8 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          LevelManager.loadLootConfiguration();
          // MODDED: Load Thief Configuration
          LevelManager.loadThiefConfiguration();
+         // MODDED: Load Tool Configuration
+         loadToolConfiguration();
     	  
          ReadingDrawingClass.loadMainImage(var_114a - 6 >> 1);
          // MODDED: Center the FULL image instead of the sprite using dynamic dimensions
