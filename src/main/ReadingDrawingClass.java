@@ -18,7 +18,7 @@ public final class ReadingDrawingClass implements LevelObjectData {
    public static byte var_12 = 7;
    public static byte var_a9 = 9;
    private static final Random var_e3 = new Random();
-   private static String[] mainImageNames = new String[]{"abc", "pic1", "pic2", "pic3", "pic4", "pic5", "pic6"};
+   private static String[] mainImageNames = new String[]{"abc", "pic1", "pic2", "pic3", "pic4", "pic6", "pic6"};
    public static short var_12d;
    private static final short[][] var_13b = new short[][]{{64, 11, 116, 106, 54, 25, 64, 93, 46, 41, 54, 77}, {49, 0, 77, 15, 49, 112, 77, 127, 56, 15, 70, 112, 48, 26, 56, 42, 70, 25, 78, 42}, {49, 0, 77, 15, 49, 112, 77, 127, 56, 15, 70, 112, 43, 15, 82, 112, 37, 26, 43, 44, 82, 26, 92, 44}, {55, 8, 113, 118, 17, 38, 55, 78, 28, 38, 41, 78}, {34, 13, 49, 113, 31, 23, 34, 105}, {27, 0, 100, 127, 40, 0, 87, 127}, {4, 22, 30, 56, 20, 100, 30, 111, 13, 36, 30, 44, 20, 73, 30, 85, 30, 0, 48, 127}, {27, 0, 100, 127, 40, 47, 88, 94, 65, 68, 79, 79, 50, 54, 71, 55, 51, 70, 54, 77}, {43, 1, 111, 125, 1, 27, 43, 76, 13, 27, 25, 76, 83, 22, 94, 97, 56, 93, 66, 102}, {12, 11, 113, 116, 35, 32, 91, 92, 12, 45, 35, 82, 45, 92, 85, 116, 43, 11, 84, 32, 91, 44, 113, 83}, {42, 32, 81, 86, 34, 99, 89, 124, 57, 50, 64, 61, 51, 86, 73, 99}, {32, 10, 48, 118, 4, 47, 18, 81, 18, 16, 33, 110}, {11, 0, 48, 127, 24, 18, 48, 109}, {9, 1, 49, 126, 4, 22, 9, 37, 4, 91, 9, 104}, {11, 16, 29, 109, 11, 0, 48, 127}, {43, 6, 104, 120, 82, 6, 104, 120, 43, 105, 82, 120, 43, 6, 82, 22}, {29, 28, 99, 100, 29, 94, 35, 100, 29, 28, 35, 34, 93, 28, 99, 34, 93, 94, 99, 100}, {40, 21, 90, 37, 90, 37, 106, 85, 40, 85, 90, 100, 26, 37, 40, 85}, {28, 34, 102, 82, 11, 73, 28, 82, 11, 34, 28, 43, 48, 34, 82, 82, 102, 44, 118, 73}, {27, 0, 100, 127}, {0, 25, 37, 25, 52, 8, 118, 119, 118, 77, 126, 100, 62, 0, 105, 8, 62, 119, 105, 127, 37, 25, 37, 102, 0, 8, 52, 8, 0, 102, 37, 102, 0, 119, 52, 119, 118, 27, 126, 52}, {32, 32, 99, 87, 48, 50, 82, 60, 49, 73, 49, 87, 66, 73, 66, 87, 81, 73, 81, 87}, {12, 11, 113, 116, 35, 32, 91, 92}, {24, 24, 101, 101}};
    private static String allCharactersStr;
@@ -27,6 +27,9 @@ public final class ReadingDrawingClass implements LevelObjectData {
    public static Image[] mainImages;
    // New array to store split sprites that were previously on pic2
    public static Image[] splitImages = new Image[60];
+   
+   // Cache for baked object sprites
+   private static Hashtable imageCache = new Hashtable();
    
    private static short var_279;
    private static short var_2a2;
@@ -287,6 +290,24 @@ public final class ReadingDrawingClass implements LevelObjectData {
 
       return -1;
    }
+   
+   public static void drawExternalImage(Graphics g, String imageName, int x, int y) {
+       Image img = (Image)imageCache.get(imageName);
+       if (img == null) {
+           try {
+               // Load from /dat/objects/ folder
+               img = Image.createImage("/dat/objects/" + imageName + ".png");
+               if (img != null) {
+                   imageCache.put(imageName, img);
+               }
+           } catch (IOException e) {
+               // Ignore
+           }
+       }
+       if (img != null) {
+           g.drawImage(img, x, y, 20); // 20 = LEFT | TOP
+       }
+   }
 
    private static boolean sub_1bb(short var0) {
       for(int var1 = 0; var1 < var_2c7.length; ++var1) {
@@ -505,6 +526,11 @@ public final class ReadingDrawingClass implements LevelObjectData {
       }
 
       HackManager.callGc();
+   }
+   
+   public static void clearImageCache() {
+       imageCache.clear();
+       HackManager.callGc();
    }
 
    public static Image loadImagePng(String imageName) {
@@ -820,13 +846,18 @@ public final class ReadingDrawingClass implements LevelObjectData {
     * @param val значение
     * @param bit позиция
     */
-   public static boolean checkBit(byte val, byte bit) {
-      return (val >> bit & 1) == 1;
-   }
+   public static boolean checkBit(int val, byte bit) {
+	      return (val >> bit & 1) != 0;
+	}
 
-   public static byte sub_6b7(byte var0, byte var1, boolean var2) {
-      return var2 ? (byte)(1 << var1 | var0) : (byte)(255 - (1 << var1) & var0);
-   }
+   public static byte sub_6b7(int var0, byte var1, boolean var2) {
+	      if (var2) {
+	         return (byte) (var0 | 1 << var1);
+	      } else {
+	         return (byte) (var0 & ~(1 << var1));
+	      }
+   	}
+   
 
    public static void sub_6da() {
       RecordStore var0 = null;

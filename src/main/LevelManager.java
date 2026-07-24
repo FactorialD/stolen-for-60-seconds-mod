@@ -983,13 +983,16 @@ public final class LevelManager implements LevelObjectData {
                   var14 = (var25 = (LevelObject)levelObjectsMap.get(var22)) != null && (var25.objectType == 1 || var25.objectType == 2);
                }
 
-               if (!var14 || gameState == 0) {
-                  if (gameState == 0) {
-                     ReadingDrawingClass.drawSpriteNoOffset(graphics, (byte)spriteTypeId, 13, mapOffsetX + j * 24, mapOffsetY + i * 24);
-                  }
-
-                  ReadingDrawingClass.drawSpriteNoOffset(graphics, (byte)spriteTypeId, mapTileCode, mapOffsetX + j * 24, mapOffsetY + i * 24);
+               // MODDED: Always draw the floor tile.
+               // Original code skipped floor drawing if (var14 == true) i.e., if a door was present.
+               // With transparent PNG objects, this causes black voids.
+               // We remove the !var14 check to ensure the floor is always drawn underneath.
+               
+               if (gameState == 0) {
+                   ReadingDrawingClass.drawSpriteNoOffset(graphics, (byte)spriteTypeId, 13, mapOffsetX + j * 24, mapOffsetY + i * 24);
                }
+               ReadingDrawingClass.drawSpriteNoOffset(graphics, (byte)spriteTypeId, mapTileCode, mapOffsetX + j * 24, mapOffsetY + i * 24);
+               
 
                if (gameState == 0 && alarmWithZonesMap.containsKey(var22) && var_7f3 == 0) {
                   ReadingDrawingClass.drawSpriteNoOffset(graphics, (byte)spriteTypeId, (byte)(15 + ((LevelObject)levelObjectsMap.get(alarmWithZonesMap.get(var22))).var_22c), mapOffsetX + j * 24, mapOffsetY + i * 24);
