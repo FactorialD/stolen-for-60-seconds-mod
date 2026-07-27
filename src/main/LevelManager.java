@@ -1649,57 +1649,67 @@ public final class LevelManager implements LevelObjectData {
    }
 
    private static void setCameraPos(int var0, int var1, boolean var2, boolean var3, boolean var4) {
-      int var5 = mapOffsetX;
-      int var6 = mapOffsetY;
+      int oldX = mapOffsetX;
+      int oldY = mapOffsetY;
+
+      int pixelX = var0 * 24 + 12;
+      int pixelY = var1 * 24 + 12;
+
+      // Враховуємо плавну анімацію вора, якщо камера слідує за ним і він РУХАЄТЬСЯ
+      if (selectedThief != null && selectedThief.positionX == var0 && selectedThief.positionY == var1) {
+         // Враховуємо зміщення лише якщо стан вора відповідає руху (зазвичай 1 або 2)
+         // Якщо він зламує (стан дії > 2), ми не рухаємо камеру за анімацією на місці
+         if (selectedThief.actionState == 1 || selectedThief.actionState == 2) {
+            pixelX += offsetTypes[0][selectedThief.direction] * (selectedThief.moveInterpolation * 24 / 12);
+            pixelY += offsetTypes[1][selectedThief.direction] * (selectedThief.moveInterpolation * 24 / 12);
+         }
+      }
+
+      int targetOffsetX;
+      int targetOffsetY;
+
+      // Розрахунок цільового зміщення по горизонталі
       if (mapWidth * 24 <= screenWidth) {
-         mapOffsetX = screenWidth - tilesInScreenX * 24 >> 1;
+         targetOffsetX = screenWidth - tilesInScreenX * 24 >> 1;
       } else {
-         if (var4) {
-            mapOffsetX -= var0;
-         } else if (var2) {
-            mapOffsetX = -(24 * var0) + (screenWidth >> 1) - 12;
-         } else if (mapOffsetX + 24 * var0 > screenWidth - 36 && mapOffsetX > -(mapWidth * 24 - screenWidth)) {
-            mapOffsetX = -(24 * var0) + 24;
-         } else if (mapOffsetX + 24 * var0 < 12) {
-            mapOffsetX = -(24 * var0 - (screenWidth - 48));
-         }
-
-         if (var5 != mapOffsetX) {
-            if (var3) {
-               mapOffsetX = -(24 * var0) + (screenWidth >> 1) - 12;
-            }
-
-            mapOffsetX = Math.min(Math.max(mapOffsetX, -(mapWidth * 24 - screenWidth)), 0);
-         }
+         targetOffsetX = (screenWidth >> 1) - pixelX;
+         // Обмеження межами мапи
+         if (targetOffsetX > 0) targetOffsetX = 0;
+         if (targetOffsetX < -(mapWidth * 24 - screenWidth)) targetOffsetX = -(mapWidth * 24 - screenWidth);
       }
 
+      // Розрахунок цільового зміщення по вертикалі
       if (mapHeight * 24 < var_cf) {
-         mapOffsetY = var_cf - tilesInScreenY * 24 >> 1;
+         targetOffsetY = var_cf - tilesInScreenY * 24 >> 1;
       } else {
-         if (var4) {
-            mapOffsetY -= var1;
-         } else if (var2) {
-            mapOffsetY = -(24 * var1) + (var_cf >> 1) - 12;
-         } else if (mapOffsetY + 24 * var1 > var_cf - 36 && mapOffsetY > -(mapHeight * 24 - var_cf)) {
-            mapOffsetY = -(24 * var1) + 24;
-         } else if (mapOffsetY + 24 * var1 < 12) {
-            mapOffsetY = -(24 * var1 - (var_cf - 48));
-         }
-
-         if (var6 != mapOffsetY) {
-            if (var3) {
-               mapOffsetY = -(24 * var1) + (var_cf >> 1) - 12;
-            }
-
-            mapOffsetY = Math.min(Math.max(mapOffsetY, -(mapHeight * 24 - var_cf)), 0);
-         }
+         targetOffsetY = (var_cf >> 1) - pixelY;
+         // Обмеження межами мапи
+         if (targetOffsetY > 0) targetOffsetY = 0;
+         if (targetOffsetY < -(mapHeight * 24 - var_cf)) targetOffsetY = -(mapHeight * 24 - var_cf);
       }
 
-      if (var5 != mapOffsetX || var6 != mapOffsetY) {
+      // Якщо встановлено прапорець негайного переміщення (var2 або var3), копіюємо координати миттєво
+      if (var2 || var3) {
+         mapOffsetX = targetOffsetX;
+         mapOffsetY = targetOffsetY;
+      } else {
+         // Плавне наближення до цілі (smoothing)
+         // Використовуємо коефіцієнт 4 для м'якого фільтрування тремтіння
+         int dx = targetOffsetX - mapOffsetX;
+         int dy = targetOffsetY - mapOffsetY;
+
+         if (dx > 0) mapOffsetX += (dx + 3) / 4;
+         else if (dx < 0) mapOffsetX += (dx - 3) / 4;
+
+         if (dy > 0) mapOffsetY += (dy + 3) / 4;
+         else if (dy < 0) mapOffsetY += (dy - 3) / 4;
+      }
+
+      // Якщо позиція змінилася — оновлюємо необхідні буфери
+      if (oldX != mapOffsetX || oldY != mapOffsetY) {
          sub_3d2();
          sub_702();
       }
-
    }
 
    public static void sub_85b() {
