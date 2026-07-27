@@ -60,20 +60,34 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
    public static int var_ab2;
    private static int var_afa;
    public static boolean var_b17 = false;
-   private static final byte[][] var_b4c = new byte[][]{{2, 7, 4, 0}, {8, 1, 1, 5}, {2, 0, 8, 2}, {2, 5, 8, 4}, {2, 6, 3, 0}, {3, 6, 1, 6}, {4, 6, 5, 7}, {0, 7, 6, 7}, {8, 1, 8, 2}};
-   private static final byte[][] var_b5a = new byte[][]{{6, 3, 3, 3}, {7, 4, 4, 4}, {5, 4, 5, 5}, {6, 0, 6, 6}};
+   
+   /* 0: Кнопка "Старт" (Play)
+   1: Кнопка "Вихід" (Exit)
+   2: Бос / Шеф (Thief 1)
+   3-6: Інші злодії (Thief 2, 3, 4, 5)
+   7: Перехід до якогось меню
+   8: Ще якесь додаткове меню*/
+   // Таблиця переходів для меню планування
+   private static final byte[][] menuNavigationMap = new byte[][]{{2, 7, 4, 0}, {8, 1, 1, 5}, {2, 0, 8, 2}, {2, 5, 8, 4}, {2, 6, 3, 0}, {3, 6, 1, 6}, {4, 6, 5, 7}, {0, 7, 6, 7}, {8, 1, 8, 2}};
+   // Таблиця пропусків. 
+   // Вона використовується, коли гравець намагається перемістити курсор на злодія, який недоступний
+   private static final byte[][] menuSkipMap = new byte[][]{{6, 3, 3, 3}, {7, 4, 4, 4}, {5, 4, 5, 5}, {6, 0, 6, 6}};
+   public static byte currentMenuElementIndex;
+   
    public static int cursorXCurrent;
    public static int var_bca;
    public static int cursorXTarget;
    public static int var_c60;
-   public static byte var_ca0;
+   
    public static int var_ce9;
    public static int var_d24;
    public static final Thief[] allThievesArray;
    public static final Vector selectedThieves;
    public static final Vector possibleThieves;
    public static byte levelId;
-   public static short[][] toolStats; // Цена, Вес, ID спрайта, ID действия/анимации
+   
+   // Цена, Вес, ID спрайта, ID действия/анимации
+   public static short[][] toolStats; 
    private static final int var_dff;
    private static final byte[][] var_e17;
    public static int currentMoney;
@@ -164,7 +178,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
    }
 
    private void sub_bd() {
-      var_ca0 = 0;
+      currentMenuElementIndex = 0;
       sub_e28();
       MusicManager.someMusicIndexVar2 = saveData[0];
       MusicManager.someMusicIndexVar = saveData[1];
@@ -687,23 +701,23 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          }
 
          int var1;
-         for(var1 = 0; var1 < LevelObjectData.var_65.length; ++var1) {
-            int[] var10000 = LevelObjectData.var_65[var1];
+         for(var1 = 0; var1 < LevelObjectData.planningMenuCoordinates.length; ++var1) {
+            int[] var10000 = LevelObjectData.planningMenuCoordinates[var1];
             var10000[0] += var_ce9;
-            var10000 = LevelObjectData.var_65[var1];
+            var10000 = LevelObjectData.planningMenuCoordinates[var1];
             var10000[1] += var_d24;
          }
 
-         for(var1 = 0; var1 < LevelObjectData.var_9d.length; ++var1) {
-            short[] var3 = LevelObjectData.var_9d[var1];
+         for(var1 = 0; var1 < LevelObjectData.thievesBias.length; ++var1) {
+            short[] var3 = LevelObjectData.thievesBias[var1];
             var3[0] = (short)(var3[0] + var_ce9);
-            var3 = LevelObjectData.var_9d[var1];
+            var3 = LevelObjectData.thievesBias[var1];
             var3[1] = (short)(var3[1] + var_d24);
          }
 
-         var_ca0 = 0;
-         cursorXTarget = LevelObjectData.var_65[var_ca0][0];
-         var_c60 = LevelObjectData.var_65[var_ca0][1];
+         currentMenuElementIndex = 0;
+         cursorXTarget = LevelObjectData.planningMenuCoordinates[currentMenuElementIndex][0];
+         var_c60 = LevelObjectData.planningMenuCoordinates[currentMenuElementIndex][1];
          ++var_114a;
          return;
       case 12:
@@ -1237,34 +1251,34 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          // Loop 1 to 4 first
          for(int var2 = 1; var2 < 5; ++var2) {
             if (!selectedThieves.contains(allThievesArray[var2]) && LevelManager.levelAdditionalData_TimerEtc[levelId - 1][6 + var2] == 1) {
-               ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)(34 + var2 - 1), 0, LevelObjectData.var_9d[var2][0], LevelObjectData.var_9d[var2][1]);
+               ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)(34 + var2 - 1), 0, LevelObjectData.thievesBias[var2][0], LevelObjectData.thievesBias[var2][1]);
             }
 
             if (LevelManager.thievesList.contains(allThievesArray[var2])) {
-               ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)39, 0, LevelObjectData.var_65[(short)(2 + var2)][0] - (LevelObjectData.spriteTypesArr[39][2] >> 1), LevelObjectData.var_65[(short)(2 + var2)][1]);
+               ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)39, 0, LevelObjectData.planningMenuCoordinates[(short)(2 + var2)][0] - (LevelObjectData.spriteTypesArr[39][2] >> 1), LevelObjectData.planningMenuCoordinates[(short)(2 + var2)][1]);
             }
          }
          
          // Draw Chief (Thief 0) separately
          boolean chiefAllowed = gameMode > -1 || LevelManager.allowChief;
          if (!selectedThieves.contains(allThievesArray[0]) && chiefAllowed) {
-             ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)52, 0, LevelObjectData.var_9d[0][0], LevelObjectData.var_9d[0][1]);
+             ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)52, 0, LevelObjectData.thievesBias[0][0], LevelObjectData.thievesBias[0][1]);
          }
          if (LevelManager.thievesList.contains(allThievesArray[0])) {
-             ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)39, 0, LevelObjectData.var_65[2][0] - (LevelObjectData.spriteTypesArr[39][2] >> 1), LevelObjectData.var_65[2][1]);
+             ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)39, 0, LevelObjectData.planningMenuCoordinates[2][0] - (LevelObjectData.spriteTypesArr[39][2] >> 1), LevelObjectData.planningMenuCoordinates[2][1]);
          }
 
          ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)29, 0, 0, 0);
-         LevelObjectData.var_65[8][0] = LevelObjectData.spriteTypesArr[29][2] >> 1;
-         LevelObjectData.var_65[8][1] = LevelObjectData.spriteTypesArr[29][3] >> 1;
+         LevelObjectData.planningMenuCoordinates[8][0] = LevelObjectData.spriteTypesArr[29][2] >> 1;
+         LevelObjectData.planningMenuCoordinates[8][1] = LevelObjectData.spriteTypesArr[29][3] >> 1;
 
          for(int var3 = 0 + LevelObjectData.spriteTypesArr[29][2]; var3 < var_1180 - LevelObjectData.spriteTypesArr[30][2]; var3 += LevelObjectData.spriteTypesArr[28][2]) {
             ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)28, 0, var3, 0);
          }
 
          ReadingDrawingClass.drawSpriteNoOffset(LevelManager.graphics, (byte)30, 0, var_1180 - LevelObjectData.spriteTypesArr[30][2], 0);
-         LevelObjectData.var_65[1][0] = var_1180 - (LevelObjectData.spriteTypesArr[30][2] >> 1);
-         LevelObjectData.var_65[1][1] = LevelObjectData.spriteTypesArr[30][3] >> 1;
+         LevelObjectData.planningMenuCoordinates[1][0] = var_1180 - (LevelObjectData.spriteTypesArr[30][2] >> 1);
+         LevelObjectData.planningMenuCoordinates[1][1] = LevelObjectData.spriteTypesArr[30][3] >> 1;
          
          // MODDED: FIX for large backgrounds covering bottom GUI
          // Force draw the bottom panel background strip (Sprite 9) unconditionally on top of everything
@@ -1284,7 +1298,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
       }
 
       var_649 = false;
-      if (var_62c && (var_ca0 == 3 || var_ca0 == 4 || var_ca0 == 5 || var_ca0 == 6 || var_ca0 == 2)) {
+      if (var_62c && (currentMenuElementIndex == 3 || currentMenuElementIndex == 4 || currentMenuElementIndex == 5 || currentMenuElementIndex == 6 || currentMenuElementIndex == 2)) {
          LevelManager.selectedThief = var_900;
          LevelManager.sub_2df(LevelManager.graphics, true);
          var_62c = false;
@@ -1596,7 +1610,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             var_649 = true;
             var_62c = true;
          } else {
-            switch(var_ca0) {
+            switch(currentMenuElementIndex) {
             case 0:
                short[] var5 = new short[4];
                var2 = 0;
@@ -1669,8 +1683,8 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
       var_ff4 = null;
       var_6ac = false;
       var_5e0 = true;
-      cursorXTarget = LevelObjectData.var_65[var_ca0][0];
-      var_c60 = LevelObjectData.var_65[var_ca0][1];
+      cursorXTarget = LevelObjectData.planningMenuCoordinates[currentMenuElementIndex][0];
+      var_c60 = LevelObjectData.planningMenuCoordinates[currentMenuElementIndex][1];
       boolean var0 = false;
 
       for(int var1 = 0; var1 < var_1123.length; ++var1) {
@@ -1731,16 +1745,16 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          var_c60 = var_762 + var_6d8 * (LevelObjectData.spriteTypesArr[26][3] + var_7d3) + (LevelObjectData.spriteTypesArr[26][3] >> 1);
          sub_b52();
       } else {
-         var_ca0 = var_b4c[var_ca0][direction];
-         cursorXTarget = LevelObjectData.var_65[var_ca0][0];
-         var_c60 = LevelObjectData.var_65[var_ca0][1];
-         switch(var_ca0) {
+         currentMenuElementIndex = menuNavigationMap[currentMenuElementIndex][direction];
+         cursorXTarget = LevelObjectData.planningMenuCoordinates[currentMenuElementIndex][0];
+         var_c60 = LevelObjectData.planningMenuCoordinates[currentMenuElementIndex][1];
+         switch(currentMenuElementIndex) {
          case 2:
             var_900 = allThievesArray[0];
             break;
          case 3:
             if (selectedThieves.contains(allThievesArray[1]) || LevelManager.levelAdditionalData_TimerEtc[levelId - 1][7] == 0) {
-               var_ca0 = var_b5a[0][direction];
+               currentMenuElementIndex = menuSkipMap[0][direction];
                moveCursorInMenu(direction);
                return;
             }
@@ -1749,7 +1763,7 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
             break;
          case 4:
             if (selectedThieves.contains(allThievesArray[2]) || LevelManager.levelAdditionalData_TimerEtc[levelId - 1][8] == 0) {
-               var_ca0 = var_b5a[1][direction];
+               currentMenuElementIndex = menuSkipMap[1][direction];
                moveCursorInMenu(direction);
                return;
             }
@@ -1762,12 +1776,12 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
                break;
             }
 
-            var_ca0 = var_b5a[2][direction];
+            currentMenuElementIndex = menuSkipMap[2][direction];
             moveCursorInMenu(direction);
             return;
          case 6:
             if (selectedThieves.contains(allThievesArray[4]) || LevelManager.levelAdditionalData_TimerEtc[levelId - 1][10] == 0) {
-               var_ca0 = var_b5a[3][direction];
+               currentMenuElementIndex = menuSkipMap[3][direction];
                moveCursorInMenu(direction);
                return;
             }
@@ -1851,10 +1865,10 @@ public final class GlobalManager extends BaseGameManager implements Runnable, Co
          var_f69 = 0;
          var_f83 = var_11cf - ReadingDrawingClass.var_a9 - 2;
          var_fa9 = var_1180;
-         var0 = ReadingDrawingClass.readTextFromLng((short)LevelObjectData.var_65[var_ca0][2]);
-         var_6bc = !saveData[7 + var_ca0] && gameMode == -1;
+         var0 = ReadingDrawingClass.readTextFromLng((short)LevelObjectData.planningMenuCoordinates[currentMenuElementIndex][2]);
+         var_6bc = !saveData[7 + currentMenuElementIndex] && gameMode == -1;
          if (var_12fc && var_6bc) {
-            saveData[7 + var_ca0] = true;
+            saveData[7 + currentMenuElementIndex] = true;
             ReadingDrawingClass.sub_7c6();
             var_6bc = false;
          }

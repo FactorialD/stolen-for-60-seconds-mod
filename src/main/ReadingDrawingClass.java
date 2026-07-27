@@ -44,15 +44,15 @@ public final class ReadingDrawingClass implements LevelObjectData {
          
          // 1. Read var_9d (Thief Offsets: 5 entries x 2 shorts)
          for(int i = 0; i < 5; i++) {
-            LevelObjectData.var_9d[i][0] = dis.readShort();
-            LevelObjectData.var_9d[i][1] = dis.readShort();
+            LevelObjectData.thievesBias[i][0] = dis.readShort();
+            LevelObjectData.thievesBias[i][1] = dis.readShort();
          }
          
          // 2. Read var_65 (Menu Positions: 9 entries x 3 shorts)
          for(int i = 0; i < 9; i++) {
-            LevelObjectData.var_65[i][0] = dis.readShort();
-            LevelObjectData.var_65[i][1] = dis.readShort();
-            LevelObjectData.var_65[i][2] = dis.readShort();
+            LevelObjectData.planningMenuCoordinates[i][0] = dis.readShort();
+            LevelObjectData.planningMenuCoordinates[i][1] = dis.readShort();
+            LevelObjectData.planningMenuCoordinates[i][2] = dis.readShort();
          }
          
       } catch (Exception e) {
@@ -62,13 +62,13 @@ public final class ReadingDrawingClass implements LevelObjectData {
          int[][] def_65 = new int[][]{{95, 106, 242}, {200, 10, 243}, {22, 84, 250}, {107, 49, 244}, {90, 75, 245}, {174, 45, 246}, {203, 78, 247}, {181, 111, 248}, {12, 12, 249}};
          
          for(int i=0; i<5; i++) {
-             LevelObjectData.var_9d[i][0] = def_9d[i][0];
-             LevelObjectData.var_9d[i][1] = def_9d[i][1];
+             LevelObjectData.thievesBias[i][0] = def_9d[i][0];
+             LevelObjectData.thievesBias[i][1] = def_9d[i][1];
          }
          for(int i=0; i<9; i++) {
-             LevelObjectData.var_65[i][0] = def_65[i][0];
-             LevelObjectData.var_65[i][1] = def_65[i][1];
-             LevelObjectData.var_65[i][2] = def_65[i][2];
+             LevelObjectData.planningMenuCoordinates[i][0] = def_65[i][0];
+             LevelObjectData.planningMenuCoordinates[i][1] = def_65[i][1];
+             LevelObjectData.planningMenuCoordinates[i][2] = def_65[i][2];
          }
          
       } finally {

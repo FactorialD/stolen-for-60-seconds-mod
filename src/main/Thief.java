@@ -3,7 +3,8 @@ import java.util.Vector;
 import javax.microedition.lcdui.Graphics;
 
 public final class Thief implements LevelObjectData {
-   public static byte[][] toolUsingTimeStats = new byte[][]{{0, 0, 35, 80, 65, 20, 0, 0, 30, 15, 8, 0}, {22, 18, 14, 30, 20, 0, 0, 0, 0, 15, 8, 0}, {0, 55, 35, 55, 45, 25, 0, 0, 0, 15, 8, 0}, {25, 20, 17, 15, 0, 0, 0, 0, 0, 15, 8, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10}, {14, 8, 0, 20, 0, 0, 0, 0, 0, 15, 8, 0}, {0, 0, 0, 0, 0, 0, 50, 30, 15, 0, 0, 0}, {15, 10, 8, 12, 0, 0, 30, 0, 0, 15, 8, 0}, {25, 20, 17, 15, 0, 0, 0, 0, 0, 15, 8, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 8, 0}, {17, 11, 0, 20, 0, 0, 0, 0, 0, 15, 8, 0}, {15, 10, 0, 0, 0, 0, 0, 0, 0, 15, 8, 0}, {0, 0, 35, 70, 20, 15, 0, 0, 25, 15, 8, 0}, {14, 8, 0, 20, 0, 0, 0, 0, 0, 15, 8, 0}, {20, 15, 15, 30, 0, 0, 0, 0, 0, 15, 8, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {17, 10, 0, 20, 0, 0, 0, 0, 0, 15, 8, 0}, {17, 10, 0, 20, 0, 0, 0, 0, 0, 15, 8, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+	// Заповнюється даними з /dat/tools.dat
+   public static byte[][] toolUsingTimeStats = new byte[29][12];
    public final byte thiefId;
    public byte positionX;
    public byte positionY;
@@ -333,8 +334,8 @@ public final class Thief implements LevelObjectData {
             case 3:
                this.targetObject.var_1a5 = globalTimer;
                LevelManager.sub_702();
-               if (this.targetObject.var_1f5 != 0 && this.targetObject.var_22c > 0 && LevelManager.var_7a3[this.targetObject.var_1f5] <= 0 && this.projectedLoad + LevelManager.var_71c[this.targetObject.var_1f5][1] > LevelManager.thiefStats[this.thiefId][0]) {
-                  if (LevelManager.thiefStats[this.thiefId][0] - this.calculateCurrentWeight() < LevelManager.var_71c[this.targetObject.var_1f5][1]) {
+               if (this.targetObject.var_1f5 != 0 && this.targetObject.var_22c > 0 && LevelManager.var_7a3[this.targetObject.var_1f5] <= 0 && this.projectedLoad + LevelManager.lootPrice[this.targetObject.var_1f5][1] > LevelManager.thiefStats[this.thiefId][0]) {
+                  if (LevelManager.thiefStats[this.thiefId][0] - this.calculateCurrentWeight() < LevelManager.lootPrice[this.targetObject.var_1f5][1]) {
                      LevelManager.var_247 = 186;
                   } else {
                      LevelManager.var_247 = 185;
@@ -344,8 +345,8 @@ public final class Thief implements LevelObjectData {
             case 4:
                this.targetObject.interactionTickTimestamp = globalTimer;
                LevelManager.sub_702();
-               if (this.inventoryTools[this.selectedToolSlot] == 115 && this.targetObject.var_1f5 != 0 && this.targetObject.var_22c > 0 && LevelManager.var_7a3[this.targetObject.var_1f5] <= 0 && this.projectedLoad + LevelManager.var_71c[this.targetObject.var_1f5][1] > LevelManager.thiefStats[this.thiefId][0]) {
-                  if (LevelManager.thiefStats[this.thiefId][0] - this.calculateCurrentWeight() < LevelManager.var_71c[this.targetObject.var_1f5][1]) {
+               if (this.inventoryTools[this.selectedToolSlot] == 115 && this.targetObject.var_1f5 != 0 && this.targetObject.var_22c > 0 && LevelManager.var_7a3[this.targetObject.var_1f5] <= 0 && this.projectedLoad + LevelManager.lootPrice[this.targetObject.var_1f5][1] > LevelManager.thiefStats[this.thiefId][0]) {
+                  if (LevelManager.thiefStats[this.thiefId][0] - this.calculateCurrentWeight() < LevelManager.lootPrice[this.targetObject.var_1f5][1]) {
                      LevelManager.var_247 = 186;
                   } else {
                      LevelManager.var_247 = 185;
@@ -380,11 +381,11 @@ public final class Thief implements LevelObjectData {
 
    public final boolean collectLoot() {
       if (this.targetObject.var_1f5 != 0 && this.targetObject.var_22c > 0) {
-         if (LevelManager.thiefStats[this.thiefId][0] - this.currentLoad >= LevelManager.var_71c[this.targetObject.var_1f5][1]) {
+         if (LevelManager.thiefStats[this.thiefId][0] - this.currentLoad >= LevelManager.lootPrice[this.targetObject.var_1f5][1]) {
             short[] var10000 = this.collectedLoot;
             byte var10001 = this.targetObject.var_1f5;
             var10000[var10001] = (short)(var10000[var10001] + this.targetObject.var_22c);
-            this.currentLoad = (byte)(this.currentLoad + LevelManager.var_71c[this.targetObject.var_1f5][1]);
+            this.currentLoad = (byte)(this.currentLoad + LevelManager.lootPrice[this.targetObject.var_1f5][1]);
             return true;
          }
 

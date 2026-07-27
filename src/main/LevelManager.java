@@ -37,7 +37,8 @@ public final class LevelManager implements LevelObjectData {
    public static final byte[][] var_64c = new byte[][]{{0}, {1}, {2, 1}, {3}, {4}, {5}, {6}, {7, 3}, {8, 3}, {9}, {10}, {11}, {12}, {13}, {14, 13}, {15, 14, 13}, {16, 23}, {-1}, {18, 23}, {-1}, {-1}, {21, 26, 10}, {22}, {23}, {24, 23}, {-1}, {26, 10}, {27, 26, 10}, {28, 5}};
    public static final short[][] levelAdditionalData_TimerEtc = new short[][]{{500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 50, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 9}, {500, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 50, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 10}, {500, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 50, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 11}, {500, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 300, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 12}, {500, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 11100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 13}, {140, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1800, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 14}, {140, 0, 3, 0, 5, 0, 9, 0, 0, 0, 1, 2, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 15, 35}, {200, 12, 5, 0, 15, 0, 22, 0, 1, 0, 1, 10, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 16, 36}, {260, 0, 0, 50, 40, 0, 30, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 17}, {250, 0, 30, 60, 20, 0, 50, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 18}, {160, 100, 0, 0, 0, 0, 50, 1, 0, 0, 1, 30, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 19, 37}, {320, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 40, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 20, 38}, {230, 0, 0, 0, 10, 250, 70, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 21}, {150, 0, 43, 50, 10, 0, 35, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 33}, {200, 45, 26, 0, 3, 0, 60, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 22}, {320, 0, 0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 23}, {150, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 26}, {185, 0, 0, 0, 65, 0, 50, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 24}, {210, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 45, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 32, 39}, {340, 0, 0, 0, 0, 150, 80, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 25}, {180, 0, 70, 0, 40, 0, 60, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 28}, {110, 0, 0, 70, 0, 0, 55, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 31}, {240, 0, 0, 0, 0, 0, 70, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 27}, {135, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 30}, {130, 100, 0, 0, 0, 0, 50, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 29}, {170, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 50, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 34, 40}};
    public static byte[][] thiefStats = new byte[][]{{18, 0, 0}, {30, 20, 30}, {25, 15, 12}, {22, 12, 10}, {20, 10, 8}};
-   public static short[][] var_71c = new short[][]{{0, 0}, {1000, 2}, {1000, 1}, {1000, 0}, {1000, 1}, {1000, 3}};
+   // Параметри луту (ціна, вага). Читаються з /dat/loot_type.dat
+   public static short[][] lootPrice = new short[6][2];
    private static byte[][] mapArray; // > 12: Стены/препятствия. <= 12: Проходимый пол.
    public static int[] lootValues = new int[6];
    public static int[] var_7a3 = new int[7];
@@ -90,8 +91,8 @@ public final class LevelManager implements LevelObjectData {
          if (is != null) {
             java.io.DataInputStream dis = new java.io.DataInputStream(is);
             for(int i = 0; i < 6; i++) {
-               var_71c[i][0] = dis.readShort();
-               var_71c[i][1] = dis.readShort();
+               lootPrice[i][0] = dis.readShort();
+               lootPrice[i][1] = dis.readShort();
             }
             dis.close();
          }
@@ -303,7 +304,7 @@ public final class LevelManager implements LevelObjectData {
             int var1;
             for(var1 = 0; var1 < thievesList.size(); ++var1) {
                Thief var2 = (Thief)thievesList.elementAt(var1);
-               var0 += var2.collectedLoot[1] * var_71c[1][0] + var2.collectedLoot[2] * var_71c[2][0] + var2.collectedLoot[3] * var_71c[3][0] + var2.collectedLoot[4] * var_71c[4][0] + var2.collectedLoot[5] * var_71c[5][0];
+               var0 += var2.collectedLoot[1] * lootPrice[1][0] + var2.collectedLoot[2] * lootPrice[2][0] + var2.collectedLoot[3] * lootPrice[3][0] + var2.collectedLoot[4] * lootPrice[4][0] + var2.collectedLoot[5] * lootPrice[5][0];
                var2.sub_41a();
                var2.sub_44c();
             }
@@ -558,10 +559,10 @@ public final class LevelManager implements LevelObjectData {
                               var20 = (LevelObject)levelObjectsList.nextElement();
                               if (ReadingDrawingClass.checkBit(LevelObjectData.spriteIndexes[var20.objectType][5], (byte)4) && var20.var_1f5 < 6) {
                                  int[] var27 = lootValues;
-                                 var27[0] += var20.var_22c * var_71c[var20.var_1f5][0];
+                                 var27[0] += var20.var_22c * lootPrice[var20.var_1f5][0];
                                  var27 = lootValues;
                                  byte var28 = var20.var_1f5;
-                                 var27[var28] += var20.var_22c * var_71c[var20.var_1f5][0];
+                                 var27[var28] += var20.var_22c * lootPrice[var20.var_1f5][0];
                               }
                            }
 
@@ -1041,7 +1042,7 @@ public final class LevelManager implements LevelObjectData {
                         var23.positionY = var30;
                         var23.direction = var31;
                         if (var23.targetObject != null && var23.targetObject.var_1f5 != 0 && var23.targetObject.var_22c > 0 && var_7a3[var23.targetObject.var_1f5] <= 0) {
-                           var23.projectedLoad = (byte)(var23.projectedLoad + var_71c[var23.targetObject.var_1f5][1]);
+                           var23.projectedLoad = (byte)(var23.projectedLoad + lootPrice[var23.targetObject.var_1f5][1]);
                         }
                      } else if (var27 != var26.packedData) {
                         var27 = 0;
@@ -2128,7 +2129,7 @@ public final class LevelManager implements LevelObjectData {
 	          for(int i = thievesList.size() - 1; i >= 0; --i) {
 	             Thief thief = (Thief)thievesList.elementAt(i);
 	             for(int j = 1; j < 6; j++) {
-	                calculatedLootForWin += thief.collectedLoot[j] * var_71c[j][0];
+	                calculatedLootForWin += thief.collectedLoot[j] * lootPrice[j][0];
 	             }
 	          }
 	          
@@ -2161,11 +2162,11 @@ public final class LevelManager implements LevelObjectData {
 	         // 2 * Distance is roughly travel time needed
 	         if ((2 * (Math.abs(thief.positionX - exitX) + Math.abs(thief.positionY - exitY)) > timeLeft || thief.stunTimer > 0) && GlobalManager.gameMode != -1) {
 	            // Calculate Ransom/Penalty
-	            int currentThiefLoot = thief.collectedLoot[1] * var_71c[1][0] + 
-	                                   thief.collectedLoot[2] * var_71c[2][0] + 
-	                                   thief.collectedLoot[3] * var_71c[3][0] + 
-	                                   thief.collectedLoot[4] * var_71c[4][0] + 
-	                                   thief.collectedLoot[5] * var_71c[5][0];
+	            int currentThiefLoot = thief.collectedLoot[1] * lootPrice[1][0] + 
+	                                   thief.collectedLoot[2] * lootPrice[2][0] + 
+	                                   thief.collectedLoot[3] * lootPrice[3][0] + 
+	                                   thief.collectedLoot[4] * lootPrice[4][0] + 
+	                                   thief.collectedLoot[5] * lootPrice[5][0];
 	            
 	            // Penalty calculation from original source
 	            short ransom = (short)(Math.max(thiefStats[thief.thiefId][2] * 1000, currentThiefLoot) / 1000);
@@ -2191,15 +2192,15 @@ public final class LevelManager implements LevelObjectData {
 	            
 	            // Accumulate loot for Win Condition check
 	            for(int j = 1; j < 6; j++) {
-	                calculatedLootForWin += thief.collectedLoot[j] * var_71c[j][0];
+	                calculatedLootForWin += thief.collectedLoot[j] * lootPrice[j][0];
 	            }
 	         } else {
 	            // Thief safe but assumed escaping off-screen? 
-	            int currentThiefLoot = thief.collectedLoot[1] * var_71c[1][0] + 
-	                                   thief.collectedLoot[2] * var_71c[2][0] + 
-	                                   thief.collectedLoot[3] * var_71c[3][0] + 
-	                                   thief.collectedLoot[4] * var_71c[4][0] + 
-	                                   thief.collectedLoot[5] * var_71c[5][0];
+	            int currentThiefLoot = thief.collectedLoot[1] * lootPrice[1][0] + 
+	                                   thief.collectedLoot[2] * lootPrice[2][0] + 
+	                                   thief.collectedLoot[3] * lootPrice[3][0] + 
+	                                   thief.collectedLoot[4] * lootPrice[4][0] + 
+	                                   thief.collectedLoot[5] * lootPrice[5][0];
 	            
 	            // Add to score display (Original logic adds 50%)
 	            totalLootValue += currentThiefLoot * 50 / 100;
